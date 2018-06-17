@@ -18,6 +18,19 @@
 			this.equipamento 	= equipamento
 			this.sala 			= sala
 		}
+	//	VALIDAÇÃO DOS DADOS
+		validarDados() {
+		//	METÓDO FOR PARA RECUPERAR OS VALORES E SETAR EM UMA VARIÁVEL
+			for(let i in this) {
+			//	VERIFICA SE O VALOR É INDEFINIDO/VAZIO/NULO
+				if(this[i] == undefined ||  this[i] == '' || this[i] == null) {
+				//	SE O VALOR FOR INDEFINIDO/VAZIO/NULO RETORNA FALSO
+					return false
+				} 
+			}
+		//	RETORNA VERDADEIRO CASO OS DADOS FOR VÁLIDOS
+			return true
+		}
 	}
 //==============================================================||
 //==============================================================||
@@ -57,7 +70,7 @@
 		let bancodedados = new BancodeDados()
 //==============================================================||
 //==============================================================||
-//	2 - CADASTRA A DESPESA
+//	3 - CADASTRA A DESPESA
 //
 	function cadastrarReserva() {
 
@@ -75,6 +88,28 @@
 			equipamento.value, 
 			sala.value
 		)
-		bancodedados.gravar(reserva)
+	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
+		if(reserva.validarDados()) {
+		// 	GRAVA AS INFORMAÇÕES DA DESPESA NA CLASSE BANCODEDADOS
+		//	bancodedados.gravar(despesa)
+		//
+		//	DIALOG DE SUCESSO
+			document.getElementById('modal_titulo').innerHTML 		= 'Reserva cadastrada com sucesso!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-succes'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com sucesso!'
+			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
+			document.getElementById('modal_btn').className 			= 'btn btn-success'
+
+			$('#modalRegistraReserva').modal('show')
+		} else {
+		//	DIALOG DE ERRO
+			document.getElementById('modal_titulo').innerHTML 		= 'Erro no cadastro da reserva!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Erro na gravação, verifique se todos os campo foram inseridos corretamente!'
+			document.getElementById('modal_btn').innerHTML 			= 'Voltar e corrigir'
+			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+
+			$('#modalRegistraReserva').modal('show')
+		}
 	}
 //==============================================================||
