@@ -1,12 +1,12 @@
-//==============================================================//
-//	AUTOR: JORGE SANT ANA
+//==============================================================||
+//	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
 //	DATA DE MODIFICAÇÃO: 17/06/2018
 //	VERSÃO: 0.0.1
 //	DESCRIÇÃO: CADASTRO/CONSULTA/IMPRESÃO DE RESULTADO
-//==============================================================//
-//==============================================================//
-//	1 -CLASSE DESPESA
+//==============================================================||
+//==============================================================||
+//	1 - CLASSE DESPESA
 //
 	class Reserva {
 
@@ -19,8 +19,44 @@
 			this.sala 			= sala
 		}
 	}
-//==============================================================//
-//==============================================================//
+//==============================================================||
+//==============================================================||
+//	2 - CLASSE BANCO DE DADOS
+//
+	class BancodeDados {
+	//	METODO CONSTRUCTOR RECEBE O ID
+		constructor(){
+		//	RECEBE O ID E SETA EM UMA VARIÁVEL
+			let id = localStorage.getItem('id')
+		//	SE O ID FOR NULL ELE RECEBERÁ 0
+			if (id === null) {
+				localStorage.setItem('id', 0)
+			}
+		}
+	//	VERIFICA SE JÁ EXISTE UM ID
+		getProximoId(){
+		//	RECUPERA O ITEM NO LOCALSTORAGE
+			let proximoId = localStorage.getItem('id')
+		//	RETORNA O ID CONVERTIDO PARA INTEIRO E RECEBE + 1 
+			return parseInt(proximoId) + 1
+		}
+	//	GRAVAR REGISTROS NO LOCALSTRORAGE 
+		gravar(d){
+		//	VALOR DA REFERÊNCIAÇÃO DO getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
+			let id = this.getProximoId()
+		//
+		//	CONVERTE VALORES E SETA PARA O LOCALSTRORAGE 
+			localStorage.setItem(id, JSON.stringify(d))
+		//
+		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
+			localStorage.setItem('id', id)
+		}
+	}
+	//
+	//	CRIAÇÃO DE UMA INSTÂCIA DESPESA ATRIBUIDA EM UMA VARIÁVEL
+		let bancodedados = new BancodeDados()
+//==============================================================||
+//==============================================================||
 //	2 - CADASTRA A DESPESA
 //
 	function cadastrarReserva() {
@@ -39,15 +75,6 @@
 			equipamento.value, 
 			sala.value
 		)
-		console.log(reserva)
-		gravar(reserva)
+		bancodedados.gravar(reserva)
 	}
-//==============================================================//
-//==============================================================//
-//	3 - GRAVAR DESPESA
-//
-	function gravar(d){
-	//	CONVERTE VALORES E ENVIA PARA O LOCALSTRORAGE 
-		localStorage.setItem('reserva', JSON.stringify(d))
-	}
-//==============================================================//
+//==============================================================||
