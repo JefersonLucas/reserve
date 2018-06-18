@@ -1,26 +1,28 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 17/06/2018
+//	DATA DE MODIFICAÇÃO: 18/06/2018
 //	VERSÃO: 0.0.1
-//	DESCRIÇÃO: CADASTRO/CONSULTA/IMPRESÃO DE RESULTADO
+//	DESCRIÇÃO: CADASTRO/CONSULTA//FILTRO/EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
-//	1 - CLASSE DESPESA
+//	1 - CLASSES
+//
+//	CLASSE DESPESA
 //
 	class Reserva {
 
 	//	DEFINIÇÃO DOS VALORES NO CONSTRUCTOR
 		constructor(professor, equipamento, sala, inicio, fim, dia){
-		//	INSTANCIAÇÃO DO OBJETO DESPESA
+		//	INSTANCIAÇÃO DO OBJETO RESERVA
 			this.professor 		= professor
 			this.equipamento 	= equipamento
 			this.sala 			= sala
 			this.inicio 		= inicio
-			this.fim 			= fim		
+			this.fim 			= fim
 			this.dia 			= dia
 		}
-	//	VALIDAÇÃO DOS DADOS
+	//	MÉTODO VALIDAÇÃO DOS DADOS
 		validarDados() {
 		//	METÓDO FOR PARA RECUPERAR OS VALORES E SETAR EM UMA VARIÁVEL
 			for(let i in this) {
@@ -34,12 +36,11 @@
 			return true
 		}
 	}
-//==============================================================||
-//==============================================================||
-//	2 - CLASSE BANCO DE DADOS
+//
+//	CLASSE BANCO DE DADOS
 //
 	class BancodeDados {
-	//	METODO CONSTRUCTOR RECEBE O ID
+	//	MÉTODO CONSTRUCTOR RECEBE O ID
 		constructor(){
 		//	RECEBE O ID E SETA EM UMA VARIÁVEL
 			let id = localStorage.getItem('id')
@@ -48,14 +49,14 @@
 				localStorage.setItem('id', 0)
 			}
 		}
-	//	VERIFICA SE JÁ EXISTE UM ID
+	//	MÉTODO VERIFICA SE JÁ EXISTE UM ID
 		getProximoId(){
 		//	RECUPERA O ITEM NO LOCALSTORAGE
 			let proximoId = localStorage.getItem('id')
 		//	RETORNA O ID CONVERTIDO PARA INTEIRO E RECEBE + 1 
 			return parseInt(proximoId) + 1
 		}
-	//	GRAVAR REGISTROS NO LOCALSTRORAGE 
+	//	MÉTODO GRAVAR REGISTROS NO LOCALSTRORAGE 
 		gravar(r){
 		//	VALOR DA REFERÊNCIAÇÃO DO getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
 			let id = this.getProximoId()
@@ -66,6 +67,7 @@
 		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
 			localStorage.setItem('id', id)
 		}		
+	//	MÉTODO RECUPERA OS REGISTROS NO LOCALSTORAGE
 		recuperaTodosRegistros() {
 		//	ARRAY DE RESERVAS
 			let reservas = Array()
@@ -91,60 +93,51 @@
 		//	RETORNA O ARRAY RESERVA
 			return reservas
 		}
-	//	PESQUISA E FILTRA OS DADOS DA RESERVA
+	//	MÉTODO PESQUISA E FILTRA OS DADOS DA RESERVA
 		pesquisar(reserva) {
 		//	VARIÁVEL ARRAY
 			let reservasFiltradas = Array()
 		//	VARIÁVEL RECEBE O MÉTODO DE RECUPERAR TODOS OS REGISTROS
 			reservasFiltradas = this.recuperaTodosRegistros()
-
-			console.log(reservasFiltradas)
-			console.log(reserva)
-
+		//
 		//	FILTRO PROFESSOR
 			if(reserva.professor != '') {
-				console.log('Filtro professor')
 				reservasFiltradas = reservasFiltradas.filter(r => r.professor == reserva.professor)
 			}
 		//	FILTRO EQUIPAMENTO
 			if(reserva.equipamento != '') {
-				console.log('Filtro equipamento')
 				reservasFiltradas = reservasFiltradas.filter(r => r.equipamento == reserva.equipamento)
 			}		
 		//	FILTRO SALA
 			if(reserva.sala != '') {
-				console.log('Filtro sala')
 				reservasFiltradas = reservasFiltradas.filter(r => r.sala == reserva.sala)
 			}		
 		//	FILTRO INICIO
 			if(reserva.inicio != '') {
-				console.log('Filtro inicio')
 				reservasFiltradas = reservasFiltradas.filter(r => r.inicio == reserva.inicio)
 			}
 		//	FILTRO FIM
 			if(reserva.fim != '') {
-				console.log('Filtro fim')
 				reservasFiltradas = reservasFiltradas.filter(r => r.fim == reserva.fim)
 			}
 		//	FILTRO DIA
 			if(reserva.dia != '') {
-				console.log('Filtro dia')
 				reservasFiltradas = reservasFiltradas.filter(r => r.dia == reserva.dia)
 			}
 		//	RETORVA O FILTRO
 			return reservasFiltradas
 		}
-	//	REMOVER RESERVAS
+	//	MÉTODO REMOVER RESERVAS
 		remover(id) {
 			localStorage.removeItem(id)
 		}
 	}
 	//
-	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
-		let bancodedados = new BancodeDados()
+//	CRIAÇÃO DE UMA INSTÂCIA GLOBAL RESERVA ATRIBUIDA EM UMA VARIÁVEL
+	let bancodedados = new BancodeDados()
 //==============================================================||
 //==============================================================||
-//	3 - CADASTRA A RESERVA
+//	2 - CADASTRA A RESERVA
 //
 	function cadastrarReserva() {
 
@@ -168,10 +161,11 @@
 		)
 	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
 		if(reserva.validarDados()) {
+		//	DIALOG DE SUCESSO
+		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva)
 		//
-		//	DIALOG DE SUCESSO
 			document.getElementById('modal_titulo').innerHTML 		= 'Reserva cadastrada com sucesso!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-succes'
 			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com sucesso!'
@@ -200,7 +194,7 @@
 	}
 //==============================================================||
 //==============================================================||
-//	CARREGA A LISTA DE RESERVAS
+//	3 - CARREGA A LISTA DE RESERVAS
 //
 	function carregaListaReservas() {
 	//	DECLARAÇÃO DO ARRAY RESERVAS
@@ -227,6 +221,7 @@
  	//	CRIAR BOTAO DE EXCLUSÃO
  		let btn = document.createElement("button")
  		btn.className = 'btn btn-danger'
+ 		btn.title = 'Excluir reserva!' 
  		btn.innerHTML = '<i class="fas fa-times"></i>'
  		btn.id = `id_reserva_${r.id}`
  		btn.onclick = function() {
@@ -239,13 +234,11 @@
  		}
  		linha.insertCell(6).append(btn)
 
- 		console.log(r)
-
  		})
 	}
 //==============================================================||
 //==============================================================||
-//	FILTRAR RESERVAS
+//	4 - FILTRAR RESERVAS
 //
 	function pesquisarReserva() {
 	//	RECUPERANDO O VALOR DO CAMPOS

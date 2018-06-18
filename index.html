@@ -2,9 +2,9 @@
 //==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 17/06/2018
+//  DATA DE MODIFICAÇÃO: 18/06/2018
 //  VERSÃO: 0.0.1
-//  DESCRIÇÃO: CADASTRO DE RESERVAS
+//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================||
  -->
 <html>
@@ -37,8 +37,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Cadastro</a></li>
-                        <li class="nav-item"><a class="nav-link" href="consulta.html">Consulta</a></li>
+                        <li class="nav-item active"><a class="nav-link" title="Cadastrar Reservas" href="index.html">Cadastro</a></li>
+                        <li class="nav-item"><a class="nav-link" title="Consultar Reservas" href="consulta.html">Consulta</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,17 +56,17 @@
 
                 <!-- PROFESSOR -->
                 <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Professor" id="professor"/>
+                    <input type="text" title="Nome do Professor" class="form-control" placeholder="Professor" id="professor"/>
                 </div>
 
                 <!-- EQUIPAMENTO -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Equipamento" id="equipamento"/>
+                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento" id="equipamento"/>
                 </div>
 
                 <!-- SALA -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Sala" id="sala"/>
+                    <input type="text" title="Nome da sala" class="form-control" placeholder="Sala" id="sala"/>
                 </div>
 
             </div>
@@ -75,22 +75,22 @@
                 
                 <!-- DATA -->
                 <div class="col-md-3">
-                    <input type="date" class="form-control" placeholder="dd/mm/aaaa" id="dia"/>
+                    <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia"/>
                 </div>
 
                 <!-- HORA INICIAL -->
                 <div class="col-md-4">
-                    <input type="time" class="form-control" placeholder="00:00" id="inicio"/>
+                    <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio"/>
                 </div>
 
                 <!-- HORA FINAL -->
                 <div class="col-md-4">
-                    <input type="time" class="form-control" placeholder="00:00" id="fim"/>
+                    <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim"/>
                 </div>
 
                 <!-- BOTÃO -->
                 <div class="col-md-1 d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" onclick="cadastrarReserva()">
+                    <button type="button" title="Cadastrar!" class="btn btn-primary" onclick="cadastrarReserva()">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -109,7 +109,7 @@
                     <div id="modal_titulo_div">
 
                         <h5 class="modal-title" id="modal_titulo"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
@@ -118,7 +118,7 @@
                     <div class="modal-body" id="modal_conteudo"></div>
                     
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" id="modal_btn">Voltar</button>
+                        <button type="button" title="Voltar" data-dismiss="modal" id="modal_btn">Voltar</button>
                     </div>
 
                 </div>
