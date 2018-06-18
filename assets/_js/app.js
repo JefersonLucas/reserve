@@ -11,12 +11,14 @@
 	class Reserva {
 
 	//	DEFINIÇÃO DOS VALORES NO CONSTRUCTOR
-		constructor(dia, professor, equipamento, sala){
+		constructor(professor, equipamento, sala, inicio, fim, dia){
 		//	INSTANCIAÇÃO DO OBJETO DESPESA
-			this.dia 			= dia
 			this.professor 		= professor
 			this.equipamento 	= equipamento
 			this.sala 			= sala
+			this.inicio 		= inicio
+			this.fim 			= fim		
+			this.dia 			= dia
 		}
 	//	VALIDAÇÃO DOS DADOS
 		validarDados() {
@@ -54,44 +56,71 @@
 			return parseInt(proximoId) + 1
 		}
 	//	GRAVAR REGISTROS NO LOCALSTRORAGE 
-		gravar(d){
+		gravar(r){
 		//	VALOR DA REFERÊNCIAÇÃO DO getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
 			let id = this.getProximoId()
 		//
 		//	CONVERTE VALORES E SETA PARA O LOCALSTRORAGE 
-			localStorage.setItem(id, JSON.stringify(d))
+			localStorage.setItem(id, JSON.stringify(r))
 		//
 		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
 			localStorage.setItem('id', id)
+		}		
+		recuperaTodosRegistros() {
+		//	ARRAY DE RESERVAS
+			let reservas = Array()
+		//
+		//	RECUPERA O ID ATUAL E SETE EM UMA VARIÁVEL
+			let id = localStorage.getItem('id')
+		//
+		//	RECUPERA TODAS AS RESERVAS EM LOCALSTORAGE
+			for(let i = 1; i <= id; i ++) {
+			//	RECUPERAR A RESERVA
+				let reserva = JSON.parse(localStorage.getItem(i))
+			//
+			//	VERIFICA SE ALGUMA RESERVA É NULA
+				if(reserva === null) {
+				//	SE A RESERVA FOR NULA CONTINUA O LAÇO
+					continue
+				}
+			//	PUSH DO ARRAY RESERVA
+				reservas.push(reserva)
+			}
+		//	RETORNA O ARRAY RESERVA
+			return reservas
 		}
 	}
 	//
-	//	CRIAÇÃO DE UMA INSTÂCIA DESPESA ATRIBUIDA EM UMA VARIÁVEL
+	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 		let bancodedados = new BancodeDados()
 //==============================================================||
 //==============================================================||
-//	3 - CADASTRA A DESPESA
+//	3 - CADASTRA A RESERVA
 //
 	function cadastrarReserva() {
 
 	//	RECUPERA OS VALORES A PARTIR DO ID E REFERENCIA EM UMA VARIÁVEL
-		let dia 		= document.getElementById('dia')
 		let professor 	= document.getElementById('professor')
 		let equipamento = document.getElementById('equipamento')
 		let sala 		= document.getElementById('sala')
+		let inicio 		= document.getElementById('inicio')
+		let fim 		= document.getElementById('fim')
+		let dia 		= document.getElementById('dia')
 
-	//	CRIAÇÃO DE UMA INSTÂCIA DESPESA ATRIBUIDA EM UMA VARIÁVEL
+	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 		let reserva = new Reserva(
-		//	PARÂMETROS DA DESPESA
-			dia.value, 
+		//	PARÂMETROS DA RESERVA
 			professor.value, 
 			equipamento.value, 
-			sala.value
+			sala.value,
+			inicio.value,
+			fim.value,			
+			dia.value
 		)
 	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
 		if(reserva.validarDados()) {
-		// 	GRAVA AS INFORMAÇÕES DA DESPESA NA CLASSE BANCODEDADOS
-		//	bancodedados.gravar(despesa)
+		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
+			bancodedados.gravar(reserva)
 		//
 		//	DIALOG DE SUCESSO
 			document.getElementById('modal_titulo').innerHTML 		= 'Reserva cadastrada com sucesso!'
@@ -111,5 +140,34 @@
 
 			$('#modalRegistraReserva').modal('show')
 		}
+	}
+//==============================================================||
+//==============================================================||
+//	CARREGA A LISTA DE RESERVAS
+//
+	function carregaListaReservas() {
+	//	DECLARAÇÃO DO ARRAY RESERVAS
+	let reservas = Array()
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+	reservas = bancodedados.recuperaTodosRegistros()
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	//
+ 	//	LISTANTO A DESPESA
+ 		reservas.forEach(function(r) {
+ 	//
+ 	//	console.log(r)
+ 		//	CRIANDO A LINHA (TR)
+ 			let linha =	listaReservas.insertRow()
+ 		//
+ 		//	CRIAR AS COLUNAS (TD)
+ 			linha.insertCell(0).innerHTML = r.professor
+ 			linha.insertCell(1).innerHTML = r.equipamento
+ 			linha.insertCell(2).innerHTML = r.sala
+ 			linha.insertCell(3).innerHTML = r.inicio
+ 			linha.insertCell(4).innerHTML = r.fim
+ 			linha.insertCell(5).innerHTML = r.dia
+
+ 		})
 	}
 //==============================================================||

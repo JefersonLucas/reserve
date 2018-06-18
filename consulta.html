@@ -22,7 +22,7 @@
         <script src="assets/_js/app.js"></script>
     </head>
 
-    <body>
+    <body onload="carregaListaReservas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             <div class="container">
@@ -52,26 +52,40 @@
                 </div>
             </div>
 
-            <div class="row mb-2">
+            <div class="row mb-4">
+
+                <!-- PROFESSOR -->
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Professor" id="professor"/>
+                </div>
+
+                <!-- EQUIPAMENTO -->
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Equipamento" id="equipamento"/>
+                </div>
+
+                <!-- SALA -->
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Sala" id="sala"/>
+                </div>
+
+            </div>
+
+            <div class="row mb-4">
                 
                 <!-- DATA -->
                 <div class="col-md-3">
                     <input type="date" class="form-control" placeholder="Dia" id="dia"/>
                 </div>
 
-                <!-- PROFESSOR -->
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Professor" id="prof"/>
+                <!-- HORA -->
+                <div class="col-md-4">
+                    <input type="time" class="form-control" placeholder="Hora" id="inicio"/>
                 </div>
 
-                <!-- EQUIPAMENTO -->
-                <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Equipamento" id="equip"/>
-                </div>
-
-                <!-- SALA -->
-                <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Sala" id="sala"/>
+                <!-- HORA -->
+                <div class="col-md-4">
+                    <input type="time" class="form-control" placeholder="Hora" id="fim"/>
                 </div>
 
                 <!-- BOTÃO -->
@@ -80,10 +94,10 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-            
+
             </div>
 
-            <div class="row mb-2">
+            <div class="row mb-4">
                 
                 <div class="col">
                     
@@ -92,16 +106,17 @@
                     
                         <thead>
                             <tr>
-                                <th>Data</th>
                                 <th>Professor</th>
                                 <th>Equipamento</th>
                                 <th>Sala</th>
+                                <th>Hora inicial</th>
+                                <th>Hora final</th>               
+                                <th>Data</th>
                                 <th></th>
                             </tr>
                         </thead>
                         
-                        <tbody>
-                    
+                        <tbody id="listaReservas">
                         </tbody>
                     
                     </table>
