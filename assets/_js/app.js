@@ -83,6 +83,8 @@
 				//	SE A RESERVA FOR NULA CONTINUA O LAÇO
 					continue
 				}
+			//	A RESERVA RECEBE UM ID
+				reserva.id = i
 			//	PUSH DO ARRAY RESERVA
 				reservas.push(reserva)
 			}
@@ -129,8 +131,12 @@
 				console.log('Filtro dia')
 				reservasFiltradas = reservasFiltradas.filter(r => r.dia == reserva.dia)
 			}
+		//	RETORVA O FILTRO
 			return reservasFiltradas
-
+		}
+	//	REMOVER RESERVAS
+		remover(id) {
+			localStorage.removeItem(id)
 		}
 	}
 	//
@@ -217,6 +223,23 @@
  		linha.insertCell(3).innerHTML = r.inicio
  		linha.insertCell(4).innerHTML = r.fim
  		linha.insertCell(5).innerHTML = r.dia
+ 	//
+ 	//	CRIAR BOTAO DE EXCLUSÃO
+ 		let btn = document.createElement("button")
+ 		btn.className = 'btn btn-danger'
+ 		btn.innerHTML = '<i class="fas fa-times"></i>'
+ 		btn.id = `id_reserva_${r.id}`
+ 		btn.onclick = function() {
+ 		//	FORMATAR O ID
+ 			let id = this.id.replace('id_reserva_','')
+ 		//	REMOVE A RESERVA
+ 			bancodedados.remover(id)
+ 		//	ATUALIZA A PÁGINA
+ 			window.location.reload()
+ 		}
+ 		linha.insertCell(6).append(btn)
+
+ 		console.log(r)
 
  		})
 	}
