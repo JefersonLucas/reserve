@@ -89,6 +89,49 @@
 		//	RETORNA O ARRAY RESERVA
 			return reservas
 		}
+	//	PESQUISA E FILTRA OS DADOS DA RESERVA
+		pesquisar(reserva) {
+		//	VARIÁVEL ARRAY
+			let reservasFiltradas = Array()
+		//	VARIÁVEL RECEBE O MÉTODO DE RECUPERAR TODOS OS REGISTROS
+			reservasFiltradas = this.recuperaTodosRegistros()
+
+			console.log(reservasFiltradas)
+			console.log(reserva)
+
+		//	FILTRO PROFESSOR
+			if(reserva.professor != '') {
+				console.log('Filtro professor')
+				reservasFiltradas = reservasFiltradas.filter(r => r.professor == reserva.professor)
+			}
+		//	FILTRO EQUIPAMENTO
+			if(reserva.equipamento != '') {
+				console.log('Filtro equipamento')
+				reservasFiltradas = reservasFiltradas.filter(r => r.equipamento == reserva.equipamento)
+			}		
+		//	FILTRO SALA
+			if(reserva.sala != '') {
+				console.log('Filtro sala')
+				reservasFiltradas = reservasFiltradas.filter(r => r.sala == reserva.sala)
+			}		
+		//	FILTRO INICIO
+			if(reserva.inicio != '') {
+				console.log('Filtro inicio')
+				reservasFiltradas = reservasFiltradas.filter(r => r.inicio == reserva.inicio)
+			}
+		//	FILTRO FIM
+			if(reserva.fim != '') {
+				console.log('Filtro fim')
+				reservasFiltradas = reservasFiltradas.filter(r => r.fim == reserva.fim)
+			}
+		//	FILTRO DIA
+			if(reserva.dia != '') {
+				console.log('Filtro dia')
+				reservasFiltradas = reservasFiltradas.filter(r => r.dia == reserva.dia)
+			}
+			return reservasFiltradas
+
+		}
 	}
 	//
 	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
@@ -128,7 +171,15 @@
 			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com sucesso!'
 			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
 			document.getElementById('modal_btn').className 			= 'btn btn-success'
-
+		//
+		//	ZERA OS VALORES
+			professor.value 	= ''
+			equipamento.value 	= ''
+			sala.value 			= ''
+			inicio.value 		= ''
+			fim.value 			= ''	
+			dia.value 			= ''
+		//
 			$('#modalRegistraReserva').modal('show')
 		} else {
 		//	DIALOG DE ERRO
@@ -147,26 +198,62 @@
 //
 	function carregaListaReservas() {
 	//	DECLARAÇÃO DO ARRAY RESERVAS
-	let reservas = Array()
+		let reservas = Array()
 	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-	reservas = bancodedados.recuperaTodosRegistros()
+		reservas = bancodedados.recuperaTodosRegistros()
 	//	SELECIONANDO O ELEMENTO TBODY
 		let listaReservas = document.getElementById('listaReservas')
 	//
  	//	LISTANTO A DESPESA
  		reservas.forEach(function(r) {
  	//
- 	//	console.log(r)
- 		//	CRIANDO A LINHA (TR)
- 			let linha =	listaReservas.insertRow()
- 		//
- 		//	CRIAR AS COLUNAS (TD)
- 			linha.insertCell(0).innerHTML = r.professor
- 			linha.insertCell(1).innerHTML = r.equipamento
- 			linha.insertCell(2).innerHTML = r.sala
- 			linha.insertCell(3).innerHTML = r.inicio
- 			linha.insertCell(4).innerHTML = r.fim
- 			linha.insertCell(5).innerHTML = r.dia
+ 	//	CRIANDO A LINHA (TR)
+ 		let linha =	listaReservas.insertRow()
+ 	//
+ 	//	CRIAR AS COLUNAS (TD)
+ 		linha.insertCell(0).innerHTML = r.professor
+ 		linha.insertCell(1).innerHTML = r.equipamento
+ 		linha.insertCell(2).innerHTML = r.sala
+ 		linha.insertCell(3).innerHTML = r.inicio
+ 		linha.insertCell(4).innerHTML = r.fim
+ 		linha.insertCell(5).innerHTML = r.dia
+
+ 		})
+	}
+//==============================================================||
+//==============================================================||
+//	FILTRAR RESERVAS
+//
+	function pesquisarReserva() {
+	//	RECUPERANDO O VALOR DO CAMPOS
+		let professor 	= document.getElementById('professor').value
+		let equipamento = document.getElementById('equipamento').value
+		let sala 		= document.getElementById('sala').value
+		let inicio 		= document.getElementById('inicio').value
+		let fim 		= document.getElementById('fim').value
+		let dia 		= document.getElementById('dia').value
+	//
+	//	PASSANDO VALORES PARA VARIÁVEL
+		let reserva = new Reserva(professor, equipamento, sala, inicio, fim, dia)
+	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
+		let reservas = bancodedados.pesquisar(reserva)
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
+		listaReservas.innerHTML = ''
+ 	//	LISTANTO A DESPESA
+ 		reservas.forEach(function(r) {
+ 	//
+ 	//	CRIANDO A LINHA (TR)
+ 		let linha =	listaReservas.insertRow()
+ 	//
+ 	//	CRIAR AS COLUNAS (TD)
+ 		linha.insertCell(0).innerHTML = r.professor
+ 		linha.insertCell(1).innerHTML = r.equipamento
+ 		linha.insertCell(2).innerHTML = r.sala
+ 		linha.insertCell(3).innerHTML = r.inicio
+ 		linha.insertCell(4).innerHTML = r.fim
+ 		linha.insertCell(5).innerHTML = r.dia
 
  		})
 	}
