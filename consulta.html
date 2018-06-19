@@ -20,6 +20,7 @@
         <!-- Font Awesome -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <script src="assets/_js/app.js"></script>
+
     </head>
 
     <body onload="carregaListaReservas()">
@@ -48,24 +49,24 @@
             
             <div class="row">
                 <div class="col mb-5">
-                    <h1 class="display-4">Consulta de equipamentos</h1>
+                    <h1 class="display-5"><i class="fa fa-search" aria-hidden="true"></i> Consultar equipamentos</h1>
                 </div>
             </div>
 
             <div class="row mb-4">
 
                 <!-- PROFESSOR -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <input type="text" title="Nome do Professor" class="form-control" placeholder="Professor" id="professor"/>
                 </div>
 
                 <!-- EQUIPAMENTO -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento" id="equipamento"/>
                 </div>
 
                 <!-- SALA -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="text" title="Nome da sala" class="form-control" placeholder="Sala" id="sala"/>
                 </div>
 
@@ -74,43 +75,50 @@
             <div class="row mb-4">
                 
                 <!-- DATA -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia"/>
                 </div>
 
                 <!-- HORA -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio"/>
                 </div>
 
                 <!-- HORA -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim"/>
                 </div>
 
-                <!-- BOTÃO -->
-                <div class="col-md-1 d-flex justify-content-end" onclick="pesquisarReserva()">
-                    <button type="button" title="Filtrar!" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
+                <!-- BOTÃO PESQUISAR -->
+                <div class="col-md-1">
+                    <button type="button" title="Filtrar!" class="btn btn-primary btn-lg" onclick="pesquisarReserva()">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                    </button>                     
+                </div>
+
+                <!-- BOTÃO IMPRIMIR -->
+                <div class="col-md-1">
+                    <button id="botao" title="Imprimir!" class="btn btn-primary btn-lg" onclick="imprimiReservas()">
+                        <i class="fa fa-print" aria-hidden="true"></i>
                     </button>
                 </div>
 
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-4" id="conteudo">
                 
                 <div class="col">
                     
                     <!-- TABELA -->
-                    <table class="table" >
+                    <table class="table table-hover" >
                     
                         <thead>
                             <tr>
                                 <th>Professor</th>
                                 <th>Equipamento</th>
-                                <th>Sala</th>
-                                <th>Hora inicial</th>
-                                <th>Hora final</th>               
+                                <th>Local</th>
+                                <th>Início</th>
+                                <th>Término</th>               
                                 <th>Data</th>
                                 <th></th>
                             </tr>

@@ -19,7 +19,7 @@
 			this.equipamento 	= equipamento
 			this.sala 			= sala
 			this.inicio 		= inicio
-			this.fim 			= fim
+			this.fim 			= fim		
 			this.dia 			= dia
 		}
 	//	MÉTODO VALIDAÇÃO DOS DADOS
@@ -220,9 +220,9 @@
  	//
  	//	CRIAR BOTAO DE EXCLUSÃO
  		let btn = document.createElement("button")
- 		btn.className = 'btn btn-danger'
+ 		btn.className = 'btn btn-danger btn-sm'
  		btn.title = 'Excluir reserva!' 
- 		btn.innerHTML = '<i class="fas fa-times"></i>'
+ 		btn.innerHTML = '<i class="fa fa-user-times" aria-hidden="true"</i>'
  		btn.id = `id_reserva_${r.id}`
  		btn.onclick = function() {
  		//	FORMATAR O ID
@@ -273,4 +273,19 @@
 
  		})
 	}
+//==============================================================||
+//==============================================================||
+//	IMPRIME AS RESERVAS
+//
+	function imprimiReservas() {
+	//
+	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
+        let conteudo = document.getElementById('conteudo').innerHTML
+    //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
+        telaImpressao = window.open('about:blank')
+    //	IMPRESÃO DO CONTEÚDO
+        telaImpressao.document.write(conteudo)
+        telaImpressao.window.print()
+        telaImpressao.window.close()
+     }
 //==============================================================||
