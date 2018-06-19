@@ -1,7 +1,7 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 18/06/2018
+//	DATA DE MODIFICAÇÃO: 19/06/2018
 //	VERSÃO: 0.0.1
 //	DESCRIÇÃO: CADASTRO/CONSULTA//FILTRO/EXCLUSÃO DE RESERVAS
 //==============================================================||
@@ -186,7 +186,7 @@
 			document.getElementById('modal_titulo').innerHTML 		= 'Erro no cadastro da reserva!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
 			document.getElementById('modal_conteudo').innerHTML 	= 'Erro na gravação, verifique se todos os campo foram inseridos corretamente!'
-			document.getElementById('modal_btn').innerHTML 			= 'Voltar e corrigir'
+			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
 			document.getElementById('modal_btn').className 			= 'btn btn-danger'
 
 			$('#modalRegistraReserva').modal('show')
@@ -221,8 +221,7 @@
  	//	CRIAR BOTAO DE EXCLUSÃO
  		let btn = document.createElement("button")
  		btn.className = 'btn btn-danger btn-sm'
- 		btn.title = 'Excluir reserva!' 
- 		btn.innerHTML = '<i class="fa fa-user-times" aria-hidden="true"</i>'
+ 		btn.innerHTML = '<i class="fa fa-trash"></i> Excluir'
  		btn.id = `id_reserva_${r.id}`
  		btn.onclick = function() {
  		//	FORMATAR O ID
@@ -270,14 +269,33 @@
  		linha.insertCell(3).innerHTML = r.inicio
  		linha.insertCell(4).innerHTML = r.fim
  		linha.insertCell(5).innerHTML = r.dia
-
+ 	//
  		})
+ 	//
+	//	BOTÃO IMPRIMIR QUE APARECE AO CLICAR NO BOTÃO FILTRO
+	// 		
+ 		// let btn = document.createElement("button")
+ 		// btn.className = 'btn btn-primary btn-sm'
+ 		// btn.title = 'Imprimir reservas'
+ 		// btn.innerHTML = '<i class="fa fa-print" aria-hidden="true"></i>&nbsp;Imprimir'
+ 		// btn.id = 'botao'
+ 		// btn.onclick = function imprimeReservas() {
+   //      	let conteudo = document.getElementById('conteudo').innerHTML
+   //      	telaImpressao = window.open('about:blank')
+   //      	telaImpressao.document.write(conteudo)
+   //      	telaImpressao.window.print()
+   //      	telaImpressao.window.close()
+   //   		} 	
+
+   //   	let row = document.getElementById("imprimir")
+   // 		let x = row.insertCell(6).append(btn)
+    	
 	}
 //==============================================================||
 //==============================================================||
-//	IMPRIME AS RESERVAS
+//	5 - IMPRIME AS RESERVAS
 //
-	function imprimiReservas() {
+	function imprimeReservas() {
 	//
 	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
         let conteudo = document.getElementById('conteudo').innerHTML
@@ -288,4 +306,19 @@
         telaImpressao.window.print()
         telaImpressao.window.close()
      }
+//==============================================================||
+//==============================================================||
+//	6 - FUNÇÕES BOOTSTRAP
+//
+//	TOOGGLE
+//
+    $(function () {
+    	$('[data-toggle="tooltip"]').tooltip()
+    })
+//
+//	POPOVER
+//
+	$(function () {
+  		$('[data-toggle="popover"]').popover()
+	})
 //==============================================================||
