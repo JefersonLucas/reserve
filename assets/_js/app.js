@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 19/06/2018
-//	VERSÃO: 0.0.1
+//	DATA DE MODIFICAÇÃO: 20/06/2018
+//  VERSÃO: 1.0.0
 //	DESCRIÇÃO: CADASTRO/CONSULTA//FILTRO/EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
@@ -166,9 +166,9 @@
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva)
 		//
-			document.getElementById('modal_titulo').innerHTML 		= 'Sucesso!'
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A seguinte reserva foi <span class="text-success"><b>cadastrada</b></span> com sucesso!<br>'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi <span class="text-success"><b>cadastrada com sucesso!</b></span><br>'
 			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Professor(a)</th><th scope="col">Equipamento(s)</th><th scope="col">Sala(s)</th></tr></thead><tbody><tr><th>'+reserva.professor+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
 			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
 			document.getElementById('modal_btn').className 			= 'btn btn-success'
@@ -184,9 +184,9 @@
 			$('#modalRegistraReserva').modal('show')
 		} else {
 		//	DIALOG DE ERRO
-			document.getElementById('modal_titulo').innerHTML 		= 'Erro!'
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Erro na gravação, verifique se todos os campo foram inseridos corretamente!'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu <span class="text-danger"><b> cadastro</b></span>. Por favor! verifique se todos os campo foram inseridos corretamente!'
 			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
 			document.getElementById('modal_btn').className 			= 'btn btn-danger'
 
@@ -222,7 +222,7 @@
  	//	CRIAR BOTAO DE EXCLUSÃO
  		let btn = document.createElement("button")
  		btn.className = 'btn btn-danger btn-sm'
- 		btn.innerHTML = '<i class="fa fa-trash"></i> Excluir'
+ 		btn.innerHTML = '<i class="fa fa-trash"></i>&nbsp;Excluir'
  		btn.id = `id_reserva_${r.id}`
  	//
  	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
@@ -230,7 +230,7 @@
  		//	DIALOG DE EXCLUSÃO
 			$('#modalExcluiReserva').modal('show')
 
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fa fa-trash"></i> Atenção!'
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-user-times"></i> Atenção!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
 			document.getElementById('modal_conteudo').innerHTML 	= 'A seguinte reserva será <span class="text-danger"><b>excluida</b></span>:'
 			document.getElementById('modal_conteudo').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Professor(a)</th><th scope="col">Equipamento</th><th scope="col">Sala</th></tr></thead><tbody><tr><th>'+r.professor+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
