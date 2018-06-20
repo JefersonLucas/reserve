@@ -57,17 +57,17 @@
 
                 <!-- PROFESSOR -->
                 <div class="col-md-3">
-                    <input type="text" title="Nome do Professor" class="form-control" placeholder="Professor" id="professor"/>
+                    <input type="text" title="Nome do Professor" class="form-control" placeholder="Professor(a)" id="professor"/>
                 </div>
 
                 <!-- EQUIPAMENTO -->
                 <div class="col-md-3">
-                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento" id="equipamento"/>
+                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento(s)" id="equipamento"/>
                 </div>
 
                 <!-- SALA -->
                 <div class="col-md-3">
-                    <input type="text" title="Nome da sala" class="form-control" placeholder="Sala" id="sala"/>
+                    <input type="text" title="Nome da sala" class="form-control" placeholder="Sala(s)" id="sala"/>
                 </div>
 
             </div>
@@ -114,8 +114,8 @@
                     
                         <thead id="listaColunas">
                             <tr class="text-center" id="imprimir">
-                                <th>Professor</th>
-                                <th>Equipamento</th>
+                                <th>Professor(a)</th>
+                                <th>Equipamento(s)</th>
                                 <th>Local</th>
                                 <th>Início</th>
                                 <th>Término</th>               
@@ -132,6 +132,34 @@
                     
                 </div>
 
+            </div>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="modalExcluiReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal_titulo_div">
+
+                            <h5 class="modal-title" id="modal_titulo"></h5>
+                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal_conteudo"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal_btn" onclick="atualiza()"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            <!-- FIM MODAL -->
             </div>
 
         </div>

@@ -166,9 +166,10 @@
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva)
 		//
-			document.getElementById('modal_titulo').innerHTML 		= 'Reserva cadastrada com sucesso!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-succes'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com sucesso!'
+			document.getElementById('modal_titulo').innerHTML 		= 'Sucesso!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A seguinte reserva foi <span class="text-success"><b>cadastrada</b></span> com sucesso!<br>'
+			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Professor(a)</th><th scope="col">Equipamento(s)</th><th scope="col">Sala(s)</th></tr></thead><tbody><tr><th>'+reserva.professor+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
 			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
 			document.getElementById('modal_btn').className 			= 'btn btn-success'
 		//
@@ -177,13 +178,13 @@
 			equipamento.value 	= ''
 			sala.value 			= ''
 			inicio.value 		= ''
-			fim.value 			= ''	
+			fim.value 			= ''
 			dia.value 			= ''
 		//
 			$('#modalRegistraReserva').modal('show')
 		} else {
 		//	DIALOG DE ERRO
-			document.getElementById('modal_titulo').innerHTML 		= 'Erro no cadastro da reserva!'
+			document.getElementById('modal_titulo').innerHTML 		= 'Erro!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
 			document.getElementById('modal_conteudo').innerHTML 	= 'Erro na gravação, verifique se todos os campo foram inseridos corretamente!'
 			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
@@ -223,18 +224,39 @@
  		btn.className = 'btn btn-danger btn-sm'
  		btn.innerHTML = '<i class="fa fa-trash"></i> Excluir'
  		btn.id = `id_reserva_${r.id}`
- 		btn.onclick = function() {
- 		//	FORMATAR O ID
- 			let id = this.id.replace('id_reserva_','')
- 		//	REMOVE A RESERVA
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
+ 		btn.onclick = function () {
+ 		//	DIALOG DE EXCLUSÃO
+			$('#modalExcluiReserva').modal('show')
+
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fa fa-trash"></i> Atenção!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A seguinte reserva será <span class="text-danger"><b>excluida</b></span>:'
+			document.getElementById('modal_conteudo').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Professor(a)</th><th scope="col">Equipamento</th><th scope="col">Sala</th></tr></thead><tbody><tr><th>'+r.professor+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
+			document.getElementById('modal_btn').innerHTML 			= 'Confirmar'
+			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+		//
+		//	FORMATAR O ID
+			let id = this.id.replace('id_reserva_','')
+		//	REMOVE A RESERVA
  			bancodedados.remover(id)
- 		//	ATUALIZA A PÁGINA
- 			window.location.reload()
- 		}
- 		linha.insertCell(6).append(btn)
+
+			}
+
+		linha.insertCell(6).append(btn)
 
  		})
 	}
+//==============================================================||
+//==============================================================||
+//	ATUALIZA A PÁGINA
+//
+ 	function atualiza() {
+ 	//	ATUALIZA A PÁGINA
+ 		window.location.reload()
+	}
+//
 //==============================================================||
 //==============================================================||
 //	4 - FILTRAR RESERVAS
@@ -311,10 +333,10 @@
 //	6 - FUNÇÕES BOOTSTRAP
 //
 //	TOOGGLE
-//
+//	
     $(function () {
-    	$('[data-toggle="tooltip"]').tooltip()
-    })
+   	$('[data-toggle="tooltip"]').tooltip()
+   	})
 //
 //	POPOVER
 //
