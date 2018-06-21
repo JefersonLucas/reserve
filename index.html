@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 20/06/2018
-//  VERSÃO: 1.0.0
+//  DATA DE MODIFICAÇÃO: 21/06/2018
+//  VERSÃO: 1.0.1
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
@@ -35,8 +35,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a class="nav-link" title="Cadastrar Reservas" href="index.html"><b>CADASTRO</b></a></li>
-                        <li class="nav-item"><a class="nav-link" title="Consultar Reservas" href="consulta.html"><b>CONSULTA</b></a></li>
+                        <li class="nav-item active"><a class="nav-link" title="Cadastrar Reservas" href="index.html"><b>Cadastro</b></a></li>
+                        <li class="nav-item"><a class="nav-link" title="Consultar Reservas" href="consulta.html"><b>Consulta</b></a></li>
                     </ul>
                 </div>
             </div>
@@ -48,24 +48,24 @@
                 <div class="col mb-5">
                     <h1 class="display-5"><i class="fas fa-user-plus"></i>&nbsp;Cadastrar</h1>
                 </div>
-                <a data-toggle="popover" data-placement="top" title="Cadastro de Reserva" data-content="Informe: nome, equipamento, sala, dia, início e término da aula."><i class="fa fa-info-circle float-right" aria-hidden="true"></i></a>
+                <a data-toggle="popover" data-placement="top" title="Cadastro de Reserva" data-content="Informe: responsável, equipamento, sala, dia, início e término da aula."><i class="fa fa-info-circle float-right" aria-hidden="true"></i></a>
             </div>
 
             <div class="row mb-4">
 
                 <!-- PROFESSOR -->
                 <div class="col-md-3">
-                    <input type="text" title="Nome do Professor" class="form-control" placeholder="Professor(a)" id="professor"/>
+                    <input type="text" title="Nome do Responsável" class="form-control" placeholder="Responsável" id="responsavel"/>
                 </div>
 
                 <!-- EQUIPAMENTO -->
                 <div class="col-md-4">
-                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento(s)" id="equipamento"/>
+                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento" id="equipamento"/>
                 </div>
 
                 <!-- SALA -->
                 <div class="col-md-4">
-                    <input type="text" title="Nome da sala" class="form-control" placeholder="Sala(s)" id="sala"/>
+                    <input type="text" title="Nome da sala" class="form-control" placeholder="Local" id="sala"/>
                 </div>
 
             </div>
@@ -90,7 +90,7 @@
                 <!-- BOTÃO -->
                 <div class="col-md-1 d-flex justify-content-center">
                     <button type="button" data-toggle="tooltip" data-placement="top" title="Cadastrar" class="btn btn-primary" onclick="cadastrarReserva()">
-                        <i class="fas fa-plus"></i>&nbsp;Cadastrar
+                        <i class="fas fa-plus"></i>
                     </button>
                 </div>
 
@@ -98,7 +98,7 @@
 
         </div>
 
-        <!-- MODAL -->
+        <!-- MODAL VALIDAÇÃO -->
         <div class="modal fade" id="modalRegistraReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
             <div class="modal-dialog" role="document">

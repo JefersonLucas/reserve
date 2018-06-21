@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 20/06/2018
-//  VERSÃO: 1.0.0
+//	DATA DE MODIFICAÇÃO: 21/06/2018
+//  VERSÃO: 1.0.1
 //	DESCRIÇÃO: CADASTRO/CONSULTA//FILTRO/EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
@@ -13,9 +13,9 @@
 	class Reserva {
 
 	//	DEFINIÇÃO DOS VALORES NO CONSTRUCTOR
-		constructor(professor, equipamento, sala, inicio, fim, dia){
+		constructor(responsavel, equipamento, sala, inicio, fim, dia){
 		//	INSTANCIAÇÃO DO OBJETO RESERVA
-			this.professor 		= professor
+			this.responsavel 	= responsavel
 			this.equipamento 	= equipamento
 			this.sala 			= sala
 			this.inicio 		= inicio
@@ -101,8 +101,8 @@
 			reservasFiltradas = this.recuperaTodosRegistros()
 		//
 		//	FILTRO PROFESSOR
-			if(reserva.professor != '') {
-				reservasFiltradas = reservasFiltradas.filter(r => r.professor == reserva.professor)
+			if(reserva.responsavel != '') {
+				reservasFiltradas = reservasFiltradas.filter(r => r.responsavel == reserva.responsavel)
 			}
 		//	FILTRO EQUIPAMENTO
 			if(reserva.equipamento != '') {
@@ -142,7 +142,7 @@
 	function cadastrarReserva() {
 
 	//	RECUPERA OS VALORES A PARTIR DO ID E REFERENCIA EM UMA VARIÁVEL
-		let professor 	= document.getElementById('professor')
+		let responsavel = document.getElementById('responsavel')
 		let equipamento = document.getElementById('equipamento')
 		let sala 		= document.getElementById('sala')
 		let inicio 		= document.getElementById('inicio')
@@ -152,7 +152,7 @@
 	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 		let reserva = new Reserva(
 		//	PARÂMETROS DA RESERVA
-			professor.value, 
+			responsavel.value, 
 			equipamento.value, 
 			sala.value,
 			inicio.value,
@@ -168,13 +168,13 @@
 		//
 			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi <span class="text-success"><b>cadastrada com sucesso!</b></span><br>'
-			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Professor(a)</th><th scope="col">Equipamento(s)</th><th scope="col">Sala(s)</th></tr></thead><tbody><tr><th>'+reserva.professor+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
+			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+reserva.responsavel+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
 			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
 			document.getElementById('modal_btn').className 			= 'btn btn-success'
 		//
 		//	ZERA OS VALORES
-			professor.value 	= ''
+			responsavel.value 	= ''
 			equipamento.value 	= ''
 			sala.value 			= ''
 			inicio.value 		= ''
@@ -186,7 +186,7 @@
 		//	DIALOG DE ERRO
 			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu <span class="text-danger"><b> cadastro</b></span>. Por favor! verifique se todos os campo foram inseridos corretamente!'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar o cadastro. Por favor! verifique se todos os campo foram inseridos corretamente.'
 			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
 			document.getElementById('modal_btn').className 			= 'btn btn-danger'
 
@@ -212,45 +212,118 @@
  		let linha =	listaReservas.insertRow()
  	//
  	//	CRIAR AS COLUNAS (TD)
- 		linha.insertCell(0).innerHTML = r.professor
+ 		linha.insertCell(0).innerHTML = r.responsavel
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
- 		linha.insertCell(3).innerHTML = r.inicio
- 		linha.insertCell(4).innerHTML = r.fim
- 		linha.insertCell(5).innerHTML = r.dia
+ 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
+ 		linha.insertCell(4).innerHTML = r.dia
  	//
- 	//	CRIAR BOTAO DE EXCLUSÃO
- 		let btn = document.createElement("button")
- 		btn.className = 'btn btn-danger btn-sm'
- 		btn.innerHTML = '<i class="fa fa-trash"></i>&nbsp;Excluir'
- 		btn.id = `id_reserva_${r.id}`
+ 		})
+	}
+//==============================================================||
+//==============================================================||
+//	4 - FILTRAR RESERVAS
+//
+	function pesquisarReserva() {
+	//	RECUPERANDO O VALOR DO CAMPOS
+		let responsavel = document.getElementById('responsavel').value
+		let equipamento = document.getElementById('equipamento').value
+		let sala 		= document.getElementById('sala').value
+		let inicio 		= document.getElementById('inicio').value
+		let fim 		= document.getElementById('fim').value
+		let dia 		= document.getElementById('dia').value
+	//
+	//	PASSANDO VALORES PARA VARIÁVEL
+		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
+		let reservas = bancodedados.pesquisar(reserva)
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
+		listaReservas.innerHTML = ''
+	//	VALIDAÇÃO DE PESQUISA FILTRO
+ 		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
+		//	DIALOG DE ERRO
+			$('#modalValidaReserva').modal('show')
+
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu filtro. Por favor! verifique se algum campo não foi inseridos corretamente.'
+			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
+			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+
+ 		} else {
+ 
+ 	//	LISTANTO A DESPESA 		
+ 		reservas.forEach(function(r) {
+ 	//
+ 	//	CRIANDO A LINHA (TR)
+ 		let linha =	listaReservas.insertRow()
+ 	//
+ 	//	CRIAR AS COLUNAS (TD)
+ 		linha.insertCell(0).innerHTML = r.responsavel
+ 		linha.insertCell(1).innerHTML = r.equipamento
+ 		linha.insertCell(2).innerHTML = r.sala
+ 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
+ 		linha.insertCell(4).innerHTML = r.dia
+ 	//
+ 	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
+ 		let view 		= document.createElement("button")
+ 		view.className 	= 'float-left btn btn-primary btn-sm'
+ 		view.title 		= 'Vizualizar'
+ 		view.innerHTML	= '<i class="fas fa-eye"></i>'
+ 		view.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR UM MODAL DE VIZUALIZAÇÃO VAI APARECER	
+ 		view.onclick = function () {
+ 		//	DIALOG DE VIZUALIZAÇÃO
+			$('#modalVizualizaReserva').modal('show')
+		//
+			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
+			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
+			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
+			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th></tr></thead><tbody><tr><th>'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td></tr></tbody>'
+			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
+			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
+		//
+			}
+	//
+ 	//	CRIAÇÃO BOTAO DE EXCLUSÃO
+ 		let dell 		= document.createElement("button")
+ 		dell.className 	= 'float-center btn btn-danger btn-sm'
+ 		dell.title 		= 'Excluir'
+ 		dell.innerHTML 	= '<i class="fa fa-trash"></i>'
+ 		dell.id 		= `id_reserva_${r.id}`
  	//
  	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
- 		btn.onclick = function () {
+ 		dell.onclick = function () {
  		//	DIALOG DE EXCLUSÃO
 			$('#modalExcluiReserva').modal('show')
-
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-user-times"></i> Atenção!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A seguinte reserva será <span class="text-danger"><b>excluida</b></span>:'
-			document.getElementById('modal_conteudo').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Professor(a)</th><th scope="col">Equipamento</th><th scope="col">Sala</th></tr></thead><tbody><tr><th>'+r.professor+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
-			document.getElementById('modal_btn').innerHTML 			= 'Confirmar'
-			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+		//
+			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-user-times"></i> Excluir'
+			document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
+			document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
+			document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
+			document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
+			document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
 		//
 		//	FORMATAR O ID
 			let id = this.id.replace('id_reserva_','')
 		//	REMOVE A RESERVA
  			bancodedados.remover(id)
-
+ 		//
 			}
-
-		linha.insertCell(6).append(btn)
-
+	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
+		linha.insertCell(5).append(view, dell)
+	//
  		})
+ 		
+ 		}
+ 	//
 	}
 //==============================================================||
 //==============================================================||
-//	ATUALIZA A PÁGINA
+//	5 - ATUALIZA A PÁGINA
 //
  	function atualiza() {
  	//	ATUALIZA A PÁGINA
@@ -259,63 +332,7 @@
 //
 //==============================================================||
 //==============================================================||
-//	4 - FILTRAR RESERVAS
-//
-	function pesquisarReserva() {
-	//	RECUPERANDO O VALOR DO CAMPOS
-		let professor 	= document.getElementById('professor').value
-		let equipamento = document.getElementById('equipamento').value
-		let sala 		= document.getElementById('sala').value
-		let inicio 		= document.getElementById('inicio').value
-		let fim 		= document.getElementById('fim').value
-		let dia 		= document.getElementById('dia').value
-	//
-	//	PASSANDO VALORES PARA VARIÁVEL
-		let reserva = new Reserva(professor, equipamento, sala, inicio, fim, dia)
-	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
-		let reservas = bancodedados.pesquisar(reserva)
-	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById('listaReservas')
-	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
-		listaReservas.innerHTML = ''
- 	//	LISTANTO A DESPESA
- 		reservas.forEach(function(r) {
- 	//
- 	//	CRIANDO A LINHA (TR)
- 		let linha =	listaReservas.insertRow()
- 	//
- 	//	CRIAR AS COLUNAS (TD)
- 		linha.insertCell(0).innerHTML = r.professor
- 		linha.insertCell(1).innerHTML = r.equipamento
- 		linha.insertCell(2).innerHTML = r.sala
- 		linha.insertCell(3).innerHTML = r.inicio
- 		linha.insertCell(4).innerHTML = r.fim
- 		linha.insertCell(5).innerHTML = r.dia
- 	//
- 		})
- 	//
-	//	BOTÃO IMPRIMIR QUE APARECE AO CLICAR NO BOTÃO FILTRO
-	// 		
- 		// let btn = document.createElement("button")
- 		// btn.className = 'btn btn-primary btn-sm'
- 		// btn.title = 'Imprimir reservas'
- 		// btn.innerHTML = '<i class="fa fa-print" aria-hidden="true"></i>&nbsp;Imprimir'
- 		// btn.id = 'botao'
- 		// btn.onclick = function imprimeReservas() {
-   //      	let conteudo = document.getElementById('conteudo').innerHTML
-   //      	telaImpressao = window.open('about:blank')
-   //      	telaImpressao.document.write(conteudo)
-   //      	telaImpressao.window.print()
-   //      	telaImpressao.window.close()
-   //   		} 	
-
-   //   	let row = document.getElementById("imprimir")
-   // 		let x = row.insertCell(6).append(btn)
-    	
-	}
-//==============================================================||
-//==============================================================||
-//	5 - IMPRIME AS RESERVAS
+//	6 - IMPRIME AS RESERVAS
 //
 	function imprimeReservas() {
 	//
@@ -330,7 +347,7 @@
      }
 //==============================================================||
 //==============================================================||
-//	6 - FUNÇÕES BOOTSTRAP
+//	7 - FUNÇÕES BOOTSTRAP
 //
 //	TOOGGLE
 //	

@@ -1,46 +1,75 @@
 # Reserve
-O Reserve é um mini sistema utilizado pelos colaboradores do setor da informática e Áudio e Vídeo do [Colégio e Faculdade Sena Aires](http://www.senaaires.com.br/) (campus Valparaíso de Goiás - GO). Essa é a versão 1.0.0 que vai ao ar no dia 20/06/2018.
+O Reserve é um aplicativo utilizado pelos colaboradores do setor da Informática e Áudio e Vídeo do [Colégio e Faculdade Sena Aires](http://www.senaaires.com.br/) (campus Valparaíso de Goiás - GO).
 
-As motivações para o desenvolvimento desse sistema foi:
+As motivações para o desenvolvimento desse aplicativo foi:
 * Agilidade na reserva de equipamento;
 * Maior organização lógica das reservas, podendo agenda-lás para dias posteriores;
 * Facilidade de busca com filtro de pesquisa;
 * Fazer uso da TI verde e dispensar o uso de papel para o agendamento de reservas;
-* Armazenamento rápido e prático.
+* Armazenamento mais rápido e prático.
 
-O sistema foi desenvolvido com base nas tecnologias:
+O aplicativo foi desenvolvido com base nas tecnologias:
 * Framework front-end [Bootstrap](https://getbootstrap.com/) versão 4.1.1;
 * Pacote de ícones do [Font Awesome](https://fontawesome.com/) versão 5.0.13;
-* Armazenamento no localStorage; 
+* Armazenamento no localStorage.
 
-## Funcionamento
-O sistema funciona baseado na funcionalidade do localStorage para inserção, leitura e remoção das reservas efetuada pelos professores.
+## Changelog
 
-## Como começar?
-Para utilizar necessita clonar o reposiório [Reserve](https://github.com/JefersonLucas/reserve) em qualquer máquina, abra o arquivo index.html
+### Versão 1.0.0
+A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades estão:
+* Cadastro e validação das reservas;
+* Consulta e filtro dos cadastros;
+* Possibilidade de impressão de reservas.
+
+### Versão 1.0.1 *new*
+A versão 1.0.1 vai ao ar no dia ##/##/####. Dentre as suas funcionalidades estão:
+* Adição da feature visualizar com um botão de visualização junto com o botão de exclusão. Tendo a possibilidade de visualizar detalhadamente reserva do responsável;
+* Adição de link externo para o site do Colégio e Faculdade Sena Aires;
+* Validação de pesquisa de filtro.
+
+## Bugs da aplicação
+* *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro;
+* Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome);
+* Botão de informação com a função *popover* pode ser clicado abaixo do própio botão.
+
+## Correções
+* Ortografia (versão 1.0.0);
+* Substituição do placeholder e da variável "*Professor*" para "*Responsável*" (*versão 1.0.1*);
+* Substituição do placeholder *Sala* para *Local* (*versão 1.0.1*);
+* Substituição do texto e da variável "*Professor(a)*" para "*Responsável*" (*versão 1.0.1*);
+* Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas (*versão 1.0.1*);
+* União do horário de início e término em um única coluna na tabela de consulta (*versão 1.0.1*).
+
+## Como funciona?
+O aplicativo funciona baseado na funcionalidade do localStorage do navegador para inserção, leitura e remoção das reservas efetuada pelos professores.
+
+## Como utilizar?
+Para utilizar a aplicação necessita clonar ou fazer o download do repositório [Reserve](https://github.com/JefersonLucas/reserve) em qualquer máquina. Logo depois, abra o arquivo *index.html*.
 
 ```bash
 index.html
 ```
-# Utilização
-## index.html
+
+## Demonstração
+
+### index.html
 O usuário pode fazer depois da validação, cadastrar reservas de equipamentos.
-![index](https://user-images.githubusercontent.com/39635734/41671120-92edf1a2-748c-11e8-8ce7-3197a7b3d16d.jpg)
-## Validação
+
+### Validação do cadastro
 Caso haja erro no cadastro, irá ser exibido um modal de erro, caso contrário exibe um modal de sucesso.
-![index-erro](https://user-images.githubusercontent.com/39635734/41673393-31beeb1e-7493-11e8-9539-ff83f270db60.jpg)
 
-![index-success](https://user-images.githubusercontent.com/39635734/41573481-4cce9c9c-7353-11e8-96b4-0b7d5ce73396.jpg)
+### Modal Erro
 
-## consulta.html
+### Modal Success
+
+### consulta.html
 O usuário poderá consultar, filtrar, imprimir e também excluir os reservas cadastradas.
-![consulta](https://user-images.githubusercontent.com/39635734/41673446-56004d60-7493-11e8-9582-4ef133379cee.jpg)
 
-## Filtrando reservas
-![consulta-filter](https://user-images.githubusercontent.com/39635734/41673472-6f736958-7493-11e8-827e-267636192bf9.jpg)
+### Filtrando reservas
 
-## Excluindo reservas
-![consulta-drop](https://user-images.githubusercontent.com/39635734/41673494-7e76a3c0-7493-11e8-82f2-4f78474252c4.jpg)
+### Validação do filtro
+Caso haja erro no filtro, irá ser exibido um modal de erro.
 
-## Imprimindo reservas
-![consulta-print](https://user-images.githubusercontent.com/39635734/41673509-8992f858-7493-11e8-8ed6-9d8d1d0d4df3.jpg)
+### Excluindo reservas
+
+### Imprimindo reservas
