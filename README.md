@@ -36,7 +36,6 @@ A versão 1.0.1 vai ao ar no dia ##/##/####. Dentre as suas funcionalidades est�
 * Ortografia (versão 1.0.0);
 * Substituição do placeholder e da variável "*Professor*" para "*Responsável*" (*versão 1.0.1*);
 * Substituição do placeholder *Sala* para *Local* (*versão 1.0.1*);
-* Substituição do texto e da variável "*Professor(a)*" para "*Responsável*" (*versão 1.0.1*);
 * Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas (*versão 1.0.1*);
 * União do horário de início e término em um única coluna na tabela de consulta (*versão 1.0.1*).
 
