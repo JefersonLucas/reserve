@@ -3,12 +3,12 @@
 //  DATA DE CRIAÇÃO: 17/06/2018
 //  DATA DE MODIFICAÇÃO: 21/06/2018
 //  VERSÃO: 1.0.1
-//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
+//  DESCRIÇÃO: EDITA O CADASTRO DAS RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
 	<head>
         <meta charset="utf-8" />
-	    <title>Cadastro | SENA AIRES &#8211; Colégios e Faculdade</title>
+	    <title>Edita | SENA AIRES &#8211; Colégios e Faculdade</title>
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -33,20 +33,14 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a class="nav-link" title="Cadastrar Reservas" href="index.html"><b>Cadastro</b></a></li>
-                        <li class="nav-item"><a class="nav-link" title="Consultar Reservas" href="consulta.html"><b>Consulta</b></a></li>
-                    </ul>
-                </div>
-            </div>
+           	</div>
         </nav>
 
         <div class="container">
             
             <div class="row">
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-user-plus"></i>&nbsp;Cadastrar</h1>
+                    <h1 class="display-5"><i class="fas fa-pencil-alt"></i>&nbsp;Editar</h1>
                 </div>
                 <a data-toggle="popover" data-placement="top" title="Cadastro de Reserva" data-content="Informe: responsável, equipamento, local, data, início e término da aula."><i class="fa fa-info-circle float-right" aria-hidden="true"></i></a>
             </div>
@@ -89,7 +83,7 @@
 
                 <!-- BOTÃO -->
                 <div class="col-md-1 d-flex justify-content-center">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Cadastrar" class="btn btn-primary" onclick="cadastrarReserva()">
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="Cadastrar" class="btn btn-primary" onclick="editaReserva()">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>

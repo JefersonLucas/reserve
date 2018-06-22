@@ -195,6 +195,68 @@
 	}
 //==============================================================||
 //==============================================================||
+//	2 - EDITA A RESERVA
+//
+	function editaReserva() {
+
+	//	RECUPERA OS VALORES A PARTIR DO ID E REFERENCIA EM UMA VARIÁVEL
+		let responsavel = document.getElementById('responsavel')
+		let equipamento = document.getElementById('equipamento')
+		let sala 		= document.getElementById('sala')
+		let inicio 		= document.getElementById('inicio')
+		let fim 		= document.getElementById('fim')
+		let dia 		= document.getElementById('dia')
+
+	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
+		let reserva = new Reserva(
+		//	PARÂMETROS DA RESERVA
+			responsavel.value, 
+			equipamento.value, 
+			sala.value,
+			inicio.value,
+			fim.value,			
+			dia.value
+		)
+	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
+		if(reserva.validarDados()) {
+		//	DIALOG DE SUCESSO
+		//
+		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
+			bancodedados.gravar(reserva)
+		//	FORMATAR O ID
+			let id = this.id.replace('id_reserva_','')
+		//	REMOVE A RESERVA
+ 			bancodedados.remover(id)
+		//
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
+			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
+			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+reserva.responsavel+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
+			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
+			document.getElementById('modal_btn').className 			= 'btn btn-success'
+		//
+		//	ZERA OS VALORES
+			responsavel.value 	= ''
+			equipamento.value 	= ''
+			sala.value 			= ''
+			inicio.value 		= ''
+			fim.value 			= ''
+			dia.value 			= ''
+		//
+			$('#modalRegistraReserva').modal('show')
+		} else {
+		//	DIALOG DE ERRO
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar o cadastro. Por favor! verifique se todos os campo foram inseridos corretamente.'
+			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
+			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+
+			$('#modalRegistraReserva').modal('show')
+		}
+	}
+//==============================================================||
+//==============================================================||
 //	3 - CARREGA A LISTA DE RESERVAS
 //
 	function carregaListaReservas() {
@@ -216,8 +278,104 @@
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
  		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
- 		linha.insertCell(4).innerHTML = r.dia
  	//
+ 	//	CRIAÇÃO DOS BOTÕES DE STATUS
+
+ 		let montado = document.createElement("input")
+ 		montado.title = 'Status'
+ 		montado.type = 'checkbox'
+ 		montado.className = 'form-check-input'
+ 		montado.id = `id_reserva_${r.id}`
+
+ 		let label = document.createElement("label")
+ 		label.className = 'form-check-label'
+ 		label.innerHTML = 'Montado'
+ 		label.setAttribute("for", `id_reserva_${r.id}`)
+
+ 		linha.insertCell(4).append(montado, label)
+ 		
+ 		linha.insertCell(5).innerHTML = r.dia
+ 	 	//
+ 	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
+ 		let view 		= document.createElement("button")
+ 		view.className 	= 'btn btn-primary btn-sm'
+ 		view.title 		= 'Vizualizar'
+ 		view.innerHTML	= '<i class="fas fa-eye"></i>'
+ 		view.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR UM MODAL DE VIZUALIZAÇÃO VAI APARECER	
+ 		view.onclick = function () {
+ 		//	DIALOG DE VIZUALIZAÇÃO
+			$('#modalVizualizaReserva').modal('show')
+		//
+			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
+			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
+			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
+			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th></tr></thead><tbody><tr><th>'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td></tr></tbody>'
+			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
+			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
+		//
+			}
+		//
+	//	CRIAÇÃO DO BOTAO DE EDIÇÃO
+ 		let edit 		= document.createElement("button")
+ 		edit.className 	= 'btn btn-success btn-sm'
+ 		edit.title 		= 'Editar'
+ 		edit.innerHTML	= '<i class="fas fa-pencil-alt"></i>'
+ 		edit.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR UM MODAL DE EDIÇÃO VAI APARECER	
+ 		edit.onclick = function () {
+ 		//	DIALOG DE VIZUALIZAÇÃO
+			$('#modalEditaReserva').modal('show')
+		//
+			document.getElementById('modal-titulo-edit').innerHTML 		= '<i class="fas fa-pencil-alt"></i> Editar'
+			document.getElementById('modal-titulo-div-edit').className  = 'modal-header text-success'
+			document.getElementById('modal-conteudo-edit').innerHTML 	= 'Deseja Editar?'
+			document.getElementById('modal-btn-edit').innerHTML 		= 'Salvar'
+			document.getElementById('modal-btn-edit').className 		= 'btn btn-success'
+	//
+	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
+	//	let reserva = new Reserva(r.responsavel, r.equipamento, r.sala, r.dia, r.inicio, r.fim)		
+	// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
+	// 	bancodedados.gravar(reserva)
+	//	FORMATAR O ID
+	//	let id = this.id.replace('id_reserva_','')
+	//	REMOVE A RESERVA
+ 	//	bancodedados.remover(id)
+	
+		}
+
+	//
+	//
+ 	//	CRIAÇÃO BOTAO DE EXCLUSÃO
+ 		let dell 		= document.createElement("button")
+ 		dell.className 	= 'btn btn-danger btn-sm'
+ 		dell.title 		= 'Excluir'
+ 		dell.innerHTML 	= '<i class="fa fa-trash-alt"></i>'
+ 		dell.id 		= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
+ 		dell.onclick = function () {
+ 		//	DIALOG DE EXCLUSÃO
+			$('#modalExcluiReserva').modal('show')
+		//
+			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-user-times"></i> Excluir'
+			document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
+			document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
+			document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
+			document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
+			document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
+		//
+		//	FORMATAR O ID
+			let id = this.id.replace('id_reserva_','')
+		//	REMOVE A RESERVA
+ 			bancodedados.remover(id)
+ 		//
+			}
+	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
+		linha.insertCell(6).append(view,' ' , edit,' ' , dell)
+	//
  		})
 	}
 //==============================================================||
@@ -266,56 +424,7 @@
  		linha.insertCell(2).innerHTML = r.sala
  		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
  		linha.insertCell(4).innerHTML = r.dia
- 	//
- 	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
- 		let view 		= document.createElement("button")
- 		view.className 	= 'float-left btn btn-primary btn-sm'
- 		view.title 		= 'Vizualizar'
- 		view.innerHTML	= '<i class="fas fa-eye"></i>'
- 		view.id			= `id_reserva_${r.id}`
- 	//
- 	//	QUANDO CLICAR UM MODAL DE VIZUALIZAÇÃO VAI APARECER	
- 		view.onclick = function () {
- 		//	DIALOG DE VIZUALIZAÇÃO
-			$('#modalVizualizaReserva').modal('show')
-		//
-			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
-			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
-			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
-			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th></tr></thead><tbody><tr><th>'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td></tr></tbody>'
-			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
-			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
-		//
-			}
-	//
- 	//	CRIAÇÃO BOTAO DE EXCLUSÃO
- 		let dell 		= document.createElement("button")
- 		dell.className 	= 'float-center btn btn-danger btn-sm'
- 		dell.title 		= 'Excluir'
- 		dell.innerHTML 	= '<i class="fa fa-trash"></i>'
- 		dell.id 		= `id_reserva_${r.id}`
- 	//
- 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
- 		dell.onclick = function () {
- 		//	DIALOG DE EXCLUSÃO
-			$('#modalExcluiReserva').modal('show')
-		//
-			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-user-times"></i> Excluir'
-			document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
-			document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
-			document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
-			document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
-			document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
-		//
-		//	FORMATAR O ID
-			let id = this.id.replace('id_reserva_','')
-		//	REMOVE A RESERVA
- 			bancodedados.remover(id)
- 		//
-			}
-	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
-		linha.insertCell(5).append(view, dell)
-	//
+
  		})
  		
  		}
@@ -346,6 +455,10 @@
         telaImpressao.window.close()
      }
 //==============================================================||
+
+function redireciona() {
+	window.location.href = "edita.html";
+}
 //==============================================================||
 //	7 - FUNÇÕES BOOTSTRAP
 //

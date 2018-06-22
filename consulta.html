@@ -101,6 +101,14 @@
                     </button>
                 </div>
 
+                <!-- BOTÃO ATUALIZAR -->
+                <div class="col-md-1">
+                    <button id="botao" data-toggle="tooltip" data-placement="top" title="Recarregar" class="btn btn-primary btn-lg" onclick="atualiza()">
+                        <i class="fas fa-redo-alt"></i>
+                    </button>
+                </div>
+
+
             </div>
 
             <div class="row mb-4" id="conteudo">
@@ -115,9 +123,10 @@
                                 <th>Responsável</th>
                                 <th>Equipamento</th>
                                 <th>Local</th>
-                                <th>Horário</th>              
+                                <th>Horário</th>             
+                                <th>Situação</th>            
                                 <th>Data</th>
-                                <th></th>
+                                <th>Opões</th>
                             </tr>
                         </thead>
                         
@@ -161,7 +170,7 @@
             <!-- FIM MODAL -->
 
             <!-- MODAL VIZUALIZAÇÃO -->
-            <div class="modal fade" id="modalVizualizaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade bd-example-modal-lg" id="modalVizualizaReserva" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
                 <div class="modal-dialog" role="document">
                 
@@ -180,6 +189,35 @@
                     
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" id="modal-btn-view"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </div>
+            <!-- FIM MODAL -->
+
+            <!-- MODAL EDIÇÃO -->
+            <div class="modal fade" id="modalEditaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal-titulo-div-edit">
+
+                            <h5 class="modal-title" id="modal-titulo-edit"></h5>
+                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal-conteudo-edit"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal-btn-edit" onclick="redireciona()"></button>
                         </div>
 
                     </div>

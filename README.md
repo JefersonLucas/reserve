@@ -25,6 +25,10 @@ A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades est�
 A versão 1.0.1 vai ao ar no dia ##/##/####. Dentre as suas funcionalidades estão:
 * Adição da feature visualizar com um botão de visualização junto com o botão de exclusão. Tendo a possibilidade de visualizar detalhadamente reserva do responsável;
 * Adição de link externo para o site do Colégio e Faculdade Sena Aires;
+* Adição do botão atulizar;
+* Adição do input checkbox para verificação de status.
+
+
 * Validação de pesquisa de filtro.
 
 ## Bugs da aplicação
