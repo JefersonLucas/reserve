@@ -1,7 +1,7 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 21/06/2018
+//  DATA DE MODIFICAÇÃO: 22/06/2018
 //  VERSÃO: 1.0.1
 //  DESCRIÇÃO: EXIBE CONSULTAS/FILTROS E EXCLUSÃO DE RESERVAS
 //==============================================================|| -->
@@ -23,7 +23,6 @@
     <body onload="carregaListaReservas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-            <div class="container">
             
                 <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank">
                     <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
@@ -35,11 +34,10 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html"><b>Cadastro</b></a></li>
-                        <li class="nav-item active"><a class="nav-link" title="Consultar reservas" href="consulta.html"><b>Consulta</b></a></li>
+                        <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
+                        <li class="nav-item active"><a class="nav-link" title="Consultar reservas" href="consulta.html">Consulta</a></li>
                     </ul>
                 </div>
-            </div>
         </nav>
 
         <div class="container">
@@ -55,17 +53,17 @@
 
                 <!-- PROFESSOR -->
                 <div class="col-md-3">
-                    <input type="text" title="Nome do Responsável" class="form-control" placeholder="Responsável" id="responsavel"/>
+                    <input type="text" title="Nome do Responsável" class="form-control" placeholder="Nome do Responsável" id="responsavel"/>
                 </div>
 
                 <!-- EQUIPAMENTO -->
                 <div class="col-md-3">
-                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Equipamento" id="equipamento"/>
+                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento"/>
                 </div>
 
                 <!-- SALA -->
                 <div class="col-md-3">
-                    <input type="text" title="Nome da sala" class="form-control" placeholder="Local" id="sala"/>
+                    <input type="text" title="Nome da sala" class="form-control" placeholder="Nome da sala" id="sala"/>
                 </div>
 
             </div>
@@ -89,21 +87,21 @@
 
                 <!-- BOTÃO PESQUISAR -->
                 <div class="col-md-1">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Filtrar" class="btn btn-primary btn-lg" onclick="pesquisarReserva()">
+                    <button type="button" title="Filtrar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                     </button>                     
                 </div>
 
                 <!-- BOTÃO IMPRIMIR -->
                 <div class="col-md-1">
-                    <button id="botao" data-toggle="tooltip" data-placement="top" title="Imprimir" class="btn btn-primary btn-lg" onclick="imprimeReservas()">
+                    <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
                         <i class="fa fa-print" aria-hidden="true"></i>
                     </button>
                 </div>
 
                 <!-- BOTÃO ATUALIZAR -->
                 <div class="col-md-1">
-                    <button id="botao" data-toggle="tooltip" data-placement="top" title="Recarregar" class="btn btn-primary btn-lg" onclick="atualiza()">
+                    <button id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
                         <i class="fas fa-redo-alt"></i>
                     </button>
                 </div>
@@ -116,17 +114,16 @@
                 <div class="col">
                     
                     <!-- TABELA -->
-                    <table class="table table-hover">
+                    <table class="table table-hover d-print-inline">
                     
                         <thead id="listaColunas">
-                            <tr class="text-center" id="imprimir">
+                            <tr class="text-center" id="listaColunas">
                                 <th>Responsável</th>
                                 <th>Equipamento</th>
                                 <th>Local</th>
-                                <th>Horário</th>             
-                                <th>Situação</th>            
+                                <th>Horário</th>
                                 <th>Data</th>
-                                <th>Opões</th>
+                                <th></th>
                             </tr>
                         </thead>
                         
