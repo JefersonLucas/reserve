@@ -1,9 +1,9 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 22/06/2018
+//	DATA DE MODIFICAÇÃO: 24/06/2018
 //  VERSÃO: 1.0.1
-//	DESCRIÇÃO: CADASTRO/CONSULTA//FILTRO/EXCLUSÃO DE RESERVAS
+//	DESCRIÇÃO: CADASTRO/CONSULTA/FILTRO/EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
 //	1 - CLASSES
@@ -259,22 +259,7 @@
 	//	SELECIONANDO O ELEMENTO TBODY
 		let listaReservas = document.getElementById('listaReservas')
 	//
-
-//==============================================================||
-//	RETIRADO
-
-	 	// let coluna = listaColunas.insertRow()
-
- 		// coluna.insertCell(0).innerHTML = '<b>Responsável</b>'
- 		// coluna.insertCell(1).innerHTML = '<b>Equipamento</b>'
- 		// coluna.insertCell(2).innerHTML = '<b>Sala</b>'
- 		// coluna.insertCell(3).innerHTML = '<b>Horário</b>'
- 		// coluna.insertCell(4).innerHTML = '<b>Situação</b>'
- 		// coluna.insertCell(5).innerHTML = '<b>Data</b>'
- 		// coluna.insertCell(6).innerHTML = '<b>Opções</b>'
-//==============================================================||
-
- 	//	LISTANTO A DESPESA
+	//	LISTANTO A DESPESA
  		reservas.forEach(function(r) {
  	//
  	//	CRIANDO A LINHA (TR)
@@ -285,48 +270,8 @@
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
  		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
- 	//
-//==============================================================||
-//	RETIRADO
- 	//	CRIAÇÃO DOS BOTÕES DE STATUS
- 		// let range = document.createElement("input")
- 		// range.title = "1: Montado, 2: Desmontado"
- 		// range.type = 'range'
- 		// range.value = 0
- 		// range.setAttribute("min", 0)
- 		// range.setAttribute("max", 1)
-
- 		// let montado = document.createElement("input")
- 		// montado.title = 'Status'
- 		// montado.type = 'checkbox'
- 		// montado.className = 'form-check-input'
- 		// montado.id = `id_reserva_${r.id}`
-
- 		// let labelmontado = document.createElement("label")
- 		// labelmontado.className = 'form-check-label'
- 		// labelmontado.innerHTML = 'Montado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
- 		// labelmontado.setAttribute("for", `id_reserva_${r.id}`)
-
- 		// let desmontado = document.createElement("input")
- 		// desmontado.title = 'Status'
- 		// desmontado.type = 'checkbox'
- 		// desmontado.className = 'form-check-input'
- 		// desmontado.id = r.id
-
- 		// let labeldesmontado = document.createElement("label")
- 		// labeldesmontado.className = 'form-check-label'
- 		// labeldesmontado.innerHTML = 'Desmontado'
- 		// labeldesmontado.setAttribute("for", r.id)
-
- 		// linha.insertCell(4).append(montado, labelmontado, desmontado, labeldesmontado)
- 		// //linha.insertCell(4).append('Montado ',range,' Desmontado')
-
-//==============================================================||
- 		
  		linha.insertCell(4).innerHTML = r.dia
- 	 	//
-
-	//
+ 	//
  		})
 	}
 //==============================================================||
@@ -350,11 +295,9 @@
 		let listaReservas = document.getElementById('listaReservas')
 	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
 		listaReservas.innerHTML = ''
+	//
 	//	VALIDAÇÃO DE PESQUISA FILTRO
-
-		let listaColunas = document.getElementById('listaColunas')
-
- 		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
+		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
 		//	DIALOG DE ERRO
 			$('#modalValidaReserva').modal('show')
 
@@ -386,7 +329,7 @@
  		view.innerHTML	= '<i class="fas fa-eye"></i>'
  		view.id			= `id_reserva_${r.id}`
  	//
- 	//	QUANDO CLICAR UM MODAL DE VIZUALIZAÇÃO VAI APARECER	
+ 	//	QUANDO CLICAR NO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO E UM MODAL DE VIZUALIZAÇÃO VAI APARECER
  		view.onclick = function () {
  		//	DIALOG DE VIZUALIZAÇÃO
 			$('#modalVizualizaReserva').modal('show')
@@ -400,41 +343,7 @@
 		//
 			}
 		//
-	//	CRIAÇÃO DO BOTAO DE EDIÇÃO
- 		let edit 		= document.createElement("button")
- 		edit.className 	= 'btn btn-outline-success btn-sm'
- 		edit.title 		= 'Editar'
- 		edit.innerHTML	= '<i class="fas fa-pencil-alt"></i>'
- 		edit.id			= `id_reserva_${r.id}`
  	//
- 	//	QUANDO CLICAR UM MODAL DE EDIÇÃO VAI APARECER	
- 		edit.onclick = function () {
- 		//	DIALOG DE VIZUALIZAÇÃO
-			$('#modalEditaReserva').modal('show')
-		//
-			document.getElementById('modal-titulo-edit').innerHTML 		= '<i class="fas fa-pencil-alt"></i> Editar'
-			document.getElementById('modal-titulo-div-edit').className  = 'modal-header text-success'
-			document.getElementById('modal-conteudo-edit').innerHTML 	= 'Deseja Editar?'
-			document.getElementById('modal-btn-edit').innerHTML 		= 'Salvar'
-			document.getElementById('modal-btn-edit').className 		= 'btn btn-success'
-
-//==============================================================||
-//	RETIRADO
-
-	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
-	//	let reserva = new Reserva(r.responsavel, r.equipamento, r.sala, r.dia, r.inicio, r.fim)		
-	// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
-	// 	bancodedados.gravar(reserva)
-	//	FORMATAR O ID
-	//	let id = this.id.replace('id_reserva_','')
-	//	REMOVE A RESERVA
- 	//	bancodedados.remover(id)
-//==============================================================||
-	
-		}
-
-	//
-	//
  	//	CRIAÇÃO BOTAO DE EXCLUSÃO
  		let dell 		= document.createElement("button")
  		dell.className 	= 'btn btn-outline-danger btn-sm'
@@ -442,7 +351,7 @@
  		dell.innerHTML 	= '<i class="fa fa-trash-alt"></i>'
  		dell.id 		= `id_reserva_${r.id}`
  	//
- 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA
+ 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA E UM MODAL SERÁ EXIBIDO
  		dell.onclick = function () {
  		//	DIALOG DE EXCLUSÃO
 			$('#modalExcluiReserva').modal('show')
@@ -460,11 +369,12 @@
  			bancodedados.remover(id)
  		//
 			}
+		//
 	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
-		linha.insertCell(5).append(view,' ' , edit,' ' , dell)
-
+		linha.insertCell(5).append(view,' ', dell)
+	//
  		})
- 		
+ 	//
  		}
  	//
 	}
@@ -484,27 +394,18 @@
 	function imprimeReservas() {
 	//
 	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
-        let conteudo = document.getElementById('conteudo').innerHTML
+        let imprime = document.getElementById('conteudo-imprecao').innerHTML
     //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
         telaImpressao = window.open('about:blank')
     //	IMPRESÃO DO CONTEÚDO
-        telaImpressao.document.write(conteudo)
+        telaImpressao.document.write(imprime)
         telaImpressao.window.print()
         telaImpressao.window.close()
      }
-//==============================================================||
-
-function redireciona() {
-	window.location.href = "edita.html";
-}
-//==============================================================||
-//	7 - FUNÇÕES BOOTSTRAP
 //
-//	TOOGGLE
-//	
-    $(function () {
-   	$('[data-toggle="tooltip"]').tooltip()
-   	})
+//=============================================================||
+//=============================================================||
+//	7 - FUNÇÕES BOOTSTRAP
 //
 //	POPOVER
 //

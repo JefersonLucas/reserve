@@ -22,18 +22,18 @@ A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades est�
 * Possibilidade de impressão de reservas.
 
 ### Versão 1.0.1 *new*
-A versão 1.0.1 vai ao ar no dia ##/##/####. Dentre as suas funcionalidades estão:
-* Adição da feature visualizar com um botão de visualização junto com o botão de exclusão. Tendo a possibilidade de visualizar detalhadamente reserva do responsável;
+A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades estão:
+* Correções de bugs da versão 1.0.0;
+* Adição do botão visualizar para ver detalhadamente reserva do responsável;
+* Adição do botão atualizar para recarregar a lista;
+* Adição da página Reservas listando todas as reservas cadastradas;
 * Adição de link externo para o site do Colégio e Faculdade Sena Aires;
-* Adição do botão atulizar;
-* Adição do input checkbox para verificação de status.
-
-
-* Validação de pesquisa de filtro.
+* Mudança na cor dos botões;
+* Validação dupla na pesquisa de filtro e no cadastro de reservas.
 
 ## Bugs da aplicação
-* ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~(*descontinuado na versão 1.0.1*);
-* Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome);
+* ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~ (*descontinuado na versão 1.0.1*);
+* ~~Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome)~~ (*corrigido na versão 1.0.1*);
 * ~~Botão de informação com a função *popover* pode ser clicado abaixo do própio botão~~ (*corrigido na versão 1.0.1*).
 
 ## Correções
@@ -52,45 +52,3 @@ Para utilizar a aplicação necessita clonar ou fazer o download do repositório
 ```bash
 index.html
 ```
-
-## Demonstração
-
-### index.html
-O usuário pode fazer depois da validação, cadastrar reservas de equipamentos.
-![index](https://user-images.githubusercontent.com/39635734/41740991-2a3625b4-7570-11e8-91c6-f4039dbec0f8.jpg)
-
-#### Validação do cadastro
-Caso haja erro no cadastro, irá ser exibido um modal de erro, caso contrário exibe um modal de sucesso.
-
-#### Modal Erro
-![index-erro](https://user-images.githubusercontent.com/39635734/41741042-527de4f8-7570-11e8-9dd3-e9056ed3754c.jpg)
-
-#### Modal Success
-![index-success](https://user-images.githubusercontent.com/39635734/41741084-74f9ba16-7570-11e8-8111-fbf963b8a369.jpg)
-
-### consulta.html
-O usuário poderá consultar, filtrar, imprimir e também excluir os reservas cadastradas.
-![consulta](https://user-images.githubusercontent.com/39635734/41741130-99955d62-7570-11e8-8933-0af5939a629a.jpg)
-
-#### Filtrando reservas
-Para buscar algum cadastro basta utilizar o filtro de pesquisa e caso houver a pesquisa o aplicativo retorna a busca.
-![consulta-filter](https://user-images.githubusercontent.com/39635734/41741158-ad25b7aa-7570-11e8-8506-595cebb02a73.jpg)
-
-#### Validação do filtro
-Caso haja erro no filtro, irá ser exibido um modal de erro.
-![consulta-filter-error](https://user-images.githubusercontent.com/39635734/41741200-ce36b688-7570-11e8-88d8-67e28a5cbd25.jpg)
-
-#### Visualizando reservas *new* (*versão 1.0.1*)
-Se o usuário sentir necessidade de ver a reserva isolada e detalhada tem a opção no botão de visualizar reservas.
-![consulta-filter-view](https://user-images.githubusercontent.com/39635734/41741427-72aa5918-7571-11e8-8665-620e1bd4f3cc.jpg)
-
-#### Excluindo reservas *new* (*versão 1.0.1*)
-No momento que o usuário decidir excluir uma reserva irá ser exibido um modal de aviso que a reserva irá ser exibido informando qual reserva será ser excluida.
-![consulta-filter-del](https://user-images.githubusercontent.com/39635734/41741288-07f3d892-7571-11e8-9e6a-ae72e27683c0.jpg)
-
-Logo depois será exibido todas reservas existentes.
-![consulta-filter-del-2](https://user-images.githubusercontent.com/39635734/41741302-134c4df0-7571-11e8-9573-0f8d0ded599f.jpg)
-
-#### Imprimindo reservas
-Se caso o usuário queira, tem a opção de imprimir as reservas no aplicativo. 
-![consulta-printer](https://user-images.githubusercontent.com/39635734/41741317-1fcb8294-7571-11e8-8b89-f31019cc05ea.jpg)

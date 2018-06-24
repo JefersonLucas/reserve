@@ -1,14 +1,15 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 22/06/2018
+//  DATA DE MODIFICAÇÃO: 24/06/2018
 //  VERSÃO: 1.0.1
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
 	<head>
-        <meta charset="utf-8" />
-	    <title>Cadastro | SENA AIRES &#8211; Colégios e Faculdade</title>
+        <meta charset="utf-8">
+	    <title>Cadastro | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,16 +18,17 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <!-- APP -->
         <script src="assets/_js/app.js"></script>
 
         <script>
-        //  Example starter JavaScript for disabling form submissions if there are invalid fields
+        //  VALIDAÇÃO DE CADASTRO
             (function() {
                 'use strict';
                 window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            //	Fetch all the forms we want to apply custom Bootstrap validation styles to
                 var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
+            //	Loop over them and prevent submission
                 var validation = Array.prototype.filter.call(forms, function(form) {
                     form.addEventListener('submit', function(event) {
                     
@@ -46,14 +48,17 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
+            <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank">
                 <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
             </a>
                 
+            <!-- BOTÃO TOGLLER -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+			
+			<!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
@@ -82,66 +87,56 @@
             </div>
 
             <div class="row mb-4">
+                
                 <!-- FORMULÁRIO COM VALIDAÇÃO -->
                 <form class="needs-validation" novalidate>
+                    
                     <!-- DIV DO FORMULÁRIO -->
                     <div class="form-row">
                     
                         <!-- PROFESSOR -->
                         <div class="col-md-4 mb-4">
-                            <label for="responsavel">Responsável</label>
+                            <label for="responsavel" class="font-weight-bold">Responsável</label>
                             <input type="text" title="Nome do Responsável" class="form-control" placeholder="Nome do Responsável" id="responsavel" required>
-                            <div class="invalid-feedback">
-                                Informe o nome do Professor ou responsável.
-                            </div>
+                            <div class="invalid-feedback">Informe o nome do Professor ou responsável.</div>
                         </div>
 
                         <!-- EQUIPAMENTO -->
                         <div class="col-md-4 mb-4">
-                            <label for="equipamento">Equipamento</label>
+                            <label for="equipamento" class="font-weight-bold">Equipamento</label>
                             <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento" required>
-                            <div class="invalid-feedback">
-                                Descreva o equipamento que será utilizado.
-                            </div>
+                            <div class="invalid-feedback">Descreva o equipamento que será utilizado.</div>
                         </div>
 
                         <!-- SALA -->
                         <div class="col-md-4 mb-4">
-                            <label for="sala">Local</label>
+                            <label for="sala" class="font-weight-bold">Local</label>
                             <input type="text" title="Nome da sala" class="form-control" placeholder="Nome da sala" id="sala" required>
-                            <div class="invalid-feedback">
-                                Informe o local ou nome da sala.
-                            </div>
+                            <div class="invalid-feedback">Informe o local ou nome da sala.</div>
                         </div>
                 
                         <!-- DATA -->
                         <div class="col-md-4 mb-4">
-                            <label for="dia">Data</label>
+                            <label for="dia" class="font-weight-bold">Data</label>
                             <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia" required>
-                            <div class="invalid-feedback">
-                                Informe o dia da aula.
-                            </div>
+                            <div class="invalid-feedback">Informe o dia da aula.</div>
                         </div>
 
-                        <!-- INICIO DA AULA -->
+                        <!-- INÍCIO DA AULA -->
                         <div class="col-md-4 mb-4">
-                            <label for="inicio">Início da aula</label>
+                            <label for="inicio" class="font-weight-bold">Início da aula</label>
                             <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio" required>
-                            <div class="invalid-feedback">
-                                Informe o início da aula.
-                            </div>
+                            <div class="invalid-feedback">Informe o início da aula.</div>
                         </div>
 
                         <!-- TÉRMINO DA AULA -->
                         <div class="col-md-4 mb-4">
-                            <label for="fim">Término da aula</label>
+                            <label for="fim" class="font-weight-bold">Término da aula</label>
                             <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim" required>
-                            <div class="invalid-feedback">
-                                Informe o término da aula.
-                            </div>
+                            <div class="invalid-feedback">Informe o término da aula.</div>
                         </div>
 
-                        <!-- BOTÃO -->
+                        <!-- BOTÃO CADASTRAR RESERVA -->
                         <div class="col-md-1 mb-4">
                             <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReserva()">
                                 <i class="fas fa-user-plus"></i>
@@ -149,7 +144,9 @@
                         </div>
 
                     </div>
+
                 </form>
+
             </div>
 
         <!-- MODAL VALIDAÇÃO -->
@@ -177,9 +174,9 @@
                 </div>
 
             </div>
-        <!-- FIM MODAL -->
-        </div>
 
+        </div>        
+        <!-- FIM MODAL VALIDAÇÃO -->        
     </body>
 
 </html>

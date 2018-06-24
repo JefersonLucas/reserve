@@ -1,14 +1,15 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 22/06/2018
+//  DATA DE MODIFICAÇÃO: 24/06/2018
 //  VERSÃO: 1.0.1
-//  DESCRIÇÃO: EXIBE CONSULTAS/FILTROS E EXCLUSÃO DE RESERVAS
+//  DESCRIÇÃO: EXIBE FILTROS E EXCLUSÃO DE RESERVAS
 //==============================================================|| -->
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Consulta | SENA AIRES &#8211; Colégios e Faculdade</title>
+        <title>Consulta | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,21 +18,48 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <!-- APP -->
         <script src="assets/_js/app.js"></script>
+
+        <script>            
+        //  VALIDAÇÃO DE CADASTRO
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                    
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }        
+                        form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+
     </head>
 
-    <body">
+    <body onload="carregaListaReservas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
+            <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank">
                 <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
             </a>
                 
+            <!-- BOTÃO TOGLLER -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
@@ -39,97 +67,102 @@
                     <li class="nav-item active"><a class="nav-link" title="Consultar reservas" href="consulta.html">Consulta</a></li>
                 </ul>
             </div>
+
         </nav>
 
         <div class="container">
             
             <div class="row">
-                <div class="col mb-5">
-                    <h1 class="display-5"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Consultar </h1>
-                </div>
-                <a data-toggle="popover" data-placement="top" title="Consulta de Reservas" data-content="Consulte, filtre, vizualize, exclua e imprima as reservas."><i class="fa fa-info-circle float-right" aria-hidden="true"></i></a>
-            </div>
-
-            <div class="row mb-4">
-
-                <!-- PROFESSOR -->
-                <div class="col-md-3">
-                    <input type="text" title="Nome do Responsável" class="form-control" placeholder="Nome do Responsável" id="responsavel"/>
-                </div>
-
-                <!-- EQUIPAMENTO -->
-                <div class="col-md-3">
-                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento"/>
-                </div>
-
-                <!-- SALA -->
-                <div class="col-md-3">
-                    <input type="text" title="Nome da sala" class="form-control" placeholder="Nome da sala" id="sala"/>
-                </div>
-
-            </div>
-
-            <div class="row mb-4">
                 
-                <!-- DATA -->
-                <div class="col-md-3">
-                    <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia"/>
+                <!-- TÍTULO -->
+                <div class="col mb-5">
+                    <h1 class="display-5"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Consultar</h1>
                 </div>
 
-                <!-- HORA -->
-                <div class="col-md-3">
-                    <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio"/>
-                </div>
+                <!-- INFO -->
+                <a data-toggle="popover" data-placement="top" title="Consulta de Reservas" data-content="Filtre, vizualize e exclua as reservas.">
+                    <i class="fa fa-info-circle float-right" aria-hidden="true"></i>
+                </a>
+            </div>
 
-                <!-- HORA -->
-                <div class="col-md-3">
-                    <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim"/>
-                </div>
+            <div class="row mb-4">
 
-                <!-- BOTÃO PESQUISAR -->
-                <div class="col-md-1">
-                    <button type="button" title="Filtrar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
-                        <i class="fa fa-filter" aria-hidden="true"></i>
-                    </button>                     
-                </div>
+                <!-- FORMULÁRIO COM VALIDAÇÃO -->
+                <form class="needs-validation" novalidate>
+                    
+                    <!-- DIV DO FORMULÁRIO -->
+                    <div class="form-row">
 
-                <!-- BOTÃO IMPRIMIR -->
-                <div class="col-md-1">
-                    <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
-                        <i class="fa fa-print" aria-hidden="true"></i>
-                    </button>
-                </div>
+                        <!-- PROFESSOR -->
+                        <div class="col-md-4 mb-4">
+                            <input type="text" title="Nome do Responsável" class="form-control" placeholder="Nome do Responsável" id="responsavel" required>
+                        </div>
 
-                <!-- BOTÃO ATUALIZAR -->
-                <div class="col-md-1">
-                    <button id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
-                        <i class="fas fa-redo-alt"></i>
-                    </button>
-                </div>
+                        <!-- EQUIPAMENTO -->
+                        <div class="col-md-4 mb-4">
+                            <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento" required>
+                        </div>
 
+                        <!-- SALA -->
+                        <div class="col-md-4 mb-4">
+                            <input type="text" title="Nome da sala" class="form-control" placeholder="Nome da sala" id="sala" required>
+                        </div>
+                
+                        <!-- DATA -->
+                        <div class="col-md-4 mb-4">
+                            <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia" required>
+                        </div>
+
+                        <!-- INÍCIO DA AULA -->
+                        <div class="col-md-4 mb-4">
+                            <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio" required>
+                        </div>
+
+                        <!-- TÉRMINO DA AULA -->
+                        <div class="col-md-4 mb-4">
+                            <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim" required>
+                        </div>
+
+                        <!-- BOTÃO PESQUISAR -->
+                        <div class="col-md-1">
+                            <button type="submit" title="Filtrar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>                     
+                        </div>
+
+                        <!-- BOTÃO ATUALIZAR -->
+                        <div class="col-md-1">
+                            <button type="button" id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <div class="row mb-4" id="conteudo">
+            <div class="row mb-4">
                 
                 <div class="col">
                     
-                    <!-- TABELA -->
+                    <!-- TABELA DAS RESERVAS -->
                     <table class="table table-hover d-print-inline">
                     
                         <thead id="listaColunas">
                             <tr class="text-center bg-dark" id="listaColunas">
-                                <th class="text-white"><i class="fas fa-chalkboard-teacher" title="Responsável"></i> Responsável</th>
-                                <th class="text-white"><i class="fas fa-desktop text-white" title="Equipamento"></i> Equipamento</th>
-                                <th class="text-white"><i class="fas fa-compass text-white" title="Local"></i> Local</th>
-                                <th class="text-white"><i class="fas fa-clock text-white" title="Horário"></i> Horário</th>
-                                <th class="text-white"><i class="fas fa-calendar-alt text-white" title="Data"></i> Data</th>
-                                <th class="text-white"><i class="fas fa-users-cog text-white" title="Opções"></i> Opções</th>
+                                <th class="text-white"><i class="fas fa-chalkboard-teacher" title="Responsável"></i>&nbsp;Responsável</th>
+                                <th class="text-white"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
+                                <th class="text-white"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
+                                <th class="text-white"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
+                                <th></th>
                             </tr>
                         </thead>
                         
-                        <!-- EXIBIÇÃO DAS RESERVAS -->
                         <tbody id="listaReservas" class="text-center">
+                        <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
                     </table>
@@ -138,7 +171,7 @@
 
             </div>
 
-            <!-- MODAL VALIDAÇÃO DE FILTRO-->
+            <!-- MODAL VALIDAÇÃO DE FILTRO -->
             <div class="modal fade" id="modalValidaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
                 <div class="modal-dialog" role="document">
@@ -157,7 +190,7 @@
                         <div class="modal-body" id="modal_conteudo"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal_btn" onclick="atualiza()"></button>
+                            <button type="button" data-dismiss="modal" id="modal_btn"></button>
                         </div>
 
                     </div>
@@ -252,7 +285,7 @@
                 </div>
             
             </div>
-        <!-- FIM MODAL -->
+            <!-- FIM MODAL -->
         </div>
 
     </body>	

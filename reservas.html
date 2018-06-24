@@ -1,14 +1,15 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 23/06/2018
+//  DATA DE MODIFICAÇÃO: 24/06/2018
 //  VERSÃO: 1.0.1
 //  DESCRIÇÃO: EXIBE AS RESERVAS
 //==============================================================|| -->
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Reservas | SENA AIRES &#8211; Colégios e Faculdade</title>
+        <title>Reservas | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,21 +18,25 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <!-- APP -->
         <script src="assets/_js/app.js"></script>
     </head>
 
     <body onload="carregaListaReservas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-            
+
+            <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank">
                 <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
             </a>
-                
+            
+            <!-- BOTÃO TOGLLER -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
@@ -48,36 +53,54 @@
                 
                 <!-- TÍTULO -->
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-clipboard-list"></i>&nbsp;Reservas </h1>
+                    <h1 class="display-5"><i class="fas fa-clipboard-list"></i>&nbsp;Reservas</h1>
                 </div>
                 
                 <!-- INFO -->
                 <div class="col mb-5">
-                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Cadastro de Reserva" data-content="Informe: responsável, equipamento, local, data, início e término da aula.">
+                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Lista de Reservas" data-content="Todas as reservas cadastradas estarão listadas aqui.">
                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
 
-            <div class="row mb-4" id="conteudo">
+            <div class="row mb-4">
+                
+                <!-- BOTÃO IMPRIMIR -->
+                <div class="col-md-1">
+                    <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <!-- BOTÃO ATUALIZAR -->
+                <div class="col-md-1">
+                    <button id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
+                        <i class="fas fa-redo-alt"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="row mb-4" id="conteudo-imprecao">
                 
                 <div class="col">
                     
-                    <!-- TABELA -->
+                    <!-- TABELA DAS RESERVAS -->
                     <table class="table table-hover d-print-inline">
                         
-                        <thead id="listaColunas">
-                            <tr class="text-center bg-dark" id="listaColunas">
-                                <th class="text-white"><i class="fas fa-chalkboard-teacher" title="Responsável"></i> Responsável</th>
-                                <th class="text-white"><i class="fas fa-desktop text-white" title="Equipamento"></i> Equipamento</th>
-                                <th class="text-white"><i class="fas fa-compass text-white" title="Local"></i> Local</th>
-                                <th class="text-white"><i class="fas fa-clock text-white" title="Horário"></i> Horário</th>
-                                <th class="text-white"><i class="fas fa-calendar-alt text-white" title="Data"></i> Data</th>
+                        <thead>
+                            <tr class="text-center bg-dark">
+                                <th class="text-white"><i class="fas fa-chalkboard-teacher" title="Responsável"></i>&nbsp;Responsável</th>
+                                <th class="text-white"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
+                                <th class="text-white"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
+                                <th class="text-white"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
                             </tr>
                         </thead>
                         
-                        <!-- EXIBIÇÃO DAS RESERVAS -->
                         <tbody id="listaReservas" class="text-center">
+                        <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
                     </table>
@@ -86,121 +109,6 @@
 
             </div>
 
-            <!-- MODAL VALIDAÇÃO DE FILTRO-->
-            <div class="modal fade" id="modalValidaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal_titulo_div">
-
-                            <h5 class="modal-title" id="modal_titulo"></h5>
-                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal_conteudo"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal_btn" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL -->
-
-            <!-- MODAL VIZUALIZAÇÃO -->
-            <div class="modal fade bd-example-modal-lg" id="modalVizualizaReserva" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-view">
-
-                            <h5 class="modal-title" id="modal-titulo-view"></h5>
-                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-view"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-view"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL -->
-
-            <!-- MODAL EDIÇÃO -->
-            <div class="modal fade" id="modalEditaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-edit">
-
-                            <h5 class="modal-title" id="modal-titulo-edit"></h5>
-                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-edit"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-edit" onclick="redireciona()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL -->
-
-            <!-- MODAL EXCLUSÃO -->
-            <div class="modal fade" id="modalExcluiReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-del">
-
-                            <h5 class="modal-title" id="modal-titulo-del"></h5>
-                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-del"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-del" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-        <!-- FIM MODAL -->
         </div>
 
     </body>	
