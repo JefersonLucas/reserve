@@ -28,6 +28,7 @@ A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades est�
 * Adição do botão atualizar para recarregar a lista;
 * Adição da página Reservas listando todas as reservas cadastradas;
 * Adição de link externo para o site do Colégio e Faculdade Sena Aires;
+* Adição de link externo para o projeto no GitHub;
 * Mudança na cor dos botões;
 * Validação dupla na pesquisa de filtro e no cadastro de reservas.
 
