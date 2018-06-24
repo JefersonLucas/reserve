@@ -21,7 +21,7 @@ A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades est�
 * Consulta e filtro dos cadastros;
 * Possibilidade de impressão de reservas.
 
-### Versão 1.0.1 *new*
+### Versão 1.0.1
 A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades estão:
 * Correções de bugs da versão 1.0.0;
 * Adição do botão visualizar para ver detalhadamente reserva do responsável;
@@ -32,12 +32,18 @@ A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades est�
 * Mudança na cor dos botões;
 * Validação dupla na pesquisa de filtro e no cadastro de reservas.
 
-## Bugs da aplicação
+### Versão 1.0.2 *new*
+A versão 1.0.2 foi ao ar dia 20/06/2018. Corrigindo os seguintes *bugs*
+* Indentificação da versão e link do GitHub;
+* Titles dos indentificadores da reservas.
+
+## Bugs / Defeitos
 * ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~ (*descontinuado na versão 1.0.1*);
 * ~~Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome)~~ (*corrigido na versão 1.0.1*);
-* ~~Botão de informação com a função *popover* pode ser clicado abaixo do própio botão~~ (*corrigido na versão 1.0.1*).
+* ~~Botão de informação com a função *popover* pode ser clicado abaixo do própio botão~~ (*corrigido na versão 1.0.1*);
+* ~~Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação~~ (*corrigido na versão 1.0.2*.)
 
-## Correções
+## Correções / Paths
 * Ortografia (versão 1.0.0);
 * Substituição do placeholder e da variável "*Professor*" para "*Responsável*" (*versão 1.0.1*);
 * Substituição do placeholder *Sala* para *Local* (*versão 1.0.1*);
