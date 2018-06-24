@@ -325,6 +325,60 @@
  		
  		linha.insertCell(4).innerHTML = r.dia
  	 	//
+
+	//
+ 		})
+	}
+//==============================================================||
+//==============================================================||
+//	4 - FILTRAR RESERVAS
+//
+	function pesquisarReserva() {
+	//	RECUPERANDO O VALOR DO CAMPOS
+		let responsavel = document.getElementById('responsavel').value
+		let equipamento = document.getElementById('equipamento').value
+		let sala 		= document.getElementById('sala').value
+		let inicio 		= document.getElementById('inicio').value
+		let fim 		= document.getElementById('fim').value
+		let dia 		= document.getElementById('dia').value
+	//
+	//	PASSANDO VALORES PARA VARIÁVEL
+		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
+		let reservas = bancodedados.pesquisar(reserva)
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
+		listaReservas.innerHTML = ''
+	//	VALIDAÇÃO DE PESQUISA FILTRO
+
+		let listaColunas = document.getElementById('listaColunas')
+
+ 		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
+		//	DIALOG DE ERRO
+			$('#modalValidaReserva').modal('show')
+
+			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
+			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu filtro. Por favor! verifique se algum campo não foi inseridos corretamente.'
+			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
+			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+
+ 		} else {
+
+ 	//	LISTANTO A DESPESA 		
+ 		reservas.forEach(function(r) {
+ 	//
+ 	//	CRIANDO A LINHA (TR)
+ 		let linha =	listaReservas.insertRow()
+ 	//
+ 	//	CRIAR AS COLUNAS (TD)
+ 		linha.insertCell(0).innerHTML = r.responsavel
+ 		linha.insertCell(1).innerHTML = r.equipamento
+ 		linha.insertCell(2).innerHTML = r.sala
+ 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
+ 		linha.insertCell(4).innerHTML = r.dia
+ 	//
  	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
  		let view 		= document.createElement("button")
  		view.className 	= 'btn btn-outline-primary btn-sm'
@@ -408,58 +462,6 @@
 			}
 	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
 		linha.insertCell(5).append(view,' ' , edit,' ' , dell)
-	//
- 		})
-	}
-//==============================================================||
-//==============================================================||
-//	4 - FILTRAR RESERVAS
-//
-	function pesquisarReserva() {
-	//	RECUPERANDO O VALOR DO CAMPOS
-		let responsavel = document.getElementById('responsavel').value
-		let equipamento = document.getElementById('equipamento').value
-		let sala 		= document.getElementById('sala').value
-		let inicio 		= document.getElementById('inicio').value
-		let fim 		= document.getElementById('fim').value
-		let dia 		= document.getElementById('dia').value
-	//
-	//	PASSANDO VALORES PARA VARIÁVEL
-		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
-	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
-		let reservas = bancodedados.pesquisar(reserva)
-	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById('listaReservas')
-	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
-		listaReservas.innerHTML = ''
-	//	VALIDAÇÃO DE PESQUISA FILTRO
-
-		let listaColunas = document.getElementById('listaColunas')
-
- 		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
-		//	DIALOG DE ERRO
-			$('#modalValidaReserva').modal('show')
-
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu filtro. Por favor! verifique se algum campo não foi inseridos corretamente.'
-			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
-			document.getElementById('modal_btn').className 			= 'btn btn-danger'
-
- 		} else {
-
- 	//	LISTANTO A DESPESA 		
- 		reservas.forEach(function(r) {
- 	//
- 	//	CRIANDO A LINHA (TR)
- 		let linha =	listaReservas.insertRow()
- 	//
- 	//	CRIAR AS COLUNAS (TD)
- 		linha.insertCell(0).innerHTML = r.responsavel
- 		linha.insertCell(1).innerHTML = r.equipamento
- 		linha.insertCell(2).innerHTML = r.sala
- 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
- 		linha.insertCell(4).innerHTML = r.dia
 
  		})
  		

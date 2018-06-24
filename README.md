@@ -32,9 +32,9 @@ A versão 1.0.1 vai ao ar no dia ##/##/####. Dentre as suas funcionalidades est�
 * Validação de pesquisa de filtro.
 
 ## Bugs da aplicação
-* *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro;
+* ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~(*descontinuado na versão 1.0.1*);
 * Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome);
-* Botão de informação com a função *popover* pode ser clicado abaixo do própio botão.
+* ~~Botão de informação com a função *popover* pode ser clicado abaixo do própio botão~~ (*corrigido na versão 1.0.1*).
 
 ## Correções
 * Ortografia (versão 1.0.0);

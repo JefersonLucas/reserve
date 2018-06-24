@@ -1,14 +1,14 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 22/06/2018
+//  DATA DE MODIFICAÇÃO: 23/06/2018
 //  VERSÃO: 1.0.1
-//  DESCRIÇÃO: EXIBE CONSULTAS/FILTROS E EXCLUSÃO DE RESERVAS
+//  DESCRIÇÃO: EXIBE AS RESERVAS
 //==============================================================|| -->
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Consulta | SENA AIRES &#8211; Colégios e Faculdade</title>
+        <title>Reservas | SENA AIRES &#8211; Colégios e Faculdade</title>
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,7 +20,7 @@
         <script src="assets/_js/app.js"></script>
     </head>
 
-    <body">
+    <body onload="carregaListaReservas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
@@ -35,79 +35,28 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
-                    <li class="nav-item"><a class="nav-link" title="Consultar reservas" href="reservas.html">Reservas</a></li>
-                    <li class="nav-item active"><a class="nav-link" title="Consultar reservas" href="consulta.html">Consulta</a></li>
+                    <li class="nav-item active"><a class="nav-link" title="Consultar reservas" href="reservas.html">Reservas</a></li>
+                    <li class="nav-item"><a class="nav-link" title="Consultar reservas" href="consulta.html">Consulta</a></li>
                 </ul>
             </div>
+
         </nav>
 
         <div class="container">
             
             <div class="row">
-                <div class="col mb-5">
-                    <h1 class="display-5"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Consultar </h1>
-                </div>
-                <a data-toggle="popover" data-placement="top" title="Consulta de Reservas" data-content="Consulte, filtre, vizualize, exclua e imprima as reservas."><i class="fa fa-info-circle float-right" aria-hidden="true"></i></a>
-            </div>
-
-            <div class="row mb-4">
-
-                <!-- PROFESSOR -->
-                <div class="col-md-3">
-                    <input type="text" title="Nome do Responsável" class="form-control" placeholder="Nome do Responsável" id="responsavel"/>
-                </div>
-
-                <!-- EQUIPAMENTO -->
-                <div class="col-md-3">
-                    <input type="text" title="Descrição do equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento"/>
-                </div>
-
-                <!-- SALA -->
-                <div class="col-md-3">
-                    <input type="text" title="Nome da sala" class="form-control" placeholder="Nome da sala" id="sala"/>
-                </div>
-
-            </div>
-
-            <div class="row mb-4">
                 
-                <!-- DATA -->
-                <div class="col-md-3">
-                    <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia"/>
+                <!-- TÍTULO -->
+                <div class="col mb-5">
+                    <h1 class="display-5"><i class="fas fa-clipboard-list"></i>&nbsp;Reservas </h1>
                 </div>
-
-                <!-- HORA -->
-                <div class="col-md-3">
-                    <input type="time" title="Início da aula" class="form-control" placeholder="00:00" id="inicio"/>
+                
+                <!-- INFO -->
+                <div class="col mb-5">
+                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Cadastro de Reserva" data-content="Informe: responsável, equipamento, local, data, início e término da aula.">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </a>
                 </div>
-
-                <!-- HORA -->
-                <div class="col-md-3">
-                    <input type="time" title="Término da aula" class="form-control" placeholder="00:00" id="fim"/>
-                </div>
-
-                <!-- BOTÃO PESQUISAR -->
-                <div class="col-md-1">
-                    <button type="button" title="Filtrar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
-                        <i class="fa fa-filter" aria-hidden="true"></i>
-                    </button>                     
-                </div>
-
-                <!-- BOTÃO IMPRIMIR -->
-                <div class="col-md-1">
-                    <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
-                        <i class="fa fa-print" aria-hidden="true"></i>
-                    </button>
-                </div>
-
-                <!-- BOTÃO ATUALIZAR -->
-                <div class="col-md-1">
-                    <button id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
-                        <i class="fas fa-redo-alt"></i>
-                    </button>
-                </div>
-
-
             </div>
 
             <div class="row mb-4" id="conteudo">
@@ -116,7 +65,7 @@
                     
                     <!-- TABELA -->
                     <table class="table table-hover d-print-inline">
-                    
+                        
                         <thead id="listaColunas">
                             <tr class="text-center bg-dark" id="listaColunas">
                                 <th class="text-white"><i class="fas fa-chalkboard-teacher" title="Responsável"></i> Responsável</th>
@@ -124,7 +73,6 @@
                                 <th class="text-white"><i class="fas fa-compass text-white" title="Local"></i> Local</th>
                                 <th class="text-white"><i class="fas fa-clock text-white" title="Horário"></i> Horário</th>
                                 <th class="text-white"><i class="fas fa-calendar-alt text-white" title="Data"></i> Data</th>
-                                <th class="text-white"><i class="fas fa-users-cog text-white" title="Opções"></i> Opções</th>
                             </tr>
                         </thead>
                         
