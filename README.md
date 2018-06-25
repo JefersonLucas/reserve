@@ -22,7 +22,7 @@ A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades est�
 * Possibilidade de impressão de reservas.
 
 ### Versão 1.0.1
-A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades estão:
+A v1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades estão:
 * Correções de bugs da versão 1.0.0;
 * Adição do botão visualizar para ver detalhadamente reserva do responsável;
 * Adição do botão atualizar para recarregar a lista;
@@ -32,10 +32,15 @@ A versão 1.0.1 foi ao ar no dia 24/06/2018. Dentre as suas funcionalidades est�
 * Mudança na cor dos botões;
 * Validação dupla na pesquisa de filtro e no cadastro de reservas.
 
-### Versão 1.0.2 *new*
-A versão 1.0.2 foi ao ar dia 20/06/2018. Corrigindo os seguintes *bugs*
+### Versão 1.0.2 
+A v1.0.2 foi ao ar dia 24/06/2018. Corrigindo os seguintes *bugs*
 * Indentificação da versão e link do GitHub;
 * Titles dos indentificadores da reservas.
+
+### Versão 1.0.3 *new*
+A v1.0.3 foi ao ar dia 25/06/2018. Corrigindo os seguintes *bugs*
+* Ícone popover da página consulta.html;
+* Remoção do underline do link para o GitHub. 
 
 ## Bugs / Defeitos
 * ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~ (*descontinuado na versão 1.0.1*);
