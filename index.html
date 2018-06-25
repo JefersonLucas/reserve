@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 24/06/2018
-//  VERSÃO: 1.0.1
+//  DATA DE MODIFICAÇÃO: 25/06/2018
+//  VERSÃO: 1.0.3
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
@@ -20,6 +20,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
         <script src="assets/_js/app.js"></script>
+        <!-- STYLE -->
+        <style type="text/css">
+            a.nounderline:link { 
+                text-decoration:none; 
+            } 
+        </style>       
 
         <script>
         //  VALIDAÇÃO DE CADASTRO
@@ -68,8 +74,8 @@
                 </ul>
 
                 <!-- VERSÃO E LINK GITHUB -->
-                <span class="navbar-text font-italic"><i class="fas fa-tag"></i>&nbsp;Versão 1.0.2&nbsp;
-                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub">
+                <span class="navbar-text font-italic"><i class="fas fa-tag"></i>&nbsp;Versão 1.0.3&nbsp;
+                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
                         <i class="fab fa-github"></i>
                     </a>
                 </span>
@@ -167,7 +173,7 @@
                     <div id="modal_titulo_div">
 
                         <h5 class="modal-title" id="modal_titulo"></h5>
-                        <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
@@ -176,7 +182,7 @@
                     <div class="modal-body" id="modal_conteudo"></div>
                     
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" id="modal_btn">Voltar</button>
+                        <button type="button" data-dismiss="modal" id="modal_btn" onclick="atualiza()"></button>
                     </div>
 
                 </div>

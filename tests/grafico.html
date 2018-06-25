@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
-//  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 24/06/2018
-//  VERSÃO: 1.0.1
+//  DATA DE CRIAÇÃO: 24/06/2018
+//  DATA DE MODIFICAÇÃO: 25/06/2018
+//  VERSÃO: 0.0.2
 //  DESCRIÇÃO: GRÁFICO DAS RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
@@ -10,7 +10,7 @@
         <meta charset="utf-8">
 	    <title>Gráfico | SENA AIRES &#8211; Colégio e Faculdade</title>
         <!-- ÍCONE -->
-        <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -19,7 +19,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/_js/app.js"></script>
+        <script src="_js/app.js"></script>
       
 	</head>
 
@@ -29,21 +29,21 @@
             
             <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank">
-                <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
+                <img src="../assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
             </a>
 
             <!-- BOTÃO TOGLLER -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-			
-			<!-- LINKS DE NAVEGAÇÃO -->
+            
+            <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="index.html">Cadastro</a></li>
-                    <li class="nav-item"><a class="nav-link" title="lista de reservas" href="reservas.html">Reservas</a></li>
-                    <li class="nav-item"><a class="nav-link" title="Consulta de reservas" href="consulta.html">Consulta</a></li>
-                    <li class="nav-item  active"><a class="nav-link" title="Gráfico das reservas" href="consulta.html">Gráfico</a></li>
+                    <li class="nav-item"><a class="nav-link" title="Cadastrar reservas" href="../index.html">Cadastro</a></li>
+                    <li class="nav-item"><a class="nav-link" title="Lista de reservas" href="../reservas.html">Reservas</a></li>
+                    <li class="nav-item"><a class="nav-link" title="Consulta reservas" href="../consulta.html">Consulta</a></li>
+                    <li class="nav-item active"><a class="nav-link" title="Consulta reservas" href="graficos.html">Gráficos</a></li>
                 </ul>
 
                 <!-- VERSÃO E LINK GITHUB -->
@@ -73,6 +73,8 @@
             </div>
 
             <div class="row">
+
+                <legend class="text-center">Reservas semanais</legend>
                 
                  <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                 
