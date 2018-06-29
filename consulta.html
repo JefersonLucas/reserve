@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 26/06/2018
-//  VERSÃO: 1.1.0 BETA
+//  DATA DE MODIFICAÇÃO: 28/06/2018
+//  VERSÃO: 1.2.0 BETA
 //  DESCRIÇÃO: FILTROS VIZUALIZAÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================|| -->
 <html>
@@ -74,7 +74,7 @@
                 </ul>
 
                 <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
-                <span class="navbar-text font-italic">Versão 1.1.0 Beta&nbsp;
+                <span class="navbar-text font-italic">v1.2.0 Beta&nbsp;
                     <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
                         <i class="fab fa-github"></i>
                     </a>
@@ -94,7 +94,7 @@
 
                 <!-- INFO -->
                 <div class="col mb-5">
-                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Consulta de Reservas" data-content="Filtre, vizualize e exclua as reservas.">
+                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Consulta de Reservas" data-content="Filtre, vizualize, edite e exclua as reservas.">
                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -125,7 +125,7 @@
                 
                         <!-- DATA -->
                         <div class="col-md-4 mb-4">
-                            <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia" required>
+                            <input type="date" title="Dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia" min="2018-01-01" max="2018-12-31" required>
                         </div>
 
                         <!-- INÍCIO DA AULA -->
@@ -235,35 +235,6 @@
                     
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" id="modal-btn-view"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL -->
-
-            <!-- MODAL EDIÇÃO -->
-            <div class="modal fade" id="modalEditaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-edit">
-
-                            <h5 class="modal-title" id="modal-titulo-edit"></h5>
-                            <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-edit"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-edit" onclick="redireciona()"></button>
                         </div>
 
                     </div>

@@ -41,9 +41,17 @@ A v1.0.3 foi ao ar no dia 25/06/2018. Tendo as seguintes correções:
 * Ícone popover da página consulta.html;
 * Remoção do underline do link para o GitHub.
 
-### Versão 1.1.0 Beta *new*
+### Versão 1.1.0 Beta
 A v1.1.0 Beta foi ao ar no dia 26/06/2018. 
 * Liberada como versão de testes para uso diário.
+
+### Versão 1.2.0 Beta *new*
+A v1.2.0 Beta foi ao ar no dia 28/06/2018. Dentre as suas funcionalidades estão:
+* Possibilidade de edição de reserva;
+* Validação da edição de reserva;
+* Visualização mais completa no modo visualização;
+* Limitador de data para cadastro e consulta;
+* Código mais limpo e mais leve.
 
 ## Bugs / Defeitos
 * ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~ (*descontinuado na versão 1.0.1*);

@@ -1,12 +1,13 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//	DATA DE MODIFICAÇÃO: 24/06/2018
-//  VERSÃO: 1.0.1
-//	DESCRIÇÃO: CADASTRO/CONSULTA/FILTRO/EXCLUSÃO DE RESERVAS
+//  DATA DE MODIFICAÇÃO: 28/06/2018
+//  VERSÃO: 1.2.0 BETA
+//	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO/
+//	EDIÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
-//	1 - CLASSES
+//	1 - CLASSES DO APP
 //
 //	CLASSE DESPESA
 //
@@ -137,7 +138,9 @@
 	let bancodedados = new BancodeDados()
 //==============================================================||
 //==============================================================||
-//	2 - CADASTRA A RESERVA
+//	2 - FUNÇÕES DO APP
+//
+//	CADASTRA A RESERVA
 //
 	function cadastrarReserva() {
 
@@ -193,63 +196,8 @@
 			$('#modalRegistraReserva').modal('show')
 		}
 	}
-//==============================================================||
-//==============================================================||
-//	2 - EDITA A RESERVA
 //
-	function editaReserva() {
-
-	//	RECUPERA OS VALORES A PARTIR DO ID E REFERENCIA EM UMA VARIÁVEL
-		let responsavel = document.getElementById('responsavel')
-		let equipamento = document.getElementById('equipamento')
-		let sala 		= document.getElementById('sala')
-		let inicio 		= document.getElementById('inicio')
-		let fim 		= document.getElementById('fim')
-		let dia 		= document.getElementById('dia')
-
-	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
-		let reserva = new Reserva(
-		//	PARÂMETROS DA RESERVA
-			responsavel.value, 
-			equipamento.value, 
-			sala.value,
-			inicio.value,
-			fim.value,			
-			dia.value
-		)
-	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
-		if(reserva.validarDados()) {
-		//	DIALOG DE SUCESSO
-		//
-		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
-			bancodedados.gravar(reserva)
-		//	FORMATAR O ID
-			let id = this.id.replace('id_reserva_','')
-		//	REMOVE A RESERVA
- 			bancodedados.remover(id)
-		//
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+reserva.responsavel+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
-			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
-			document.getElementById('modal_btn').className 			= 'btn btn-success'
-		//
-			$('#modalRegistraReserva').modal('show')
-		} else {
-		//	DIALOG DE ERRO
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar o cadastro. Por favor! verifique se todos os campo foram inseridos corretamente.'
-			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
-			document.getElementById('modal_btn').className 			= 'btn btn-danger'
-
-			$('#modalRegistraReserva').modal('show')
-		}
-	}
-//==============================================================||
-//==============================================================||
-//	3 - CARREGA A LISTA DE RESERVAS
+//	CARREGA A LISTA DE RESERVAS
 //
 	function carregaListaReservas() {
 	//	DECLARAÇÃO DO ARRAY RESERVAS
@@ -274,9 +222,8 @@
  	//
  		})
 	}
-//==============================================================||
-//==============================================================||
-//	4 - FILTRAR RESERVAS
+//
+//	FILTRAR RESERVAS
 //
 	function pesquisarReserva() {
 	//	RECUPERANDO O VALOR DO CAMPOS
@@ -337,11 +284,55 @@
 			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
 			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
 			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
-			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th></tr></thead><tbody><tr><th>'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td></tr></tbody>'
+			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td><td>'+r.dia+'</td></tr></tbody>'
 			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
 			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
 		//
 			}
+		//
+ 	//
+ 	//	CRIAÇÃO DO BOTAO DE EDIÇÃO
+ 		let edit 		= document.createElement("button")
+ 		edit.className 	= 'btn btn-outline-success btn-sm'
+ 		edit.title 		= 'Editar'
+ 		edit.innerHTML	= '<i class="fas fa-pencil-alt"></i>'
+ 		edit.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO UMA VALIDAÇÃO DA EDIÇÃO IRÁ APARECER
+ 		edit.onclick = function () {
+ 			//
+			//	VARIÁVEL DE VERIFICAÇÃO
+			let resposta = prompt("Deseja realmente continuar? R: Sim ou Não")
+			//
+			//	VALIDAÇÃO
+			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') { 
+			//	FORMATAR O ID
+				let id = this.id.replace('id_reserva_','')
+			//	REMOVE A RESERVA
+ 				bancodedados.remover(id)
+ 			//	NOVOS VALORES SÃO RECEBIDOS
+				let responsavel = prompt("Nome do Responsável, ex.: José.")
+				let equipamento = prompt("Descrição do equipamento, ex.: Data Show S10.")
+				let sala 		= prompt("Nome da sala, ex: Anatomia III.")
+				let inicio 		= prompt("Início da aula, ex.: hh:mm.")
+				let fim 		= prompt("Término da aula, ex.: hh:mm.")
+				let dia 		= prompt("Dia da aula, ex.: aaaa-mm-dd.")
+			//
+			//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
+				let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+			//
+			// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
+				bancodedados.gravar(reserva)
+			//
+			//	ATUALIZA A PÁGINA
+				window.location.reload()
+			} else {
+			//
+			//	ATUALIZA A PÁGINA
+				window.location.reload()
+			}
+		//
+		}
 		//
  	//
  	//	CRIAÇÃO BOTAO DE EXCLUSÃO
@@ -356,7 +347,7 @@
  		//	DIALOG DE EXCLUSÃO
 			$('#modalExcluiReserva').modal('show')
 		//
-			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-user-times"></i> Excluir'
+			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-pincel-times"></i> Excluir'
 			document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
 			document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
 			document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
@@ -370,26 +361,23 @@
  		//
 			}
 		//
-	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO E EXCLUSÃO
-		linha.insertCell(5).append(view,' ', dell)
+	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO EDIÇÃO E EXCLUSÃO
+		linha.insertCell(5).append(view,' ', edit,' ',dell)
 	//
  		})
  	//
  		}
  	//
 	}
-//==============================================================||
-//==============================================================||
-//	5 - ATUALIZA A PÁGINA
+//
+//	ATUALIZA A PÁGINA
 //
  	function atualiza() {
  	//	ATUALIZA A PÁGINA
  		window.location.reload()
 	}
 //
-//==============================================================||
-//==============================================================||
-//	6 - IMPRIME AS RESERVAS
+//	IMPRIME AS RESERVAS
 //
 	function imprimeReservas() {
 	//
@@ -405,7 +393,7 @@
 //
 //=============================================================||
 //=============================================================||
-//	7 - FUNÇÕES BOOTSTRAP
+//	3 - FUNÇÕES BOOTSTRAP
 //
 //	POPOVER
 //
@@ -418,4 +406,5 @@
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip()
 	})
+//==============================================================||
 //==============================================================||
