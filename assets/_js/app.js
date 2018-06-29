@@ -1,15 +1,15 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 28/06/2018
-//  VERSÃO: 1.2.0 BETA
+//  DATA DE MODIFICAÇÃO: 29/06/2018
+//  VERSÃO: 1.2.1 BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO/
 //	EDIÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================||
 //==============================================================||
 //	1 - CLASSES DO APP
 //
-//	CLASSE DESPESA
+//	RESERVA
 //
 	class Reserva {
 
@@ -20,7 +20,7 @@
 			this.equipamento 	= equipamento
 			this.sala 			= sala
 			this.inicio 		= inicio
-			this.fim 			= fim		
+			this.fim 			= fim
 			this.dia 			= dia
 		}
 	//	MÉTODO VALIDAÇÃO DOS DADOS
@@ -38,7 +38,7 @@
 		}
 	}
 //
-//	CLASSE BANCO DE DADOS
+//	BANCO DE DADOS
 //
 	class BancodeDados {
 	//	MÉTODO CONSTRUCTOR RECEBE O ID
@@ -132,10 +132,16 @@
 		remover(id) {
 			localStorage.removeItem(id)
 		}
+//		
 	}
-	//
-//	CRIAÇÃO DE UMA INSTÂCIA GLOBAL RESERVA ATRIBUIDA EM UMA VARIÁVEL
+//
+//
+//==============================================================||
+//==============================================================||
+//	INSTÂCIA GLOBAL BANCODEDADOS ATRIBUIDA EM UMA VARIÁVEL
+//
 	let bancodedados = new BancodeDados()
+//
 //==============================================================||
 //==============================================================||
 //	2 - FUNÇÕES DO APP
@@ -169,12 +175,12 @@
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva)
 		//
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-success'
-			document.getElementById('modal_conteudo').innerHTML 	= 'A reserva foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-			document.getElementById('modal_conteudo').innerHTML	   += '<br><table class="table text-center"><thead><tr><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+reserva.responsavel+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.sala+'</td></tr></tbody>'
-			document.getElementById('modal_btn').innerHTML 			= 'Voltar'
-			document.getElementById('modal_btn').className 			= 'btn btn-success'
+			document.getElementById('modal_titulo_success').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
+			document.getElementById('modal_titulo_div_success').className  	= 'modal-header text-success'
+			document.getElementById('modal_conteudo_success').innerHTML 	= 'A reserva do(a) <span class="text-success"><b>'+reserva.responsavel+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
+			document.getElementById('modal_conteudo_success').innerHTML	   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.equipamento+'</th><td>'+reserva.sala+'</td><td>'+reserva.inicio+' / '+reserva.fim+'</td><td>'+reserva.dia+'</td></tr></tbody>'
+			document.getElementById('modal_btn_success').innerHTML 			= 'Voltar'
+			document.getElementById('modal_btn_success').className 			= 'btn btn-success'
 		//
 		//	ZERA OS VALORES
 			responsavel.value 	= ''
@@ -184,16 +190,16 @@
 			fim.value 			= ''
 			dia.value 			= ''
 		//
-			$('#modalRegistraReserva').modal('show')
+			$('#modalCadastraReservaSucesso').modal('show')
 		} else {
 		//	DIALOG DE ERRO
-			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
-			document.getElementById('modal_titulo_div').className  	= 'modal-header text-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar o cadastro. Por favor! verifique se todos os campo foram inseridos corretamente.'
-			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
-			document.getElementById('modal_btn').className 			= 'btn btn-danger'
+			document.getElementById('modal_titulo_erro').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
+			document.getElementById('modal_titulo_div_erro').className  = 'modal-header text-danger'
+			document.getElementById('modal_conteudo_erro').innerHTML 	= 'Houve algum erro ao efetuar o cadastro. Por favor! verifique se todos os campo foram inseridos corretamente.'
+			document.getElementById('modal_btn_erro').innerHTML 		= 'Corrigir'
+			document.getElementById('modal_btn_erro').className 		= 'btn btn-danger'
 
-			$('#modalRegistraReserva').modal('show')
+			$('#modalCadastraReservaErro').modal('show')
 		}
 	}
 //
@@ -323,10 +329,6 @@
 			//
 			// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 				bancodedados.gravar(reserva)
-			//
-			//	ATUALIZA A PÁGINA
-				window.location.reload()
-			} else {
 			//
 			//	ATUALIZA A PÁGINA
 				window.location.reload()

@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 28/06/2018
-//  VERSÃO: 1.2.0 BETA
+//  DATA DE MODIFICAÇÃO: 29/06/2018
+//  VERSÃO: 1.2.1 BETA
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
@@ -74,7 +74,7 @@
                 </ul>
 
                 <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
-                <span class="navbar-text font-italic">v1.2.0 Beta&nbsp;
+                <span class="navbar-text font-italic">v1.2.1 Beta&nbsp;
                     <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
                         <i class="fab fa-github"></i>
                     </a>
@@ -163,26 +163,26 @@
 
             </div>
 
-        <!-- MODAL VALIDAÇÃO -->
-        <div class="modal fade" id="modalRegistraReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- MODAL VALIDAÇÃO SUCESSO -->
+        <div class="modal fade" id="modalCadastraReservaSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
             <div class="modal-dialog" role="document">
                 
                 <div class="modal-content">
                     
-                    <div id="modal_titulo_div">
+                    <div id="modal_titulo_div_success">
 
-                        <h5 class="modal-title" id="modal_titulo"></h5>
+                        <h5 class="modal-title" id="modal_titulo_success"></h5>
                         <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
                     </div>
                     
-                    <div class="modal-body" id="modal_conteudo"></div>
+                    <div class="modal-body" id="modal_conteudo_success"></div>
                     
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" id="modal_btn" onclick="atualiza()"></button>
+                        <button type="button" data-dismiss="modal" id="modal_btn_success" onclick="atualiza()"></button>
                     </div>
 
                 </div>
@@ -190,7 +190,36 @@
             </div>
 
         </div>        
-        <!-- FIM MODAL VALIDAÇÃO -->        
+        <!-- FIM MODAL VALIDAÇÃO -->      
+
+        <!-- MODAL VALIDAÇÃO ERRO -->
+        <div class="modal fade" id="modalCadastraReservaErro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+            <div class="modal-dialog" role="document">
+                
+                <div class="modal-content">
+                    
+                    <div id="modal_titulo_div_erro">
+
+                        <h5 class="modal-title" id="modal_titulo_erro"></h5>
+                        <button type="button" title="Fechar" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                    </div>
+                    
+                    <div class="modal-body" id="modal_conteudo_erro"></div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" id="modal_btn_erro"></button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>        
+        <!-- FIM MODAL VALIDAÇÃO -->    
     </body>
 
 </html>
