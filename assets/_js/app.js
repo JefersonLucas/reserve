@@ -156,8 +156,14 @@
 		let sala 		= document.getElementById('sala')
 		let inicio 		= document.getElementById('inicio')
 		let fim 		= document.getElementById('fim')
-		let dia 		= document.getElementById('dia')
+		let dataEua		= document.getElementById('dia').value
 
+		var diaBr = dataEua.substr(8,2)
+		var mesBr = dataEua.substr(5,2)
+		var anoBr = dataEua.substr(0,4)
+		
+		let dia = diaBr+"/"+mesBr+"/"+anoBr
+		
 	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 		let reserva = new Reserva(
 		//	PARÂMETROS DA RESERVA
@@ -166,7 +172,7 @@
 			sala.value,
 			inicio.value,
 			fim.value,			
-			dia.value
+			dia
 		)
 	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
 		if(reserva.validarDados()) {
@@ -223,7 +229,7 @@
  		linha.insertCell(0).innerHTML = r.responsavel
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
- 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
+ 		linha.insertCell(3).innerHTML = r.inicio+'/'+r.fim
  		linha.insertCell(4).innerHTML = r.dia
  	//
  		})
@@ -238,19 +244,11 @@
 		let sala 		= document.getElementById('sala').value
 		let inicio 		= document.getElementById('inicio').value
 		let fim 		= document.getElementById('fim').value
-		let dia 		= document.getElementById('dia').value
-	//
-	//	PASSANDO VALORES PARA VARIÁVEL
-		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
-	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
-		let reservas = bancodedados.pesquisar(reserva)
-	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById('listaReservas')
-	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
-		listaReservas.innerHTML = ''
-	//
+		let dataEua		= document.getElementById('dia').value
+
 	//	VALIDAÇÃO DE PESQUISA FILTRO
-		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
+		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dataEua == '') {
+		
 		//	DIALOG DE ERRO
 			$('#modalValidaReserva').modal('show')
 
@@ -262,6 +260,34 @@
 
  		} else {
 
+ 	//	RECUPERANDO O VALOR DO CAMPOS
+		let responsavel = document.getElementById('responsavel').value
+		let equipamento = document.getElementById('equipamento').value
+		let sala 		= document.getElementById('sala').value
+		let inicio 		= document.getElementById('inicio').value
+		let fim 		= document.getElementById('fim').value
+		let dataEua		= document.getElementById('dia').value
+
+ 		var diaBr = dataEua.substr(8,2)
+		var mesBr = "/"+dataEua.substr(5,2)
+		var anoBr = "/"+dataEua.substr(0,4)
+
+		var dia = diaBr+mesBr+anoBr
+
+		console.log(dia)
+
+ 	//	PASSANDO VALORES PARA VARIÁVEL
+		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+	
+	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
+		let reservas = bancodedados.pesquisar(reserva)
+	
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	
+	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
+		listaReservas.innerHTML = ''
+
  	//	LISTANTO A DESPESA 		
  		reservas.forEach(function(r) {
  	//
@@ -272,7 +298,7 @@
  		linha.insertCell(0).innerHTML = r.responsavel
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
- 		linha.insertCell(3).innerHTML = r.inicio+' / '+r.fim
+ 		linha.insertCell(3).innerHTML = r.inicio+'/'+r.fim
  		linha.insertCell(4).innerHTML = r.dia
  	//
  	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
