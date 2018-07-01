@@ -14,6 +14,21 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 * ECMAScript 6 - [JavaScript 6](https://www.w3schools.com/js/js_es6.asp);
 * Armazenamento local no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
+## Como funciona?
+O aplicativo funciona baseado na funcionalidade [CRUD](https://pt.wikipedia.org/wiki/CRUD) do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
+* Efetuar cadastros de reservas;
+* Visualizar lista de reservas cadastradas;
+* Editar os cadastros;
+* Excluir os cadastros;
+* Imprimir as reservas cadastras.
+
+## Como utilizar?
+Para utilizar a aplicação será necessário:
+* Clonar via HTTPS ou SSH ou fazer o download direto no repositório; 
+* Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto no repositório);
+* Procurar o arquivo index.html e dê um duplo clique;
+* Caso não abra, tente abrí-lo com algum navegador de sua preferência.
+
 ## Changelog
 
 | Nome da Versão | Data | Funcionalidades |
@@ -46,21 +61,6 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 | União do horário de início e término em um única coluna na tabela de consulta. | (versão 1.0.1) |
 | Validação de cadastro. | (versão 1.2.1-beta) |
 | Formatação da data EUA para BR. | (versão 1.2.2-beta) |
-
-## Como funciona?
-O aplicativo funciona baseado na funcionalidade [CRUD](https://pt.wikipedia.org/wiki/CRUD) do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
-* Efetuar cadastros de reservas;
-* Visualizar lista de reservas cadastradas;
-* Editar os cadastros;
-* Excluir os cadastros;
-* Imprimir as reservas cadastras.
-
-## Como utilizar?
-Para utilizar a aplicação será necessário:
-* Clonar via HTTPS ou SSH ou fazer o download direto no repositório; 
-* Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto no repositório);
-* Procurar o arquivo index.html e dê um duplo clique;
-* Caso não abra, tente abrí-lo com algum navegador de sua preferência.
 
 ## Demonstração
 * Index.html (v1.2.2-beta).
