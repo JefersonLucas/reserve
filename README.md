@@ -3,7 +3,7 @@ O Reserve é um aplicativo utilizado pelos colaboradores do setor da Informátic
 
 As motivações para o desenvolvimento desse aplicativo foi:
 * Agilidade na reserva de equipamento;
-* Maior organização lógica das reservas, podendo agenda-lás para dias posteriores;
+* Melhor organização lógica das reservas, podendo agenda-lás para dias posteriores;
 * Facilidade de busca com filtro de pesquisa;
 * Fazer uso da TI verde e dispensar o uso de papel para o agendamento de reservas;
 * Armazenamento mais rápido e prático.
@@ -11,67 +11,57 @@ As motivações para o desenvolvimento desse aplicativo foi:
 O aplicativo foi desenvolvido com base nas tecnologias:
 * Framework front-end [Bootstrap](https://getbootstrap.com/) versão 4.1.1;
 * Pacote de ícones do [Font Awesome](https://fontawesome.com/) versão 5.0.13;
-* Armazenamento no localStorage.
+* ECMAScript 6 - [JavaScript 6](https://www.w3schools.com/js/js_es6.asp);
+* Armazenamento local no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
 ## Changelog
 
-### Versão 1.0.0
-A versão 1.0.0 foi ao ar no dia 20/06/2018. Dentre as suas funcionalidades estão:
-* Cadastro e validação das reservas;
-* Consulta e filtro dos cadastros;
-* Possibilidade de impressão de reservas.
+| Nome da Versão | Data | Funcionalidades |
+| :------------: | :--: | :-------------- |
+| (v1.0.0) | 20/06/2018 | Cadastro e validação das reservas; Consulta e filtro dos cadastros; Possibilidade de impressão de reservas. |
+| (v1.0.1) | 24/06/2018 | Botão visualizar para ver a reserva do responsável detalhadamente; Botão atualizar para recarregar a lista; Página de Reservas listando todas as reservas cadastradas; Link  para o site do Colégio e Faculdade Sena Aires; Mudança no padrão das cores dos botões; Validação dupla na pesquisa de filtro e no cadastro de reservas.|
+| (v1.0.2) | 24/06/2018 | Indentificação da versão e link do GitHub; Titles dos indentificadores da reservas. |
+| (v1.0.3) | 25/06/2018 | Ícone popover da página consulta.html; Remoção do underline do link para o GitHub. |
+| (v1.1.0-beta) | 26/06/2018 | Liberada como versão de testes para uso diário. |
+| (v1.2.0-beta) | 28/06/2018 | Possibilidade de edição de reserva; Validação da edição de reserva; Visualização mais completa no modo visualização; Limitador de data para cadastro e consulta; Código mais limpo e mais leve. |
+| (v1.2.1-beta) | 29/06/2018 | Aprimoramento na validação do cadastro de reservas. |
+| (v1.2.2-beta) **new**| 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
 
-### Versão 1.0.1
-A v1.0.1 foi ao ar no dia 24/06/2018. Tendo as seguintes correções:
-* Adição do botão visualizar para ver detalhadamente reserva do responsável;
-* Adição do botão atualizar para recarregar a lista;
-* Adição da página Reservas listando todas as reservas cadastradas;
-* Adição de link externo para o site do Colégio e Faculdade Sena Aires;
-* Adição de link externo para o projeto no GitHub;
-* Mudança na cor dos botões;
-* Validação dupla na pesquisa de filtro e no cadastro de reservas.
+### Bugs / Defeitos
 
-### Versão 1.0.2 
-A v1.0.2 foi ao ar no dia 24/06/2018. Tendo as seguintes correções:
-* Indentificação da versão e link do GitHub;
-* Titles dos indentificadores da reservas.
+| Bug | Versão de correção |
+| :---| :-----------------:|
+| *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro. | (descontinuado na versão 1.0.1) |
+| Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome). | (descontinuado na versão 1.0.1) |
+| Botão de informação com a função *popover* pode ser clicado abaixo do própio botão. | (corrigido na versão 1.0.1) |
+| Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação. | (corrigido na versão 1.0.2.) |
 
-### Versão 1.0.3
-A v1.0.3 foi ao ar no dia 25/06/2018. Tendo as seguintes correções:
-* Ícone popover da página consulta.html;
-* Remoção do underline do link para o GitHub.
+### Correções / Paths
 
-### Versão 1.1.0 Beta
-A v1.1.0 Beta foi ao ar no dia 26/06/2018. 
-* Liberada como versão de testes para uso diário.
-
-### Versão 1.2.0 Beta *new*
-A v1.2.0 Beta foi ao ar no dia 28/06/2018. Dentre as suas funcionalidades estão:
-* Possibilidade de edição de reserva;
-* Validação da edição de reserva;
-* Visualização mais completa no modo visualização;
-* Limitador de data para cadastro e consulta;
-* Código mais limpo e mais leve.
-
-## Bugs / Defeitos
-* ~~*Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro~~ (*descontinuado na versão 1.0.1*);
-* ~~Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome)~~ (*corrigido na versão 1.0.1*);
-* ~~Botão de informação com a função *popover* pode ser clicado abaixo do própio botão~~ (*corrigido na versão 1.0.1*);
-* ~~Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação~~ (*corrigido na versão 1.0.2*.)
-
-## Correções / Paths
-* Ortografia (versão 1.0.0);
-* Substituição do placeholder e da variável "*Professor*" para "*Responsável*" (*versão 1.0.1*);
-* Substituição do placeholder *Sala* para *Local* (*versão 1.0.1*);
-* Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas (*versão 1.0.1*);
-* União do horário de início e término em um única coluna na tabela de consulta (*versão 1.0.1*).
+| Correção | Versão de correção |
+| :------- | :----------------: |
+| Ortografia. | (versão 1.0.0) |
+| Substituição do placeholder e da variável "*Professor*" por "*Responsável*". | (versão 1.0.1) |
+| Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas. | (versão 1.0.1) |
+| União do horário de início e término em um única coluna na tabela de consulta. | (versão 1.0.1) |
+| Validação de cadastro. | (versão 1.2.1-beta) |
+| Formatação da data EUA para BR. | (versão 1.2.2-beta) |
 
 ## Como funciona?
-O aplicativo funciona baseado na funcionalidade do localStorage do navegador para inserção, leitura e remoção das reservas efetuada pelos professores.
+O aplicativo funciona baseado na funcionalidade [CRUD](https://pt.wikipedia.org/wiki/CRUD) do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
+* Efetuar cadastros de reservas;
+* Visualizar lista de reservas cadastradas;
+* Editar os cadastros;
+* Excluir os cadastros;
+* Imprimir as reservas cadastras.
 
 ## Como utilizar?
-Para utilizar a aplicação necessita clonar ou fazer o download do repositório [Reserve](https://github.com/JefersonLucas/reserve) em qualquer máquina. Logo depois, abra o arquivo *index.html*.
+Para utilizar a aplicação será necessário:
+* Clonar via HTTPS ou SSH ou fazer o download direto no repositório; 
+* Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto no repositório);
+* Procurar o arquivo index.html e dê um duplo clique;
+* Caso não abra, tente abrí-lo com algum navegador de sua preferência.
 
-```bash
-index.html
-```
+## Demonstração
+* Index.html (v1.2.2-beta).
+![index](https://user-images.githubusercontent.com/39635734/42135637-f8733902-7d23-11e8-9674-f1ab874d465b.jpg)

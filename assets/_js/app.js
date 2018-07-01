@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 29/06/2018
-//  VERSÃO: 1.2.1 BETA
+//  DATA DE MODIFICAÇÃO: 01/07/2018
+//  VERSÃO: 1.2.2 BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO/
 //	EDIÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================||
@@ -156,24 +156,13 @@
 		let sala 		= document.getElementById('sala')
 		let inicio 		= document.getElementById('inicio')
 		let fim 		= document.getElementById('fim')
-		let dataEua		= document.getElementById('dia').value
-
-		var diaBr = dataEua.substr(8,2)
-		var mesBr = dataEua.substr(5,2)
-		var anoBr = dataEua.substr(0,4)
-		
-		let dia = diaBr+"/"+mesBr+"/"+anoBr
+		let dia			= document.getElementById('dia')
 		
 	//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
-		let reserva = new Reserva(
-		//	PARÂMETROS DA RESERVA
-			responsavel.value, 
-			equipamento.value, 
-			sala.value,
-			inicio.value,
-			fim.value,			
-			dia
-		)
+	//	PARÂMETROS DA RESERVA
+		let reserva = new Reserva(responsavel.value, equipamento.value,	sala.value,	inicio.value, fim.value, dia.value)
+	//
+		console.log(reserva)
 	//	VERIFICAÇÃO DA VALIDAÇÃO DOS DADOS
 		if(reserva.validarDados()) {
 		//	DIALOG DE SUCESSO
@@ -181,10 +170,18 @@
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva)
 		//
+		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+			var diaBr = dia.value.substr(8,2)
+			var mesBr = "/"+dia.value.substr(5,2)
+			var anoBr = "/"+dia.value.substr(0,4)
+		//	VARIÁVEL COM A DATA NO FORMATO BR
+			var data = diaBr+mesBr+anoBr
+		//
+		//
 			document.getElementById('modal_titulo_success').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!'
 			document.getElementById('modal_titulo_div_success').className  	= 'modal-header text-success'
 			document.getElementById('modal_conteudo_success').innerHTML 	= 'A reserva do(a) <span class="text-success"><b>'+reserva.responsavel+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-			document.getElementById('modal_conteudo_success').innerHTML	   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.equipamento+'</th><td>'+reserva.sala+'</td><td>'+reserva.inicio+' / '+reserva.fim+'</td><td>'+reserva.dia+'</td></tr></tbody>'
+			document.getElementById('modal_conteudo_success').innerHTML	   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.equipamento+'</th><td>'+reserva.sala+'</td><td>'+reserva.inicio+'/'+reserva.fim+'</td><td>'+data+'</td></tr></tbody>'
 			document.getElementById('modal_btn_success').innerHTML 			= 'Voltar'
 			document.getElementById('modal_btn_success').className 			= 'btn btn-success'
 		//
@@ -195,6 +192,7 @@
 			inicio.value 		= ''
 			fim.value 			= ''
 			dia.value 			= ''
+
 		//
 			$('#modalCadastraReservaSucesso').modal('show')
 		} else {
@@ -230,7 +228,14 @@
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
  		linha.insertCell(3).innerHTML = r.inicio+'/'+r.fim
- 		linha.insertCell(4).innerHTML = r.dia
+	//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+		let dia = r.dia.substr(8,2)
+		let mes = "/"+r.dia.substr(5,2)
+		let ano = "/"+r.dia.substr(0,4)
+	//	VARIÁVEL NO FORMATO BR		
+		let data = dia+mes+ano
+	//	DATA EXIBIDA NO FORMATO BR
+ 		linha.insertCell(4).innerHTML = data
  	//
  		})
 	}
@@ -244,11 +249,19 @@
 		let sala 		= document.getElementById('sala').value
 		let inicio 		= document.getElementById('inicio').value
 		let fim 		= document.getElementById('fim').value
-		let dataEua		= document.getElementById('dia').value
-
+		let dia 		= document.getElementById('dia').value
+	//
+	//	PASSANDO VALORES PARA VARIÁVEL
+		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
+		let reservas = bancodedados.pesquisar(reserva)
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaReservas')
+	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
+		listaReservas.innerHTML = ''
+	//
 	//	VALIDAÇÃO DE PESQUISA FILTRO
-		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dataEua == '') {
-		
+		if(responsavel == '' && equipamento  == '' && sala == '' && inicio == '' && fim == '' && dia == '') {
 		//	DIALOG DE ERRO
 			$('#modalValidaReserva').modal('show')
 
@@ -259,34 +272,6 @@
 			document.getElementById('modal_btn').className 			= 'btn btn-danger'
 
  		} else {
-
- 	//	RECUPERANDO O VALOR DO CAMPOS
-		let responsavel = document.getElementById('responsavel').value
-		let equipamento = document.getElementById('equipamento').value
-		let sala 		= document.getElementById('sala').value
-		let inicio 		= document.getElementById('inicio').value
-		let fim 		= document.getElementById('fim').value
-		let dataEua		= document.getElementById('dia').value
-
- 		var diaBr = dataEua.substr(8,2)
-		var mesBr = "/"+dataEua.substr(5,2)
-		var anoBr = "/"+dataEua.substr(0,4)
-
-		var dia = diaBr+mesBr+anoBr
-
-		console.log(dia)
-
- 	//	PASSANDO VALORES PARA VARIÁVEL
-		let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
-	
-	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
-		let reservas = bancodedados.pesquisar(reserva)
-	
-	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById('listaReservas')
-	
-	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
-		listaReservas.innerHTML = ''
 
  	//	LISTANTO A DESPESA 		
  		reservas.forEach(function(r) {
@@ -299,7 +284,14 @@
  		linha.insertCell(1).innerHTML = r.equipamento
  		linha.insertCell(2).innerHTML = r.sala
  		linha.insertCell(3).innerHTML = r.inicio+'/'+r.fim
- 		linha.insertCell(4).innerHTML = r.dia
+	//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+		let dia = r.dia.substr(8,2)
+		let mes = "/"+r.dia.substr(5,2)
+		let ano = "/"+r.dia.substr(0,4)
+	//	VARIÁVEL NO FORMATO BR		
+		let data = dia+mes+ano
+	//	DATA EXIBIDA NO FORMATO BR
+ 		linha.insertCell(4).innerHTML = data
  	//
  	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
  		let view 		= document.createElement("button")
@@ -337,7 +329,7 @@
 			let resposta = prompt("Deseja realmente continuar? R: Sim ou Não")
 			//
 			//	VALIDAÇÃO
-			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') { 
+			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 			//	FORMATAR O ID
 				let id = this.id.replace('id_reserva_','')
 			//	REMOVE A RESERVA
@@ -348,7 +340,14 @@
 				let sala 		= prompt("Nome da sala, ex: Anatomia III.")
 				let inicio 		= prompt("Início da aula, ex.: hh:mm.")
 				let fim 		= prompt("Término da aula, ex.: hh:mm.")
-				let dia 		= prompt("Dia da aula, ex.: aaaa-mm-dd.")
+				let dataBr 		= prompt("Dia da aula, ex.: dd/mm/aaaa.")
+			//
+			//	CONVERSÃO DA DATA NO FORMATO BR PARA O EUA
+				let anoEua = dataBr.substr(6,4)
+				let mesEua = dataBr.substr(3,2)
+				let diaEua = dataBr.substr(0,2)
+			//	VARIÁVEL NO FORMATO EUA
+				let dia = anoEua+"-"+mesEua+"-"+diaEua
 			//
 			//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 				let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
