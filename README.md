@@ -14,7 +14,22 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 * ECMAScript 6 - [JavaScript 6](https://www.w3schools.com/js/js_es6.asp);
 * Armazenamento local no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
-## Changelog
+## Como funciona?
+O aplicativo funciona baseado na funcionalidade CRUD do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
+* Efetuar cadastros de reservas;
+* Visualizar lista de reservas cadastradas;
+* Editar os cadastros;
+* Excluir os cadastros;
+* Imprimir as reservas cadastras.
+
+## Como utilizar?
+Para utilizar a aplicação será necessário:
+* Clonar via HTTPS ou SSH para seu repositório local ou fazer o download .ZIP direto desse repositório; 
+* Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto desse repositório);
+* Procurar o arquivo index.html e dê um duplo clique;
+* Caso não abra, dê um clique no botão direito do mouse e procure a opção "Abrir com..." e escolha um navegador de sua preferência.
+
+## Changelog / Versões
 
 | Nome da Versão | Data | Funcionalidades |
 | :------------: | :--: | :-------------- |
@@ -25,7 +40,8 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 | (v1.1.0-beta) | 26/06/2018 | Liberada como versão de testes para uso diário. |
 | (v1.2.0-beta) | 28/06/2018 | Possibilidade de edição de reserva; Validação da edição de reserva; Visualização mais completa no modo visualização; Limitador de data para cadastro e consulta; Código mais limpo e mais leve. |
 | (v1.2.1-beta) | 29/06/2018 | Aprimoramento na validação do cadastro de reservas. |
-| (v1.2.2-beta) **new**| 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
+| (v1.2.2-beta) | 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
+| (v1.3.0-beta) **new** | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição de reservas. |
 
 ### Bugs / Defeitos
 
@@ -35,8 +51,9 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 | Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome). | (descontinuado na versão 1.0.1) |
 | Botão de informação com a função *popover* pode ser clicado abaixo do própio botão. | (corrigido na versão 1.0.1) |
 | Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação. | (corrigido na versão 1.0.2.) |
+| A página consulta atualiza quando todos os campos são preenchidos na pesquisa sem retornar nenhum resultado. | *** |
 
-### Correções / Paths
+### Paths / Correções
 
 | Correção | Versão de correção |
 | :------- | :----------------: |
@@ -46,22 +63,7 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 | União do horário de início e término em um única coluna na tabela de consulta. | (versão 1.0.1) |
 | Validação de cadastro. | (versão 1.2.1-beta) |
 | Formatação da data EUA para BR. | (versão 1.2.2-beta) |
-
-## Como funciona?
-O aplicativo funciona baseado na funcionalidade [CRUD](https://pt.wikipedia.org/wiki/CRUD) do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
-* Efetuar cadastros de reservas;
-* Visualizar lista de reservas cadastradas;
-* Editar os cadastros;
-* Excluir os cadastros;
-* Imprimir as reservas cadastras.
-
-## Como utilizar?
-Para utilizar a aplicação será necessário:
-* Clonar via HTTPS ou SSH ou fazer o download direto no repositório; 
-* Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto no repositório);
-* Procurar o arquivo index.html e dê um duplo clique;
-* Caso não abra, tente abrí-lo com algum navegador de sua preferência.
+| Validação duplas de edição e exclusão de cadastro. | (versão 1.3.0-beta) |
 
 ## Demonstração
-* Index.html (v1.2.2-beta).
 ![index](https://user-images.githubusercontent.com/39635734/42135637-f8733902-7d23-11e8-9674-f1ab874d465b.jpg)

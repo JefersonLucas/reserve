@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 01/07/2018
-//  VERSÃO: 1.2.2 BETA
+//  DATA DE MODIFICAÇÃO: 02/07/2018
+//  VERSÃO: 1.3.0 BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO/
 //	EDIÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================||
@@ -240,6 +240,156 @@
  		})
 	}
 //
+//	CARREGA A LISTA DE CONSULTA
+//
+	function carregaListaConsultas() {
+	//	DECLARAÇÃO DO ARRAY RESERVAS
+		let reservas = Array()
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		reservas = bancodedados.recuperaTodosRegistros()
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById('listaConsultas')
+	//
+	//	LISTANTO A DESPESA
+ 		reservas.forEach(function(r) {
+ 	//
+ 	//	CRIANDO A LINHA (TR)
+ 		let linha =	listaReservas.insertRow()
+ 	//
+ 	//	CRIAR AS COLUNAS (TD)
+ 		linha.insertCell(0).innerHTML = r.responsavel
+ 		linha.insertCell(1).innerHTML = r.equipamento
+ 		linha.insertCell(2).innerHTML = r.sala
+ 		linha.insertCell(3).innerHTML = r.inicio+'/'+r.fim
+	//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+		let dia = r.dia.substr(8,2)
+		let mes = "/"+r.dia.substr(5,2)
+		let ano = "/"+r.dia.substr(0,4)
+	//	VARIÁVEL NO FORMATO BR		
+		let data = dia+mes+ano
+	//	DATA EXIBIDA NO FORMATO BR
+ 		linha.insertCell(4).innerHTML = data
+ 	//
+ 	//	CRIAÇÃO DO BOTAO DE VIZUALIZAÇÃO
+ 		let view 		= document.createElement("button")
+ 		view.className 	= 'btn btn-outline-primary btn-sm'
+ 		view.title 		= 'Vizualizar'
+ 		view.innerHTML	= '<i class="fas fa-eye"></i>'
+ 		view.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO E UM MODAL DE VIZUALIZAÇÃO VAI APARECER
+ 		view.onclick = function () {
+ 		//	DIALOG DE VIZUALIZAÇÃO
+			$('#modalVizualizaReserva').modal('show')
+		//
+			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
+			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
+			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
+			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+'/'+r.fim+'</td><td>'+data+'</td></tr></tbody>'
+			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
+			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
+		//
+		}
+		//
+ 	//
+ 	//	CRIAÇÃO DO BOTAO DE EDIÇÃO
+ 		let edit 		= document.createElement("button")
+ 		edit.className 	= 'btn btn-outline-success btn-sm'
+ 		edit.title 		= 'Editar'
+ 		edit.innerHTML	= '<i class="fas fa-pencil-alt"></i>'
+ 		edit.id			= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO UMA VERIFICAÇÃO DA EDIÇÃO IRÁ APARECER
+ 		edit.onclick = function () {
+ 		//
+		//	VARIÁVEL DE VERIFICAÇÃO
+			let resposta = prompt("Deseja realmente EDITAR a reserva do(a) "+r.responsavel+"? R: Sim ou Não", "Não")
+		//
+		//	VALIDAÇÃO DA EDIÇÃO
+			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//	NOVOS VALORES SÃO RECEBIDOS E O VALOR ATUAL É RECUPERADO NO INPUT
+				let responsavel = prompt("Nome do Responsável:",""+r.responsavel)
+				let equipamento = prompt("Descrição do equipamento:",""+r.equipamento)
+				let sala 		= prompt("Nome da sala:",""+r.sala)
+				let inicio 		= prompt("Início da aula:",""+r.inicio)
+				let fim 		= prompt("Término da aula:",""+r.fim)
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBr = r.dia.substr(8,2)
+				let mesBr = "/"+r.dia.substr(5,2)
+				let anoBr = "/"+r.dia.substr(0,4)
+			//
+			//	VARIÁVEL NO FORMATO BR		
+				let data = diaBr+mesBr+anoBr
+			//	DATA NO FORMATO BR É RECUPERADA E EXIBIDA NO INPUT
+				let dataBr = prompt("Dia da aula:",""+data)
+			//
+			//	FORMATAR O ID
+				let id = this.id.replace('id_reserva_','')
+			//	REMOVE A RESERVA
+ 				bancodedados.remover(id)
+ 			//
+			//	CONVERSÃO DO CALENDÁRIO NO FORMATO BR PARA O EUA
+				let anoEua = dataBr.substr(6,4)
+				let mesEua = "-"+dataBr.substr(3,2)
+				let diaEua = "-"+dataBr.substr(0,2)
+			//
+			//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
+				let dia = anoEua+mesEua+diaEua
+			//
+			//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
+				let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
+			//
+			// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
+				bancodedados.gravar(reserva)
+			//
+			//	ATUALIZA A PÁGINA
+				window.location.reload()
+			}
+		//
+		}
+		//
+ 	//
+ 	//	CRIAÇÃO BOTAO DE EXCLUSÃO
+ 		let dell 		= document.createElement("button")
+ 		dell.className 	= 'btn btn-outline-danger btn-sm'
+ 		dell.title 		= 'Excluir'
+ 		dell.innerHTML 	= '<i class="fa fa-trash-alt"></i>'
+ 		dell.id 		= `id_reserva_${r.id}`
+ 	//
+ 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXIBIDO UM PRONPT DE VERIFICAÇÃO
+ 		dell.onclick = function () {
+ 		//
+		//	PRONPT DE VERIFICAÇÃO
+			let resposta = prompt("Deseja realmente EXCLUIR a reserva do(a) "+r.responsavel+"? R: Sim ou Não", "Não")
+		//	VALIDAÇÃO DE EXCLUSÃO
+			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//
+			//	DIALOG DE EXCLUSÃO
+				$('#modalExcluiReserva').modal('show')
+			//
+				document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-pincel-times"></i> Excluir'
+				document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
+				document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
+				document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
+				document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
+				document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
+			//
+			//	FORMATAR O ID
+				let id = this.id.replace('id_reserva_','')
+			//	REMOVE A RESERVA
+ 				bancodedados.remover(id)
+ 			//
+				}
+			//
+			}
+		//
+	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO EDIÇÃO E EXCLUSÃO
+		linha.insertCell(5).append(view,' ', edit,' ',dell)
+	//
+ 		})
+	}
+//
 //	FILTRAR RESERVAS
 //
 	function pesquisarReserva() {
@@ -256,7 +406,7 @@
 	//	RESULTADO DA PESQUISA DO FILTRO PASSADO PARA A VARIÁVEL
 		let reservas = bancodedados.pesquisar(reserva)
 	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById('listaReservas')
+		let listaReservas = document.getElementById('listaConsultas')
 	//	LIMPANDO CONTEÚDO DA TABELA DE RESERVA
 		listaReservas.innerHTML = ''
 	//
@@ -270,9 +420,11 @@
 			document.getElementById('modal_conteudo').innerHTML 	= 'Houve algum erro ao efetuar seu filtro. Por favor! verifique se algum campo não foi inseridos corretamente.'
 			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
 			document.getElementById('modal_btn').className 			= 'btn btn-danger'
-
- 		} else {
-
+		//
+ 		}
+ 	//
+ 		else {
+ 	//
  	//	LISTANTO A DESPESA 		
  		reservas.forEach(function(r) {
  	//
@@ -308,11 +460,11 @@
 			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
 			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-primary'
 			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
-			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+' / '+r.fim+'</td><td>'+r.dia+'</td></tr></tbody>'
+			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+'/'+r.fim+'</td><td>'+data+'</td></tr></tbody>'
 			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
 			document.getElementById('modal-btn-view').className 		= 'btn btn-primary'
 		//
-			}
+		}
 		//
  	//
  	//	CRIAÇÃO DO BOTAO DE EDIÇÃO
@@ -322,32 +474,43 @@
  		edit.innerHTML	= '<i class="fas fa-pencil-alt"></i>'
  		edit.id			= `id_reserva_${r.id}`
  	//
- 	//	QUANDO CLICAR NO BOTÃO UMA VALIDAÇÃO DA EDIÇÃO IRÁ APARECER
+ 	//	QUANDO CLICAR NO BOTÃO UM PROMPT DE VERIFICAÇÃO IRÁ APARECER
  		edit.onclick = function () {
- 			//
-			//	VARIÁVEL DE VERIFICAÇÃO
-			let resposta = prompt("Deseja realmente continuar? R: Sim ou Não")
-			//
-			//	VALIDAÇÃO
+ 		//
+		//	VARIÁVEL DE VERIFICAÇÃO
+			let resposta = prompt("Deseja realmente EDITAR a reserva do(a) "+r.responsavel+"? R: Sim ou Não", "Não")
+		//
+		//	VALIDAÇÃO DE EDIÇÃO
 			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//	NOVOS VALORES SÃO RECEBIDOS E O VALOR ATUAL É RECUPERADO NO INPUT
+				let responsavel = prompt("Nome do Responsável:",""+r.responsavel)
+				let equipamento = prompt("Descrição do equipamento:",""+r.equipamento)
+				let sala 		= prompt("Nome da sala:",""+r.sala)
+				let inicio 		= prompt("Início da aula:",""+r.inicio)
+				let fim 		= prompt("Término da aula:",""+r.fim)
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBr = r.dia.substr(8,2)
+				let mesBr = "/"+r.dia.substr(5,2)
+				let anoBr = "/"+r.dia.substr(0,4)
+			//
+			//	VARIÁVEL NO FORMATO BR		
+				let data = diaBr+mesBr+anoBr
+			//	DATA NO FORMATO BR É RECUPERADA E EXIBIDA NO INPUT
+				let dataBr = prompt("Dia da aula:"," "+data)
+			//
 			//	FORMATAR O ID
 				let id = this.id.replace('id_reserva_','')
 			//	REMOVE A RESERVA
  				bancodedados.remover(id)
- 			//	NOVOS VALORES SÃO RECEBIDOS
-				let responsavel = prompt("Nome do Responsável, ex.: José.")
-				let equipamento = prompt("Descrição do equipamento, ex.: Data Show S10.")
-				let sala 		= prompt("Nome da sala, ex: Anatomia III.")
-				let inicio 		= prompt("Início da aula, ex.: hh:mm.")
-				let fim 		= prompt("Término da aula, ex.: hh:mm.")
-				let dataBr 		= prompt("Dia da aula, ex.: dd/mm/aaaa.")
-			//
-			//	CONVERSÃO DA DATA NO FORMATO BR PARA O EUA
+ 			//
+			//	CONVERSÃO DO CALENDÁRIO NO FORMATO BR PARA O EUA
 				let anoEua = dataBr.substr(6,4)
-				let mesEua = dataBr.substr(3,2)
-				let diaEua = dataBr.substr(0,2)
-			//	VARIÁVEL NO FORMATO EUA
-				let dia = anoEua+"-"+mesEua+"-"+diaEua
+				let mesEua = "-"+dataBr.substr(3,2)
+				let diaEua = "-"+dataBr.substr(0,2)
+			//
+			//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
+				let dia = anoEua+mesEua+diaEua
 			//
 			//	CRIAÇÃO DE UMA INSTÂCIA RESERVA ATRIBUIDA EM UMA VARIÁVEL
 				let reserva = new Reserva(responsavel, equipamento, sala, inicio, fim, dia)
@@ -358,6 +521,7 @@
 			//	ATUALIZA A PÁGINA
 				window.location.reload()
 			}
+			//
 		//
 		}
 		//
@@ -369,24 +533,33 @@
  		dell.innerHTML 	= '<i class="fa fa-trash-alt"></i>'
  		dell.id 		= `id_reserva_${r.id}`
  	//
- 	//	QUANDO CLICAR NO BOTÃO A RESERVA SERÁ EXCLUÍDA E UM MODAL SERÁ EXIBIDO
+ 	//	QUANDO CLICAR NO BOTÃO UM PROMPT DE VERIFICAÇÃO SERÁ EXIBIDO
  		dell.onclick = function () {
- 		//	DIALOG DE EXCLUSÃO
-			$('#modalExcluiReserva').modal('show')
-		//
-			document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-pincel-times"></i> Excluir'
-			document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
-			document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
-			document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
-			document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
-			document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
-		//
-		//	FORMATAR O ID
-			let id = this.id.replace('id_reserva_','')
-		//	REMOVE A RESERVA
- 			bancodedados.remover(id)
  		//
+		//	PROMPT DE VERIFICAÇÃO
+			let resposta = prompt("Deseja realmente EXCLUIR a reserva do(a) "+r.responsavel+"? R: Sim ou Não", "Não")
+		//	VALIDAÇÃO DE EXCLUSÃO
+			if (resposta == 'sim'|| resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//
+ 			//	DIALOG DE EXCLUSÃO
+				$('#modalExcluiReserva').modal('show')
+			//
+				document.getElementById('modal-titulo-del').innerHTML 		= '<i class="fas fa-pincel-times"></i> Excluir'
+				document.getElementById('modal-titulo-div-del').className  	= 'modal-header text-danger'
+				document.getElementById('modal-conteudo-del').innerHTML 	= 'A seguinte reserva irá ser <span class="text-danger"><b>excluida</b></span>:'
+				document.getElementById('modal-conteudo-del').innerHTML    += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Responsável</th><th scope="col">Equipamento</th><th scope="col">Local</th></tr></thead><tbody><tr><th>'+r.responsavel+'</th><td>'+r.equipamento+'</td><td>'+r.sala+'</td></tr></tbody>'
+				document.getElementById('modal-btn-del').innerHTML 			= 'Confirmar'
+				document.getElementById('modal-btn-del').className 			= 'btn btn-danger'
+			//
+			//	FORMATAR O ID
+				let id = this.id.replace('id_reserva_','')
+			//	REMOVE A RESERVA
+ 				bancodedados.remover(id)
+ 			//
 			}
+			//
+		//
+		}
 		//
 	//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO EDIÇÃO E EXCLUSÃO
 		linha.insertCell(5).append(view,' ', edit,' ',dell)

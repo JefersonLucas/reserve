@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 01/07/2018
-//  VERSÃO: 1.2.2 BETA
+//  DATA DE MODIFICAÇÃO: 02/07/2018
+//  VERSÃO: 1.3.0 BETA
 //  DESCRIÇÃO: FILTROS VIZUALIZAÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================|| -->
 <html>
@@ -51,7 +51,7 @@
 
     </head>
 
-    <body onload="carregaListaReservas()">
+    <body onload="carregaListaConsultas()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
 
@@ -74,7 +74,7 @@
                 </ul>
 
                 <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
-                <span class="navbar-text font-italic">v1.2.2 Beta&nbsp;
+                <span class="navbar-text font-italic">v1.3.0 Beta&nbsp;
                     <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
                         <i class="fab fa-github"></i>
                     </a>
@@ -166,17 +166,17 @@
                     <table class="table table-hover table-bordered">
                     
                         <thead>
-                            <tr class="text-center bg-dark" id="listaColunas">
+                            <tr class="text-center bg-dark">
                                 <th class="text-white" title="Responsável"><i class="fas fa-chalkboard-teacher" title="Responsável"></i>&nbsp;Responsável</th>
                                 <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
                                 <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
                                 <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
                                 <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
-                                <th></th>
+                                <th class="text-white" title="Opções"><i class="fas fa-user-cog"></i>&nbsp;Opções</th>
                             </tr>
                         </thead>
                         
-                        <tbody id="listaReservas" class="text-center">
+                        <tbody id="listaConsultas" class="text-center">
                         <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
