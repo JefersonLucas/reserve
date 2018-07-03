@@ -41,7 +41,8 @@ Para utilizar a aplicação será necessário:
 | (v1.2.0-beta) | 28/06/2018 | Possibilidade de edição de reserva; Validação da edição de reserva; Visualização mais completa no modo visualização; Limitador de data para cadastro e consulta; Código mais limpo e mais leve. |
 | (v1.2.1-beta) | 29/06/2018 | Aprimoramento na validação do cadastro de reservas. |
 | (v1.2.2-beta) | 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
-| (v1.3.0-beta) **new** | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
+| (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
+| (v1.4.0-beta) **new**| Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
 
 ### Bugs / Defeitos
 
