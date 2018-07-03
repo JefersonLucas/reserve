@@ -25,29 +25,7 @@
             a.nounderline:link { 
                 text-decoration:none;
             } 
-        </style>       
-
-        <script>
-        //  VALIDAÇÃO DE CADASTRO
-            (function() {
-                'use strict';
-                window.addEventListener('load', function() {
-            //	Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-            //	Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                    
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }        
-                        form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-        </script>
+        </style>
         
 	</head>
 
@@ -74,7 +52,7 @@
                 </ul>
 
                 <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
-                <span class="navbar-text font-italic" title="Versão do Aplicativo">v1.4.0 Beta&nbsp;
+                <span class="navbar-text" title="Versão do Aplicativo">v1.4.0-beta&nbsp;
                     <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
                         <i class="fab fa-github"></i>
                     </a>
@@ -84,7 +62,7 @@
         </nav>
 
         <div class="container">
-            
+
             <div class="row">
                 
                 <!-- TÍTULO -->
@@ -94,10 +72,11 @@
 
                 <!-- INFO -->
                 <div class="col mb-5">
-                    <a data-toggle="popover" class="float-right text-dark" data-placement="top" title="Cadastro de Reserva" data-content="Informe: responsável, equipamento, local, data, início e término da aula.">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <a data-toggle="popover" class="float-right" data-placement="top" title="Cadastrando reservas" data-content="Insira todos os dados nos campos abaixo para cadastrar uma reserva.">
+                        <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
                     </a>
                 </div>
+            
             </div>
 
             <div class="row mb-4">
@@ -221,5 +200,27 @@
         </div>        
         <!-- FIM MODAL VALIDAÇÃO -->    
     </body>
+ 
+    <script>
+    //  VALIDAÇÃO DE CADASTRO
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+        //  Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+        //  Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }        
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
 
+    </script>
 </html>

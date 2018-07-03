@@ -1,0 +1,383 @@
+<!-- ==============================================================||
+//  AUTOR: JEFERSON LUCAS
+//  DATA DE CRIAÇÃO: 17/06/2018
+//  DATA DE MODIFICAÇÃO: 03/07/2018
+//  VERSÃO: 1.5.0 BETA
+//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
+//==============================================================|| -->
+<html>
+	<head>
+        <meta charset="utf-8">
+	    <title>Reserve | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <!-- ÍCONE -->
+        <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
+        <!-- Bootstrap -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <!-- APP -->
+        <script src="assets/_js/app.js"></script>
+        <!-- STYLE -->
+        <style type="text/css">
+            a.nounderline:link { 
+                text-decoration:none;
+            } 
+        </style>
+        
+	</head>
+
+    <body onload="carregaListaReservas()">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+            
+            <!-- IMAGEM SENA AIRES -->
+            <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank" class="border-right" title="Faculdade Sena Aires – FACESA">
+                <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
+            </a>
+
+            <!-- BOTÃO TOGLLER -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+			
+			<!-- LINKS DE NAVEGAÇÃO -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="index.html">Professores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Alunos</a></li>
+                </ul>
+
+                <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
+                <span class="navbar-text" title="Versão do Aplicativo">v1.5.0-beta&nbsp;
+                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Ver projeto no GitHub" class="nounderline">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </span>
+            </div>
+
+        </nav>
+
+        <div class="container">
+
+            <div class="row">
+                
+                <!-- TÍTULO -->
+                <div class="col mb-5">
+                    <h1 class="display-5"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Reserva de Professores</h1>
+                </div>
+
+                <!-- INFO -->
+                <div class="col mb-5">
+                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
+                        <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
+                    </a>
+                </div>
+            
+            </div>
+
+            <div class="row mb-2">
+                
+                <!-- FORMULÁRIO COM VALIDAÇÃO -->
+                <form class="needs-validation" novalidate>
+                    
+                    <!-- DIV DO FORMULÁRIO -->
+                    <div class="form-row">
+
+                        <!-- PROFESSOR -->
+  						<div class="input-group col-md-4 mb-4">
+    						<div class="input-group-prepend">
+      							<div class="input-group-text bg-dark text-white">
+      								<i class="fas fa-chalkboard-teacher"></i>
+      							</div>
+   	 						</div>
+    						<input type="text" title="Descreva o nome do responsável" class="form-control" placeholder="Nome do responsável" id="responsavel" required>
+                        </div>                    
+                        
+                        <!-- EQUIPAMENTO -->                        
+  						<div class="input-group col-md-4 mb-4">
+    						<div class="input-group-prepend">
+      							<div class="input-group-text bg-dark text-white">
+      								<i class="fas fa-desktop" title="Equipamento"></i>
+      							</div>
+   	 						</div>
+                            <input type="text" title="Descreva o nome equipamento" class="form-control" placeholder="Descrição do equipamento" id="equipamento" required>
+                        </div>
+
+                        <!-- SALA -->                        
+  						<div class="input-group col-md-4 mb-4">
+    						<div class="input-group-prepend">
+      							<div class="input-group-text bg-dark text-white">
+      								<i class="fas fa-compass" title="Local"></i>
+      							</div>
+   	 						</div>
+                            <input type="text" title="Descreva o nome da sala" class="form-control" placeholder="Nome da sala" id="sala" required>
+                        </div>
+
+                        <!-- INÍCIO DA AULA -->                        
+  						<div class="input-group col-md-4 mb-4">
+    						<div class="input-group-prepend">
+      							<div class="input-group-text bg-dark text-white">
+      								<i class="fas fa-clock" title="Horário"></i>
+      							</div>
+   	 						</div>
+                            <input type="time" title="Informe o início da aula" class="form-control" placeholder="00:00" id="inicio" required>
+                        </div>
+
+                        <!-- TÉRMINO DA AULA -->                        
+  						<div class="input-group col-md-4 mb-4">
+    						<div class="input-group-prepend">
+      							<div class="input-group-text bg-dark text-white">
+      								<i class="fas fa-clock" title="Horário"></i>
+      							</div>
+   	 						</div>
+                            <input type="time" title="Informe o término da aula" class="form-control" placeholder="00:00" id="fim" required>
+                        </div>
+
+                        <!-- DATA -->                        
+                        <div class="input-group col-md-4 mb-4">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text bg-dark text-white">
+                                    <i class="fas fa-calendar-alt" title="Data"></i>
+                                </div>
+                            </div>
+                            <input type="date" title="Informe o dia da aula" class="form-control" placeholder="dd/mm/aaaa" id="dia" min="2018-01-01" max="2020-12-31" required>
+                        </div>
+
+                        <!-- BOTÃO CADASTRAR RESERVA -->
+                        <div class="col-md-1 mb-4">
+                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReserva()">
+                                <i class="fas fa-user-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- BOTÃO PESQUISAR -->
+                        <div class="col-md-1">
+                            <button type="submit" title="Filtrar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>                     
+                        </div>
+                
+                        <!-- BOTÃO IMPRIMIR -->
+                        <div class="col-md-1">
+                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- BOTÃO ATUALIZAR -->
+                        <div class="col-md-1">
+                            <button type="button" id="botao" title="Recarregar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TABELA DAS RESERVAS -->
+            <div class="row mb-4">
+                
+                <div class="col" id="conteudo-imprecao">
+                    
+                    <table class="table table-hover table-bordered">
+                    
+                        <thead>
+                            <tr class="text-center bg-dark">
+                                <th class="text-white" title="Responsável"><i class="fas fa-chalkboard-teacher" title="Responsável"></i>&nbsp;Responsável</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
+                                <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
+                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
+                                <th class="text-white" title="Opções"><i class="fas fa-user-cog"></i>&nbsp;Opções</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="listaConsultas" class="text-center">
+                        <!-- EXIBIÇÃO DAS RESERVAS -->
+                        </tbody>
+                    
+                    </table>
+                    
+                </div>
+
+            </div>
+            <!-- FIM TABELA DAS RESERVAS -->
+
+            <!-- MODAL VALIDAÇÃO SUCESSO -->
+            <div class="modal fade" id="modalCadastraReservaSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog border border-success rounded alert-success" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal_titulo_div_success">
+
+                            <h5 class="modal-title" id="modal_titulo_success"></h5>
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal_conteudo_success"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal_btn_success" onclick="atualiza()"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>        
+            <!-- FIM MODAL VALIDAÇÃO SUCESSO -->
+
+            <!-- MODAL VALIDAÇÃO ERRO -->
+            <div class="modal fade" id="modalCadastraReservaErro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal_titulo_div_erro">
+
+                            <h5 class="modal-title" id="modal_titulo_erro"></h5>
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal_conteudo_erro"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="" id="modal_btn_erro"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>        
+            <!-- FIM MODAL VALIDAÇÃO ERRO -->
+
+            <!-- MODAL VALIDAÇÃO DE FILTRO -->
+            <div class="modal fade" id="modalValidaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal_titulo_div">
+
+                            <h5 class="modal-title" id="modal_titulo"></h5>
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal_conteudo"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal_btn"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </div>
+            <!-- FIM MODAL VALIDAÇÃO DE FILTRO -->
+
+            <!-- MODAL VIZUALIZAÇÃO -->
+            <div class="modal fade bd-example-modal-lg" id="modalVizualizaReserva" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div class="modal-dialog border border-primary rounded alert-primary" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal-titulo-div-view">
+
+                            <h5 class="modal-title" id="modal-titulo-view"></h5>
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal-conteudo-view"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal-btn-view"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </div>
+            <!-- FIM MODAL VIZUALIZAÇÃO -->
+
+            <!-- MODAL ALTERA A RESERVA -->
+            <div class="modal fade" id="modalAlteraReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+                <div id="modal-dialog-alt" role="document">
+                
+                    <div class="modal-content">
+                    
+                        <div id="modal-titulo-div-alt">
+
+                            <h5 class="modal-title" id="modal-titulo-alt"></h5>
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                    
+                        <div class="modal-body" id="modal-conteudo-alt"></div>
+                    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" id="modal-btn-alt" onclick="atualiza()"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </div>
+            <!-- FIM MODAL ALTERA A RESERVA -->
+        </div>
+
+    </body>
+
+    <script>
+    //  VALIDAÇÃO DE CADASTRO
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+        //  Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+        //  Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }        
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+    </script>
+
+</html>
