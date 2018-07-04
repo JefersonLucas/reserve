@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 02/07/2018
-//  VERSÃO: 1.4.0 BETA
+//  DATA DE MODIFICAÇÃO: 04/07/2018
+//  VERSÃO: 1.5.0-BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO/
 //	EDIÇÃO E EXCLUSÃO DE RESERVAS
 //==============================================================||
@@ -252,7 +252,7 @@
 		//
 			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
 			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-white bg-primary'
-			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
+			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável <span class="text-primary"><b>'+r.responsavel+'</b></span>'
 			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+'/'+r.fim+'</td><td>'+dataBR+'</td></tr></tbody>'
 			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
 			document.getElementById('modal-btn-view').className 		= 'btn btn-outline-primary'
@@ -388,7 +388,7 @@
 		//
 			document.getElementById('modal_titulo').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!'
 			document.getElementById('modal_titulo_div').className  	= 'modal-header text-white bg-danger'
-			document.getElementById('modal_conteudo').innerHTML 	= 'Erro ao efetuar seu <span class="text-danger"><b>filtro</b></span>. Por favor verifique se algum campo não foi inseridos corretamente.'
+			document.getElementById('modal_conteudo').innerHTML 	= 'Erro ao efetuar sua <span class="text-danger"><b>pesquisa</b></span>. Por favor verifique se algum campo não foi inseridos corretamente.'
 			document.getElementById('modal_btn').innerHTML 			= 'Corrigir'
 			document.getElementById('modal_btn').className 			= 'btn btn-outline-danger'
 		//
@@ -431,7 +431,7 @@
 		//
 			document.getElementById('modal-titulo-view').innerHTML 		= '<i class="fas fa-eye"></i> Informações'
 			document.getElementById('modal-titulo-div-view').className  = 'modal-header text-white bg-primary'
-			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável: <span class="text-primary"><b>'+r.responsavel+'</b></span>'
+			document.getElementById('modal-conteudo-view').innerHTML 	= 'Detalhes da reserva do responsável <span class="text-primary"><b>'+r.responsavel+'</b></span>'
 			document.getElementById('modal-conteudo-view').innerHTML   += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+r.equipamento+'</th><td>'+r.sala+'</td><td>'+r.inicio+'/'+r.fim+'</td><td>'+dataBR+'</td></tr></tbody>'
 			document.getElementById('modal-btn-view').innerHTML 		= 'Voltar'
 			document.getElementById('modal-btn-view').className 		= 'btn btn-outline-primary'
