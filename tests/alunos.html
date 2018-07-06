@@ -3,13 +3,13 @@
 //  DATA DE CRIAÇÃO: 17/06/2018
 //  DATA DE MODIFICAÇÃO: 05/07/2018
 //  VERSÃO: 1.5.0-BETA
-//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE PROFESSORES
+//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE ALUNOS
 //==============================================================|| -->
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Reserve - Professores | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <title>Reserve - Alunos | SENA AIRES &#8211; Colégio e Faculdade</title>
         <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
@@ -20,7 +20,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/_js/app-professor.js"></script>
+        <script src="assets/_js/app-aluno.js"></script>
         <!-- STYLE -->
         <style type="text/css">
             a.nounderline:link { 
@@ -30,7 +30,7 @@
         
     </head>
 
-    <body onload="carregaListaReservasProfessor()">
+    <body onload="">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
@@ -47,8 +47,8 @@
             <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Professores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="alunos.html">Alunos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Professores</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="alunos.html">Alunos</a></li>
                 </ul>
 
                 <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
@@ -67,12 +67,12 @@
                 
                 <!-- TÍTULO -->
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Professor</h1>
+                    <h1 class="display-5"><i class="fas fa-user-graduate"></i>&nbsp;Alunos</h1>
                 </div>
 
                 <!-- INFO -->
                 <div class="col-md-1 mb-5">
-                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
+                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Alunos" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
                         <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
                     </a>
                 </div>
@@ -87,83 +87,84 @@
                     <!-- DIV DO FORMULÁRIO -->
                     <div class="form-row">
 
-                        <!-- PROFESSOR -->
+                        <!-- ALUNO -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-chalkboard-teacher" title="Professor"></i>
+                                    <i class="fas fa-user-graduate" title="Aluno"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Informe o nome do professor" class="form-control" placeholder="Nome do professor" id="professor" required>
-                        </div>                    
-                        
-                        <!-- EQUIPAMENTO -->                        
+                            <input type="text" title="Informe o nome do aluno" class="form-control" placeholder="Nome do aluno" id="aluno" required>
+                        </div>
+
+                        <!-- MATRÍCULA -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-desktop" title="Equipamento"></i>
+                                    <i class="fas fa-address-card" title="Matrícula"></i>
+                                </div>
+                            </div>
+                            <input type="text" title="Informe o nº de matrícula" class="form-control" placeholder="Número de matrícula" id="matricula" required>
+                        </div>            
+                        
+                        <!-- EQUIPAMENTO -->
+                        <div class="input-group col-md-4 mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text bg-dark text-white">
+                                    <i class="fas fa-laptop"  title="Equipamento"></i>
                                 </div>
                             </div>
                             <input type="text" title="Informe o nome do equipamento" class="form-control" placeholder="Nome do equipamento" id="equipamento" required>
                         </div>
 
-                        <!-- SALA -->                        
+                        <!-- NÚMERO DE SÉRIE -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-compass" title="Local"></i>
+                                    <i class="fas fa-barcode" title="Nº de série"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Informe o nome da sala" class="form-control" placeholder="Nome da sala" id="sala" required>
+                            <input type="text" title="Informe o nº série" class="form-control" placeholder="Número de série" id="serie" required>
                         </div>
 
-                        <!-- INÍCIO DA AULA -->                        
+                        <!-- HORÁRIO -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Inicial"></i>
+                                    <i class="fas fa-clock" title="Horário"></i>
                                 </div>
                             </div>
-                            <input type="time" title="Informe o horário inicial" class="form-control" placeholder="00:00" id="inicio" required>
+                            <input type="time" title="Informe o horário" class="form-control" placeholder="00:00" id="hora" required>
                         </div>
 
-                        <!-- TÉRMINO DA AULA -->                        
+                        <!-- DATA -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Final"></i>
+                                    <i class="fas fa-calendar-alt" title="Data"></i>&nbsp;
                                 </div>
                             </div>
-                            <input type="time" title="Informe o horário final " class="form-control" placeholder="00:00" id="fim" required>
-                        </div>
-
-                        <!-- DATA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-calendar-alt" title="Data"></i>
-                                </div>
-                            </div>
-                            <input type="date" title="Informe a data" class="form-control" placeholder="dd/mm/aaaa" id="dia" min="2018-01-01" max="2020-12-31" required>
+                            <input type="date" title="Informe a data" class="form-control" placeholder="dd/mm/aaaa" id="data" required>
                         </div>                    
 
                         <!-- BOTÃO CADASTRAR RESERVA -->
                         <div class="col-md-1">
-                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaProfessor()">
+                            <!-- MUDAR O TYPE PARA SUBMIT -->
+                            <button type="button" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaAluno()">
                                 <i class="fas fa-save"></i>
                             </button>
                         </div>
 
                         <!-- BOTÃO PESQUISAR -->
                         <div class="col-md-1">
-                            <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReservaProfessor()">
+                            <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReserva()">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>                     
                         </div>
                 
                         <!-- BOTÃO IMPRIMIR -->
                         <div class="col-md-1">
-                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservasProfessor()">
+                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -187,17 +188,17 @@
                 <div class="col" id="conteudo-imprecao">
                     <table class="table table-hover table-bordered d-print-table">
                         <thead>
-                            <tr class="text-center bg-dark">
-                                <th class="text-white" title="Professor"><i class="fas fa-chalkboard-teacher" title="Professor"></i>&nbsp;Professor</th>
-                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
-                                <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
-                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
+                            <tr class="text-center bg-dark">                                    
+                                <th class="text-white" title="Responsável"><i class="fas fa-user-graduate" title="Responsável"></i>&nbsp;Aluno</th>
+                                <th class="text-white" title="Matrícula"><i class="fas fa-address-card" title="Matrícula"></i>&nbsp;Matrícula</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-laptop"  title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white" title="Nº de série"><i class="fas fa-barcode" title="Nº de série"></i>&nbsp;Nº de série</th>
+                                <th class="text-white" title="Data e horário"><i class="fas fa-calendar-alt" title="Data e horário"></i>&nbsp;Data e horário</th>
                                 <th class="text-white" title="Opções"><i class="fas fa-user-cog"></i>&nbsp;Opções</th>
                             </tr>
                         </thead>
                         
-                        <tbody id="listaConsultas" class="text-center">
+                        <tbody id="" class="text-center">
                         <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
@@ -218,7 +219,7 @@
                         <div id="modal_titulo_div_success">
 
                             <h5 class="modal-title" id="modal_titulo_success"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
@@ -227,7 +228,7 @@
                         <div class="modal-body" id="modal_conteudo_success"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal_btn_success" onclick="atualiza()"></button>
+                            <button type="button" data-dismiss="modal" id="modal_btn_success" onclick=""></button>
                         </div>
 
                     </div>

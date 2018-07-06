@@ -43,7 +43,7 @@ Para utilizar a aplicação será necessário:
 | (v1.2.2-beta) | 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
 | (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
 | (v1.4.0-beta) | 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
-| (v1.5.0-beta) **new** | 04/07/2018 | Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Mudança na paleta de cores dos modais e botões. |
+| (v1.5.0-beta) **new** | ##/07/2018 | Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Mudança na paleta de cores dos modais e botões; Mudança de ícones de botões; Nova página Aluno; |
 
 ### Bugs / Defeitos
 
