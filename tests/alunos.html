@@ -30,7 +30,7 @@
         
     </head>
 
-    <body onload="">
+    <body onload="carregaListasReservasAlunos()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
@@ -150,7 +150,7 @@
                         <!-- BOTÃO CADASTRAR RESERVA -->
                         <div class="col-md-1">
                             <!-- MUDAR O TYPE PARA SUBMIT -->
-                            <button type="button" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaAluno()">
+                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaAluno()">
                                 <i class="fas fa-save"></i>
                             </button>
                         </div>
@@ -198,7 +198,7 @@
                             </tr>
                         </thead>
                         
-                        <tbody id="" class="text-center">
+                        <tbody id="listaAlunos" class="text-center">
                         <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
@@ -219,7 +219,7 @@
                         <div id="modal_titulo_div_success">
 
                             <h5 class="modal-title" id="modal_titulo_success"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="">
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
@@ -228,7 +228,7 @@
                         <div class="modal-body" id="modal_conteudo_success"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal_btn_success" onclick=""></button>
+                            <button type="button" data-dismiss="modal" id="modal_btn_success" onclick="atualiza()"></button>
                         </div>
 
                     </div>

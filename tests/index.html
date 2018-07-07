@@ -67,7 +67,7 @@
                 
                 <!-- TÍTULO -->
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Professor</h1>
+                    <h1 class="display-5"><i class="fas fa-user-tie"></i>&nbsp;Professor</h1>
                 </div>
 
                 <!-- INFO -->
@@ -91,7 +91,7 @@
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-chalkboard-teacher" title="Professor"></i>
+                                    <i class="fas fa-user-tie" title="Professor"></i>
                                 </div>
                             </div>
                             <input type="text" title="Informe o nome do professor" class="form-control" placeholder="Nome do professor" id="professor" required>
@@ -124,7 +124,7 @@
                                     <i class="fas fa-clock" title="Horário Inicial"></i>
                                 </div>
                             </div>
-                            <input type="time" title="Informe o horário inicial" class="form-control" placeholder="00:00" id="inicio" required>
+                            <input type="time" title="Informe o horário inicial" class="form-control" placeholder="00:00" id="horaA" required>
                         </div>
 
                         <!-- TÉRMINO DA AULA -->                        
@@ -134,7 +134,7 @@
                                     <i class="fas fa-clock" title="Horário Final"></i>
                                 </div>
                             </div>
-                            <input type="time" title="Informe o horário final " class="form-control" placeholder="00:00" id="fim" required>
+                            <input type="time" title="Informe o horário final " class="form-control" placeholder="00:00" id="horaB" required>
                         </div>
 
                         <!-- DATA -->                        
@@ -144,7 +144,7 @@
                                     <i class="fas fa-calendar-alt" title="Data"></i>
                                 </div>
                             </div>
-                            <input type="date" title="Informe a data" class="form-control" placeholder="dd/mm/aaaa" id="dia" min="2018-01-01" max="2020-12-31" required>
+                            <input type="date" title="Informe a data" class="form-control" placeholder="dd/mm/aaaa" id="data" min="2018-01-01" max="2020-12-31" required>
                         </div>                    
 
                         <!-- BOTÃO CADASTRAR RESERVA -->
@@ -188,7 +188,7 @@
                     <table class="table table-hover table-bordered d-print-table">
                         <thead>
                             <tr class="text-center bg-dark">
-                                <th class="text-white" title="Professor"><i class="fas fa-chalkboard-teacher" title="Professor"></i>&nbsp;Professor</th>
+                                <th class="text-white" title="Professor"><i class="fas fa-user-tie" title="Professor"></i>&nbsp;Professor</th>
                                 <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
                                 <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
                                 <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
@@ -302,19 +302,19 @@
                 
                     <div class="modal-content">
                     
-                        <div id="modal-titulo-div-view">
+                        <div id="modal-titulo-div-ver">
 
-                            <h5 class="modal-title" id="modal-titulo-view"></h5>
+                            <h5 class="modal-title" id="modal-titulo-ver"></h5>
                             <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
                     
-                        <div class="modal-body" id="modal-conteudo-view"></div>
+                        <div class="modal-body" id="modal-conteudo-ver"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-view"></button>
+                            <button type="button" data-dismiss="modal" id="modal-btn-ver"></button>
                         </div>
 
                     </div>
