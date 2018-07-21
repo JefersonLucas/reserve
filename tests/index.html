@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Reserve - Professores | SENA AIRES &#8211; Colégio e Faculdade</title>
         <!-- ÍCONE -->
-        <link rel="shortcut icon" href="assets/_img/logo16x16.png" type="image/x-icon">
+        <link rel="shortcut icon" href="assets/imagens/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/_js/app-professor.js"></script>
+        <script src="assets/javascript/app.js"></script>
         <!-- STYLE -->
         <style type="text/css">
             a.nounderline:link { 
@@ -30,13 +30,13 @@
         
     </head>
 
-    <body onload="carregaListaReservasProfessor()">
+    <body onload="carregaListaReservasProfessores()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
             <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank" class="border-right" title="Faculdade Sena Aires – FACESA">
-                <img src="assets/_img/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
+                <img src="assets/imagens/logo-sena-aires-lateral.png" width="250" height="50" alt="Logo Sena Aires Lateral">
             </a>
 
             <!-- BOTÃO TOGLLER -->
@@ -163,7 +163,7 @@
                 
                         <!-- BOTÃO IMPRIMIR -->
                         <div class="col-md-1">
-                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservasProfessor()">
+                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReserva()">
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </div>
