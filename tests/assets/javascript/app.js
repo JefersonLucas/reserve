@@ -52,6 +52,105 @@
 		}
 	}
 //
+//
+	class BancodeDados {
+		constructor(){
+		//	RECEBE O ID E SETA EM UMA VARIÁVEL
+			let idAluno 	= localStorage.getItem('idAluno');
+			let idProfessor = localStorage.getItem('idProfessor');
+		//	SE O ID FOR NULL
+			if (idAluno === null) {
+			//	SETA UM NOVO ID/CHAVE/VALOR
+				localStorage.setItem('idAluno', 0);
+			}
+			if (idProfessor === null) {
+			//	SETA UM NOVO ID/CHAVE/VALOR
+				localStorage.setItem('idProfessor', 0);
+			}
+		}
+		getProximoId(nome) {
+
+			let idAluno 	= parseInt(localStorage.getItem('idAluno')); 
+			let idProfessor = parseInt(localStorage.getItem('idProfessor'));
+
+			//
+			if (nome == "Professor") {
+			//	VERIFICAÇÃO
+				if(idAluno > idProfessor) {
+				//	ESTRUTURA FOR PARA RETORNAR NOVO VALOR DE ID
+					for(let i = 0; i <= idAluno; i++) {
+						var proximoId = i + 1;
+					}
+				//	VALOR DE RETORNO
+					return proximoId;
+				//
+				} else if(idProfessor > idAluno) {
+				//	VALOR DE RETORNO
+					var proximoId = (idProfessor + 1);
+				//	RETORNO DO NOVO VALOR DE ID
+					return proximoId;
+				//
+				} else if(idProfessor == idAluno) {
+				//	VALOR DE RETORNO
+					var proximoId = (idProfessor + 1);
+				//	RETORNO DO NOVO VALOR DE ID
+					return proximoId;
+				}
+				else {
+				//	RETORNO DO VALOR DE ID
+					return null;
+				//
+				}
+			//
+			} 
+			else if(nome == "Aluno") {
+			//	VERIFICAÇÃO
+				if(idProfessor > idAluno) {
+				//	ESTRUTURA FOR PARA RETORNAR NOVO VALOR DE ID
+					for(let i = 0; i <= idProfessor; i++){
+						var proximoId = i + 1;
+					}
+				//	RETORNO DO NOVO VALOR DE ID
+					return proximoId;
+				//	
+				} else if(idAluno > idProfessor) {
+				//	VALOR DE RETORNO
+					let proximoId = (idAluno + 1);
+				//	
+					return proximoId;
+				//
+				} else if(idAluno == idProfessor) {
+				//	VALOR DE RETORNO
+					let proximoId = (idAluno + 1);
+				//	
+					return proximoId;
+				//
+				} else {
+				//	RETORNO DO VALOR DE ID
+					return 0;
+				//
+				}
+				//				
+			}
+		}
+		gravar(r, n) {
+		//	VALOR DA getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
+			let id = this.getProximoId(n);
+		//
+		//	CONVERTE VALORES E SETA PARA O LOCALSTRORAGE 
+			localStorage.setItem(id, JSON.stringify(r))
+		//
+		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
+			localStorage.setItem(`id${n}`, id)
+		}
+	}
+//
+//	VARIÁVEL GLOBAL BANCO DE DADOS
+	let bancodedados = new BancodeDados();
+//
+//	DEBUG
+	console.log(bancodedados.getProximoId("Aluno"));
+//
 //==============================================================||
 //==============================================================||
 //	2 - FUNÇÕES DO APP
@@ -68,6 +167,7 @@
 	//	INSTÂNCIA DA RESERVA DO PROFESSOR
 		reservaProfessor  = new ReservaProfessor(nome.value, equipamento.value, horaA.value, dataEUA.value, sala.value, horaB.value)
 	//
+	//
 	//	DEBUG
 		console.log(reservaProfessor);
 	//
@@ -78,7 +178,7 @@
 			$('#modalCadastraReservaSucesso').modal('show');
 		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
-		//	bancodedados.gravarProfessor(reserva);
+			bancodedados.gravar(reservaProfessor, "Professor");
 		//
 		//	CONVERTE A DATA NO FORMATO EUA PARA O BR
 			var diaBR = dataEUA.value.substr(8,2);
@@ -137,7 +237,7 @@
 			$('#modalCadastraReservaSucesso').modal('show');
 		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
-		//	bancodedados.gravarProfessor(reserva);
+			bancodedados.gravar(reservaAluno, "Aluno");
 		//
 		//	CONVERTE A DATA NO FORMATO EUA PARA O BR
 			var diaBR = dataEUA.value.substr(8,2);
