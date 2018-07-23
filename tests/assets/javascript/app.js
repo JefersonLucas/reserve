@@ -177,6 +177,10 @@
 			}
 			return reservas;
 		}
+	//	MÉTODO REMOVER RESERVAS
+		removerReserva(id) {
+			localStorage.removeItem(id);
+		}
 	}
 //
 //	VARIÁVEL GLOBAL BANCO DE DADOS
@@ -336,6 +340,96 @@
 		//	DATA EXIBIDA NO FORMATO BR
 			linha.insertCell(4).innerHTML = dataBR;
 		//
+ 		//	BOTAO DE VIZUALIZAÇÃO
+ 		//
+ 			let ver 		= document.createElement("button");
+ 			ver.className 	= 'btn btn-outline-primary btn-sm';
+ 			ver.title 		= "Vizualizar";
+ 			ver.innerHTML 	= '<i class="far fa-eye"></i>';
+ 			ver.id 			= `id_ver_${p.id}`;
+ 		//
+ 		//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
+ 			ver.onclick = function() {
+ 			//	MODAL DE VIZUALIÇÃO
+ 				$('#modalVizualizaReserva').modal('show');
+			//
+				document.getElementById('modal-titulo-ver').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
+				document.getElementById('modal-titulo-div-ver').className  	= 'modal-header text-white bg-primary';
+				document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) professor(a) <span class="text-primary"><b>'+p.nome+'</b></span>';
+				document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+dataBR+'</td></tr></tbody>';
+				document.getElementById('modal-btn-ver').innerHTML 			= 'Voltar';
+				document.getElementById('modal-btn-ver').className 			= 'btn btn-outline-primary';
+			//
+ 			}
+ 		//
+ 		//	BOTAO DE EDIÇÃO
+ 		//
+ 			let editar 			= document.createElement("button");
+ 			editar.className 	= 'btn btn-outline-success btn-sm';
+ 			editar.title 		= "Editar";
+ 			editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
+ 			editar.id 			= `id_editar_${p.id}`;
+ 		//
+ 			editar.onclick = function() {
+ 			//
+ 			//	VERIFICAÇÃO
+ 				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+p.nome+"? R: Sim ou Não","Não");
+ 			//
+ 			//	VALIDAÇÃO DE VERIFICAÇÃO
+ 				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+ 				//
+ 				//	NOVOS VALORES SERÃO RECEBIDOS
+ 					let nome 			= prompt("Nome do(a) Professor(a):", p.nome);
+ 					let equipamento 	= prompt("Descrição do equipamento:",p.equipamento);
+ 					let sala 			= prompt("Nome do sala:",p.sala);
+ 					let horaA 			= prompt("Início da aula:",p.horaA);
+ 					let horaB 			= prompt("Término da aula:",p.horaB);
+ 					let dataBr 			= prompt("Data da aula:",dataBR);
+ 				//
+ 				//	MODAL DE EDIÇÃO
+ 					$('#modalEditaReserva').modal('show');
+				//
+					document.getElementById('modal-titulo-editar').innerHTML 		= '<i class="fas fa-pencil-alt"></i> Editar';
+					document.getElementById('modal-titulo-div-editar').className  	= 'modal-header text-white bg-success';
+					document.getElementById('modal-dialog-editar').className  		= 'modal-dialog border border-success rounded alert-success';
+					document.getElementById('modal-conteudo-editar').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>'
+					document.getElementById('modal-conteudo-editar').innerHTML     += '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Equipamento</th><th scope="col">Local</th><th scope="col">Horário</th><th scope="col">Data</th></tr></thead><tbody><tr><th class="font-weight-normal">'+equipamento+'</th><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBr+'</td></tr></tbody>';
+					document.getElementById('modal-btn-editar').innerHTML 			= 'Voltar';
+					document.getElementById('modal-btn-editar').className 			= 'btn btn-outline-success';
+				//
+				//	FORMATAR O ID
+					let id = this.id.replace('id_editar_','');
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//
+				//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
+					let anoEUA = dataBr.substr(6,4);
+					let mesEUA = "-"+dataBr.substr(3,2);
+					let diaEUA = "-"+dataBr.substr(0,2);
+				//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
+					let dataEUA = anoEUA+mesEUA+diaEUA;
+				//
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					let reservaProfessor = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB);
+				//
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reservaProfessor, "Professor");
+				//
+ 				}
+ 			}
+
+ 		//
+ 		//	BOTAO DE EXCLUSÃO
+ 		//
+ 			excluir = document.createElement("button");
+ 			excluir.className 	= 'btn btn-outline-danger btn-sm';
+ 			excluir.title 		= 'Excluir';
+ 			excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
+ 			excluir.id 			= `id_excluir_${p.id}`;
+ 		//
+ 		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO
+ 			linha.insertCell(5).append(ver," ", editar, " ", excluir);
+ 		//
 		})
 	}
 //
@@ -369,10 +463,52 @@
 			//
 		//	DATA EXIBIDA NO FORMATO BR
  			linha.insertCell(4).innerHTML = dataBR +" - "+ a.horaA;
+		//
+ 		//	BOTAO DE VIZUALIZAÇÃO
+ 		//
+ 			let ver = document.createElement("button");
+ 			ver.className = 'btn btn-outline-primary btn-sm';
+ 			ver.title = "Vizualizar";
+ 			ver.innerHTML = '<i class="fa fa-eye"></i>';
+ 			ver.id = `id_professor_${a.id}`;
+ 		//
+ 		//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
+ 			ver.onclick = function() {
+ 			//	MODAL DE VIZUALIÇÃO
+ 				$('#modalVizualizaReserva').modal('show');
+			//
+				document.getElementById('modal-titulo-ver').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
+				document.getElementById('modal-titulo-div-ver').className  	= 'modal-header text-white bg-primary';
+				document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>';
+				document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center" ><thead><tr ><th scope="col">Matrícula</th><th scope="col">Equipamento</th><th scope="col">Nº série</th><th scope="col">Data e hora</th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
+				document.getElementById('modal-btn-ver').innerHTML 			= 'Voltar';
+				document.getElementById('modal-btn-ver').className 			= 'btn btn-outline-primary';
+			//
+ 			}
+ 		 //
+ 		//	BOTAO DE EDIÇÃO
+ 		//
+ 			let editar 			= document.createElement("button");
+ 			editar.className 	= 'btn btn-outline-success btn-sm';
+ 			editar.title 		= "Editar";
+ 			editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
+ 			editar.id 			= `id_editar_${a.id}`;
+ 		//
+ 		//
+ 		//	BOTAO DE EXCLUSÃO
+ 		//
+ 			excluir = document.createElement("button");
+ 			excluir.className 	= 'btn btn-outline-danger btn-sm';
+ 			excluir.title 		= 'Excluir';
+ 			excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
+ 			excluir.id 			= `id_excluir_${a.id}`;
+ 		//
+ 		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
+ 			linha.insertCell(5).append(ver," ", editar, " ", excluir);
  		//
 		})
 	}
-
+//
 //	2.4 - ATUALIZA A PÁGINA
 //
  	function atualiza() {
