@@ -98,7 +98,7 @@
 				}
 				else {
 				//	RETORNO DO VALOR DE ID
-					return null;
+					return 0;
 				//
 				}
 			//
@@ -143,17 +143,49 @@
 		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
 			localStorage.setItem(`id${n}`, id)
 		}
+		recuperaReservaProfessor() {
+			
+			let reservas = Array()
+
+			let id = localStorage.getItem("idProfessor");
+
+			for(let i = 0; i <= id; i++){
+				let reserva = JSON.parse(localStorage.getItem(i));
+			
+				if(reserva === null || reserva.nome === undefined || reserva.equipamento === undefined || reserva.sala === undefined || reserva.horaA === undefined || reserva.horaB === undefined || reserva.dataEUA === undefined) {
+					continue;
+				}
+				reserva.id = i;
+				reservas.push(reserva);
+			}
+			return reservas;
+		}
+		recuperaReservaAluno() {
+
+			let reservas = Array()
+
+			let id = localStorage.getItem("idAluno");
+
+			for(let i = 0; i <= id; i++){
+				let reserva = JSON.parse(localStorage.getItem(i));
+			
+				if(reserva === null || reserva.nome === undefined || reserva.matricula === undefined || reserva.equipamento === undefined || reserva.numeroSerie === undefined || reserva.horaA === undefined || reserva.dataEUA === undefined) {
+					continue;
+				}
+				reserva.id = i;
+				reservas.push(reserva);
+			}
+			return reservas;
+		}
 	}
 //
 //	VARIÁVEL GLOBAL BANCO DE DADOS
 	let bancodedados = new BancodeDados();
 //
-//	DEBUG
-	console.log(bancodedados.getProximoId("Aluno"));
-//
 //==============================================================||
 //==============================================================||
 //	2 - FUNÇÕES DO APP
+//
 //	FUNÇÃO CADASTRAR A RESERVA DO PROFESSOR
 	function cadastrarReservaProfessor() {
 	//	RESGATANDO O VALOR DA RESERVA	
@@ -273,8 +305,73 @@
 		}
 	}
 //
-	function carregaListaReservasProfessores() {}
-	function carregaListasReservasAlunos() {}
+//	LISTA DE RESERVAS DOS PROFESSORES
+	function ListaReservasProfessores() {
+	//	DECLARAÇÃO DO ARRAY RESERVAS
+		let reservas = Array();
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		reservas = bancodedados.recuperaReservaProfessor();
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById("listaProfessores");
+	//
+	//	LISTANTO A RESERVA
+ 		reservas.forEach(function(p) {
+ 		//
+ 		//	CRIANDO A LINHA (TR)
+ 			let linha =	listaReservas.insertRow();
+ 		//
+ 		//	CRIAR AS COLUNAS (TD)
+ 			linha.insertCell(0).innerHTML = p.nome;
+ 			linha.insertCell(1).innerHTML = p.equipamento;
+ 			linha.insertCell(2).innerHTML = p.sala;
+ 			linha.insertCell(3).innerHTML = p.horaA+"/"+p.horaB;
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBR = p.dataEUA.substr(8,2);
+				let mesBR = "/"+p.dataEUA.substr(5,2);
+				let anoBR = "/"+p.dataEUA.substr(0,4);
+			//	VARIÁVEL NO FORMATO BR		
+				let dataBR = diaBR+mesBR+anoBR;
+			//
+		//	DATA EXIBIDA NO FORMATO BR
+			linha.insertCell(4).innerHTML = dataBR;
+		//
+		})
+	}
+//
+//	LISTA DE RESERVAS DOS ALUNOS
+	function ListasReservasAlunos() {
+	//	DECLARAÇÃO DO ARRAY RESERVAS
+		let reservas = Array();
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		reservas = bancodedados.recuperaReservaAluno();
+	//	SELECIONANDO O ELEMENTO TBODY
+		let listaReservas = document.getElementById("listaAlunos");
+	//
+	//	LISTANTO A RESERVA
+ 		reservas.forEach(function(a) {
+ 		//
+ 		//	CRIANDO A LINHA (TR)
+ 			let linha =	listaReservas.insertRow();
+ 		//
+ 		//	CRIAR AS COLUNAS (TD)
+ 			linha.insertCell(0).innerHTML = a.nome;
+ 			linha.insertCell(1).innerHTML = a.matricula;
+ 			linha.insertCell(2).innerHTML = a.equipamento;
+ 			linha.insertCell(3).innerHTML = a.numeroSerie;
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBR = a.dataEUA.substr(8,2);
+				let mesBR = "/"+a.dataEUA.substr(5,2);
+				let anoBR = "/"+a.dataEUA.substr(0,4);
+			//	VARIÁVEL NO FORMATO BR		
+				let dataBR = diaBR+mesBR+anoBR;
+			//
+		//	DATA EXIBIDA NO FORMATO BR
+ 			linha.insertCell(4).innerHTML = dataBR +" - "+ a.horaA;
+ 		//
+		})
+	}
 
 //	2.4 - ATUALIZA A PÁGINA
 //
@@ -285,7 +382,7 @@
 //
 //	2.5 - IMPRIME AS RESERVAS
 //
-	function imprimeReserva() {
+	function imprimeReservas() {
 	//
 	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
         let imprime = document.getElementById('conteudo-imprecao').innerHTML;
