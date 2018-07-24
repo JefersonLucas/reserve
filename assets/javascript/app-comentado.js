@@ -9,17 +9,15 @@
 //==============================================================||
 //	1 - CLASSES DO APP
 //
-//	1.1 - RESERVA
-//
-//	CLASSE PAI / RESERVA
+//	1.0.0 - CLASSE PAI / RESERVA
 	class Reserva {
 		constructor(nome, equipamento, horaA, dataEUA) {
 			this.nome 			= nome;
 			this.equipamento 	= equipamento;
 			this.horaA			= horaA;
-			this.dataEUA 			= dataEUA; 
+			this.dataEUA 		= dataEUA; 
 		}
-	//	VALIDAR DADOS DE RESERVA
+	//	1.0.1 - VALIDAR DADOS DE RESERVA
 		validaDadosReserva() {
 		//	VALIDAR OS DADOS DA RESERVA
 			for (let r in this){
@@ -30,29 +28,31 @@
 				}
 			}
 		//	RETORNA VERDADEIRO
-			return true
+			return true;
 		}
 	}
 ///
-//	CLASSE FILHO / RESERVA DO PROFESSOR
+//	1.2.0 - CLASSE FILHO / RESERVA DO PROFESSOR
 	class ReservaProfessor extends Reserva {
 		constructor(nome, equipamento, horaA, dataEUA, sala, horaB) {
+		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, horaA, dataEUA);
 			this.sala = sala;
 			this.horaB = horaB;
 		}
 	}
 //
-//	CLASSE FILHO / RESERVA DO ALUNO
+//	1.3.0 - CLASSE FILHO / RESERVA DO ALUNO
 	class ReservaAluno extends Reserva {
 		constructor(nome, equipamento, horaA, dataEUA, matricula, numeroSerie) {
+		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, horaA, dataEUA);
 			this.matricula = matricula;
 			this.numeroSerie = numeroSerie;
 		}
 	}
 //
-//
+//	1.4.0 - CLASSE BANCO DE DADOS
 	class BancodeDados {
 		constructor(){
 		//	RECEBE O ID E SETA EM UMA VARIÁVEL
@@ -68,12 +68,13 @@
 				localStorage.setItem('idProfessor', 0);
 			}
 		}
+	//	1.4.1 - PEGAR UM NO ID
 		getProximoId(nome) {
-
+		//	PEGO O ID DO ALUNO E PROFESSOR E CONVERTE PARA INTEIRO
 			let idAluno 	= parseInt(localStorage.getItem('idAluno')); 
 			let idProfessor = parseInt(localStorage.getItem('idProfessor'));
-
-			//
+		//
+		//	SE O NOME FOR DO PROFESSOR
 			if (nome == "Professor") {
 			//	VERIFICAÇÃO
 				if(idAluno > idProfessor) {
@@ -97,11 +98,11 @@
 					return proximoId;
 				}
 				else {
-				//	RETORNO DO VALOR DE ID
+				//	CASO NÃO TENHA VALOR RETORNO 0
 					return 0;
 				//
 				}
-			//
+		//	SE O NOME FOR DO ALUNO
 			} 
 			else if(nome == "Aluno") {
 			//	VERIFICAÇÃO
@@ -126,58 +127,70 @@
 					return proximoId;
 				//
 				} else {
-				//	RETORNO DO VALOR DE ID
+				//	CASO NÃO TENHA VALOR RETORNO 0
 					return 0;
 				//
 				}
 				//				
 			}
+		//
 		}
+	//	1.4.2 - GRAVAR RESERVA
 		gravar(reserva, nome) {
 		//	VALOR DA getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
 			let id = this.getProximoId(nome);
 		//
 		//	CONVERTE VALORES E SETA PARA O LOCALSTRORAGE 
-			localStorage.setItem(id, JSON.stringify(reserva))
+			localStorage.setItem(id, JSON.stringify(reserva));
 		//
 		//	ATUALIZA O ID COM A INFORMAÇÃO DO NOVO ID DA FUNÇÃO getProximoId()
-			localStorage.setItem(`id${nome}`, id)
+			localStorage.setItem(`id${nome}`, id);
 		}
+	//	1.4.3 - RECUPERAR DADOS DA RESERVA DO PROFESSOR
 		recuperaReservaProfessor() {
-			
-			let reservas = Array()
-
+		//	DEFINIÇÃO DE UM ARRAY DE RESERVAS
+			let reservas = Array();
+		//	PEGANDO O ID DO PROFESSOR NO LOCAL STORAGE
 			let id = localStorage.getItem("idProfessor");
-
+		//	ESTRUTURA FOR PRA EXTRAIR OS IDS DAS RESERVAS 
 			for(let i = 0; i <= id; i++){
+			//	CONVERTENDO AS RESERVAS EM JSON 
 				let reserva = JSON.parse(localStorage.getItem(i));
-			
+			//	CASO ALGUM ITEM DA RESERVA SEJA INDEFINIDO CONTINUA E IGNORA A RESERVA
 				if(reserva === null || reserva.nome === undefined || reserva.equipamento === undefined || reserva.sala === undefined || reserva.horaA === undefined || reserva.horaB === undefined || reserva.dataEUA === undefined) {
 					continue;
 				}
+			//	ID DA RESERVA RECEBE O VALOR DE I
 				reserva.id = i;
+			//	INSERÇÃO DAS RESERVAS NO ARRAY RESERVAS
 				reservas.push(reserva);
 			}
+		//	RETORNA AS RESERVAS
 			return reservas;
 		}
+	//	1.4.4 - RECUPERAR DADOS DA RESERVA DO ALUNO
 		recuperaReservaAluno() {
-
-			let reservas = Array()
-
+		//	DEFINIÇÃO DE UM ARRAY DE RESERVAS
+			let reservas = Array();
+		//	PEGANDO O ID DO ALUNO NO LOCAL STORAGE
 			let id = localStorage.getItem("idAluno");
-
+		//	ESTRUTURA FOR PRA EXTRAIR OS IDS DAS RESERVAS 
 			for(let i = 0; i <= id; i++){
+			//	CONVERTENDO AS RESERVAS EM JSON 
 				let reserva = JSON.parse(localStorage.getItem(i));
-			
+			//	CASO ALGUM ITEM DA RESERVA SEJA INDEFINIDO CONTINUA E IGNORA A RESERVA
 				if(reserva === null || reserva.nome === undefined || reserva.matricula === undefined || reserva.equipamento === undefined || reserva.numeroSerie === undefined || reserva.horaA === undefined || reserva.dataEUA === undefined) {
 					continue;
 				}
+			//	ID DA RESERVA RECEBE O VALOR DE I
 				reserva.id = i;
+			//	INSERÇÃO DAS RESERVAS NO ARRAY RESERVAS
 				reservas.push(reserva);
 			}
+		//	RETORNA AS RESERVAS
 			return reservas;
 		}
-	//	MÉTODO DE PESQUISAR E FILTRAR OS DADOS DA RESERVA
+	//	1.4.5 - PESQUISAR E FILTRAR OS DADOS DA RESERVA
 		pesquisaReserva(reserva, nome) {
 		//	VERIFICAÇÃO
 			if(nome == "Professor") {
@@ -221,16 +234,16 @@
 					reservasFiltradas = reservasFiltradas.filter(a => a.nome == reserva.nome);
 				}
 				if(reserva.matricula != "") {
-					reservasFiltradas = reservasFiltradas.filter(a => a.equipamento == reserva.matricula);
+					reservasFiltradas = reservasFiltradas.filter(a => a.matricula == reserva.matricula);
 				}
 				if(reserva.equipamento != "") {
-					reservasFiltradas = reservasFiltradas.filter(a => a.sala == reserva.equipamento);
+					reservasFiltradas = reservasFiltradas.filter(a => a.equipamento == reserva.equipamento);
 				}
 				if(reserva.numeroSerie != "") {
-					reservasFiltradas = reservasFiltradas.filter(a => a.horaA == reserva.numeroSerie);
+					reservasFiltradas = reservasFiltradas.filter(a => a.numeroSerie == reserva.numeroSerie);
 				}
 				if(reserva.horaA != "") {
-					reservasFiltradas = reservasFiltradas.filter(a => a.horaB == reserva.horaA);
+					reservasFiltradas = reservasFiltradas.filter(a => a.horaA == reserva.horaA);
 				}
 				if(reserva.dataEUA != "") {
 					reservasFiltradas = reservasFiltradas.filter(a => a.dataEUA == reserva.dataEUA);
@@ -241,20 +254,20 @@
 			}
 		//
 		}
-	//	MÉTODO REMOVER RESERVAS
+	//	1.4.6 - REMOVER RESERVAS
 		removerReserva(id) {
 			localStorage.removeItem(id);
 		}
 	}
 //
-//	VARIÁVEL GLOBAL BANCO DE DADOS
+//	1.5.0 - VARIÁVEL GLOBAL BANCO DE DADOS
 	let bancodedados = new BancodeDados();
 //
 //==============================================================||
 //==============================================================||
 //	2 - FUNÇÕES DO APP
 //
-//	FUNÇÃO CADASTRAR A RESERVA DO PROFESSOR
+//	2.0.0 - FUNÇÃO CADASTRAR A RESERVA DO PROFESSOR
 	function cadastrarReservaProfessor() {
 	//	RESGATANDO O VALOR DA RESERVA	
 		let nome 		= document.getElementById('professor');
@@ -310,7 +323,7 @@
 		}
 	}
 //
-//	FUNÇÃO CADASTRAR A RESERVA DO ALUNO
+//	2.1.0 - FUNÇÃO CADASTRAR A RESERVA DO ALUNO
 	function cadastrarReservaAluno() {
 	//	RESGATANDO O VALOR DA RESERVA	
 		let nome 		= document.getElementById('aluno');
@@ -321,7 +334,7 @@
 		let dataEUA 	= document.getElementById('data');
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, numeroSerie.value)
+		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, numeroSerie.value);
 	//
 	//	VALIDAÇÃO
 		if(reserva.validaDadosReserva()){
@@ -367,7 +380,7 @@
 	//
 	}
 //
-//	LISTA DE RESERVAS DOS PROFESSORES
+//	2.2.0 - LISTA DE RESERVAS DOS PROFESSORES
 	function ListaReservasProfessores() {
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
@@ -515,7 +528,7 @@
 		})
 	}
 //
-//
+//	2.3.0 - PESQUISAR RESERVA DO PROFESSOR
 	function pesquisarReservaProfessor() {
 	//	RECUPERANDO OS VALORES DOS CAMPOS
 		let nome 		= document.getElementById('professor').value;
@@ -690,7 +703,7 @@
 	}
 	//
 //
-//	LISTA DE RESERVAS DOS ALUNOS
+//	2.4.0 - LISTA DE RESERVAS DOS ALUNOS
 	function ListasReservasAlunos() {
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
@@ -816,7 +829,7 @@
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 				//
 				//	DIALOG DE EXCLUSÃO
-					$('#modalAlteraReserva').modal('show')
+					$('#modalAlteraReserva').modal('show');
 				//
 					document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
 					document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-danger';
@@ -841,6 +854,7 @@
 //
 	}
 //
+//	2.5.0 PESQUISA RESERVA DO ALUNO
 	function pesquisarReservaAluno() {
 	//	RESGATANDO O VALOR DA RESERVA	
 		let nome 		= document.getElementById('aluno').value;
@@ -907,7 +921,7 @@
 				//
 					document.getElementById('modal-titulo-ver').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
 					document.getElementById('modal-titulo-div-ver').className  	= 'modal-header text-white bg-primary';
-					document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>';
+					document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>:';
 					document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
 					document.getElementById('modal-btn-ver').innerHTML 			= 'Voltar';
 					document.getElementById('modal-btn-ver').className 			= 'btn btn-outline-primary';
@@ -987,7 +1001,7 @@
 					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 					//
 					//	DIALOG DE EXCLUSÃO
-						$('#modalAlteraReserva').modal('show')
+						$('#modalAlteraReserva').modal('show');
 					//
 						document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
 						document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-danger';
@@ -1016,15 +1030,13 @@
 	}
 	//
 //
-//	2.4 - ATUALIZA A PÁGINA
-//
+//	2.6.0 - ATUALIZA A PÁGINA
  	function atualiza() {
  	//	ATUALIZA A PÁGINA
  		window.location.reload();
 	}
 //
-//	2.5 - IMPRIME AS RESERVAS
-//
+//	2.7.0 - IMPRIME AS RESERVAS
 	function imprimeReservas() {
 	//
 	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
@@ -1041,14 +1053,12 @@
 //=============================================================||
 //	3 - FUNÇÕES BOOTSTRAP
 //
-//	3.1 - POPOVER
-//
+//	3.1.0 - POPOVER
 	$(function () {
   		$('[data-toggle="popover"]').popover();
 	})
 //
-//	3.2 - TOOLTIP
-//
+//	3.2.0 - TOOLTIP
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip();
 	})

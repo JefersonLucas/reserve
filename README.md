@@ -15,7 +15,7 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 * Armazenamento local no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
 ## Como funciona?
-O aplicativo funciona baseado na funcionalidade CRUD do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
+O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
 * Efetuar cadastros de reservas;
 * Visualizar lista de reservas cadastradas;
 * Editar os cadastros;
@@ -42,7 +42,8 @@ Para utilizar a aplicação será necessário:
 | (v1.2.1-beta) | 29/06/2018 | Aprimoramento na validação do cadastro de reservas. |
 | (v1.2.2-beta) | 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
 | (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
-| (v1.4.0-beta) **new**| 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
+| (v1.4.0-beta) | 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
+| (v1.5.0-beta) **new** | 24/07/2018 | Adição de cadastro, vizualização, edição e exclusão de reservas para alunos; Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Alteração do background dos modais e cor do texto das tabelas dos modais; botões; Troca de ícones e botões.  |
 
 ### Bugs / Defeitos
 
@@ -65,6 +66,3 @@ Para utilizar a aplicação será necessário:
 | Validação de cadastro. | (versão 1.2.1-beta) |
 | Formatação da data EUA para BR. | (versão 1.2.2-beta) |
 | Validação duplas de edição e exclusão de cadastro. | (versão 1.3.0-beta) |
-
-## Demonstração
-![index](https://user-images.githubusercontent.com/39635734/42135637-f8733902-7d23-11e8-9674-f1ab874d465b.jpg)
