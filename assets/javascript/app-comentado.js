@@ -392,6 +392,13 @@
 //
 //	2.2.0 - LISTA DE RESERVAS DOS PROFESSORES
 	function ListaReservasProfessores() {
+	//	NOME DO FUNCIONÁRIO
+		funcionario();
+	//	DATA E HORA
+		tempo();
+	//
+    //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
+        document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
 	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
@@ -715,6 +722,13 @@
 //
 //	2.4.0 - LISTA DE RESERVAS DOS ALUNOS
 	function ListasReservasAlunos() {
+	//	NOME DO FUNCIONÁRIO
+		funcionario();
+	//	DATA E HORA
+		tempo();
+	//
+    //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
+        document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
 	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
@@ -1059,7 +1073,7 @@
         telaImpressao.window.close();
     }
 //	2.8.0 - DEFINE O NOME DO FUNCIONÁRIO
-    function nomeFuncionario() {
+    let funcionario = function nomeFuncionario() {
     //	PEGA NO LOCAL STORAGE O NOME DO FUNCIONÁRIO
     	let funcionario = localStorage.getItem("funcionario");
     //	SE NÃO EXISTIR O NOME DO FUNCIONÁRIO
@@ -1079,6 +1093,47 @@
     //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
         document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
     }
+//
+//	TEMPO
+	let tempo = function() {
+		setInterval(dataHora, 100);
+	}
+//
+//	DATA E HORA
+	function dataHora() {
+	//
+	//	INSTÂNCIA DATA
+		let time = new Date();
+	//	DATA
+		let ano = time.getFullYear();
+		let mes = time.getMonth() + 1;
+		let dia = time.getDate();
+	//	AJUSTE NA DATA
+		if(mes < 10){mes = "0"+mes;} 
+	//
+		let data = dia+"/"+mes+"/"+ano;
+	//
+	//	HORA
+		let hora = time.getHours();
+		let minuto = time.getMinutes();
+		let segundo = time.getSeconds();
+	//	AJUSTE NA HORA
+		if(hora < 10) {hora = "0"+hora;}
+		if(minuto < 10) {minuto = "0"+minuto;}
+		if(segundo < 10) {segundo = "0"+segundo;}
+	//	
+		let horario = hora+":"+minuto+":"+segundo;
+	//
+	//	MENSAGEM
+		let mensagem = null;
+	//
+		if(hora >= "06" && hora <= "12") { mensagem = "<i class='fas fa-sun'></i> Boa dia, "; }
+		if(hora >= "12" && hora <= "18") { mensagem = "<i class='fas fa-sun'></i> Boa tarde, "; }	
+		else { mensagem = "<i class='fas fa-moon'></i> Boa noite, "; }
+	//
+		document.getElementById("tempo").innerHTML = mensagem+" "+data+" "+horario;
+	//
+	}
 //
 //=============================================================||
 //=============================================================||

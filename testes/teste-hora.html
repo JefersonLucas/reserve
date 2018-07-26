@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+
+		function tempo() {
+			
+			var time = new Date();
+			var hora = time.getHours();
+			var minuto = time.getMinutes();
+			var segundo = time.getSeconds();
+
+			if(hora < 10) {
+				hora = "0"+hora;
+			}
+			if (minuto < 10) {
+				minuto = "0"+minuto;
+			}
+			if(segundo < 10) {
+				segundo = "0"+segundo;
+			}
+			var tempo = hora+":"+minuto+":"+segundo;
+
+			document.getElementById("tempo").innerHTML = tempo;
+		}
+		function iniciaTempo() {
+			setInterval(tempo, 1000);
+		}
+
+	</script>
+
+</head>
+<body onload="iniciaTempo()">
+	<div id="tempo"></div>
+</body>
+</html>
