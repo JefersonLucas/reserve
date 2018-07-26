@@ -1,8 +1,8 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 24/07/2018
-//  VERSÃO: 1.5.0-BETA
+//  DATA DE MODIFICAÇÃO: 26/07/2018
+//  VERSÃO: 1.6.0-BETA
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE PROFESSORES
 //==============================================================|| -->
 <html>
@@ -20,17 +20,16 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/javascript/app.min.js"></script>
+        <script src="assets/javascript/app-comentado.js"></script>
         <!-- STYLE -->
         <style type="text/css">
             a.nounderline:link { 
                 text-decoration:none;
-            } 
+            }
         </style>
-        
     </head>
 
-    <body onload="ListaReservasProfessores()">
+    <body onload="ListaReservasProfessores(), nomeFuncionario()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
@@ -50,12 +49,18 @@
                     <li class="nav-item active"><a class="nav-link" href="index.html">Professores</a></li>
                     <li class="nav-item"><a class="nav-link" href="alunos.html">Alunos</a></li>
                 </ul>
-
-                <!-- NÚMERO DA VERSÃO E LINK GITHUB -->
-                <span class="navbar-text" title="Reserve v1.5.0-beta">v1.5.0-beta&nbsp;
-                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Projeto no GitHub" class="nounderline">
+                
+                <!-- GITHUB -->
+                <span class="navbar-text" data-toggle="tooltip" data-placement="bottom" title="GitHub">
+                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" class="nounderline">
                         <i class="fab fa-github"></i>
-                    </a>
+                    </a>&nbsp;
+                </span>
+
+                <!-- NOME DO FUNCIONÁRIO -->
+                <span class="navbar-text">
+                    <i class="fas fa-user-circle"></i>
+                    Funcionário: <a href="#" class="nounderline" id="funcionario"></a>
                 </span>
             </div>
 

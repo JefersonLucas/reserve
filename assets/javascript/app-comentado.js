@@ -1,11 +1,21 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 21/07/2018
-//  DATA DE MODIFICAÇÃO: 24/07/2018
-//  VERSÃO: 1.5.0-BETA
+//  DATA DE MODIFICAÇÃO: 26/07/2018
+//  VERSÃO: 1.6.0-BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO
 //	/EDIÇÃO E EXCLUSÃO DE RESERVAS DE PROFESSORES E ALUNOS
 //==============================================================||
+//	0 - VERSÃO DO APP
+//
+//	PEGA VERSÃO ATUAL GRAVADO NO LOCAL STORAGE
+	let versao = localStorage.getItem("versao");
+//	SE NÃO HOUVER
+	if(versao === null) {
+	//	SETA UMA COM O VALOR DA NOVA VERSÃO
+		localStorage.setItem("versao","1.6.0-beta");
+	}
+//
 //==============================================================||
 //	1 - CLASSES DO APP
 //
@@ -1047,7 +1057,28 @@
         telaImpressao.document.write(imprime);
         telaImpressao.window.print();
         telaImpressao.window.close();
-     }
+    }
+//	2.8.0 - DEFINE O NOME DO FUNCIONÁRIO
+    function nomeFuncionario() {
+    //	PEGA NO LOCAL STORAGE O NOME DO FUNCIONÁRIO
+    	let funcionario = localStorage.getItem("funcionario");
+    //	SE NÃO EXISTIR O NOME DO FUNCIONÁRIO
+    	if (funcionario === null) {
+   		//	PEGA O NOME DO FUNCIONÁRIO ATRAVÉS DO PROMPT
+        	let nome = prompt("Nome do funcionário:","Seu nome");
+    	//	SE O NOME FOR NULLO
+        	if(nome === null){
+        	//	RECARREGA A PÁGINA
+           		window.location.reload();
+        //	SE NÃO
+        	} else {
+        	//	SETA O NOME DO FUNCIONÁRIO NO LOCAL STORAGE 
+       			localStorage.setItem("funcionario", nome);
+        	}
+        }
+    //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
+        document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
+    }
 //
 //=============================================================||
 //=============================================================||
