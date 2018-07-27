@@ -54,11 +54,11 @@
 //
 //	1.3.0 - CLASSE FILHO / RESERVA DO ALUNO
 	class ReservaAluno extends Reserva {
-		constructor(nome, equipamento, horaA, dataEUA, matricula, numeroSerie) {
+		constructor(nome, equipamento, horaA, dataEUA, matricula, serial) {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, horaA, dataEUA);
 			this.matricula = matricula;
-			this.numeroSerie = numeroSerie;
+			this.serial = serial;
 		}
 	}
 //
@@ -189,7 +189,7 @@
 			//	CONVERTENDO AS RESERVAS EM JSON 
 				let reserva = JSON.parse(localStorage.getItem(i));
 			//	CASO ALGUM ITEM DA RESERVA SEJA INDEFINIDO CONTINUA E IGNORA A RESERVA
-				if(reserva === null || reserva.nome === undefined || reserva.matricula === undefined || reserva.equipamento === undefined || reserva.numeroSerie === undefined || reserva.horaA === undefined || reserva.dataEUA === undefined) {
+				if(reserva === null || reserva.nome === undefined || reserva.matricula === undefined || reserva.equipamento === undefined || reserva.serial === undefined || reserva.horaA === undefined || reserva.dataEUA === undefined) {
 					continue;
 				}
 			//	ID DA RESERVA RECEBE O VALOR DE I
@@ -249,8 +249,8 @@
 				if(reserva.equipamento != "") {
 					reservasFiltradas = reservasFiltradas.filter(a => a.equipamento == reserva.equipamento);
 				}
-				if(reserva.numeroSerie != "") {
-					reservasFiltradas = reservasFiltradas.filter(a => a.numeroSerie == reserva.numeroSerie);
+				if(reserva.serial != "") {
+					reservasFiltradas = reservasFiltradas.filter(a => a.serial == reserva.serial);
 				}
 				if(reserva.horaA != "") {
 					reservasFiltradas = reservasFiltradas.filter(a => a.horaA == reserva.horaA);
@@ -339,12 +339,12 @@
 		let nome 		= document.getElementById('aluno');
 		let matricula 	= document.getElementById('matricula');
 		let equipamento = document.getElementById('equipamento');		
-		let numeroSerie = document.getElementById('serie');
+		let serial = document.getElementById('serie');
 		let horaA 		= document.getElementById('horaA');
 		let dataEUA 	= document.getElementById('data');
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, numeroSerie.value);
+		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, serial.value);
 	//
 	//	VALIDAÇÃO
 		if(reserva.validaDadosReserva()){
@@ -364,7 +364,7 @@
 			document.getElementById('modal-titulo-success').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
 			document.getElementById('modal-titulo-div-success').className  	= 'modal-header text-white bg-success';
 			document.getElementById('modal-conteudo-success').innerHTML 	= 'A reserva do aluno(a) <span class="text-success"><b>'+reserva.nome+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-			document.getElementById('modal-conteudo-success').innerHTML	   += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.matricula+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.numeroSerie+'</td><td>'+dataBR+' - '+reserva.horaA+'</td></tr></tbody>';
+			document.getElementById('modal-conteudo-success').innerHTML	   += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.matricula+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.serial+'</td><td>'+dataBR+' - '+reserva.horaA+'</td></tr></tbody>';
 			document.getElementById('modal-btn-success').innerHTML 			= 'Voltar';
 			document.getElementById('modal-btn-success').className 			= 'btn btn-outline-success';
 		//
@@ -372,7 +372,7 @@
 			nome.value 			= "";
 			matricula.value 	= "";
 			equipamento.value 	= "";
-			numeroSerie.value 	= "";
+			serial.value 	= "";
 			horaA.value			= "";
 			dataEUA.value 		= "";
 		//
@@ -397,6 +397,8 @@
 	//	DATA E HORA
 		tempo();
 	//
+		tempoAlerta();
+    //
     //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
         document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
 	//	DECLARAÇÃO DO ARRAY RESERVAS
@@ -726,7 +728,6 @@
 		funcionario();
 	//	DATA E HORA
 		tempo();
-	//
     //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
         document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
 	//	DECLARAÇÃO DO ARRAY RESERVAS
@@ -746,7 +747,7 @@
  			linha.insertCell(0).innerHTML = a.nome;
  			linha.insertCell(1).innerHTML = a.matricula;
  			linha.insertCell(2).innerHTML = a.equipamento;
- 			linha.insertCell(3).innerHTML = a.numeroSerie;
+ 			linha.insertCell(3).innerHTML = a.serial;
 			//
 			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
 				let diaBR = a.dataEUA.substr(8,2);
@@ -774,7 +775,7 @@
 				document.getElementById('modal-titulo-ver').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
 				document.getElementById('modal-titulo-div-ver').className  	= 'modal-header text-white bg-primary';
 				document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>:';
-				document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
+				document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
 				document.getElementById('modal-btn-ver').innerHTML 			= 'Voltar';
 				document.getElementById('modal-btn-ver').className 			= 'btn btn-outline-primary';
 			//
@@ -800,7 +801,7 @@
  					let nome 			= prompt("Nome do(a) Aluno(a):",a.nome); 					
  					let matricula		= prompt("Matrícula:",a.matricula);
  					let equipamento 	= prompt("Descrição do equipamento:",a.equipamento);
- 					let numeroSerie		= prompt("Nº de série:",a.numeroSerie);
+ 					let serial		= prompt("Nº de série:",a.serial);
  					let horaA 			= prompt("Início da aula:",a.horaA);
  					let dataBr 			= prompt("Data da aula:",dataBR);
  				//
@@ -811,7 +812,7 @@
 					document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-success';
 					document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-success rounded alert-success';
 					document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>'
-					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+numeroSerie+'</td><td>'+dataBr+'-'+horaA+'</td></tr></tbody>';
+					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataBr+'-'+horaA+'</td></tr></tbody>';
 					document.getElementById('modal-btn-altera').innerHTML 			= 'Voltar';
 					document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-success';
 				//
@@ -828,7 +829,7 @@
 					let dataEUA = anoEUA+mesEUA+diaEUA;
 				//
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, numeroSerie);
+					reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
 				//
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reservaAluno, "Aluno");
@@ -859,7 +860,7 @@
 					document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-danger';
 					document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-danger rounded alert-danger';
 					document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-danger"><b>'+a.nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
-					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-danger bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+'-'+a.horaA+'</td></tr></tbody>';
+					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-danger bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+'-'+a.horaA+'</td></tr></tbody>';
 					document.getElementById('modal-btn-altera').innerHTML 			= 'Voltar';
 					document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-danger';
 				//
@@ -884,12 +885,12 @@
 		let nome 		= document.getElementById('aluno').value;
 		let matricula 	= document.getElementById('matricula').value;
 		let equipamento = document.getElementById('equipamento').value;		
-		let numeroSerie = document.getElementById('serie').value;
+		let serial = document.getElementById('serie').value;
 		let horaA 		= document.getElementById('horaA').value;
 		let dataEUA 	= document.getElementById('data').value;
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, numeroSerie);
+		reserva  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
 	//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
 		let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
 	//	SELECIONANDO O ELEMENTO DA TABELA
@@ -898,7 +899,7 @@
 		listaReservas.innerHTML = "";
 	//
 	//	VALIDAÇÃO DA PESQUISA
-		if(nome == "" && equipamento == "" && horaA == "" && dataEUA == "" && matricula == "" && numeroSerie == "") {
+		if(nome == "" && equipamento == "" && horaA == "" && dataEUA == "" && matricula == "" && serial == "") {
 		//	MODAL DE ERRO
 			$('#modalValidaReserva').modal('show');
 		//
@@ -920,7 +921,7 @@
 				linha.insertCell(0).innerHTML = a.nome;
 				linha.insertCell(1).innerHTML = a.matricula;
 				linha.insertCell(2).innerHTML = a.equipamento;
-				linha.insertCell(3).innerHTML = a.numeroSerie;
+				linha.insertCell(3).innerHTML = a.serial;
 				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
 					let diaBR = a.dataEUA.substr(8,2);
 					let mesBR = "/"+a.dataEUA.substr(5,2);
@@ -946,7 +947,7 @@
 					document.getElementById('modal-titulo-ver').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
 					document.getElementById('modal-titulo-div-ver').className  	= 'modal-header text-white bg-primary';
 					document.getElementById('modal-conteudo-ver').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>:';
-					document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
+					document.getElementById('modal-conteudo-ver').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
 					document.getElementById('modal-btn-ver').innerHTML 			= 'Voltar';
 					document.getElementById('modal-btn-ver').className 			= 'btn btn-outline-primary';
 				//
@@ -972,7 +973,7 @@
  						let nome 			= prompt("Nome do(a) Aluno(a):",a.nome); 					
  						let matricula		= prompt("Matrícula:",a.matricula);
  						let equipamento 	= prompt("Descrição do equipamento:",a.equipamento);
- 						let numeroSerie		= prompt("Nº de série:",a.numeroSerie);
+ 						let serial		= prompt("Nº de série:",a.serial);
  						let horaA 			= prompt("Início da aula:",a.horaA);
  						let dataBr 			= prompt("Data da aula:",dataBR);
  					//
@@ -983,7 +984,7 @@
 						document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-success';
 						document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-success rounded alert-success';
 						document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>'
-						document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+numeroSerie+'</td><td>'+dataBr+'-'+horaA+'</td></tr></tbody>';
+						document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataBr+'-'+horaA+'</td></tr></tbody>';
 						document.getElementById('modal-btn-altera').innerHTML 			= 'Voltar';
 						document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-success';
 					//
@@ -1000,7 +1001,7 @@
 						let dataEUA = anoEUA+mesEUA+diaEUA;
 					//
 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, numeroSerie);
+						reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
 					//
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 						bancodedados.gravar(reservaAluno, "Aluno");
@@ -1031,7 +1032,7 @@
 						document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-danger';
 						document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-danger rounded alert-danger';
 						document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-danger"><b>'+a.nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
-						document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.numeroSerie+'</td><td>'+dataBR+'-'+a.horaA+'</td></tr></tbody>';
+						document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+'-'+a.horaA+'</td></tr></tbody>';
 						document.getElementById('modal-btn-altera').innerHTML 			= 'Voltar';
 						document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-danger';
 					//
@@ -1092,14 +1093,15 @@
         }
     //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
         document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
+        document.getElementById("funcionario").title = localStorage.getItem("funcionario");
     }
 //
-//	TEMPO
+//	2.9.0 - TEMPO
 	let tempo = function() {
 		setInterval(dataHora, 100);
 	}
 //
-//	DATA E HORA
+//	2.10.0 - DATA E HORA
 	function dataHora() {
 	//
 	//	INSTÂNCIA DATA
@@ -1135,6 +1137,58 @@
 	//
 	}
 //
+//	ALERTA
+	let tempoAlerta = function() { setInterval(alertaReserva, 5000); }
+//
+	function alertaReserva() {
+		
+		reservas = bancodedados.recuperaReservaProfessor();
+
+		reservas.forEach(function(p) {
+
+			let horaA = p.horaA;
+			let horaB = p.horaB;
+
+			let time = new Date();
+
+			let hora = time.getHours();
+			let minuto = time.getMinutes();
+
+			if(minuto < 10) {minuto = "0"+minuto;}
+
+			let horaX = hora+":"+minuto;
+
+			if(horaX >= p.horaA) {
+			//	DIALOG DE EXCLUSÃO
+				$('#modalAlteraReserva').modal('show');
+			//
+				document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
+				document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
+				document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
+				document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
+				document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
+				document.getElementById('modal-btn-altera').innerHTML 			= 'Voltar';
+				document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
+			}
+			else if(horaX <= p.horaB) {
+			//	DIALOG DE EXCLUSÃO
+				$('#modalAlteraReserva').modal('show');
+			//
+				document.getElementById('modal-titulo-altera').innerHTML 		= 'Atenção!';
+				document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
+				document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
+				document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> está pra <span class="text-warning"><b>acabar!</b></span>';
+				document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
+				document.getElementById('modal-btn-altera').innerHTML 			= 'Retirado';
+				document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
+			//
+			//	FORMATAR O ID
+			//	let id = p.id;
+			//	REMOVE A RESERVA
+ 			//	bancodedados.removerReserva(id);
+			}
+		})
+	}
 //=============================================================||
 //=============================================================||
 //	3 - FUNÇÕES BOOTSTRAP
