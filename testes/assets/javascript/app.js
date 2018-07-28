@@ -1,7 +1,7 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
 //	DATA DE CRIAÇÃO: 21/07/2018
-//  DATA DE MODIFICAÇÃO: 26/07/2018
+//  DATA DE MODIFICAÇÃO: 28/07/2018
 //  VERSÃO: 1.6.0-BETA
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO
 //	/EDIÇÃO E EXCLUSÃO DE RESERVAS DE PROFESSORES E ALUNOS
@@ -44,11 +44,12 @@
 ///
 //	1.2.0 - CLASSE FILHO / RESERVA DO PROFESSOR
 	class ReservaProfessor extends Reserva {
-		constructor(nome, equipamento, horaA, dataEUA, sala, horaB) {
+		constructor(nome, equipamento, horaA, dataEUA, sala, horaB, status = "Aguardando") {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, horaA, dataEUA);
 			this.sala = sala;
 			this.horaB = horaB;
+			this.status = status;
 		}
 	}
 //
@@ -167,7 +168,7 @@
 			//	CONVERTENDO AS RESERVAS EM JSON 
 				let reserva = JSON.parse(localStorage.getItem(i));
 			//	CASO ALGUM ITEM DA RESERVA SEJA INDEFINIDO CONTINUA E IGNORA A RESERVA
-				if(reserva === null || reserva.nome === undefined || reserva.equipamento === undefined || reserva.sala === undefined || reserva.horaA === undefined || reserva.horaB === undefined || reserva.dataEUA === undefined) {
+				if(reserva === null || reserva.nome === undefined || reserva.equipamento === undefined || reserva.sala === undefined || reserva.horaA === undefined || reserva.horaB === undefined || reserva.dataEUA === undefined || reserva.status === undefined) {
 					continue;
 				}
 			//	ID DA RESERVA RECEBE O VALOR DE I
@@ -286,9 +287,10 @@
 		let horaA 		= document.getElementById('horaA');
 		let horaB 		= document.getElementById('horaB');
 		let dataEUA 	= document.getElementById('data');
+		let status 		= "Aguardando";
 	//
 	//	INSTÂNCIA DA RESERVA DO PROFESSOR
-		reserva = new ReservaProfessor(nome.value, equipamento.value, horaA.value, dataEUA.value, sala.value, horaB.value);
+		reserva = new ReservaProfessor(nome.value, equipamento.value, horaA.value, dataEUA.value, sala.value, horaB.value, status);
 	//
 	//	VALIDAÇÃO
 		if(reserva.validaDadosReserva()){
@@ -430,6 +432,18 @@
 		//	DATA EXIBIDA NO FORMATO BR
 			linha.insertCell(4).innerHTML = dataBR;
 		//
+			let status;
+		//
+			if(p.status == "Aguardando") {
+				status = '<span class="text-primary"><b>'+p.status+'</b></span>';
+			} else if(p.status == "Montado") {
+				status = '<span class="text-success"><b>'+p.status+'</b></span>';
+			} else {
+				status = '<span class="text-danger"><b>'+p.status+'</b></span>';
+			}
+		//
+			linha.insertCell(5).innerHTML = status;
+		//
  		//	BOTAO DE VIZUALIZAÇÃO
  		//
  			let ver 		= document.createElement("button");
@@ -499,8 +513,9 @@
 				//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
 					let dataEUA = anoEUA+mesEUA+diaEUA;
 				//
+					let status = p.status;
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB);
+					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
 				//
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Professor");
@@ -542,7 +557,7 @@
  			}
  		//
  		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO
- 			linha.insertCell(5).append(ver," ", editar," ", excluir);
+ 			linha.insertCell(6).append(ver," ", editar," ", excluir);
  		//
 		})
 	}
@@ -597,7 +612,22 @@
 				//	VALOR COM A DATA NO FORMATO BR
 					let dataBR = diaBR+mesBR+anoBR;
 			//	DATA EXIBIDA NO FORMATO BR
-				linha.insertCell(4).innerHTML = dataBR;
+				linha.insertCell(4).innerHTML = dataBR;		
+			//
+				let status;
+			//
+				if(p.status == "Aguardando") {
+					status = '<span class="text-primary"><b>'+p.status+'</b></span>';
+				} else if(p.status == "Montado") {
+					status = '<span class="text-success"><b>'+p.status+'</b></span>';
+				} else {
+					status = '<span class="text-danger"><b>'+p.status+'</b></span>';
+				}
+			//
+			//
+				linha.insertCell(5).innerHTML = status;
+			//
+
 			//
  			//	BOTAO DE VIZUALIZAÇÃO
  			//
@@ -668,8 +698,9 @@
 					//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
 						let dataEUA = anoEUA+mesEUA+diaEUA;
 					//
+						let status = p.status;
 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						let reservaProfessor = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB);
+						let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
 					//
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 						bancodedados.gravar(reservaProfessor, "Professor");
@@ -711,7 +742,7 @@
  				}
  			//
  			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO
- 				linha.insertCell(5).append(ver," ", editar," ", excluir);
+ 				linha.insertCell(6).append(ver," ", editar," ", excluir);
  			//
 			//
 			})
@@ -1138,7 +1169,7 @@
 	}
 //
 //	ALERTA
-	let tempoAlerta = function() { setInterval(alertaReserva, 120000); }
+	let tempoAlerta = function() { setInterval(alertaReserva, 15000); }
 //
 	function alertaReserva() {
 		
@@ -1152,44 +1183,85 @@
 		//	INSTÂNCIA DO TEMPO
 			let time = new Date();
 		//
-		//	TEMPO X
-			let horaX = time.getHours();
-			let minutoX = time.getMinutes() - 5;
-			if(minutoX < 10) {minutoX = "0"+minutoX;}
-			let tempoX = horaX+":"+minutoX;
+		//	TEMPO
+			let hora = time.getHours();
+			let minuto = time.getMinutes();
+			if(minuto < 10) {minuto = "0"+minuto;}
+			if(hora < 10) {hora = "0"+hora;}
+			let tempo = hora+":"+minuto;
 		//
-		//	TEMPO Y
-			let horaY = time.getHours();
-			let minutoY = time.getMinutes();
-			if(minutoY < 10) {minutoY = "0"+minutoY;}
-			let tempoY = horaY+":"+minutoY;
-		//
-			console.log(tempoX, tempoY);
+			if(p.status == "Aguardando") {
+			//	INÍCIO DA RESERVA
+				if(comeco == tempo){
+				//
+					$('#modalAlteraReserva').modal('show');
+					document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
+					document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
+					document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
+					document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
+					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
+					document.getElementById('modal-btn-altera').innerHTML 			= 'Montar';
+					document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
+				//	FORMATAR O ID
+					let id = p.id;
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//
+				//
+					let nome 		= p.nome;
+					let equipamento = p.equipamento;
+					let horaA 		= p.horaA;
+					let dataEUA 	= p.dataEUA;
+					let sala 		= p.sala;
+					let horaB 		= p.horaB;
+					let status 		= "Montado";
 
-			if(tempoX <= comeco){
-				$('#modalAlteraReserva').modal('show');
-			//
-				document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
-				document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
-				document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
-				document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
-				document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
-				document.getElementById('modal-btn-altera').innerHTML 			= 'Montar';
-				document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
+				//
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reserva, "Professor");
+				//
+				}
 			}
-			else if (tempoX <= final){
-				$('#modalAlteraReserva').modal('show');
-				document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
-				document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
-				document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
-				document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>acabar!</b></span>';
-				document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
-				document.getElementById('modal-btn-altera').innerHTML 			= 'Retirar';
-				document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
-			} 
+			if(p.status == "Montado") {
+			//	FIM DA RESERVA
+				if(final == tempo){
+				//
+					$('#modalAlteraReserva').modal('show');
+					document.getElementById('modal-titulo-altera').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
+					document.getElementById('modal-titulo-div-altera').className  	= 'modal-header text-white bg-warning';
+					document.getElementById('modal-dialog-altera').className  		= 'modal-dialog border border-warning rounded alert-warning';
+					document.getElementById('modal-conteudo-altera').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>acabar!</b></span>';
+					document.getElementById('modal-conteudo-altera').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+p.nome+'</td></tr></tbody>';
+					document.getElementById('modal-btn-altera').innerHTML 			= 'Retirar';
+					document.getElementById('modal-btn-altera').className 			= 'btn btn-outline-warning';
+				//	FORMATAR O ID
+					let id = p.id;
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//
+				//
+					let nome 		= p.nome;
+					let equipamento = p.equipamento;
+					let horaA 		= p.horaA;
+					let dataEUA 	= p.dataEUA;
+					let sala 		= p.sala;
+					let horaB 		= p.horaB;
+					let status 		= "Retirado";
 
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
+				//
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reserva, "Professor");
+				//
+				}
+			}
+		//
 		})
 	}
+//
 //=============================================================||
 //=============================================================||
 //	3 - FUNÇÕES BOOTSTRAP
