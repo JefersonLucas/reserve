@@ -44,7 +44,7 @@ Para utilizar a aplicação será necessário:
 | (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
 | (v1.4.0-beta) | 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
 | (v1.5.0-beta) | 24/07/2018 | Adição de cadastro, vizualização, edição e exclusão de reservas para alunos; Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Alteração do background dos modais e cor do texto das tabelas dos modais; botões; Troca de ícones e botões.  |
-| (v1.6.0-beta) **new** | ##/##/#### | Definição do nome do funcionário; data e hora exibidas no menu de navegação.  |
+| (v1.6.0-beta) **new** | ##/##/#### | Definição do nome do funcionário; data e relógio exibidos no menu de navegação; alerta de reserva do professor; status de reserva do professor. |
 
 ### Bugs / Defeitos
 

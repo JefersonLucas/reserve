@@ -1,15 +1,15 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 28/07/2018
+//  DATA DE MODIFICAÇÃO: 26/07/2018
 //  VERSÃO: 1.6.0-BETA
-//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE PROFESSORES
+//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE ALUNOS
 //==============================================================|| -->
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Reserve - Professores | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <title>Reserve - Alunos | SENA AIRES &#8211; Colégio e Faculdade</title>
         <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/imagens/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
@@ -18,18 +18,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- APP -->
         <script src="assets/javascript/app.js"></script>
         <!-- STYLE -->
         <style type="text/css">
             a.nounderline:link { 
                 text-decoration:none;
-            }
+            } 
         </style>
+        
     </head>
 
-    <body onload="ListaReservasProfessores()">
+    <body onload="ListasReservasAlunos()">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
             
@@ -46,8 +47,8 @@
             <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="teste-alerta.html">Professores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Alunos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="professor.html">Professores</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="alunos.html">Alunos</a></li>
                 </ul>
                 
                 <!-- GITHUB -->
@@ -61,8 +62,8 @@
                 <span class="navbar-text" id="tempo"></span>&nbsp;
 
                 <!-- NOME DO FUNCIONÁRIO -->
-                <span class="navbar-text active">
-                    - <i class="fas fa-user-circle"></i>
+                <span class="navbar-text">
+                    <i class="fas fa-user-circle"></i>
                     Funcionário: <a href="#" class="nounderline" id="funcionario"></a>
                 </span>
             </div>
@@ -75,12 +76,12 @@
                 
                 <!-- TÍTULO -->
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-user-tie"></i>&nbsp;Professor</h1>
+                    <h1 class="display-5"><i class="fas fa-user-graduate"></i>&nbsp;Aluno</h1>
                 </div>
 
                 <!-- INFO -->
                 <div class="col-md-1 mb-5">
-                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
+                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Alunos" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
                         <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
                     </a>
                 </div>
@@ -95,76 +96,77 @@
                     <!-- DIV DO FORMULÁRIO -->
                     <div class="form-row">
 
-                        <!-- PROFESSOR -->
+                        <!-- ALUNO -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-user-tie" title="Professor"></i>
+                                    <i class="fas fa-user-graduate" title="Aluno"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Nome do professor" class="form-control" placeholder="Ex.: José" id="professor" required>
-                        </div>                    
+                            <input type="text" title="Nome do aluno" class="form-control" placeholder="Ex.: José" id="aluno" required>
+                        </div>
+
+                        <!-- MATRÍCULA -->
+                        <div class="input-group col-md-4 mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text bg-dark text-white">
+                                    <i class="fas fa-address-card" title="Matrícula"></i>
+                                </div>
+                            </div>
+                            <input type="text" title="Matrícula do aluno" class="form-control" placeholder="Ex.: A182018" id="matricula" required>
+                        </div>            
                         
-                        <!-- EQUIPAMENTO -->                        
+                        <!-- EQUIPAMENTO -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-desktop" title="Equipamento"></i>
+                                    <i class="fas fa-laptop"  title="Equipamento"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Nome do equipamento" class="form-control" placeholder="Ex.: Data Show S27" id="equipamento" required>
+                            <input type="text" title="Nome do equipamento" class="form-control" placeholder="Ex.: NOT-001" id="equipamento" required>
                         </div>
 
-                        <!-- SALA -->                        
+                        <!-- NÚMERO DE SÉRIE -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-compass" title="Local"></i>
+                                    <i class="fas fa-barcode" title="Nº de série"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Nome da sala" class="form-control" placeholder="Ex.: Anatomia I" id="sala" required>
+                            <input type="text" title="Nº de série" class="form-control" placeholder="Ex.: NOT12345" id="serie" required>
                         </div>
 
-                        <!-- INÍCIO DA AULA -->                        
+                        <!-- HORÁRIO -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Inicial"></i>
+                                    <i class="fas fa-clock" title="Horário"></i>
                                 </div>
                             </div>
-                            <input type="time" title="Horário inicial" class="form-control" placeholder="00:00" id="horaA" required>
+                            <input type="time" title="Hora" class="form-control" placeholder="00:00" id="horaA" required>
                         </div>
 
-                        <!-- TÉRMINO DA AULA -->                        
+                        <!-- DATA -->
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Final"></i>
+                                    <i class="fas fa-calendar-alt" title="Data"></i>&nbsp;
                                 </div>
                             </div>
-                            <input type="time" title="Horário final" class="form-control" placeholder="00:00" id="horaB" required>
-                        </div>
-
-                        <!-- DATA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-calendar-alt" title="Data"></i>
-                                </div>
-                            </div>
-                            <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" id="data" min="2018-01-01" max="2020-12-31" required>
+                            <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" id="data" required>
                         </div>                    
 
                         <!-- BOTÃO CADASTRAR RESERVA -->
                         <div class="col-md-1">
-                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaProfessor()">
+                            <!-- MUDAR O TYPE PARA SUBMIT -->
+                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaAluno()">
                                 <i class="fas fa-save"></i>
                             </button>
                         </div>
 
                         <!-- BOTÃO PESQUISAR -->
                         <div class="col-md-1">
-                            <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReservaProfessor()">
+                            <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReservaAluno()">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>                     
                         </div>
@@ -195,18 +197,17 @@
                 <div class="col" id="conteudo-imprecao">
                     <table class="table table-hover table-bordered d-print-table">
                         <thead>
-                            <tr class="text-center bg-dark">
-                                <th class="text-white" title="Professor"><i class="fas fa-user-tie" title="Professor"></i>&nbsp;Professor</th>
-                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
-                                <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
-                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
-                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
+                            <tr class="text-center bg-dark">                                    
+                                <th class="text-white" title="Responsável"><i class="fas fa-user-graduate" title="Responsável"></i>&nbsp;Aluno</th>
+                                <th class="text-white" title="Matrícula"><i class="fas fa-address-card" title="Matrícula"></i>&nbsp;Matrícula</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-laptop" title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white" title="Nº de série"><i class="fas fa-barcode" title="Nº de série"></i>&nbsp;Nº de série</th>
+                                <th class="text-white" title="Data e hora"><i class="fas fa-calendar-alt" title="Data e hora"></i>&nbsp;Data e hora</th>
                                 <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i>&nbsp;Opções</th>
                             </tr>
                         </thead>
                         
-                        <tbody id="listaProfessores" class="text-center">
+                        <tbody id="listaAlunos" class="text-center">
                         <!-- EXIBIÇÃO DAS RESERVAS -->
                         </tbody>
                     
@@ -215,86 +216,28 @@
                 </div>
 
             </div>
-            <!-- FIM TABELA DAS RESERVAS -->
+            <!-- FIM TABELA DAS RESERVAS -->            
 
-            <!-- MODAL VALIDAÇÃO SUCESSO -->
-            <div class="modal fade" id="modalCadastraReservaSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- MODAL TIPO 1 -->
+            <div class="modal fade" id="modalTipo1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
-                <div class="modal-dialog border border-success rounded alert-success" role="document">
+                <div class="modal-dialog" role="document" id="modal-document-tipo-1">
                 
                     <div class="modal-content">
                     
-                        <div id="modal-titulo-div-success">
+                        <div id="modal-titulo-div-tipo-1">
 
-                            <h5 class="modal-title" id="modal-titulo-success"></h5>
+                            <h5 class="modal-title" id="modal-titulo-tipo-1"></h5>
                             <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
                     
-                        <div class="modal-body" id="modal-conteudo-success"></div>
+                        <div class="modal-body" id="modal-conteudo-tipo-1"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-success" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>        
-            <!-- FIM MODAL VALIDAÇÃO SUCESSO -->
-
-            <!-- MODAL VALIDAÇÃO ERRO -->
-            <div class="modal fade" id="modalCadastraReservaErro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-erro">
-
-                            <h5 class="modal-title" id="modal-titulo-erro"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-erro"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="" id="modal-btn-erro"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>        
-            <!-- FIM MODAL VALIDAÇÃO ERRO -->
-
-            <!-- MODAL VALIDAÇÃO DE FILTRO -->
-            <div class="modal fade" id="modalValidaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div">
-
-                            <h5 class="modal-title" id="modal-titulo"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn"></button>
+                            <button type="button" data-dismiss="modal" id="modal-btn-tipo-1" onclick="atualiza()"></button>
                         </div>
 
                     </div>
@@ -302,28 +245,28 @@
                 </div>
             
             </div>
-            <!-- FIM MODAL VALIDAÇÃO DE FILTRO -->
+            <!-- FIM MODAL TIPO 1 -->
 
-            <!-- MODAL VIZUALIZAÇÃO -->
-            <div class="modal fade bd-example-modal-lg" id="modalVizualizaReserva" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- MODAL TIPO 2 -->
+            <div class="modal fade" id="modalTipo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
-                <div class="modal-dialog border border-primary rounded alert-primary" role="document">
+                <div class="modal-dialog" role="document" id="modal-document-tipo-2">
                 
                     <div class="modal-content">
                     
-                        <div id="modal-titulo-div-ver">
+                        <div id="modal-titulo-div-tipo-2">
 
-                            <h5 class="modal-title" id="modal-titulo-ver"></h5>
+                            <h5 class="modal-title" id="modal-titulo-tipo-2"></h5>
                             <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
                     
-                        <div class="modal-body" id="modal-conteudo-ver"></div>
+                        <div class="modal-body" id="modal-conteudo-tipo-2"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-ver"></button>
+                            <button type="button" data-dismiss="modal" id="modal-btn-tipo-2"></button>
                         </div>
 
                     </div>
@@ -331,36 +274,8 @@
                 </div>
             
             </div>
-            <!-- FIM MODAL VIZUALIZAÇÃO -->
-
-            <!-- MODAL ALTERA A RESERVA -->
-            <div class="modal fade" id="modalAlteraReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- FIM MODAL TIPO 2 -->
             
-                <div id="modal-dialog-altera" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-altera">
-
-                            <h5 class="modal-title" id="modal-titulo-altera"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-altera"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-altera" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL ALTERA A RESERVA -->
         </div>
 
     </body>
@@ -385,6 +300,7 @@
                 });
             }, false);
         })();
+
     </script>
 
 </html>
