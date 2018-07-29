@@ -8,13 +8,7 @@
 //==============================================================||
 //	0 - VERSÃO DO APP
 //
-//	PEGA VERSÃO ATUAL GRAVADO NO LOCAL STORAGE
-	let versao = localStorage.getItem("versao");
-//	SE NÃO HOUVER
-	if(versao === null) {
-	//	SETA UMA COM O VALOR DA NOVA VERSÃO
-		localStorage.setItem("versao","1.6.0-beta");
-	}
+
 //
 //==============================================================||
 //	1 - CLASSES DO APP
@@ -271,10 +265,105 @@
 		}
 	}
 //
-//	1.5.0 - VARIÁVEL GLOBAL BANCO DE DADOS
+//
+	class Funcionario {
+		constructor(nome) {
+			this.nome = nome;
+		}
+		validaFuncionario() {
+			for(let f in this){
+				if(this[f] === "" || this[f] === null || this[f] === undefined){
+					return false;
+				}
+			}
+			return true;
+		}
+		gravarFuncionario(nome) {
+			localStorage.setItem("funcionario", nome);
+		}
+		exibeNomeFuncionario(){
+			let nome = localStorage.getItem("funcionario");
+
+			document.getElementById("funcionario").innerHTML = nome;
+         	document.getElementById("funcionario").title = nome;
+		}
+		informaNomeFuncionario() {
+			let nome = localStorage.getItem("funcionario");
+			return nome;
+		}
+	}
+//
+	class versaoApp {
+		verificaVersao() {
+		//	PEGA VERSÃO ATUAL GRAVADO NO LOCAL STORAGE
+			let versao = localStorage.getItem("versao");
+		//	SE NÃO HOUVER OU VERSÃO FOR ANTIGA
+			if(versao === null || versao === "1.5.0-beta") {
+			//	SETA UMA COM O VALOR DA NOVA VERSÃO
+				localStorage.setItem("versao","1.6.0-beta");
+			}
+		}
+		versaoAtual() {
+			let versao = localStorage.getItem("versao");
+			return versao;
+		}				
+	}
+//
+//	1.5.0 - VARIÁVEL GLOBAL
+//
 	let bancodedados = new BancodeDados();
 //
+	let funcionario = new Funcionario();
+//
+	let versao = new versaoApp();
+//
 //==============================================================||
+	function novoFuncionario() {
+	//
+		let nome = localStorage.getItem("funcionario");
+	//
+		if(nome === null){
+		//
+        	let nome = prompt("Indentificação do funcionário");
+		//
+			let funcionario = new Funcionario(nome);
+		//
+			if(funcionario.validaFuncionario()){
+			//
+				funcionario.gravarFuncionario(nome);
+			//
+				$('#modalTipo2').modal('show');
+				document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-user-circle"></i> '+funcionario.nome+' seja bem vindo!';
+				document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
+				document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
+				document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'O App Reserve está atualizado com novas funcionalidades para a reserva de equipamentos. Você pode obter mais informações você pode conferir lendo o <a href="https://github.com/JefersonLucas/reserve#changelog--versões" target="_blank">README</a> do app:';
+				document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
+				document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
+			//
+			} else{
+			//	RECARREGA A PÁGINA
+           		window.location.reload();
+           	//
+			}
+		//
+		}
+	//
+	}
+//
+//
+	function informacaoApp() {
+ 	//	MODAL DE VIZUALIÇÃO
+ 		$('#modalTipo2').modal('show');
+	//
+		document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fa fa-info-circle"></i> Informações';
+		document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
+		document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
+		document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Detalhes do App Reserve:';
+		document.getElementById('modal-conteudo-tipo-2').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Hora"></i></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+funcionario.informaNomeFuncionario()+'</td><td>'+versao.versaoAtual()+'</td><td>'+funcionario.informaNomeFuncionario()+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank"><i class="fas fa-download" title="Download"></i></a></b></td></tr></tbody></table>';
+		document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
+		document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
+	//
+	}
 //==============================================================||
 //	2 - FUNÇÕES DO APP
 //
@@ -399,7 +488,12 @@
 //	2.2.0 - LISTA DE RESERVAS DOS PROFESSORES
 	function ListaReservasProfessores() {
 	//	NOME DO FUNCIONÁRIO
-		funcionario();
+		novoFuncionario();
+	//
+		funcionario.exibeNomeFuncionario();
+	//
+		versao.verificaVersao();
+	//
 	//	DATA E HORA
 		tempo();
 	//
@@ -763,7 +857,12 @@
 //	2.4.0 - LISTA DE RESERVAS DOS ALUNOS
 	function ListasReservasAlunos() {
 	//	NOME DO FUNCIONÁRIO
-		funcionario();
+		novoFuncionario();
+	//
+		funcionario.exibeNomeFuncionario();
+	//
+		versao.verificaVersao();
+	//
 	//	DATA E HORA
 		tempo();
     //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
@@ -1116,38 +1215,37 @@
     }
 //
 //	2.8.0 - DEFINE O NOME DO FUNCIONÁRIO
-    let funcionario = function nomeFuncionario() {
-    //	PEGA NO LOCAL STORAGE O NOME DO FUNCIONÁRIO
-    	let funcionario = localStorage.getItem("funcionario");
-    //	SE NÃO EXISTIR O NOME DO FUNCIONÁRIO
-    	if (funcionario === null) {
-   		//	PEGA O NOME DO FUNCIONÁRIO ATRAVÉS DO PROMPT
-        	let nome = prompt("Nome do funcionário:","Seu nome");
-    	//	SE O NOME FOR NULLO
-        	if(nome === null){
-        	//	RECARREGA A PÁGINA
-           		window.location.reload();
-        //	SE NÃO
-        	} else {
-			//	
-				let versao = localStorage.getItem("versao");
-			//
-				$('#modalTipo2').modal('show');
-				document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-user-tag"></i> '+nome+' a versão '+versao+' chegou!';
-				document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
-				document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
-				document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'O App Reserve está com novas funcionalidades e novas funções. Mais informações você pode conferir lendo o <a href="https://github.com/JefersonLucas/reserve#changelog--versões" target="_blank">README</a> do app:';
-				document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-				document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
-			//
-        	//	SETA O NOME DO FUNCIONÁRIO NO LOCAL STORAGE 
-       			localStorage.setItem("funcionario", nome);
-        	}
-        }
-    //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
-        document.getElementById("funcionario").innerHTML = localStorage.getItem("funcionario");
-        document.getElementById("funcionario").title = localStorage.getItem("funcionario");
-    }
+   //  let funcionario = function nomeFuncionario() {
+   //  //	PEGA NO LOCAL STORAGE O NOME DO FUNCIONÁRIO
+   //  	let funcionario = localStorage.getItem("funcionario");
+   //  //	SE NÃO EXISTIR O NOME DO FUNCIONÁRIO
+   //  	if (funcionario === null) {
+   // 		//	PEGA O NOME DO FUNCIONÁRIO ATRAVÉS DO PROMPT
+   //      	let nome = prompt("Nome do funcionário:","Seu nome");
+   //  	//	SE O NOME FOR NULLO
+   //      	if(nome === null){
+   //      	//	RECARREGA A PÁGINA
+   //         		window.location.reload();
+   //      //	SE NÃO
+   //      	} else {
+			// //	
+			// 	let versao = localStorage.getItem("versao");
+			// //
+			// 	$('#modalTipo2').modal('show');
+			// 	document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-user-tag"></i> '+nome+' a versão '+versao+' chegou!';
+			// 	document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
+			// 	document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
+			// 	document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'O App Reserve está com novas funcionalidades e novas funções. Mais informações você pode conferir lendo o <a href="https://github.com/JefersonLucas/reserve#changelog--versões" target="_blank">README</a> do app:';
+			// 	document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
+			// 	document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
+			// //
+   //      	//	SETA O NOME DO FUNCIONÁRIO NO LOCAL STORAGE 
+   //     			localStorage.setItem("funcionario", nome);
+   //      	}
+   //      }
+   //  //	RETORNA O NOME DO FUNCIONÁRIO E EXIBE NO MENU DE NAVEGAÇÃO
+   //      
+   //  }
 //
 //	2.9.0 - RELÓGIO
 	let tempo = function() {
