@@ -49,11 +49,12 @@
 //
 //	1.3.0 - CLASSE FILHO / RESERVA DO ALUNO
 	class ReservaAluno extends Reserva {
-		constructor(nome, equipamento, horaA, dataEUA, matricula, serial) {
+		constructor(nome, equipamento, horaA, dataEUA, matricula, serial, status = "Em uso") {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, horaA, dataEUA);
 			this.matricula = matricula;
 			this.serial = serial;
+			this.status = status;
 		}
 	}
 //
@@ -453,23 +454,20 @@
 		let matricula 	= document.getElementById('matricula');
 		let equipamento = document.getElementById('equipamento');		
 		let serial 		= document.getElementById('serie');
-		let horaA 		= document.getElementById('horaA');
-		let dataEUA 	= document.getElementById('data');
+		let horaA 		= retornaHora();
+		let dataEUA		= retornaData();
+		let status 		= "Em uso";
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, serial.value);
+		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA, dataEUA, matricula.value, serial.value, status);
+	//
+		console.log(reserva)
 	//
 	//	VALIDAÇÃO
 		if(reserva.validaDadosReserva()){
 		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Aluno");
-		//
-		//	CONVERTE A DATA NO FORMATO EUA PARA O BR
-			var diaBR = dataEUA.value.substr(8,2);
-			var mesBR = "/"+dataEUA.value.substr(5,2);
-			var anoBR = "/"+dataEUA.value.substr(0,4);
-			var dataBR = diaBR+mesBR+anoBR;
 		//
 		//	MODAL DE SUCESSO
 			$('#modalTipo1').modal('show');
@@ -478,7 +476,7 @@
 			document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-success rounded alert-success';
 			document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
 			document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+reserva.nome+'</b></span> foi cadadastrada com <span class="text-success"><b>sucesso!</b></span>'
-			document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.matricula+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.serial+'</td><td>'+dataBR+'-'+reserva.horaA+'</td></tr></tbody>';
+			document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.matricula+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.serial+'</td><td>'+reserva.dataEUA+' - '+reserva.horaA+'</td></tr></tbody>';
 			document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
 			document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
 		//
@@ -487,8 +485,6 @@
 			matricula.value 	= "";
 			equipamento.value 	= "";
 			serial.value 		= "";
-			horaA.value			= "";
-			dataEUA.value 		= "";
 		//
 		} else {
 		//	MODAL DE ERRO
@@ -911,6 +907,8 @@
 	//	SELECIONANDO O ELEMENTO TBODY
 		let listaReservas = document.getElementById("listaAlunos");
 	//
+		console.log(reservas);
+	//
 	//	LISTANTO A RESERVA
  		reservas.forEach(function(a) {
  		//
@@ -922,16 +920,17 @@
  			linha.insertCell(1).innerHTML = a.matricula;
  			linha.insertCell(2).innerHTML = a.equipamento;
  			linha.insertCell(3).innerHTML = a.serial;
-			//
-			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-				let diaBR = a.dataEUA.substr(8,2);
-				let mesBR = "/"+a.dataEUA.substr(5,2);
-				let anoBR = "/"+a.dataEUA.substr(0,4);
-			//	VARIÁVEL NO FORMATO BR		
-				let dataBR = diaBR+mesBR+anoBR;
-			//
-		//	DATA EXIBIDA NO FORMATO BR
- 			linha.insertCell(4).innerHTML = dataBR +" - "+ a.horaA;
+ 			linha.insertCell(4).innerHTML = a.dataEUA +" - "+ a.horaA;
+ 		//
+ 			let status;
+		//
+			if(a.status == "Em uso") {
+				status = '<span class="text-primary"><b>'+a.status+'</b></span>';
+			} else if(a.status == "Recolhido") {
+				status = '<span class="text-danger"><b>'+a.status+'</b></span>';
+			}
+		//
+			linha.insertCell(5).innerHTML = status;
 		//
  		//	BOTAO DE VIZUALIZAÇÃO
  		//
@@ -1047,7 +1046,7 @@
  			}
  		//
  		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 			linha.insertCell(5).append(ver," ", editar," ", excluir);
+ 			linha.insertCell(6).append(ver," ", editar," ", excluir);
  		//
 		})
 		//
@@ -1098,14 +1097,18 @@
 				linha.insertCell(1).innerHTML = a.matricula;
 				linha.insertCell(2).innerHTML = a.equipamento;
 				linha.insertCell(3).innerHTML = a.serial;
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBR = a.dataEUA.substr(8,2);
-					let mesBR = "/"+a.dataEUA.substr(5,2);
-					let anoBR = "/"+a.dataEUA.substr(0,4);
-				//	VALOR COM A DATA NO FORMATO BR
-					let dataBR = diaBR+mesBR+anoBR;
-			//	DATA EXIBIDA NO FORMATO BR
-				linha.insertCell(4).innerHTML = dataBR+" - "+a.horaA;
+				linha.insertCell(4).innerHTML = dataEUA+" - "+a.horaA;
+			//
+ 				let status;
+			//
+				if(a.status == "Em uso") {
+					status = '<span class="text-primary"><b>'+a.status+'</b></span>';
+				} else if(a.status == "Recolhido") {
+					status = '<span class="text-danger"><b>'+a.status+'</b></span>';
+				}
+			//
+				linha.insertCell(5).innerHTML = status;
+			//
 			//
  			//	BOTAO DE VIZUALIZAÇÃO
  			//
@@ -1246,7 +1249,7 @@
 			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
 			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
 			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Informações dos detalhes:';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data do cadastro"></i> - <i class="fas fa-clock" title="Hora do cadastro"></i></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+f.nome+'</td><td>'+f.versao+'</td><td>'+f.dataBR+' - '+f.hora+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank"><i class="fas fa-download" title="Download"></i></a></b></td></tr></tbody></table>';
+			document.getElementById('modal-conteudo-tipo-2').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão do App"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora do cadastro"></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+f.nome+'</td><td>'+f.versao+'</td><td>'+f.dataBR+' - '+f.hora+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank"><i class="fas fa-download" title="Download"></i></a></b></td></tr></tbody></table>';
 			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
 			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
 		//
@@ -1272,6 +1275,41 @@
         telaImpressao.window.print();
         telaImpressao.window.close();
     }
+    let retornaData = function() {
+	//
+	//	INSTÂNCIA DATA
+		let time = new Date();
+	//	DATA
+		let ano = time.getFullYear();
+		let mes = time.getMonth() + 1;
+		let dia = time.getDate();
+	//	AJUSTE NA DATA
+		if(mes < 10){mes = "0"+mes;} 
+	//
+		let data = dia+"/"+mes+"/"+ano;
+	//
+		return data;
+	//
+    }
+//
+    let retornaHora = function() {
+    //	INSTÂNCIA DATA
+		let time = new Date();
+    //	HORA
+		let horas = time.getHours();
+		let minutos = time.getMinutes();
+		let segundos = time.getSeconds();
+	//	AJUSTE NA HORAs
+		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
+		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
+		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
+	//	
+		let hora = horas+":"+minutos+":"+segundos;
+	//
+		return hora;
+	//
+    }
+//
 //
 //	2.9.0 - RELÓGIO
 	let relogio = function() {
@@ -1306,7 +1344,7 @@
 	//	MENSAGEM
 		let mensagem = null;
 	//
-		mensagem = hora >= "06" && hora <= "12" ? mensagem = "<i class='fas fa-sun'></i> Boa dia, " : mensagem; 
+		mensagem = hora >= "06" && hora <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia, " : mensagem; 
 		mensagem = hora >= "12" && hora <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde, ": mensagem;	
 		mensagem = hora >= "18" || hora <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite, ": mensagem;
 	//
@@ -1358,7 +1396,7 @@
 						let dataBR = diaBR+mesBR+anoBR;
 					//	ALERTA DE RESERVA
 						$('#modalTipo1').modal('show');
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
+						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
 						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-warning';
 						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-warning rounded alert-warning';
 						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
@@ -1399,7 +1437,7 @@
 						let dataBR = diaBR+mesBR+anoBR;
 					//	ALERTA DE RESERVA
 						$('#modalTipo1').modal('show');
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-laptop" title="Equipamento"></i> Atenção!';
+						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
 						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-warning';
 						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-warning rounded alert-warning';
 						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>acabar!</b></span>';
