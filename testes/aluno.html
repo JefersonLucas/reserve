@@ -106,7 +106,7 @@
                                     <i class="fas fa-address-card" title="Matrícula"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Matrícula do aluno" class="form-control" placeholder="Ex.: A182018" id="matricula" required>
+                            <input type="text" title="Matrícula do aluno" class="form-control" placeholder="Ex.: ALUNO2018" id="matricula" required>
                         </div>            
                         
                         <!-- EQUIPAMENTO -->
@@ -175,7 +175,6 @@
                                 <th class="text-white" title="Matrícula"><i class="fas fa-address-card" title="Matrícula"></i>&nbsp;Matrícula</th>
                                 <th class="text-white" title="Equipamento"><i class="fas fa-laptop" title="Equipamento"></i>&nbsp;Equipamento</th>
                                 <th class="text-white" title="Nº de série"><i class="fas fa-barcode" title="Nº de série"></i>&nbsp;Nº de série</th>
-                                <th class="text-white" title="Data e hora"><i class="fas fa-user-clock" title="Data e hora"></i>&nbsp;Data e hora</th>
                                 <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
                                 <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i>&nbsp;Opções</th>
                             </tr>
@@ -208,7 +207,14 @@
 
                         </div>
                     
-                        <div class="modal-body" id="modal-conteudo-tipo-1"></div>
+                        <div class="modal-body" id="modal-conteudo-tipo-1">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4">.col-md-4</div>
+                                    <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+                                </div>
+                            </div>
+                        </div>
                     
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" id="modal-btn-tipo-1" onclick="atualizar()"></button>
@@ -223,24 +229,30 @@
 
             <!-- MODAL TIPO 2 -->
             <div class="modal fade" id="modalTipo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog" role="document" id="modal-document-tipo-2">
+                
+                <!-- DOCUMENTO -->
+                <div role="document" id="modal-tipo-2">
                 
                     <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-tipo-2">
+                        
+                        <!-- CABEÇALHO -->
+                        <div id="cabecalho-tipo-2">
 
-                            <h5 class="modal-title" id="modal-titulo-tipo-2"></h5>
+                            <!-- TÍTULO -->
+                            <h5 class="modal-title" id="titulo-tipo-2"></h5>
+                            <!-- BOTÃO FECHAR MODAL -->
                             <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-tipo-2"></div>
+                        
+                        <!-- CONTEÚDO -->
+                        <div class="modal-body" id="conteudo-tipo-2"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-tipo-2"></button>
+                            <!-- BOTÃO -->
+                            <button type="button" data-dismiss="modal" id="botao-tipo-2"></button>
                         </div>
 
                     </div>
@@ -248,8 +260,8 @@
                 </div>
             
             </div>
-            <!-- FIM MODAL TIPO 2 -->
-            
+            <!-- FIM MODAL TIPO 2 -->   
+       
         </div>
 
     </body>
