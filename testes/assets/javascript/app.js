@@ -357,15 +357,7 @@
 			var dataBR = diaBR+mesBR+anoBR;
 		//
 		//	MODAL DE SUCESSO
-			$('#modalTipo1').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
-			document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-success rounded alert-success';
-			document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
-			document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do professor(a) <span class="text-success"><b>'+reserva.nome+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-			document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center" ><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.equipamento+'</th><td>'+reserva.sala+'</td><td>'+reserva.horaA+'/'+reserva.horaB+'</td><td>'+dataBR+'</td></tr></tbody>';
-			document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-			document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
+			modalCadastarProfessorSucesso(reserva.nome, reserva.equipamento, reserva.sala, reserva.horaA, reserva.horaB, dataBR);
 		//
 		//	LIMPA OS VALORES
 			nome.value 			= "";
@@ -377,14 +369,7 @@
 		//
 		} else {
 		//	MODAL DE ERRO
-			$('#modalTipo2').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-danger rounded alert-danger';
-			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-danger';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Erro ao efetuar seu <span class="text-danger"><b>cadastro</b></span>. Por favor verifique se todos os campo foram inseridos corretamente.';
-			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Corrigir';
-			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-danger';
+			modalCadastroErro();
 		//
 		}
 	}
@@ -414,15 +399,7 @@
 			bancodedados.gravar(reserva, "Aluno");
 		//
 		//	MODAL DE SUCESSO
-			$('#modalTipo1').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
-			document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-success rounded alert-success';
-			document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
-			document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+reserva.nome+'</b></span> foi cadadastrada com <span class="text-success"><b>sucesso!</b></span>'
-			document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+reserva.matricula+'</th><td>'+reserva.equipamento+'</td><td>'+reserva.serial+'</td><td>'+reserva.dataEUA+'<br>'+reserva.horaA+'</td></tr></tbody></table>';
-			document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-			document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
+			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, reserva.dataEUA, reserva.horaA);
 		//
 		//	LIMPA OS VALORES
 			nome.value 			= "";
@@ -432,14 +409,7 @@
 		//
 		} else {
 		//	MODAL DE ERRO
-			$('#modalTipo2').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-danger rounded alert-danger';
-			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-danger';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Erro ao efetuar seu <span class="text-danger"><b>cadastro</b></span>. Por favor verifique se todos os campo foram inseridos corretamente.';
-			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Corrigir';
-			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-danger';
+			modalCadastroErro();
 		//
 		}
 	//
@@ -467,13 +437,7 @@
 			//	GRAVA O NOME DO FUNCIONÁRIO
 				bancodedados.gravarFuncionario(funcionario);
 			//	MODAL DE BEM VINDO
-				$('#modalTipo2').modal('show');
-				document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-user-circle"></i> '+funcionario.nome+' seja bem vindo(a)!';
-				document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
-				document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
-				document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'O App Reserve está atualizado com novas funcionalidades para a reserva dos equipamentos. Você pode obter mais informações vendo nesse <a href="https://github.com/JefersonLucas/reserve#changelog--versões" target="_blank">link</a> aqui.';
-				document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-				document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
+				modalCadastarFuncionarioSucesso(funcionario.nome);
 			//	SE NÃO
 			} else{
 			//	RECARREGA A PÁGINA
@@ -557,15 +521,7 @@
  		//
  			ver.onclick = function() {
  			//	MODAL DE VIZUALIÇÃO
- 				$('#modalTipo2').modal('show');
-			//
-				document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-				document.getElementById('modal-document-tipo-2').className		= 'modal-dialog modal-lg border border-primary rounded alert-primary';
-				document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-primary';
-				document.getElementById('modal-conteudo-tipo-2').innerHTML 		= '';
-				document.getElementById('modal-conteudo-tipo-2').innerHTML     += '';
-				document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-				document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-primary';
+ 				modalVizualizarProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 			//
  			}
  		//
@@ -593,35 +549,27 @@
  					let horaB 			= prompt("Término da aula:",p.horaB);
  					let dataBr 			= prompt("Data da aula:",dataBR);
  				//
- 				//	MODAL DE VIZUALIÇÃO
- 					$('#modalTipo1').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-					document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-success rounded alert-success';
-					document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML 		= '';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML     += '';
-					document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
+ 				//	MODAL DE EDIÇÃO
+ 					modalEditarProfessor(nome, equipamento, sala, horaA, horaB, dataBr);
 				//
 				//	FORMATAR O ID
-					let id = this.id.replace('id-editar-','');
+				//	let id = this.id.replace('id-editar-','');
 				//	REMOVE A RESERVA
-					bancodedados.removerReserva(id);
+				//	bancodedados.removerReserva(id);
 				//
 				//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
-					let anoEUA = dataBr.substr(6,4);
-					let mesEUA = "-"+dataBr.substr(3,2);
-					let diaEUA = "-"+dataBr.substr(0,2);
+				//	let anoEUA = dataBr.substr(6,4);
+				//	let mesEUA = "-"+dataBr.substr(3,2);
+				//	let diaEUA = "-"+dataBr.substr(0,2);
 				//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
-					let dataEUA = anoEUA+mesEUA+diaEUA;
+				//	let dataEUA = anoEUA+mesEUA+diaEUA;
 				//
-					let status = p.status;
+				//	let status = p.status;
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
+				//	let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
 				//
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-					bancodedados.gravar(reserva, "Professor");
+				//	bancodedados.gravar(reserva, "Professor");
 				//
  				}
  			}
@@ -641,21 +589,13 @@
 			//	VALIDAÇÃO DE EXCLUSÃO
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 				//
- 				//	MODAL DE VIZUALIÇÃO
- 					$('#modalTipo1').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
-					document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-danger rounded alert-danger';
-					document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-danger';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML 		= '';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML     += '';
-					document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-danger';
+ 				//	MODAL DE EXCLUSÃO 				
+					modalExcluirProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 				//
 				//	FORMATAR O ID
-					let id = this.id.replace('id-excluir-','');
+				//	let id = this.id.replace('id-excluir-','');
 				//	REMOVE A RESERVA
- 					bancodedados.removerReserva(id);
+ 				//	bancodedados.removerReserva(id);
  				}
  			}
  		//
@@ -687,14 +627,7 @@
 	//	VALIDAÇÃO DA PESQUISA
 		if(nome == "" && equipamento == "" && horaA == "" && dataEUA == "" && sala == "" && horaB == "") {
 		//	MODAL DE ERRO
-			$('#modalTipo2').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-danger rounded alert-danger';
-			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-danger';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Erro ao efetuar sua <span class="text-danger"><b>perquisa</b></span>. Por favor verifique se algum campo não foi inseridos corretamente.';
-			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Corrigir';
-			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-danger';
+			modalPesquisaErro();
 		//
 		} else {
 		//
@@ -744,15 +677,7 @@
  			//
  				ver.onclick = function() {
  				//	MODAL DE VIZUALIÇÃO
- 					$('#modalTipo2').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-					document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-primary rounded alert-primary';
-					document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-primary';
-					document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Detalhes da reserva do(a) professor(a) <span class="text-primary"><b>'+p.nome+'</b></span>:';
-					document.getElementById('modal-conteudo-tipo-2').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+dataBR+'</td></tr></tbody></table>';
-					document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-primary';
+ 					modalVizualizarProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 				//
  				}
  			//
@@ -780,16 +705,8 @@
  						let horaB 			= prompt("Término da aula:",p.horaB);
  						let dataBr 			= prompt("Data da aula:",dataBR);
  					//
- 					//	MODAL DE VIZUALIÇÃO
- 						$('#modalTipo1').modal('show');
-					//
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-						document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-success rounded alert-success';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+equipamento+'</th><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBr+'</td></tr></tbody></table>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
+ 					//	MODAL DE EDIÇÃO
+ 						modalEditarProfessor(nome, equipamento, sala, horaA, horaB, dataBr);
 					//
 					//	FORMATAR O ID
 						let id = this.id.replace('id-editar-','');
@@ -828,21 +745,13 @@
 				//	VALIDAÇÃO DE EXCLUSÃO
 					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 					//
- 					//	MODAL DE VIZUALIÇÃO
- 						$('#modalTipo1').modal('show');
-					//
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
-						document.getElementById('modal-document-tipo-1').className		= 'modal-dialog border border-danger rounded alert-danger';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-danger';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-danger"><b>'+p.nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+dataBR+'</td></tr></tbody></table>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-danger';
+ 					//	MODAL DE EXCLUSÃO
+ 						modalExcluirProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 					//
 					//	FORMATAR O ID
-						let id = this.id.replace('id-excluir-','');
+					//	let id = this.id.replace('id-excluir-','');
 					//	REMOVE A RESERVA
- 						bancodedados.removerReserva(id);
+ 					//	bancodedados.removerReserva(id);
  					}
  				}
  			//
@@ -917,16 +826,8 @@
  		//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
  			ver.onclick = function() {
  			//	MODAL DE VIZUALIÇÃO
- 				$('#modalTipo2').modal('show');
-			//
-				document.getElementById('titulo-tipo-2').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-				document.getElementById('modal-tipo-2').className		= 'modal-dialog modal-lg border border-primary rounded alert-primary';
-				document.getElementById('cabecalho-tipo-2').className  	= 'modal-header text-white bg-primary';
-				document.getElementById('conteudo-tipo-2').innerHTML 	= '';
-				document.getElementById('conteudo-tipo-2').innerHTML   += '';
-				document.getElementById('botao-tipo-2').innerHTML 		= 'Voltar';
-				document.getElementById('botao-tipo-2').className 		= 'btn btn-outline-primary';
-			//
+ 				modalVizualizarAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
+ 			//
  			}
  		//
  		//	BOTAO DE EDIÇÃO
@@ -950,37 +851,20 @@
  					let matricula		= prompt("Matrícula:",a.matricula);
  					let equipamento 	= prompt("Descrição do equipamento:",a.equipamento);
  					let serial			= prompt("Nº de série:",a.serial);
- 					let horaA 			= prompt("Início da aula:",a.horaA);
- 					let dataBr 			= prompt("Data da aula:",dataBR);
  				//
  				//	MODAL DE EDIÇÃO
- 					$('#modalTipo1').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-1').innerHTML 			= '<i class="fas fa-pencil-alt"></i> Editar';
-					document.getElementById('modal-titulo-div-tipo-1').className  		= 'modal-header text-white bg-success';
-					document.getElementById('modal-document-tipo-1').className  		= 'modal-dialog border border-success rounded alert-success';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML 			= '';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML         += '';
-					document.getElementById('modal-btn-tipo-1').innerHTML 				= 'Voltar';
-					document.getElementById('modal-btn-tipo-1').className 				= 'btn btn-outline-success';
+ 					modalEditarAluno(nome, matricula, equipamento, serial);
 				//
 				//	FORMATAR O ID
-					let id = this.id.replace('id-editar-','');
+				//	let id = this.id.replace('id-editar-','');
 				//	REMOVE A RESERVA
-					bancodedados.removerReserva(id);
-				//
-				//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
-					let anoEUA = dataBr.substr(6,4);
-					let mesEUA = "-"+dataBr.substr(3,2);
-					let diaEUA = "-"+dataBr.substr(0,2);
-				//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
-					let dataEUA = anoEUA+mesEUA+diaEUA;
+				//	bancodedados.removerReserva(id);
 				//
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
+				//	reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
 				//
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-					bancodedados.gravar(reservaAluno, "Aluno");
+				//	bancodedados.gravar(reservaAluno, "Aluno");
 				//
  				}
  			}
@@ -1001,24 +885,16 @@
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 				//
 				//	MODAL DE EXCLUSÃO
-					$('#modalTipo1').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
-					document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-danger';
-					document.getElementById('modal-document-tipo-1').className 		= 'modal-dialog border border-danger rounded alert-danger';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML 		= '';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML     += '';
-					document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-danger';
+					modalExcluirAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
 				//
 				//	FORMATAR O ID
-					let id = this.id.replace('id-excluir-','');
+				//	let id = this.id.replace('id-excluir-','');
 				//	REMOVE A RESERVA
- 					bancodedados.removerReserva(id);
+ 				//	bancodedados.removerReserva(id);
  				}
  			}
  		//
- 		//	BOTÃO DE CHECKUP DE RESERVA
+ 		//	BOTÃO VERIFICAR RESERVA
  		//
  			verficar 			= document.createElement("button");
  			verficar.className 	= "btn btn-outline-info btn-sm";
@@ -1033,21 +909,13 @@
 				//	VALIDAÇÃO DE EXCLUSÃO
 					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 					//
-					//	MODAL DE EXCLUSÃO
-						$('#modalTipo1').modal('show');
-					//
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-user-check"></i> Excluir';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-info';
-						document.getElementById('modal-document-tipo-1').className 		= 'modal-dialog border border-info rounded alert-info';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= '';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-info';
+					//	MODAL DE VERIFICAÇÃO
+						modalVerificaReservaAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
 					//
 					//	FORMATAR O ID
-						let id = this.id.replace('id-verifica-','');
+					//	let id = this.id.replace('id-verifica-','');
 					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
+					//	bancodedados.removerReserva(id);
 					//
 						let nome 		= a.nome;
 						let equipamento = a.equipamento;
@@ -1066,16 +934,9 @@
 						bancodedados.gravar(reservaAluno, "Aluno");
 	 				}
  				} else {
- 				//	MODAL DE ERRO
-					$('#modalTipo1').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-user-check"></i> Ops...';
-					document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-danger';
-					document.getElementById('modal-document-tipo-1').className 		= 'modal-dialog border border-danger rounded alert-danger';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML 		= '';
-					document.getElementById('modal-conteudo-tipo-1').innerHTML     += '';
-					document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-danger';
+ 				//	MODAL DE ERRO 					
+					modalVerificaReservaAlunoErro(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
+ 				//
  				}
  			}
  		//
@@ -1094,11 +955,9 @@
 		let matricula 	= document.getElementById('matricula').value;
 		let equipamento = document.getElementById('equipamento').value;		
 		let serial 		= document.getElementById('serie').value;
-		let horaA 		= document.getElementById('horaA').value;
-		let dataEUA 	= document.getElementById('data').value;
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
+		reserva  = new ReservaAluno(nome, equipamento, matricula, serial);
 	//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
 		let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
 	//	SELECIONANDO O ELEMENTO DA TABELA
@@ -1107,16 +966,9 @@
 		listaReservas.innerHTML = "";
 	//
 	//	VALIDAÇÃO DA PESQUISA
-		if(nome == "" && equipamento == "" && horaA == "" && dataEUA == "" && matricula == "" && serial == "") {
+		if(nome == "" && equipamento == "" && matricula == "" && serial == "") {
 		//	MODAL DE ERRO
-			$('#modalTipo2').modal('show');
-		//
-			document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-danger rounded alert-danger';
-			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-danger';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Erro ao efetuar sua <span class="text-danger"><b>perquisa</b></span>. Por favor verifique se algum campo não foi inseridos corretamente.';
-			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Corrigir';
-			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-danger';
+			modalPesquisaErro();
 		//
 		} else {
 		//
@@ -1155,15 +1007,7 @@
  			//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
  				ver.onclick = function() {
  				//	MODAL DE VIZUALIÇÃO
- 					$('#modalTipo2').modal('show');
-				//
-					document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fas fa-eye"></i> Informações';
-					document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-primary rounded alert-primary';
-					document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-primary';
-					document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+a.nome+'</b></span>:';
-					document.getElementById('modal-conteudo-tipo-2').innerHTML   	+= '<br><br><table class="table text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+' - '+a.horaA+'</td></tr></tbody>';
-					document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-					document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-primary';
+ 					modalVizualizarAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
 				//
  				}
  			 //
@@ -1192,15 +1036,7 @@
  						let dataBr 			= prompt("Data da aula:",dataBR);
  					//
  					//	MODAL DE EDIÇÃO
- 						$('#modalTipo1').modal('show');
-					//
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-pencil-alt"></i> Editar';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-success';
-						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-success rounded alert-success';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>'
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataBr+'-'+horaA+'</td></tr></tbody>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-success';
+ 						modalEditarAluno(nome, matricula, equipamento, serial);
 					//
 					//	FORMATAR O ID
 						let id = this.id.replace('id-editar-','');
@@ -1240,15 +1076,7 @@
 					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 					//
 					//	MODAL DE EXCLUSÃO
-						$('#modalTipo1').modal('show');
-					//
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fa fa-trash-alt"></i> Excluir';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-danger';
-						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-danger rounded alert-danger';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-danger"><b>'+a.nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i> - <i class="fas fa-clock" title="Horário"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+a.matricula+'</th><td>'+a.equipamento+'</td><td>'+a.serial+'</td><td>'+dataBR+'-'+a.horaA+'</td></tr></tbody>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Voltar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-danger';
+						modalExcluirAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
 					//
 					//	FORMATAR O ID
 						let id = this.id.replace('id-excluir-','');
@@ -1257,8 +1085,54 @@
  					}
  				}
  			//
+ 			//	BOTÃO VERIFICAR RESERVA
+ 			//
+ 				verficar 			= document.createElement("button");
+ 				verficar.className 	= "btn btn-outline-info btn-sm";
+ 				verficar.title 		= "Verificar";
+ 				verficar.innerHTML 	= '<i class="fas fa-user-check"></i>';
+ 				verficar.id 			= `id-verifica-${a.id}`;
+ 				verficar.onclick = function() {
+ 			 	//
+ 			 		if(a.status ==  "Em uso") {
+					//	PRONPT DE VERIFICAÇÃO
+					let resposta = prompt("A reserva do(a) "+a.nome+" está verificada? R: Sim ou Não", "Não");
+						//	VALIDAÇÃO DE EXCLUSÃO
+						if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+						//
+						//	MODAL DE VERIFICAÇÃO
+							modalVerificaReservaAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
+						//
+						//	FORMATAR O ID
+						//	let id = this.id.replace('id-verifica-','');
+							//	REMOVE A RESERVA
+						//	bancodedados.removerReserva(id);
+						//
+							let nome 		= a.nome;
+							let equipamento = a.equipamento;
+							let horaA 		= a.horaA;
+							let dataEUA 	= a.dataEUA;
+							let matricula	= a.matricula;
+							let serial 		= a.serial;
+							let status 		= "Recolhido";
+							let dataB 		= retornaData();
+							let horaB 		= retornaHora();
+							//
+						//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+							reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial, status, dataB, horaB);
+						//
+						//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+							bancodedados.gravar(reservaAluno, "Aluno");
+	 					}
+ 					} else {
+ 					//	MODAL DE ERRO 					
+						modalVerificaReservaAlunoErro(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
+ 					//
+ 					}
+ 				}
+ 			//
  			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 				linha.insertCell(5).append(ver," ", editar," ", excluir);
+ 				linha.insertCell(5).append(ver," ", editar," ", excluir, " ", verficar);
  			//
 			})
 			//
@@ -1269,120 +1143,210 @@
 	}
 	//
 //
-//	INFORMAÇÃO DO APP
-	function informacaoApp() {
-	//	ARRAY FUNCIONÁRIO
-		let funcionario = Array();
-	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-		funcionario = bancodedados.recuperaFuncionario();
-	//	LISTANTO A RESERVA
- 		funcionario.forEach(function(f) {
- 		//	MODAL DE VIZUALIÇÃO
- 			$('#modalTipo2').modal('show');
-			document.getElementById('modal-titulo-tipo-2').innerHTML 		= '<i class="fa fa-info-circle"></i> Informações do App Reserve';
-			document.getElementById('modal-document-tipo-2').className		= 'modal-dialog border border-info rounded alert-info';
-			document.getElementById('modal-titulo-div-tipo-2').className  	= 'modal-header text-white bg-info';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML 		= 'Informações dos detalhes:';
-			document.getElementById('modal-conteudo-tipo-2').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão do App"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora do cadastro"></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+f.nome+'</td><td>'+f.versao+'</td><td>'+f.dataBR+' - '+f.hora+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank"><i class="fas fa-download" title="Download"></i></a></b></td></tr></tbody></table>';
-			document.getElementById('modal-btn-tipo-2').innerHTML 			= 'Voltar';
-			document.getElementById('modal-btn-tipo-2').className 			= 'btn btn-outline-info';
-		//
-		})
+//	MODAL INFORMAÇÃO DO APP
+	let modalInformacaoApp = function(nome, versao, dataBR, hora) {
+	//
+ 		$('#modal2').modal('show');
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fa fa-info-circle"></i> Informações do App Reserve';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-info rounded alert-info';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-info';
+		document.getElementById('modal-conteudo-2').innerHTML 	= 'Informações dos detalhes:';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão do App"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora do cadastro"></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+nome+'</td><td>'+versao+'</td><td>'+dataBR+' - '+hora+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank"><i class="fas fa-download" title="Download"></i></a></b></td></tr></tbody></table>';
+		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-info';
+	//
+	}
+//	MODAL CADASTRAR ALUNO
+	let modalCadastarAlunoSucesso = function(nome, matricula, equipamento, serial, dataEUA, horaA) {
+	//
+		$('#modal1').modal('show');
+		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi cadadastrada com <span class="text-success"><b>sucesso!</b></span>'
+		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
+	//
+	}
+//	MODAL CADASTRAR PROFESSOR
+	let modalCadastarProfessorSucesso = function(nome, equipamento, sala, horaA, horaB, dataBR) {
+	//
+		$('#modal1').modal('show');
+		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do professor(a) <span class="text-success"><b>'+nome+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table text-center" ><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+equipamento+'</th><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td></tr></tbody>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
+	//
+	}
+//	MODAL CADASTRAR FUNCIONÁRIO
+	let modalCadastarFuncionarioSucesso = function(nome) {
+	//
+		$('#modal2').modal('show');
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-user-circle"></i> '+nome+' seja bem vindo(a)!';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-info rounded alert-info';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-info';
+		document.getElementById('modal-conteudo-2').innerHTML 	= 'O App Reserve está atualizado com novas funcionalidades para a reserva dos equipamentos. Você pode obter mais informações vendo nesse <a href="https://github.com/JefersonLucas/reserve#changelog--versões" target="_blank">link</a> aqui.';
+		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-info';
+	//
+	} 
+//	MODAL DE ERRO DE CADASTRO
+	function modalCadastroErro() {
+	//
+		$('#modal2').modal('show');		
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-2').innerHTML	= 'Erro ao efetuar seu <span class="text-danger"><b>cadastro</b></span>. Por favor verifique se todos os campo foram inseridos corretamente.';
+		document.getElementById('modal-botao-2').innerHTML		= 'Corrigir';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-danger';
+	//
+	}
+//	MODAL DE ERRO DE PESQUISA
+	function modalPesquisaErro() {
+	//
+		$('#modal2').modal('show');		
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-2').innerHTML	= 'Erro ao efetuar sua <span class="text-danger"><b>pesquisa</b></span>. Por favor verifique se todos os campo foram inseridos corretamente.';
+		document.getElementById('modal-botao-2').innerHTML		= 'Corrigir';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-danger';
+	//
+	}
+//	MODAL DE VIZUALIÇÃO ALUNO
+	let modalVizualizarAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	//
+ 		$('#modal2').modal('show');
+ 		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-eye"></i> Informações';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog modal-lg border border-primary rounded alert-primary';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-primary';
+		document.getElementById('modal-conteudo-2').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+nome+'</b></span>:';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-primary';
+	//
+	}
+//	MODAL DE VIZUALIÇÃO PROFESSOR
+	let modalVizualizarProfessor = function(nome, equipamento, sala, horaA, horaB, dataBR, status) {		
+ 	//
+ 		$('#modal2').modal('show');
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-eye"></i> Informações';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog modal-lg border border-primary rounded alert-primary';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-primary';
+		document.getElementById('modal-conteudo-2').innerHTML 	= 'Detalhes da reserva do(a) professor(a) <span class="text-primary"><b>'+nome+'</b></span>:';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-primary';
 	//
 	}
 //
-//	2.6.0 - ATUALIZA A PÁGINA
- 	function atualizar() {
- 	//	ATUALIZA A PÁGINA
- 		window.location.reload();
+	let modalEditarAluno = function(nome, matricula, equipamento, serial) {
+	//
+ 		$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-pencil-alt"></i> Editar';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
+	//
 	}
 //
-//	2.7.0 - IMPRIME AS RESERVAS
-	function imprimir() {
+	let modalEditarProfessor = function(nome, equipamento, sala, horaA, horaB, dataBr) {
 	//
-	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
-        let imprime = document.getElementById('conteudo-imprecao').innerHTML;
-    //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
-        telaImpressao = window.open('about:blank');
-    //	IMPRESÃO DO CONTEÚDO
-        telaImpressao.document.write(imprime);
-        telaImpressao.window.print();
-        telaImpressao.window.close();
-    }
-    let retornaData = function() {
+ 		$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-pencil-alt"></i> Editar';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBr+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
 	//
-	//	INSTÂNCIA DATA
-		let time = new Date();
-	//	DATA
-		let ano = time.getFullYear();
-		let mes = time.getMonth() + 1;
-		let dia = time.getDate();
-	//	AJUSTE NA DATA
-		if(mes < 10){mes = "0"+mes;} 
-	//
-		let data = dia+"/"+mes+"/"+ano;
-	//
-		return data;
-	//
-    }
-//
-    let retornaHora = function() {
-    //	INSTÂNCIA DATA
-		let time = new Date();
-    //	HORA
-		let horas = time.getHours();
-		let minutos = time.getMinutes();
-		let segundos = time.getSeconds();
-	//	AJUSTE NA HORAs
-		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
-		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
-		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
-	//	
-		let hora = horas+":"+minutos+":"+segundos;
-	//
-		return hora;
-	//
-    }
-//
-//
-//	2.9.0 - RELÓGIO
-	let relogio = function() {
-		setInterval(calendario, 100);
 	}
 //
-//	2.10.0 - CALENDÁRIO
-	function calendario() {
+	let modalExcluirAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
 	//
-	//	INSTÂNCIA DATA
-		let time = new Date();
-	//	DATA
-		let ano = time.getFullYear();
-		let mes = time.getMonth() + 1;
-		let dia = time.getDate();
-	//	AJUSTE NA DATA
-		if(mes < 10){mes = "0"+mes;} 
+	 	$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fa fa-trash-alt"></i> Excluir';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-danger"><b>'+nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-danger';
 	//
-		let data = dia+"/"+mes+"/"+ano;
+	}
+//	
+	let modalExcluirProfessor = function(nome, equipamento, sala, horaA, horaB, dataBR, status) {
 	//
-	//	HORA
-		let hora = time.getHours();
-		let minuto = time.getMinutes();
-		let segundo = time.getSeconds();
-	//	AJUSTE NA HORA
-		hora 	= hora 		< 10 ? hora 	= "0"+hora 		: hora;
-		minuto 	= minuto 	< 10 ? minuto 	= "0"+minuto 	: minuto;
-		segundo = segundo 	< 10 ? segundo 	= "0"+segundo 	: segundo;
-	//	
-		let horario = hora+":"+minuto+":"+segundo;
+	 	$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fa fa-trash-alt"></i> Excluir';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-danger"><b>'+nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-danger';
 	//
-	//	MENSAGEM
-		let mensagem = null;
+	}
+//
+	let modalVerificaReservaAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
 	//
-		mensagem = hora >= "06" && hora <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia, " : mensagem; 
-		mensagem = hora >= "12" && hora <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde, ": mensagem;	
-		mensagem = hora >= "18" || hora <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite, ": mensagem;
+ 		$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-user-check"></i> Verificada';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-info rounded alert-info';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-info';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-info"><b>'+nome+'</b></span> foi <span class="text-info"><b>verificada!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-info';
 	//
-		document.getElementById("tempo").innerHTML = mensagem+" "+data+" "+horario;
+	}
+//
+	let modalVerificaReservaAlunoErro = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	//
+ 		$('#modal1').modal('show');
+ 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-user-check"></i> Verificada';
+		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-danger"><b>'+nome+'</b></span> já foi <span class="text-danger"><b>verificada!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-danger';
+	//
+	}
+//
+	let modalAlertaReservaA = function(nome, equipamento, sala, horaA, horaB, dataBR, status) {
+	//
+		$('#modal1').modal('show');
+		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
+		document.getElementById('modal-documento-1').className  = 'modal-dialog modal-lg border border-warning rounded alert-warning';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-warning';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Montar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-warning';
+	//
+	}
+//
+//
+	let modalAlertaReservaB = function(nome, equipamento, sala, horaA, horaB, dataBR, status) {
+	//
+		$('#modal1').modal('show');
+		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
+		document.getElementById('modal-documento-1').className  = 'modal-dialog modal-lg border border-warning rounded alert-warning';
+		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-warning';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Retirar';
+		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-warning';
 	//
 	}
 //
@@ -1429,14 +1393,7 @@
 					//	VALOR COM A DATA NO FORMATO BR
 						let dataBR = diaBR+mesBR+anoBR;
 					//	ALERTA DE RESERVA
-						$('#modalTipo1').modal('show');
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-warning';
-						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-warning rounded alert-warning';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+dataBR+'</td></tr></tbody>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Montar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-warning';
+						modalAlertaReservaA(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 					//
 					//	FORMATAR O ID
 						let id = p.id;
@@ -1470,14 +1427,7 @@
 					//	VALOR COM A DATA NO FORMATO BR
 						let dataBR = diaBR+mesBR+anoBR;
 					//	ALERTA DE RESERVA
-						$('#modalTipo1').modal('show');
-						document.getElementById('modal-titulo-tipo-1').innerHTML 		= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
-						document.getElementById('modal-titulo-div-tipo-1').className  	= 'modal-header text-white bg-warning';
-						document.getElementById('modal-document-tipo-1').className  	= 'modal-dialog border border-warning rounded alert-warning';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML 		= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+p.nome+'</b></span> já está pra <span class="text-warning"><b>acabar!</b></span>';
-						document.getElementById('modal-conteudo-tipo-1').innerHTML     += '<br><br><table class="table text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th><th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th><th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+p.equipamento+'</th><td>'+p.sala+'</td><td>'+p.horaA+'/'+p.horaB+'</td><td>'+dataBR+'</td></tr></tbody>';
-						document.getElementById('modal-btn-tipo-1').innerHTML 			= 'Retirar';
-						document.getElementById('modal-btn-tipo-1').className 			= 'btn btn-outline-warning';
+						modalAlertaReservaB(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 					//	FORMATAR O ID
 						let id = p.id;
 					//	REMOVE A RESERVA
@@ -1505,6 +1455,118 @@
 		//
 		})
 	//
+	}
+//
+//	2.9.0 - RELÓGIO
+	let relogio = function() {
+		setInterval(calendario, 100);
+	}
+//
+//	2.10.0 - CALENDÁRIO
+	function calendario() {
+	//
+	//	INSTÂNCIA DATA
+		let time = new Date();
+	//	DATA
+		let ano = time.getFullYear();
+		let mes = time.getMonth() + 1;
+		let dia = time.getDate();
+	//	AJUSTE NA DATA
+		if(mes < 10){mes = "0"+mes;} 
+	//
+		let data = dia+"/"+mes+"/"+ano;
+	//
+	//	HORA
+		let hora = time.getHours();
+		let minuto = time.getMinutes();
+		let segundo = time.getSeconds();
+	//	AJUSTE NA HORA
+		hora 	= hora 		< 10 ? hora 	= "0"+hora 		: hora;
+		minuto 	= minuto 	< 10 ? minuto 	= "0"+minuto 	: minuto;
+		segundo = segundo 	< 10 ? segundo 	= "0"+segundo 	: segundo;
+	//	
+		let horario = hora+":"+minuto+":"+segundo;
+	//
+	//	MENSAGEM
+		let mensagem = null;
+	//
+		mensagem = hora >= "06" && hora <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia, " : mensagem; 
+		mensagem = hora >= "12" && hora <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde, ": mensagem;	
+		mensagem = hora >= "18" || hora <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite, ": mensagem;
+	//
+		document.getElementById("tempo").innerHTML = mensagem+" "+data+" "+horario;
+	//
+	}
+//
+//	RETORNA A DATA ATUAL
+    let retornaData = function() {
+	//
+	//	INSTÂNCIA DATA
+		let time = new Date();
+	//	DATA
+		let ano = time.getFullYear();
+		let mes = time.getMonth() + 1;
+		let dia = time.getDate();
+	//	AJUSTE NA DATA
+		if(mes < 10){mes = "0"+mes;} 
+	//
+		let data = dia+"/"+mes+"/"+ano;
+	//
+		return data;
+	//
+    }
+//
+//	RETORNA A HORA ATUAL
+    let retornaHora = function() {
+    //	INSTÂNCIA DATA
+		let time = new Date();
+    //	HORA
+		let horas = time.getHours();
+		let minutos = time.getMinutes();
+		let segundos = time.getSeconds();
+	//	AJUSTE NA HORAs
+		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
+		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
+		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
+	//	
+		let hora = horas+":"+minutos+":"+segundos;
+	//
+		return hora;
+	//
+    }
+//
+//	INFORMAÇÃO DO APP
+	function informacaoApp() {
+	//	ARRAY FUNCIONÁRIO
+		let funcionario = Array();
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		funcionario = bancodedados.recuperaFuncionario();
+	//	LISTANTO A RESERVA
+ 		funcionario.forEach(function(f) {
+ 		//	MODAL DE VIZUALIÇÃO
+ 			modalInformacaoApp(f.nome, f.versao, f.dataBR, f.hora);
+		//
+		})
+	//
+	}
+//	
+//	2.7.0 - IMPRIME AS RESERVAS
+	function imprimir() {
+	//
+	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
+        let imprime = document.getElementById('conteudo-imprecao').innerHTML;
+    //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
+        telaImpressao = window.open('about:blank');
+    //	IMPRESÃO DO CONTEÚDO
+        telaImpressao.document.write(imprime);
+        telaImpressao.window.print();
+        telaImpressao.window.close();
+    }
+//
+//	2.6.0 - ATUALIZA A PÁGINA
+ 	function atualizar() {
+ 	//	ATUALIZA A PÁGINA
+ 		window.location.reload();
 	}
 //
 //=============================================================||

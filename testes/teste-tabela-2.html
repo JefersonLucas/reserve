@@ -15,7 +15,8 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Vizualizar reserva</button>
 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTipo1">Editar reserva</button>
 	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTipo2">Excluir reserva</button>
-	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalTipo3">Verificar reserva</button>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalTipo3">Verificar reserva</button>
+	<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal2">Alerta reserva</button>
 
 	<!-- VIZUALIZAR -->
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -79,11 +80,11 @@
 		                </thead>
 		                <tbody>
 		                	<tr>
-		                    	<td>'+p.equipamento+'</td>
-		                    	<td>'+p.sala+'</td>
-		                    	<td>'+p.horaA+'/'+p.horaB+'</td>
+		                    	<td>'+equipamento+'</td>
+		                    	<td>'+sala+'</td>
+		                    	<td>'+horaA+'/'+horaB+'</td>
 		                    	<td>'+dataBR+'</td>
-		                    	<td>'+p.status+'</td>
+		                    	<td>'+status+'</td>
 		                    </tr>
 		                </tbody>
 		            </table>
@@ -329,5 +330,55 @@
             
     </div>
     <!-- FIM VERIFICAR -->
+
+
+            <!-- MODAL ALERTA -->
+            <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                <!-- DOCUMENTO -->
+                <div class="modal-dialog modal-header text-white bg-warning" role="document" id="modal-documento-2">
+                
+                    <div class="modal-content">
+                        
+                        <!-- CABEÇALHO -->
+                        <div id="modal-cabecalho-2" class="modal-dialog border border-warning rounded alert-warning">
+
+                            <!-- TÍTULO -->
+                            <h5 class="modal-title" id="modal-titulo-2"><i class="fas fa-bell" title="Alerta"></i> Atenção!</h5>
+                            <!-- BOTÃO FECHAR MODAL -->
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                        
+                        <!-- CONTEÚDO -->
+                        <div class="modal-body" id="modal-conteudo-2">
+                        A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>
+                        <br><br>
+                        <table class="table text-center">
+                            <thead>
+                                <tr class="text-center bg-warning">
+                                    <th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th>
+                                        </tr>
+                                    </thead><tbody><tr><th class="font-weight-normal">'+equipamento+'</th><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td></tr></tbody>
+                        </div>
+                    
+                        <div class="modal-footer">
+                            <!-- BOTÃO -->
+                            <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </div>
+            <!-- FIM MODAL ALERTA -->
+
+    
 </body>
 </html>
