@@ -339,7 +339,7 @@
 		let nome 		= document.getElementById('aluno');
 		let matricula 	= document.getElementById('matricula');
 		let equipamento = document.getElementById('equipamento');		
-		let serial = document.getElementById('serie');
+		let serial 		= document.getElementById('serie');
 		let horaA 		= document.getElementById('horaA');
 		let dataEUA 	= document.getElementById('data');
 	//
