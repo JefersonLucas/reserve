@@ -286,6 +286,12 @@
 				if(reserva.serial != "") {
 					reservasFiltradas = reservasFiltradas.filter(a => a.serial == reserva.serial);
 				}
+				if(reserva.horaA != "") {
+					reservasFiltradas = reservasFiltradas.filter(p => p.horaA == reserva.horaA);
+				}
+				if(reserva.dataEUA != "") {
+					reservasFiltradas = reservasFiltradas.filter(a => a.dataEUA == reserva.dataEUA);
+				}
 			//	RETORNA O FILTRO
 				return reservasFiltradas;
 			//
@@ -336,19 +342,15 @@
 	//
 	//	VALIDAÇÃO
 		if(reserva.validarDados()){
-		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Professor");
-		//
 		//	CONVERTE A DATA NO FORMATO EUA PARA O BR
 			var diaBR = dataEUA.value.substr(8,2);
 			var mesBR = "/"+dataEUA.value.substr(5,2);
 			var anoBR = "/"+dataEUA.value.substr(0,4);
 			var dataBR = diaBR+mesBR+anoBR;
-		//
 		//	MODAL DE SUCESSO
 			modalCadastarProfessorSucesso(reserva.nome, reserva.equipamento, reserva.sala, reserva.horaA, reserva.horaB, dataBR);
-		//
 		//	LIMPA OS VALORES
 			nome.value 			= "";
 			equipamento.value 	= "";
@@ -378,18 +380,18 @@
 		let horaB 		= "00:00:00"; 
 	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA.value, dataEUA.value, matricula.value, serial.value, status, dataB, horaB);
-	//
-		console.log(reserva)
-	//
+		reserva  = new ReservaAluno(nome.value, equipamento.value, horaA, dataEUA, matricula.value, serial.value, status, dataB, horaB);
 	//	VALIDAÇÃO
 		if(reserva.validarDados()){
-		//
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Aluno");
-		//
+		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+			let diaBR = reserva.dataEUA.substr(8,2);
+			let mesBR = "/"+reserva.dataEUA.substr(5,2);
+			let anoBR = "/"+reserva.dataEUA.substr(0,4);
+			let dataBR = diaBR+mesBR+anoBR;
 		//	MODAL DE SUCESSO
-			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, reserva.dataEUA, reserva.horaA);
+			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, dataBR, reserva.horaA);
 		//
 		//	LIMPA OS VALORES
 			nome.value 			= "";
@@ -489,17 +491,14 @@
 		//
  		//	CRIANDO A LINHA (TR)
  			let linha =	listaReservas.insertRow();
- 		//
  		//	CRIAR AS COLUNAS (TD)
  			linha.insertCell(0).innerHTML = p.nome;
  			linha.insertCell(1).innerHTML = p.equipamento;
  			linha.insertCell(2).innerHTML = p.sala;
- 		
+ 		//
  		//	linha.insertCell(3).innerHTML = p.horaA+"/"+p.horaB;
-
 		//	DATA EXIBIDA NO FORMATO BR
 		//	linha.insertCell(5).innerHTML = dataBR;
-		//
 		//
 			linha.insertCell(3).innerHTML = status;
 		//
@@ -510,9 +509,7 @@
  			ver.title 		= "Vizualizar";
  			ver.innerHTML 	= '<i class="far fa-eye"></i>';
  			ver.id 			= `id-ver-${p.id}`;
- 		//
- 		//
- 			ver.onclick = function() {
+ 			ver.onclick 	= function() {
  			//	MODAL DE VIZUALIÇÃO
  				modalVizualizarProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 			//
@@ -527,13 +524,10 @@
  			editar.id 			= `id-editar-${p.id}`;
  		//
  			editar.onclick = function() {
- 			//
  			//	VERIFICAÇÃO
  				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+p.nome+"? R: Sim ou Não","Não");
- 			//
  			//	VALIDAÇÃO DE VERIFICAÇÃO
  				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 				//
  				//	NOVOS VALORES SERÃO RECEBIDOS
  					let nome 			= prompt("Nome do(a) Professor(a):", p.nome);
  					let equipamento 	= prompt("Descrição do equipamento:",p.equipamento);
@@ -541,15 +535,12 @@
  					let horaA 			= prompt("Início da aula:",p.horaA);
  					let horaB 			= prompt("Término da aula:",p.horaB);
  					let dataBr 			= prompt("Data da aula:",dataBR);
- 				//
  				//	MODAL DE EDIÇÃO
  					modalEditarProfessor(nome, equipamento, sala, horaA, horaB, dataBr);
-				//
 				//	FORMATAR O ID
 					let id = this.id.replace('id-editar-','');
 				//	REMOVE A RESERVA
 					bancodedados.removerReserva(id);
-				//
 				//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
 					let anoEUA = dataBr.substr(6,4);
 					let mesEUA = "-"+dataBr.substr(3,2);
@@ -560,7 +551,6 @@
 					let status = p.status;
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 					let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
-				//
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Professor");
 				//
@@ -574,17 +564,13 @@
  			excluir.title 		= 'Excluir';
  			excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
  			excluir.id 			= `id-excluir-${p.id}`;
- 		//
- 			excluir.onclick = function() {
- 		 	//
-			//	PRONPT DE VERIFICAÇÃO
+ 			excluir.onclick 	= function() {
+ 		 	//	PRONPT DE VERIFICAÇÃO
 				let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+p.nome+"? R: Sim ou Não", "Não");
 			//	VALIDAÇÃO DE EXCLUSÃO
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-				//
- 				//	MODAL DE EXCLUSÃO 				
+				//	MODAL DE EXCLUSÃO 				
 					modalExcluirProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
-				//
 				//	FORMATAR O ID
 					let id = this.id.replace('id-excluir-','');
 				//	REMOVE A RESERVA
@@ -607,7 +593,6 @@
 		let horaA 		= document.getElementById('horaA').value;
 		let horaB 		= document.getElementById('horaB').value;
 		let dataEUA 	= document.getElementById('data').value;
-	//
 	//	PASANDO VALORES PARA UMA NOVA INSTÂNCIA
 		let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB);
 	//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
@@ -626,7 +611,22 @@
 		//
 		//	LISTANDO A PESQUISA
 			reservas.forEach(function(p) {
-			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBR = p.dataEUA.substr(8,2);
+				let mesBR = "/"+p.dataEUA.substr(5,2);
+				let anoBR = "/"+p.dataEUA.substr(0,4);
+			//	VALOR COM A DATA NO FORMATO BR
+				let dataBR = diaBR+mesBR+anoBR;
+			//	COR DO STATUS
+				let status;
+			//	VERIFICAÇÃO DE STATUS
+				if(p.status == "Aguardando") {
+					status = '<span class="text-danger"><b>'+p.status+'</b></span>';
+				} else if(p.status == "Montado") {
+					status = '<span class="text-success"><b>'+p.status+'</b></span>';
+				} else {
+					status = '<span class="text-primary"><b>'+p.status+'</b></span>';
+				}
 			//	CRIANDO A LINHA
 				let linha = listaReservas.insertRow();
 			//
@@ -635,29 +635,10 @@
 				linha.insertCell(1).innerHTML = p.equipamento;
 				linha.insertCell(2).innerHTML = p.sala;
 				linha.insertCell(3).innerHTML = p.horaA+"/"+p.horaB;
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBR = p.dataEUA.substr(8,2);
-					let mesBR = "/"+p.dataEUA.substr(5,2);
-					let anoBR = "/"+p.dataEUA.substr(0,4);
-				//	VALOR COM A DATA NO FORMATO BR
-					let dataBR = diaBR+mesBR+anoBR;
 			//	DATA EXIBIDA NO FORMATO BR
 				linha.insertCell(4).innerHTML = dataBR;		
-			//	COR DO STATUS
-				let status;
-			//
-				if(p.status == "Aguardando") {
-					status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-				} else if(p.status == "Montado") {
-					status = '<span class="text-success"><b>'+p.status+'</b></span>';
-				} else {
-					status = '<span class="text-primary"><b>'+p.status+'</b></span>';
-				}
-			//
 			//
 				linha.insertCell(5).innerHTML = status;
-			//
-
 			//
  			//	BOTAO DE VIZUALIZAÇÃO
  			//
@@ -666,9 +647,7 @@
  				ver.title 		= "Vizualizar";
  				ver.innerHTML 	= '<i class="far fa-eye"></i>';
  				ver.id 			= `id-ver-${p.id}`;
- 			//
- 			//
- 				ver.onclick = function() {
+ 				ver.onclick 	= function() {
  				//	MODAL DE VIZUALIÇÃO
  					modalVizualizarProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
 				//
@@ -681,15 +660,11 @@
  				editar.title 		= "Editar";
  				editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
  				editar.id 			= `id-editar-${p.id}`;
- 			//
- 				editar.onclick = function() {
- 				//
+ 				editar.onclick 		= function() {
  				//	VERIFICAÇÃO
  					let = resposta = prompt("Deseja EDITAR a reserva do(a) "+p.nome+"? R: Sim ou Não","Não");
- 				//
  				//	VALIDAÇÃO DE VERIFICAÇÃO
  					if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 					//
  					//	NOVOS VALORES SERÃO RECEBIDOS
  						let nome 			= prompt("Nome do(a) Professor(a):", p.nome);
  						let equipamento 	= prompt("Descrição do equipamento:",p.equipamento);
@@ -697,26 +672,21 @@
  						let horaA 			= prompt("Início da aula:",p.horaA);
  						let horaB 			= prompt("Término da aula:",p.horaB);
  						let dataBr 			= prompt("Data da aula:",dataBR);
- 					//
  					//	MODAL DE EDIÇÃO
  						modalEditarProfessor(nome, equipamento, sala, horaA, horaB, dataBr);
-					//
 					//	FORMATAR O ID
 						let id = this.id.replace('id-editar-','');
 					//	REMOVE A RESERVA
 						bancodedados.removerReserva(id);
-					//
 					//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
 						let anoEUA = dataBr.substr(6,4);
 						let mesEUA = "-"+dataBr.substr(3,2);
 						let diaEUA = "-"+dataBr.substr(0,2);
-					//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
 						let dataEUA = anoEUA+mesEUA+diaEUA;
 					//
 						let status = p.status;
 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 						let reserva = new ReservaProfessor(nome, equipamento, horaA, dataEUA, sala, horaB, status);
-					//
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 						bancodedados.gravar(reserva, "Professor");
 					//
@@ -730,35 +700,26 @@
  				excluir.title 		= 'Excluir';
  				excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
  				excluir.id 			= `id-excluir-${p.id}`;
- 			//
- 				excluir.onclick = function() {
- 		 		//
-				//	PRONPT DE VERIFICAÇÃO
+ 				excluir.onclick 	= function() {
+ 		 		//	PRONPT DE VERIFICAÇÃO
 					let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+p.nome+"? R: Sim ou Não", "Não");
 				//	VALIDAÇÃO DE EXCLUSÃO
 					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-					//
- 					//	MODAL DE EXCLUSÃO
+					//	MODAL DE EXCLUSÃO
  						modalExcluirProfessor(p.nome, p.equipamento, p.sala, p.horaA, p.horaB, dataBR, p.status);
-					//
 					//	FORMATAR O ID
 						let id = this.id.replace('id-excluir-','');
 					//	REMOVE A RESERVA
  						bancodedados.removerReserva(id);
  					}
  				}
- 			//
  			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO
  				linha.insertCell(6).append(ver," ", editar," ", excluir);
  			//
-			//
 			})
-		//
 		}
-		//
 	//
 	}
-	//
 //
 //	2.4.0 - LISTA DE RESERVAS DOS ALUNOS
 	function ListasReservasAlunos() {
@@ -788,153 +749,27 @@
 		let listaReservas = document.getElementById("listaAlunos");
 	//	LISTANTO A RESERVA
  		reservas.forEach(function(a) {
- 		//
- 		//	CRIANDO A LINHA (TR)
+		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+			let diaBR = a.dataEUA.substr(8,2);
+			let mesBR = "/"+a.dataEUA.substr(5,2);
+			let anoBR = "/"+a.dataEUA.substr(0,4);
+			let dataBR = diaBR+mesBR+anoBR;
+ 		//	COR DO STATUS
+			let status = a.status == "Em uso" ? '<span class="text-danger"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
+		//	CRIANDO A LINHA (TR)
  			let linha =	listaReservas.insertRow();
- 		//
  		//	CRIAR AS COLUNAS (TD)
  			linha.insertCell(0).innerHTML = a.nome;
  			linha.insertCell(1).innerHTML = a.matricula;
  			linha.insertCell(2).innerHTML = a.equipamento;
  			linha.insertCell(3).innerHTML = a.serial;
  		//
-		//	COR DO STATUS
-			let status = a.status == "Em uso" ? '<span class="text-danger"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
-		//
 			linha.insertCell(4).innerHTML = status;
-		//
- 		//	BOTAO DE VIZUALIZAÇÃO
- 		//
- 			let ver = document.createElement("button");
- 			ver.className = 'btn btn-outline-primary btn-sm';
- 			ver.title = "Vizualizar";
- 			ver.innerHTML = '<i class="fa fa-eye"></i>';
- 			ver.id = `id-ver-${a.id}`;
- 		//
- 		//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
- 			ver.onclick = function() {
- 			//	MODAL DE VIZUALIÇÃO
- 				modalVizualizarAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
- 			//
- 			}
- 		//
- 		//	BOTAO DE EDIÇÃO
- 		//
- 			let editar 			= document.createElement("button");
- 			editar.className 	= 'btn btn-outline-success btn-sm';
- 			editar.title 		= "Editar";
- 			editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
- 			editar.id 			= `id-editar-${a.id}`;
- 		//
- 			editar.onclick = function() {
- 			//
- 			//	VERIFICAÇÃO
- 				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+a.nome+"? R: Sim ou Não","Não");
- 			//
- 			//	VALIDAÇÃO DE VERIFICAÇÃO
- 				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 				//
- 				//	NOVOS VALORES SERÃO RECEBIDOS
- 					let nome 			= prompt("Nome do(a) Aluno(a):",a.nome); 					
- 					let matricula		= prompt("Matrícula:",a.matricula);
- 					let equipamento 	= prompt("Descrição do equipamento:",a.equipamento);
- 					let serial			= prompt("Nº de série:",a.serial);
- 				//
- 				//	MODAL DE EDIÇÃO
- 					modalEditarAluno(nome, matricula, equipamento, serial);
-				//
-				//	FORMATAR O ID
-					let id = this.id.replace('id-editar-','');
-				//	REMOVE A RESERVA
-					bancodedados.removerReserva(id);
-				//
-				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
-				//
-				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-					bancodedados.gravar(reservaAluno, "Aluno");
-				//
- 				}
- 			}
- 		//
- 		//	BOTAO DE EXCLUSÃO
- 		//
- 			excluir 			= document.createElement("button");
- 			excluir.className 	= 'btn btn-outline-danger btn-sm';
- 			excluir.title 		= 'Excluir';
- 			excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
- 			excluir.id 			= `id-excluir-${a.id}`;
- 		//
- 			excluir.onclick = function() {
- 		 	//
-			//	PRONPT DE VERIFICAÇÃO
-				let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+a.nome+"? R: Sim ou Não", "Não");
-			//	VALIDAÇÃO DE EXCLUSÃO
-				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-				//
-				//	MODAL DE EXCLUSÃO
-					modalExcluirAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
-				//
-				//	FORMATAR O ID
-					let id = this.id.replace('id-excluir-','');
-				//	REMOVE A RESERVA
- 					bancodedados.removerReserva(id);
- 				}
- 			}
- 		//
- 		//	BOTÃO VERIFICAR RESERVA
- 		//
- 			verficar 			= document.createElement("button");
- 			verficar.className 	= "btn btn-outline-info btn-sm";
- 			verficar.title 		= "Verificar";
- 			verficar.innerHTML 	= '<i class="fas fa-user-check"></i>';
- 			verficar.id 			= `id-verifica-${a.id}`;
- 			verficar.onclick = function() {
- 		 	//
- 		 		if(a.status ==  "Em uso") {
-				//	PRONPT DE VERIFICAÇÃO
-					let resposta = prompt("A reserva do(a) "+a.nome+" está verificada? R: Sim ou Não", "Não");
-				//	VALIDAÇÃO DE EXCLUSÃO
-					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-					//
-					//	MODAL DE VERIFICAÇÃO
-						modalVerificaReservaAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
-					//
-					//	FORMATAR O ID
-						let id = this.id.replace('id-verifica-','');
-					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
-					//
-						let nome 		= a.nome;
-						let equipamento = a.equipamento;
-						let horaA 		= a.horaA;
-						let dataEUA 	= a.dataEUA;
-						let matricula	= a.matricula;
-						let serial 		= a.serial;
-						let status 		= "Recolhido";
-						let dataB 		= retornaData();
-						let horaB 		= retornaHora();
-					//
-					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial, status, dataB, horaB);
-					//
-					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reservaAluno, "Aluno");
-	 				}
- 				} else {
-					let status = a.status == "Em uso" ? '<span class="text-danger"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
- 				//	MODAL DE ERRO 					
-					modalVerificaReservaAlunoErro(a.nome, a.matricula, a.equipamento, a.serial, status, a.dataEUA, a.horaA, a.dataB, a.horaB);
- 				//
- 				}
- 			}
- 		//
- 		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 			linha.insertCell(5).append(ver," ", editar," ", excluir," ",verficar);
+		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
+ 			linha.insertCell(5).append(botaoVizualizarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, status, dataBR, a.horaA, a.dataB, a.horaB)," ", botaoEditarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, status, dataBR, a.horaA, a.dataB, a.horaB)," ", botaoExcluirAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, status, dataBR, a.horaA, a.dataB, a.horaB)," ", botaoVerificarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, a.status, dataBR, a.horaA, a.dataB, a.horaB));
  		//
 		})
-		//
-//
+	//
 	}
 //
 //	2.5.0 PESQUISA RESERVA DO ALUNO
@@ -966,168 +801,167 @@
 		//
 		//	LISTANDO A PESQUISA
 			reservas.forEach(function(a) {
-			//
 			//	CRIANDO A LINHA
 				let linha = listaReservas.insertRow();
-			//
 			//	CRIAR AS COLUNAS
 				linha.insertCell(0).innerHTML = a.nome;
 				linha.insertCell(1).innerHTML = a.matricula;
 				linha.insertCell(2).innerHTML = a.equipamento;
 				linha.insertCell(3).innerHTML = a.serial;
-			//
- 			//	COR DO STATUS
-				let status = a.status == "Em uso" ? '<span class="text-primary"><b>'+a.status+'</b></span>' : '<span class="text-danger"><b>'+a.status+'</b></span>';
+			//	COR DO STATUS
+				let status = a.status == "Em uso" ? '<span class="text-danger"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
 			//
 				linha.insertCell(4).innerHTML = status;
-			//
-			//
- 			//	BOTAO DE VIZUALIZAÇÃO
- 			//
- 				let ver 		= document.createElement("button");
- 				ver.className	= 'btn btn-outline-primary btn-sm';
- 				ver.title 		= "Vizualizar";
- 				ver.innerHTML 	= '<i class="fa fa-eye"></i>';
- 				ver.id 			= `id-ver-${a.id}`;
- 			//
- 			//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
- 				ver.onclick = function() {
- 				//	MODAL DE VIZUALIÇÃO
- 					modalVizualizarAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
-				//
- 				}
- 			 //
- 			//	BOTAO DE EDIÇÃO
- 			//
- 				let editar 			= document.createElement("button");
- 				editar.className 	= 'btn btn-outline-success btn-sm';
- 				editar.title 		= "Editar";
- 				editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
- 				editar.id 			= `id-editar-${a.id}`;
- 			//
- 				editar.onclick = function() {
- 				//
- 				//	VERIFICAÇÃO
- 					let = resposta = prompt("Deseja EDITAR a reserva do(a) "+a.nome+"? R: Sim ou Não","Não");
- 				//
- 				//	VALIDAÇÃO DE VERIFICAÇÃO
- 					if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 					//
- 					//	NOVOS VALORES SERÃO RECEBIDOS
- 						let nome 			= prompt("Nome do(a) Aluno(a):",a.nome); 					
- 						let matricula		= prompt("Matrícula:",a.matricula);
- 						let equipamento 	= prompt("Descrição do equipamento:",a.equipamento);
- 						let serial			= prompt("Nº de série:",a.serial);
- 						let horaA 			= prompt("Início da aula:",a.horaA);
- 						let dataBr 			= prompt("Data da aula:",dataBR);
- 					//
- 					//	MODAL DE EDIÇÃO
- 						modalEditarAluno(nome, matricula, equipamento, serial);
-					//
-					//	FORMATAR O ID
-						let id = this.id.replace('id-editar-','');
-					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
-					//
-					//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
-						let anoEUA = dataBr.substr(6,4);
-						let mesEUA = "-"+dataBr.substr(3,2);
-						let diaEUA = "-"+dataBr.substr(0,2);
-					//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
-						let dataEUA = anoEUA+mesEUA+diaEUA;
-					//
-					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial);
-					//
-					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reservaAluno, "Aluno");
-					//
- 					}
- 				}
- 			//
- 			//
- 			//	BOTAO DE EXCLUSÃO
- 			//
- 				excluir 			= document.createElement("button");
- 				excluir.className 	= 'btn btn-outline-danger btn-sm';
- 				excluir.title 		= 'Excluir';
- 				excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
- 				excluir.id 			= `id-excluir-${a.id}`;
- 			//
- 				excluir.onclick = function() {
- 			 	//
-				//	PRONPT DE VERIFICAÇÃO
-					let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+a.nome+"? R: Sim ou Não", "Não");
-				//	VALIDAÇÃO DE EXCLUSÃO
-					if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-					//
-					//	MODAL DE EXCLUSÃO
-						modalExcluirAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
-					//
-					//	FORMATAR O ID
-						let id = this.id.replace('id-excluir-','');
-					//	REMOVE A RESERVA
- 						bancodedados.removerReserva(id);
- 					}
- 				}
- 			//
- 			//	BOTÃO VERIFICAR RESERVA
- 			//
- 				verficar 			= document.createElement("button");
- 				verficar.className 	= "btn btn-outline-info btn-sm";
- 				verficar.title 		= "Verificar";
- 				verficar.innerHTML 	= '<i class="fas fa-user-check"></i>';
- 				verficar.id 			= `id-verifica-${a.id}`;
- 				verficar.onclick = function() {
- 			 	//
- 			 		if(a.status ==  "Em uso") {
-					//	PRONPT DE VERIFICAÇÃO
-					let resposta = prompt("A reserva do(a) "+a.nome+" está verificada? R: Sim ou Não", "Não");
-						//	VALIDAÇÃO DE EXCLUSÃO
-						if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-						//
-						//	MODAL DE VERIFICAÇÃO
-							modalVerificaReservaAluno(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
-						//
-						//	FORMATAR O ID
-							let id = this.id.replace('id-verifica-','');
-							//	REMOVE A RESERVA
-							bancodedados.removerReserva(id);
-						//
-							let nome 		= a.nome;
-							let equipamento = a.equipamento;
-							let horaA 		= a.horaA;
-							let dataEUA 	= a.dataEUA;
-							let matricula	= a.matricula;
-							let serial 		= a.serial;
-							let status 		= "Recolhido";
-							let dataB 		= retornaData();
-							let horaB 		= retornaHora();
-							//
-						//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-							reservaAluno  = new ReservaAluno(nome, equipamento, horaA, dataEUA, matricula, serial, status, dataB, horaB);
-						//
-						//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-							bancodedados.gravar(reservaAluno, "Aluno");
-	 					}
- 					} else {
- 					//	MODAL DE ERRO 					
-						modalVerificaReservaAlunoErro(a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB);
- 					//
- 					}
- 				}
- 			//
- 			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 				linha.insertCell(5).append(ver," ", editar," ", excluir, " ", verficar);
+			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
+ 				linha.insertCell(5).append(botaoVizualizarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB)," ", botaoEditarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB)," ", botaoExcluirAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB)," ", botaoVerificarAluno(a.id, a.nome, a.matricula, a.equipamento, a.serial, a.status, a.dataEUA, a.horaA, a.dataB, a.horaB));
  			//
 			})
-			//
-		//
 		}
-		//
-	//
 	}
-	//
+//
+//	BOTÃO VIZUALIZAÇÃO
+	let botaoVizualizarAluno = function(id, nome, matricula, equipamento, serial, status, dataBR, horaA, dataB, horaB) {
+	//	BOTAO DE VIZUALIZAÇÃO
+ 		let ver 		= document.createElement("button");
+ 		ver.className	= 'btn btn-outline-primary btn-sm';
+ 		ver.title 		= "Vizualizar";
+ 		ver.innerHTML 	= '<i class="fa fa-eye"></i>';
+ 		ver.id 			= `id-ver-${id}`;
+ 	//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
+ 		ver.onclick 	= function() {
+		//	COR DO STATUS
+			let corStatus = status == "Em uso" ? '<span class="text-danger"><b>'+status+'</b></span>' : '<span class="text-primary"><b>'+status+'</b></span>';
+		//	MODAL DE VIZUALIÇÃO
+			modalVizualizarAluno(nome, matricula, equipamento, serial, corStatus, dataBR, horaA, dataB, horaB);
+		//
+ 		}
+ 		return ver;
+	}
+//
+//	BOTÃO EDITAR
+	let botaoEditarAluno = function(id, nome, matricula, equipamento, serial, status, dataBR, horaA, dataB, horaB) {
+	//	BOTAO DE EDIÇÃO
+ 	//
+ 		let editar 			= document.createElement("button");
+ 		editar.className 	= 'btn btn-outline-success btn-sm';
+ 		editar.title 		= "Editar";
+ 		editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
+ 		editar.id 			= `id-editar-${id}`;
+ 	//
+ 		editar.onclick 		= function() {
+ 		//
+ 		//	VERIFICAÇÃO
+ 			let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
+ 		//
+ 		//	VALIDAÇÃO DE VERIFICAÇÃO
+ 			if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+ 			//	NOVOS VALORES SERÃO RECEBIDOS
+ 				let novoNome 		= prompt("Nome do(a) Aluno(a):", nome);
+ 				let novoMatricula	= prompt("Matrícula:", matricula);
+ 				let novoEquipamento = prompt("Descrição do equipamento:", equipamento);
+ 				let novoSerial		= prompt("Nº de série:", serial);
+ 				let novoHoraA 		= prompt("Início da aula:",horaA);
+ 				let dataBr 			= prompt("Data da aula:",dataBR);
+			//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
+				let anoEUA = dataBr.substr(6,4);
+				let mesEUA = "-"+dataBr.substr(3,2);
+				let diaEUA = "-"+dataBr.substr(0,2);
+			//	VARIÁVEL DO CALENDÁRIO NO FORMATO EUA
+				let dataEUA = anoEUA+mesEUA+diaEUA;
+ 			//	MODAL DE EDIÇÃO
+ 				modalEditarAluno(novoNome, novoMatricula, novoEquipamento, novoSerial);
+			//	FORMATAR O ID
+				let id = this.id.replace('id-editar-','');
+			//	REMOVE A RESERVA
+				bancodedados.removerReserva(id);
+			//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+				reservaAluno  = new ReservaAluno(novoNome, novoEquipamento, novoHoraA, dataEUA, novoMatricula, novoSerial);
+			//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+				bancodedados.gravar(reservaAluno, "Aluno");
+			//
+ 			}
+ 		}
+ 		return editar;
+ 	}
+//
+//	BOTÃO EXCLUIR
+	let botaoExcluirAluno = function(id, nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	//	BOTAO DE EXCLUSÃO
+ 		excluir 			= document.createElement("button");
+ 		excluir.className 	= 'btn btn-outline-danger btn-sm';
+ 		excluir.title 		= 'Excluir';
+ 		excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
+ 		excluir.id 			= `id-excluir-${id}`;
+ 	//
+ 		excluir.onclick = function() {
+ 	 	//	PRONPT DE VERIFICAÇÃO
+			let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+nome+"? R: Sim ou Não", "Não");
+		//	VALIDAÇÃO DE EXCLUSÃO
+			if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//	MODAL DE EXCLUSÃO
+				modalExcluirAluno(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB);
+			//	FORMATAR O ID
+				let id = this.id.replace('id-excluir-','');
+			//	REMOVE A RESERVA
+ 				bancodedados.removerReserva(id);
+ 			//
+ 			}
+ 		}
+ 		return excluir;
+	}
+//
+//	BOTÃO VERIFICAR
+	let botaoVerificarAluno = function(id, nome, matricula, equipamento, serial, status, dataBR, horaA, dataB, horaB) {
+	//	BOTÃO VERIFICAR RESERVA
+ 		verificar 			= document.createElement("button");
+ 		verificar.className = "btn btn-outline-info btn-sm";
+ 		verificar.title 	= "Verificar";
+ 		verificar.innerHTML = '<i class="fas fa-user-check"></i>';
+ 		verificar.id 		= `id-verifica-${id}`;
+ 		verificar.onclick 	= function() {
+ 		//
+ 			if(status ==  "Em uso") {
+		//	PRONPT DE VERIFICAÇÃO
+			let resposta = prompt("A reserva do(a) "+nome+" está verificada? R: Sim ou Não", "Não");
+			//	VALIDAÇÃO DE EXCLUSÃO
+				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+				///	FORMATAR O ID
+					let id = this.id.replace('id-verifica-','');
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//	COMVERSÃO DO CALENDÁRIO NO FORMATO BR PARA EUA
+					let anoEUA = dataBR.substr(6,4);
+					let mesEUA = "-"+dataBR.substr(3,2);
+					let diaEUA = "-"+dataBR.substr(0,2);
+					let dataEUA = anoEUA+mesEUA+diaEUA;
+				//	NOVOS VALORES
+					let novoNome 		= nome;
+					let novoEquipamento = equipamento;
+					let novoHoraA 		= horaA;
+					let novoDataEUA		= dataEUA;
+					let novoMatricula	= matricula;
+					let novoSerial 		= serial;
+					let novoStatus 		= "Recolhido";
+					let novoDataB 		= retornaData();
+					let novoHoraB 		= retornaHora();
+				//	MODAL DE VERIFICAÇÃO
+					modalVerificaReservaAluno(novoNome, novoMatricula, novoEquipamento, novoSerial, novoStatus, dataBR, novoHoraA, novoDataB, novoHoraB);
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					reservaAluno  = new ReservaAluno(novoNome, novoEquipamento, novoHoraA, novoDataEUA, novoMatricula, novoSerial, novoStatus, novoDataB, novoHoraB);
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reservaAluno, "Aluno");
+	 			}
+ 			} 
+ 			else if(status == "Recolhido") {
+ 			//	COR DO STATUS
+				let newStatus = status == "Em uso" ? '<span class="text-danger"><b>'+status+'</b></span>' : '<span class="text-primary"><b>'+status+'</b></span>';
+ 			//	MODAL DE ERRO 					
+				modalVerificaReservaAlunoErro(nome, matricula, equipamento, serial, newStatus, dataBR, horaA, dataB, horaB);
+ 			//
+ 			}
+ 		}
+ 		return verificar;
+	}
 //
 //	MODAL INFORMAÇÃO DO APP
 	let modalInformacaoApp = function(nome, versao, dataBR, hora) {
@@ -1205,14 +1039,14 @@
 	//
 	}
 //	MODAL DE VIZUALIÇÃO ALUNO
-	let modalVizualizarAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	let modalVizualizarAluno = function(nome, matricula, equipamento, serial, status, dataBR, horaA, dataB, horaB) {
 	//
  		$('#modal2').modal('show');
  		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-eye"></i> Informações';
 		document.getElementById('modal-documento-2').className	= 'modal-dialog modal-lg border border-primary rounded alert-primary';
 		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-primary';
 		document.getElementById('modal-conteudo-2').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-primary"><b>'+nome+'</b></span>:';
-		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataBR+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-primary';
 	//
@@ -1283,14 +1117,14 @@
 	//
 	}
 //
-	let modalVerificaReservaAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	let modalVerificaReservaAluno = function(nome, matricula, equipamento, serial, status, dataBR, horaA, dataB, horaB) {
 	//
  		$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-user-check"></i> Verificada';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-info rounded alert-info';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-info';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-info"><b>'+nome+'</b></span> foi <span class="text-info"><b>verificada!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de entrega"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário de devolução"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataBR+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-info';
 	//
