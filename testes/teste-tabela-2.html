@@ -16,7 +16,8 @@
 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTipo1">Editar reserva</button>
 	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTipo2">Excluir reserva</button>
     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalTipo3">Verificar reserva</button>
-	<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal2">Alerta reserva</button>
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal2">Alerta reserva</button>
+	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal3">Cadastro reserva</button>
 
 	<!-- VIZUALIZAR -->
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -73,8 +74,8 @@
 		                    <tr class="text-center bg-primary">
 		                    	<th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th>
 		                    	<th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th>
-		                        <th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th>
-		                    	<th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th>
+		                        <th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th>
+                                <th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th>
 	                            <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th>
 		                    </tr>
 		                </thead>
@@ -82,8 +83,8 @@
 		                	<tr>
 		                    	<td>'+equipamento+'</td>
 		                    	<td>'+sala+'</td>
-		                    	<td>'+horaA+'/'+horaB+'</td>
-		                    	<td>'+dataBR+'</td>
+                                <td>'+dataA+'<br>'+horaA+'</td>
+                                <td>'+dataB+'<br>'+horaB+'</td>
 		                    	<td>'+status+'</td>
 		                    </tr>
 		                </tbody>
@@ -332,52 +333,109 @@
     <!-- FIM VERIFICAR -->
 
 
-            <!-- MODAL ALERTA -->
-            <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- ALERTA -->
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+        <div class="modal-dialog modal-lg border border-success rounded alert-success" role="document" id="modal-document-tipo-2">
                 
-                <!-- DOCUMENTO -->
-                <div class="modal-dialog modal-header text-white bg-warning" role="document" id="modal-documento-2">
-                
-                    <div class="modal-content">
-                        
-                        <!-- CABEÇALHO -->
-                        <div id="modal-cabecalho-2" class="modal-dialog border border-warning rounded alert-warning">
+            <div class="modal-content">
+                    
+                <div id="modal-titulo-div-tipo-2" class="modal-header text-white bg-success">
 
-                            <!-- TÍTULO -->
-                            <h5 class="modal-title" id="modal-titulo-2"><i class="fas fa-bell" title="Alerta"></i> Atenção!</h5>
-                            <!-- BOTÃO FECHAR MODAL -->
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <h5 class="modal-title" id="modal-titulo-tipo-2"><i class="fas fa-user-check"></i> Verificada</h5>
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-                        </div>
-                        
-                        <!-- CONTEÚDO -->
-                        <div class="modal-body" id="modal-conteudo-2">
+                </div>
+                    
+                <div class="modal-body" id="modal-conteudo-tipo-2">
                         A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>
                         <br><br>
                         <table class="table text-center">
                             <thead>
                                 <tr class="text-center bg-warning">
-                                    <th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></th>
-                                    <th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></th>
-                                    <th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th>
+                                    <th scope="col" class="text-white"><i class="fas fa-clock" title="Horário"></i></th>
                                     <th scope="col" class="text-white"><i class="fas fa-calendar-alt" title="Data"></i></th>
-                                        </tr>
-                                    </thead><tbody><tr><th class="font-weight-normal">'+equipamento+'</th><td>'+sala+'</td><td>'+horaA+'/'+horaB+'</td><td>'+dataBR+'</td></tr></tbody>
-                        </div>
-                    
-                        <div class="modal-footer">
-                            <!-- BOTÃO -->
-                            <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
-                        </div>
-
-                    </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>'+equipamento+'</td>
+                                    <td>'+sala+'</td>
+                                    <td>'+horaA+'/'+horaB+'</td>
+                                    <td>'+dataBR+'</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                 </div>
-            
+                    
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" id="modal-btn-tipo-1" onclick="atualizar()"></button>
+                </div>
+
             </div>
-            <!-- FIM MODAL ALERTA -->
+
+        </div>
+            
+    </div>
+    <!-- FIM ALERTA -->
+
+
+    <!-- CADASTRAR -->
+    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+        <div class="modal-dialog modal-lg border border-success rounded alert-success" role="document" id="modal-document-tipo-2">
+                
+            <div class="modal-content">
+                    
+                <div id="modal-titulo-div-tipo-2" class="modal-header text-white bg-success">
+
+                    <h5 class="modal-title" id="modal-titulo-tipo-2"><i class="fas fa-user-check"></i> Verificada</h5>
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                    
+                <div class="modal-body" id="modal-conteudo-tipo-2">
+
+                        A reserva do(a) professor(a) <span class="text-success"><b>'+nome+'</b></span> já está pra <span class="text-success"><b>iniciar!</b></span>
+                        <br><br>
+                                <table class="table text-center" >
+                                    <thead>
+                                        <tr class="text-center bg-success">
+                                            <th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th>
+                                            <th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th>
+                                            <th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th>
+                                            <th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>'+equipamento+'</td>
+                                            <td>'+sala+'</td>
+                                            <td>'+dataA+'<br>'+horaA+'</td>
+                                            <td>'+dataB+'<br>'+horaB+'</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                </div>
+                    
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" id="modal-btn-tipo-1" onclick="atualizar()"></button>
+                </div>
+
+            </div>
+
+        </div>
+            
+    </div>
+    <!-- FIM CADASTRAR -->
 
     
 </body>
