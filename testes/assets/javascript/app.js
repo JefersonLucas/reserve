@@ -439,6 +439,8 @@
 			matricula.value 	= "";
 			equipamento.value 	= "";
 			serial.value 		= "";
+			horaA.value 		= "";
+			dataA.value 		= "";
 		//
 		} else {
 		//	MODAL DE ERRO
@@ -515,7 +517,7 @@
 		//
 			if(p.status == "Aguardando") {
 				status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-			} else if(p.status == "Montado") {
+			} else if(p.status == "Em uso") {
 				status = '<span class="text-success"><b>'+p.status+'</b></span>';
 			} else {
 				status = '<span class="text-primary"><b>'+p.status+'</b></span>';
@@ -574,7 +576,7 @@
 			//	VERIFICAÇÃO DE STATUS
 				if(p.status == "Aguardando") {
 					status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-				} else if(p.status == "Montado") {
+				} else if(p.status == "Em uso") {
 					status = '<span class="text-success"><b>'+p.status+'</b></span>';
 				} else {
 					status = '<span class="text-primary"><b>'+p.status+'</b></span>';
@@ -749,7 +751,7 @@
 		//
 			if(status == "Aguardando") {
 				corStatus = '<span class="text-danger"><b>'+status+'</b></span>';
-			} else if(status == "Montado") {
+			} else if(status == "Em uso") {
 				corStatus = '<span class="text-success"><b>'+status+'</b></span>';
 			} else {
 				corStatus = '<span class="text-primary"><b>'+status+'</b></span>';
@@ -810,28 +812,45 @@
  		editar.id 			= `id-editar-${id}`;
  	//
  		editar.onclick 		= function() {
- 		//	VERIFICAÇÃO
- 			let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
- 			//	VALIDAÇÃO DE VERIFICAÇÃO
- 			if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 			//	NOVOS VALORES SERÃO RECEBIDOS
- 				let _nome 			= prompt("Nome do(a) Professor(a):", nome);
- 				let _equipamento 	= prompt("Descrição do equipamento:",equipamento);
- 				let _sala 			= prompt("Nome da sala:",sala);
- 				let _horaA 			= prompt("Início da aula:",horaA);
- 				let _horaB 			= prompt("Término da aula:",horaB);
- 				let _dataA 			= prompt("Data da aula:",dataA);
- 			//	MODAL DE EDIÇÃO
- 				modalEditarProfessor(_nome, _equipamento, _sala, _dataA, _horaA, _horaB);
- 			//	FORMATAR O ID
-				let id = this.id.replace('id-editar-','');
-			//	REMOVE A RESERVA
-				bancodedados.removerReserva(id);
-			//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-				let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, _dataA, _horaA, dataB, _horaB, horaC, horaD);
-			//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-				bancodedados.gravar(reserva, "Professor");
-			//
+ 		//
+ 			let time = new Date();
+
+ 			let horas 	= time.getHours();
+ 			let minutos = time.getMinutes() + 5;
+
+ 			minutos = minutos < 10 ? minutos = "0"+minutos : minutos;
+			
+			let hora = horas+":"+minutos;
+
+			console.log(hora, horaA);
+
+ 			if(hora >= horaA) {
+ 				modalEditarProfessorB(nome);
+ 			} else {
+ 			//
+ 			//	VERIFICAÇÃO
+ 				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
+ 				//	VALIDAÇÃO DE VERIFICAÇÃO
+ 				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+ 				//	NOVOS VALORES SERÃO RECEBIDOS
+ 					let _nome 			= prompt("Nome do(a) Professor(a):", nome);
+ 					let _equipamento 	= prompt("Descrição do equipamento:",equipamento);
+ 					let _sala 			= prompt("Nome da sala:",sala);
+ 					let _horaA 			= prompt("Início da aula:",horaA);
+ 					let _horaB 			= prompt("Término da aula:",horaB);
+ 					let _dataA 			= prompt("Data da aula:",dataA);
+ 				//	MODAL DE EDIÇÃO
+ 					modalEditarProfessorA(_nome, _equipamento, _sala, _dataA, _horaA, _horaB);
+ 				//	FORMATAR O ID
+					let id = this.id.replace('id-editar-','');
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, _dataA, _horaA, dataB, _horaB, horaC, horaD);
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reserva, "Professor");
+				//
+ 				}
  			}
  		}
  		return editar;
@@ -882,7 +901,7 @@
 			//
 				if(status == "Aguardando") {
 					corStatus = '<span class="text-danger"><b>'+status+'</b></span>';
-				} else if(status == "Montado") {
+				} else if(status == "Em uso") {
 					corStatus = '<span class="text-success"><b>'+status+'</b></span>';
 				} else {
 					corStatus = '<span class="text-primary"><b>'+status+'</b></span>';
@@ -953,7 +972,7 @@
 	let botaoVerificarProfessor = function(id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) {
 	//	BOTÃO VERIFICAR RESERVA
  		verificar 			= document.createElement("button");
- 		verificar.className = "btn btn-outline-info btn-sm";
+ 		verificar.className = "btn btn-outline-primary btn-sm";
  		verificar.title 	= "Verificar";
  		verificar.innerHTML = '<i class="fas fa-user-check"></i>';
  		verificar.id 		= `id-verifica-${id}`;
@@ -971,20 +990,20 @@
 				//	NOVOS VALORES					
 					let _nome 		 = nome;
 					let _equipamento = equipamento;
-					let _status 	 = "Retirado";
+					let _status 	 = "Em uso";
 					let _sala 		 = sala;
 					let _dataA 		 = dataA;
 					let _horaA 		 = horaA;
 					let _dataB 		 = retornaData();
 					let _horaB 		 = horaB;
-					let _horaC 		 = horaA;
-					let _horaD 		 = retornaHora();
+					let _horaC 		 = retornaHora();
+					let _horaD 		 = horaD;
 				//	COR DO STATUS
 					let corStatus;
 				//
 					if(_status == "Aguardando") {
 						corStatus = '<span class="text-danger"><b>'+_status+'</b></span>';
-					} else if(_status == "Montado") {
+					} else if(_status == "Em uso") {
 						corStatus = '<span class="text-success"><b>'+_status+'</b></span>';
 					} else {
 						corStatus = '<span class="text-primary"><b>'+_status+'</b></span>';
@@ -997,14 +1016,47 @@
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Professor");
 	 			}
- 			} 
- 			else if(status == "Retirado") {
+ 			} 	else if(status == "Em uso") {
+				//	FORMATAR O ID
+					let id = this.id.replace('id-verifica-','');
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//	NOVOS VALORES					
+					let _nome 		 = nome;
+					let _equipamento = equipamento;
+					let _status 	 = "Retirado";
+					let _sala 		 = sala;
+					let _dataA 		 = dataA;
+					let _horaA 		 = horaA;
+					let _dataB 		 = dataB;
+					let _horaB 		 = horaB;
+					let _horaC 		 = horaC;
+					let _horaD 		 = retornaHora();
+				//	COR DO STATUS
+					let corStatus;
+				//
+					if(_status == "Aguardando") {
+						corStatus = '<span class="text-danger"><b>'+_status+'</b></span>';
+					} else if(_status == "Em uso") {
+						corStatus = '<span class="text-success"><b>'+_status+'</b></span>';
+					} else {
+						corStatus = '<span class="text-primary"><b>'+_status+'</b></span>';
+					}
+				//	MODAL DE VERIFICAÇÃO
+					modalVerificaReservaProfessor(_nome, _equipamento, corStatus, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+					console.log(_nome, _equipamento, corStatus, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reserva, "Professor");
+ 			}
+ 			else {
  			//	COR DO STATUS
 				let corStatus;
 			//
 				if(status == "Aguardando") {
 					corStatus = '<span class="text-danger"><b>'+status+'</b></span>';
-				} else if(status == "Montado") {
+				} else if(status == "Em uso") {
 					corStatus = '<span class="text-success"><b>'+status+'</b></span>';
 				} else {
 					corStatus = '<span class="text-primary"><b>'+status+'</b></span>';
@@ -1025,7 +1077,7 @@
 		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-info rounded alert-info';
 		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-info';
 		document.getElementById('modal-conteudo-2').innerHTML 	= 'Informações dos detalhes do App Reserve:';
-		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Cadastro"></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+nome+'</td><td>'+versao+'</td><td>'+dataA+'<br>'+horaA+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank" title="Projeto">GitHub</a></b></td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-user-circle" title="Funcionário"></i></th><th scope="col" class="text-white"><i class="fas fa-user-tag" title="Versão"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Cadastro"></th><th scope="col" class="text-white"><i class="fab fa-github" title="GitHub"></i></th></tr></thead><tbody><tr><td>'+nome+'</td><td>'+versao+'</td><td>'+dataA+'<br>'+horaA+'</td><td><b><a href="https://github.com/JefersonLucas/reserve" target="_blank" title="Projeto">GitHub</a></b></td></tr></tbody></table>';
 		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-info';
 	//
@@ -1038,7 +1090,7 @@
 		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi cadadastrada com <span class="text-success"><b>sucesso!</b></span>'
-		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
 	//
@@ -1051,7 +1103,7 @@
 		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do professor(a) <span class="text-success"><b>'+nome+'</b></span> foi cadastrada com <span class="text-success"><b>sucesso!</b></span><br>'
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
 	//
@@ -1132,7 +1184,7 @@
 	//
 	}
 //
-	let modalEditarProfessor = function(nome, equipamento, sala, dataA, horaA, horaB) {
+	let modalEditarProfessorA = function(nome, equipamento, sala, dataA, horaA, horaB) {
 	//
  		$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-pencil-alt"></i> Editar';
@@ -1142,6 +1194,18 @@
 		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
+	//
+	}
+//	MODAL DE ERRO DE CADASTRO
+	let  modalEditarProfessorB = function(nome) {
+	//
+		$('#modal2').modal('show');		
+		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
+		document.getElementById('modal-documento-2').className	= 'modal-dialog border border-danger rounded alert-danger';
+		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-danger';
+		document.getElementById('modal-conteudo-2').innerHTML	= 'Você não pode alterar a reserva do <span class="text-danger"><b>'+nome+'</b></span>.';
+		document.getElementById('modal-botao-2').innerHTML		= 'Voltar';
+		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-danger';
 	//
 	}
 //
@@ -1230,8 +1294,8 @@
 		document.getElementById('modal-documento-1').className  = 'modal-dialog modal-lg border border-warning rounded alert-warning';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-warning';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+dataB+'<br>'+horaC+' / '+horaD+'</td><td>'+status+'</td></tr></tbody></table>';
-		document.getElementById('modal-botao-1').innerHTML 		= 'Montar';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-warning';
 	//
 	}
@@ -1243,15 +1307,15 @@
 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-bell" title="Alerta"></i> Atenção!';
 		document.getElementById('modal-documento-1').className  = 'modal-dialog modal-lg border border-warning rounded alert-warning';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-warning';
-		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>iniciar!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+dataB+'<br>'+horaC+' / '+horaD+'</td><td>'+status+'</td></tr></tbody></table>';
-		document.getElementById('modal-botao-1').innerHTML 		= 'Retirar';
+		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) professor(a) <span class="text-warning"><b>'+nome+'</b></span> já está pra <span class="text-warning"><b>acabar!</b></span>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-warning"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-warning';
 	//
 	}
 //
 //	ALERTA
-	let alerta = function() { setInterval(alertarReserva, 5000); }
+	let alerta = function() { setInterval(alertarReserva, 15000); }
 //	FUNÇÃO ALERTA DE RESERVA 
 	function alertarReserva() {
 		
@@ -1285,44 +1349,49 @@
 			//	SE O STATUS FOR AGURARDANDO
 				if(p.status == "Aguardando") {
 				//	SE A HORA DE MONTAGEM FOR IGUAL A DO hora
-					if(p.horaA == hora){
-					//	ALERTA DE RESERVA
-						modalAlertaReservaA(p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD);
-					//
+					if(hora >= p.horaA){
 					//	FORMATAR O ID
-						let id = p.id;
+					//	let id = p.id;
 					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
+					//	bancodedados.removerReserva(id);
 					//
 						let nome 		= p.nome;
 						let equipamento = p.equipamento;
-						let status 		= "Montado";
+						let status 		= "Em uso";
 						let sala 		= p.sala;
-						let dataA 		= retornaData();
-						let horaA 		= retornaHora();
-						let dataB 		= retornaData();
+						let dataA 		= p.dataA;
+						let horaA 		= p.horaA;
 						let horaB 		= p.horaB;
+						let dataB 		= retornaData();
 						let horaC 		= retornaHora();
 						let horaD 		= p.horaD;
+					//	COR DO STATUS
+						let corStatus;
 					//
+						if(p.status == "Aguardando") {
+							corStatus = '<span class="text-danger"><b>'+p.status+'</b></span>';
+						} else if(p.status == "Em uso") {
+							corStatus = '<span class="text-success"><b>'+p.status+'</b></span>';
+						} else if(p.status == "Retirado"){
+							corStatus = '<span class="text-primary"><b>'+p.status+'</b></span>';
+						}
+					//	ALERTA DE RESERVA
+						modalAlertaReservaA(nome, equipamento, corStatus, sala, dataA, horaA, dataB, horaB, horaC, horaD);
 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						let reserva = new ReservaProfessor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD);
-					//
+					//	let reserva = new ReservaProfessor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD);
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reserva, "Professor");
+					//	bancodedados.gravar(reserva, "Professor");
 					//
 					}
 				}
-			//	SE O STATUS FOR MONTADO
-				if(p.status == "Montado") {
+			//	SE O STATUS FOR Em uso
+				if(p.status == "Em uso") {
 				//	SE A HORA DE RETIRADA FOR IGUAL A DO TEMPO
-					if(p.horaB == hora){
-					//	ALERTA DE RESERVA
-						modalAlertaReservaB(p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD);
+					if(hora >= p.horaB){
 					//	FORMATAR O ID
-						let id = p.id;
+					//	let id = p.id;
 					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
+					//	bancodedados.removerReserva(id);
 					//
 						let nome 		= p.nome;
 						let equipamento = p.equipamento;
@@ -1330,16 +1399,26 @@
 						let sala 		= p.sala;
 						let dataA 		= p.dataA;
 						let horaA 		= p.horaA;
-						let dataB 		= retornaData();
+						let dataB 		= p.dataB;
 						let horaB 		= p.horaB;
 						let horaC 		= p.horaC;
 						let horaD 		= retornaHora();
-
-					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						let reserva = new ReservaProfessor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD);
+					//	COR DO STATUS
+						let corStatus;
 					//
+						if(p.status == "Aguardando") {
+							corStatus = '<span class="text-danger"><b>'+p.status+'</b></span>';
+						} else if(p.status == "Em uso") {
+							corStatus = '<span class="text-success"><b>'+p.status+'</b></span>';
+						} else if(p.status == "Retirado"){
+							corStatus = '<span class="text-primary"><b>'+p.status+'</b></span>';
+						}
+					//	ALERTA DE RESERVA
+						modalAlertaReservaB(nome, equipamento, corStatus, sala, dataA, horaA, dataB, horaB, horaC, horaD);
+					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					//	let reserva = new ReservaProfessor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD);
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reserva, "Professor");
+					//	bancodedados.gravar(reserva, "Professor");
 					//
 					}
 				//

@@ -1,5 +1,5 @@
 # Reserve
-O Reserve é um aplicativo utilizado pelos colaboradores do setor da Informática e Áudio e Vídeo do [Colégio e Faculdade Sena Aires](http://www.senaaires.com.br/) (campus Valparaíso de Goiás - GO).
+O Reserve é um aplicativo de reservas de equipamentos utilizado pelos colaboradores do setor da Informática e Áudio e Vídeo do [Colégio e Faculdade Sena Aires](http://www.senaaires.com.br/) (campus Valparaíso de Goiás - GO).
 
 As motivações para o desenvolvimento desse aplicativo foi:
 * Agilidade na reserva de equipamento;
@@ -10,29 +10,48 @@ As motivações para o desenvolvimento desse aplicativo foi:
 
 O aplicativo foi desenvolvido com base nas tecnologias:
 * Framework front-end [Bootstrap](https://getbootstrap.com/) versão 4.1.1;
-* Pacote de ícones do [Font Awesome](https://fontawesome.com/) versão 5.0.13;
+* Pacote de ícones do [Font Awesome](https://fontawesome.com/) versão 5.2.0;
 * ECMAScript 6 - [JavaScript 6](https://www.w3schools.com/js/js_es6.asp);
-* Armazenamento local no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
+* Armazenamento no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
 ## Como funciona?
-O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse alicativo será possível:
-* Efetuar cadastros de reservas;
-* Visualizar lista de reservas cadastradas;
-* Editar os cadastros;
-* Excluir os cadastros;
-* Imprimir as reservas cadastras.
+O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse aplicativo será possível: efetuar cadastros de reservas, visualizar lista de reservas cadastradas, pesquisar e filtrar reservas, editar os cadastros, excluir os cadastros e imprimir as reservas cadastras.
 
 ## Como utilizar?
-Para utilizar a aplicação será necessário:
+
+### Efetuando o download:
 * Clonar via HTTPS ou SSH para seu repositório local ou fazer o download .ZIP direto desse repositório; 
 * Extrair o arquivo .ZIP em algum local de sua preferência (caso tenha escolhido fazer o download direto desse repositório);
 * Procurar o arquivo index.html e dê um duplo clique;
-* Caso não abra, dê um clique no botão direito do mouse e procure a opção "Abrir com..." e escolha um navegador de sua preferência.
+* Caso não abra, dê um clique no botão direito do mouse e procure a opção "Abrir com..." e escolha um navegador de sua preferência;
+* Dica: em um navegador de preferência salve a página como favorito ou crie um atalho no desktop para facilitrar o acesso ao app. 
+
+### Utilização
+
+#### Primeiro acesso
+No primeiro acesso no aplicativo ele irá pedir um nome de usuário para que possa indentificar que está utilizando. Depois da indetificação o nome do usuário será exibido na barra de navegação ao lado do calendário e o relógio.
+
+**Importante:** O aplicativo deve ser utilizado um navegador de preferência, pois os dados armazenados são gravados no navegador, ou seja, os dados gravados em um navegador não será repassado pra outro navegador.
+
+#### Efetuando uma Reserva
+Com os dados do aluno ou professor deve-se informa nos seus devidos campos respectivos, com tudo certo basta confirmar no botão de cadastro abaixo dos campos, se tudo estiver certo, um modal de confirmação da reserva irá ser exibido, caso ao contrário um modal de erro irá ser exibido.
+
+Depois da conclusão de uma reserva ela automaticamente é exibida em uma tabela com os seus devidos dados cadastrados. Cada reserva vem exibida junto com seus dados, um status e um coleção de botões de opção de reserva. 
+As reservas são dividas em três status: 
+* Aguardando: quando o horário da reserva ainda não está no hora prevista, quando atingir a hora um modal de alerta é exibido informando o nome do aluno ou professor responsável pela reserva;
+* Em uso: Quando a reserva está em uso pelo responsável pelo equipamento;
+* Recolhido: Quando a reserva já está em poder dos funcionários responsáveis pela equipamento.
+
+Botões de opções da reserva:
+* Vizualizar: exibe em um modal todos os detatlhes da reserva;
+* Editar: tem a possibilidade de editar uma determinada reserva modificando os seus dados, depois da alteração um modal é exibido contendo os dados modificados;
+* Excluir: exclui o reserva e todos os seus dados;
+* Verificar: verifica e checa a reserva modificando o seu status.
 
 ## Changelog / Versões
 
-| Nome da Versão | Data | Funcionalidades |
-| :------------: | :--: | :-------------- |
+| Versão | Data | Funcionalidades |
+| :----: | :--: | :-------------- |
 | (v1.0.0) | 20/06/2018 | Cadastro e validação das reservas; Consulta e filtro dos cadastros; Possibilidade de impressão de reservas. |
 | (v1.0.1) | 24/06/2018 | Botão visualizar para ver a reserva do responsável detalhadamente; Botão atualizar para recarregar a lista; Página de Reservas listando todas as reservas cadastradas; Link  para o site do Colégio e Faculdade Sena Aires; Mudança no padrão das cores dos botões; Validação dupla na pesquisa de filtro e no cadastro de reservas.|
 | (v1.0.2) | 24/06/2018 | Indentificação da versão e link do GitHub; Titles dos indentificadores da reservas. |
@@ -43,12 +62,12 @@ Para utilizar a aplicação será necessário:
 | (v1.2.2-beta) | 01/07/2018 | Formatação da data no formato EUA para o formato BR. |
 | (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
 | (v1.4.0-beta) | 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
-| (v1.5.0-beta) | 24/07/2018 | Adição de cadastro, vizualização, edição e exclusão de reservas para alunos; Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Alteração do background dos modais e cor do texto das tabelas dos modais; botões; Troca de ícones e botões.  |
-| (v1.6.0-beta) **new** | ##/##/#### | Definição do nome do funcionário; data e relógio exibidos no menu de navegação; alerta de reserva do professor; status de reserva do professor. |
+| (v1.5.0-beta) | 24/07/2018 | Adição de cadastro, vizualização, edição e exclusão de reservas para Alunos; Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Alteração do background dos modais e cor do texto das tabelas dos modais; botões; Troca de ícones e botões.  |
+| (v1.6.0-beta) **new** | ##/##/#### | Indentificação de usuário; data e relógio exibidos no menu de navegação; alerta de reserva; status de reserva; verificação de reserva; código mais inteligente e funcional. |
 
 ### Bugs / Defeitos
 
-| Bug | Versão de correção |
+| Bug | Correção |
 | :---| :-----------------:|
 | *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro. | (descontinuado na versão 1.0.1) |
 | Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome). | (descontinuado na versão 1.0.1) |
