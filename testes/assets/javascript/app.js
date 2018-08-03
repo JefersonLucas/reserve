@@ -48,7 +48,7 @@
 //
 //	1.3.0 - CLASSE FILHO / RESERVA DO ALUNO
 	class ReservaAluno extends Reserva {
-		constructor(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+		constructor(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
 			super(nome, equipamento, status);
 			this.matricula 	= matricula;
@@ -57,6 +57,7 @@
 			this.dataB 		= dataB;
 			this.horaA 		= horaA;
 			this.horaB 		= horaB;
+			this.horaC 		= horaC;
 		}
 	}
 //
@@ -129,8 +130,8 @@
 					return 0;
 				//
 				}
-		//	SE O NOME FOR DO ALUNO
 			} 
+		//	SE O NOME FOR DO ALUNO
 			else if(nome == "Aluno") {
 			//	VERIFICAÇÃO
 				if(idProfessor > idAluno) {
@@ -374,45 +375,60 @@
 	//	RESGATANDO O VALOR DA RESERVA
 		let nome 		= document.getElementById('aluno');
 		let equipamento = document.getElementById('equipamento');
-		let status 		= "Em uso";
 		let matricula 	= document.getElementById('matricula');
 		let serial 		= document.getElementById('serial');
-	//	VALOR DATA
-		let dataA = null;
-		let dataC = null;
-	//	TRATAMENTO DO VALOR DA DATA
-		if(document.getElementById('dataA').value == "") {
-			dataA = retornaData();
-		} else {
-			dataC = document.getElementById('dataA').value;
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA = dataC.substr(8,2);
-			let mesA = "/"+dataC.substr(5,2);
-			let anoA = "/"+dataC.substr(0,4);
-			dataA = diaA+mesA+anoA;
-		}
-	//	VALOR HORA
-		let horaA = null;
-	//	TRATAMENTO DO VALOR DA HORA
-		if(document.getElementById('horaA').value == "") { 
+		let dataA 		= document.getElementById('dataA');
+		let horaA  		= document.getElementById('horaA');
+		let status 		= null;
+		let horaB 		= null;
+		let dataB 		= null;
+		let horaC 		= "00:00:00";
+
+		let time = new Date();
+		
+		let horas = time.getHours();
+		let minutos = time.getMinutes();
+
+		horas 	= horas   < 10 ? horas 	 = "0"+horas 	: horas; 
+		minutos = minutos < 10 ? minutos = "0"+minutos 	: minutos; 
+
+		horaX 	= horas+":"+minutos;
+
+		if(horaA.value == horaX && dataA.value == retornaData()) {
+		//	STATUS
+			status = "Em uso";
+		//	HORA
 			horaA = retornaHora();
-		} else {
+			horaB = retornaHora();
+		//	DATA
+			dataA = retornaData();
+			dataB = retornaData();
+		}
+		else {
+		//	STATUS
+			status = "Aguardando";
+		//	HORA
 			horaA = document.getElementById('horaA').value;
 			horaA = horaA+":00";
+			horaB = "00:00:00";
+		//	DATA
+			dataA = document.getElementById('dataA').value;
+			dataB = "0000-00-00";
 		}
 	//
-		let dataB = "00/00/0000";
-		let horaB = "00:00:00";
-	//
 	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value, equipamento.value, status, matricula.value, serial.value, dataA, horaA, dataB, horaB);
+		reserva  = new ReservaAluno(nome.value, equipamento.value, status, matricula.value, serial.value, dataA, horaA, dataB, horaB, horaC);
 	//	VALIDAÇÃO
 		if(reserva.validarDados()){
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Aluno");
+		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+			let diaA  = reserva.dataA.substr(8,2);
+			let mesA  = "/"+reserva.dataA.substr(5,2);
+			let anoA  = "/"+reserva.dataA.substr(0,4);
+			let dataA = diaA+mesA+anoA;
 		//	MODAL DE SUCESSO
-			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, reserva.dataA, reserva.horaA);
-		//
+			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, dataA, reserva.horaA);
 		//	LIMPA OS VALORES
 			nome.value 			= "";
 			matricula.value 	= "";
@@ -554,16 +570,24 @@
 		//
 		//	LISTANDO A PESQUISA
 			reservas.forEach(function(p) {
-			//	COR DO STATUS
-				let status;
-			//	VERIFICAÇÃO DE STATUS
-				if(p.status == "Aguardando") {
-					status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-				} else if(p.status == "Em uso") {
-					status = '<span class="text-success"><b>'+p.status+'</b></span>';
-				} else {
-					status = '<span class="text-primary"><b>'+p.status+'</b></span>';
-				}
+			//	TRATAMENTO DE DADOS
+				//	COR DO STATUS
+					let status;
+				//	VERIFICAÇÃO DE STATUS
+					if(p.status == "Aguardando") {
+						status = '<span class="text-danger"><b>'+p.status+'</b></span>';
+					} else if(p.status == "Em uso") {
+						status = '<span class="text-success"><b>'+p.status+'</b></span>';
+					} else {
+						status = '<span class="text-primary"><b>'+p.status+'</b></span>';
+					}
+				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+					let diaA = p.dataA.substr(8,2);
+					let mesA = "/"+p.dataA.substr(5,2);
+					let anoA = "/"+p.dataA.substr(0,4);
+					dataA = diaA+mesA+anoA;
+				//
+			//
 			//	CRIANDO A LINHA
 				let linha = listaReservas.insertRow();
 			//
@@ -571,13 +595,8 @@
  				linha.insertCell(0).innerHTML = p.nome;
  				linha.insertCell(1).innerHTML = p.equipamento;
  				linha.insertCell(2).innerHTML = p.sala;
-			//
-				linha.insertCell(3).innerHTML = status;
-			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-				let diaA = p.dataA.substr(8,2);
-				let mesA = "/"+p.dataA.substr(5,2);
-				let anoA = "/"+p.dataA.substr(0,4);
-				dataA = diaA+mesA+anoA;
+				linha.insertCell(3).innerHTML = status
+ 			//
  			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO/VERIFICAÇÃO
  				linha.insertCell(4).append(
  					botaoVizualizarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
@@ -620,8 +639,23 @@
 		let listaReservas = document.getElementById("listaAlunos");
 	//	LISTANTO A RESERVA
  		reservas.forEach(function(a) {
- 		//	COR DO STATUS
-			let statusCor = a.status == "Em uso" ? '<span class="text-success"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
+ 		//	TRATAMENTO DE DADOS
+ 			//	COR DO STATUS
+ 				let status = null;
+ 			//	AGUARDANDO
+				if(a.status == "Aguardando") { 
+					status = '<span class="text-danger"><b>'+a.status+'</b></span>';
+				}
+			//	EM USO 
+				else if (a.status == "Em uso") {
+					status = '<span class="text-success"><b>'+a.status+'</b></span>';
+				}
+			//	RECOLHIDO 
+				else {
+					status = '<span class="text-primary"><b>'+a.status+'</b></span>';
+				}
+			//
+		//
 		//	CRIANDO A LINHA (TR)
  			let linha =	listaReservas.insertRow();
  		//	CRIAR AS COLUNAS (TD)
@@ -629,15 +663,14 @@
  			linha.insertCell(1).innerHTML = a.matricula;
  			linha.insertCell(2).innerHTML = a.equipamento;
  			linha.insertCell(3).innerHTML = a.serial;
- 		//
-			linha.insertCell(4).innerHTML = statusCor;
+ 			linha.insertCell(4).innerHTML = status;
 		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
  			linha.insertCell(5).append(
  			//
- 				botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 				botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 				botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 				botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB)
+ 				botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 				botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 				botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 				botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)
  			//
  			);
  		//
@@ -652,15 +685,11 @@
 		let equipamento = document.getElementById('equipamento').value;
 		let matricula 	= document.getElementById('matricula').value;
 		let serial 		= document.getElementById('serial').value;
-		let dataB 		= document.getElementById('dataA').value;
+		let dataA 		= document.getElementById('dataA').value;
 		let horaA 		= document.getElementById('horaA').value;
-	//	CONVERTE A DATA NO FORMATO EUA PARA O BR
-		var diaA 	= dataB.substr(8,2);
-		var mesB 	= "/"+dataB.substr(5,2);
-		var anoA 	= "/"+dataB.substr(0,4);
-		var dataA 	= diaA+mesB+anoA;
 	//	INSTÂNCIA DA RESERVA DO ALUNO
 		reserva  = new ReservaAluno(nome, equipamento,"", matricula, serial, dataA, horaA);
+		console.log(reserva);
 	//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
 		let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
 	//	SELECIONANDO O ELEMENTO DA TABELA
@@ -669,7 +698,7 @@
 		listaReservas.innerHTML = "";
 	//
 	//	VALIDAÇÃO DA PESQUISA
-		if(nome == "" && equipamento == "" && matricula == "" && serial == "" && dataA == "" && horaA) {
+		if(nome == "" && equipamento == "" && matricula == "" && serial == "" && dataA == "" && horaA == "") {
 		//	MODAL DE ERRO
 			modalPesquisaErro();
 		//
@@ -684,10 +713,17 @@
 				linha.insertCell(1).innerHTML = a.matricula;
 				linha.insertCell(2).innerHTML = a.equipamento;
 				linha.insertCell(3).innerHTML = a.serial;
-			//	COR DO STATUS
-				let corStatus = a.status == "Em uso" ? '<span class="text-success"><b>'+a.status+'</b></span>' : '<span class="text-primary"><b>'+a.status+'</b></span>';
+	 		//	COR DO STATUS
+	 			let status = null;
+				if(a.status == "Aguardando") { 
+					status = '<span class="text-danger"><b>'+a.status+'</b></span>';
+				} else if (a.status == "Em uso") {
+					status = '<span class="text-success"><b>'+a.status+'</b></span>';
+				} else {
+					status = '<span class="text-primary"><b>'+a.status+'</b></span>';
+				}
 			//
-				linha.insertCell(4).innerHTML = corStatus;
+					linha.insertCell(4).innerHTML = status;
 			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
  				linha.insertCell(5).append(
  				//
@@ -704,7 +740,7 @@
 //
 //
 //	BOTÃO VIZUALIZAÇÃO
-	let botaoVizualizarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let botaoVizualizarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//	BOTAO DE VIZUALIZAÇÃO
  		let ver 		= document.createElement("button");
  		ver.className	= 'btn btn-outline-info btn-sm';
@@ -713,10 +749,34 @@
  		ver.id 			= `id-ver-${id}`;
  	//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
  		ver.onclick 	= function() {
-		//	COR DO STATUS
-			let corStatus = status == "Em uso" ? '<span class="text-success"><b>'+status+'</b></span>' : '<span class="text-primary"><b>'+status+'</b></span>';
+ 		//	COR DO STATUS
+ 			let statusB = null;
+ 		//	AGUARDANDO
+			if(status == "Aguardando") { 
+				statusB = '<span class="text-danger"><b>'+status+'</b></span>';
+			}
+		//	EM USO 
+			else if (status == "Em uso") {
+				statusB = '<span class="text-success"><b>'+status+'</b></span>';
+			}
+		//	RECOLHIDO 
+			else {
+				statusB = '<span class="text-primary"><b>'+status+'</b></span>';
+			}
+		//
+		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+			let _diaA = dataA.substr(8,2);
+			let _mesA = "/"+dataA.substr(5,2);
+			let _anoA = "/"+dataA.substr(0,4);
+			let _dataA = _diaA+_mesA+_anoA;
+		//
+			let _diaB = dataB.substr(8,2);
+			let _mesB = "/"+dataB.substr(5,2);
+			let _anoB = "/"+dataB.substr(0,4);
+			let _dataB = _diaB+_mesB+_anoB;
+		//
 		//	MODAL DE VIZUALIÇÃO
-			modalVizualizarAluno(nome, equipamento, corStatus, matricula, serial, dataA, horaA, dataB, horaB);
+			modalVizualizarAluno(nome, equipamento, statusB, matricula, serial, _dataA, horaA, _dataB, horaB, horaC);
 		//
  		}
  		return ver;
@@ -732,24 +792,29 @@
  		ver.id 			= `id-ver-${id}`;
  		ver.onclick 	= function() {
  		//	COR DO STATUS
-			let corStatus;
-		//
-			if(status == "Aguardando") {
-				corStatus = '<span class="text-danger"><b>'+status+'</b></span>';
-			} else if(status == "Em uso") {
-				corStatus = '<span class="text-success"><b>'+status+'</b></span>';
-			} else {
-				corStatus = '<span class="text-primary"><b>'+status+'</b></span>';
+ 			let statusB = null;
+ 		//	AGUARDANDO
+			if(status == "Aguardando") { 
+				statusB = '<span class="text-danger"><b>'+status+'</b></span>';
 			}
+		//	EM USO 
+			else if (status == "Em uso") {
+				statusB = '<span class="text-success"><b>'+status+'</b></span>';
+			}
+		//	RECOLHIDO 
+			else {
+				statusB = '<span class="text-primary"><b>'+status+'</b></span>';
+			}
+		//
  		//	MODAL DE VIZUALIÇÃO		
- 			modalVizualizarProfessor(nome, equipamento, corStatus, sala, dataA, horaA, dataB, horaB, horaC, horaD);
+ 			modalVizualizarProfessor(nome, equipamento, statusB, sala, dataA, horaA, dataB, horaB, horaC, horaD);
 		//
  		}
  		return ver;
 	}
 
 //	BOTÃO EDITAR
-	let botaoEditarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let botaoEditarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//	BOTAO DE EDIÇÃO
  	//
  		let editar 			= document.createElement("button");
@@ -762,7 +827,7 @@
  		//
  			let time 	 = new Date();
  			let horas 	 = time.getHours();
- 			let minutos  = time.getMinutes() - 3;
+ 			let minutos  = time.getMinutes() + 5;
  			let segundos = time.getSeconds();
 
  			horas 		= horas 	< 10 ? horas 	= "0"+horas 	: horas;
@@ -771,32 +836,45 @@
 			
 			let horaX = horas+":"+minutos+":"+segundos;
 
- 			if(horaX >= horaA || status == "Recolhido") {
- 				modalEditarAlunoB(nome);
- 			} else {
+ 			if(dataA >= retornaData() && horaX <= horaA && status == "Aguardando") {
  			//	VERIFICAÇÃO
  				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
  			//
  			//	VALIDAÇÃO DE VERIFICAÇÃO
  				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
- 				//	NOVOS VALORES SERÃO RECEBIDOS
- 					let nomeB 			= prompt("Nome do(a) Aluno(a):", nome);
- 					let matriculaB		= prompt("Matrícula:", matricula);
- 					let equipamentoB 	= prompt("Descrição do equipamento:", equipamento);
- 					let serialB			= prompt("Nº de série:", serial);
- 				//	MODAL DE EDIÇÃO
- 					modalEditarAlunoA(nomeB, equipamentoB, matriculaB, serialB);
 				//	FORMATAR O ID
 					let id = this.id.replace('id-editar-','');
 				//	REMOVE A RESERVA
 					bancodedados.removerReserva(id);
-				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reserva  = new ReservaAluno(nomeB, equipamentoB, status, matriculaB, serialB, dataA, horaA, dataB, horaB);
+				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+					let diaBR = dataA.substr(8,2);
+					let mesBR = "/"+dataA.substr(5,2);
+					let anoBR = "/"+dataA.substr(0,4);
+					let dataBR = diaBR+mesBR+anoBR;
+				//	NOVOS VALORES SERÃO RECEBIDOS
+ 					let _nome 			= prompt("Nome do(a) Aluno(a):", nome);
+ 					let _matricula		= prompt("Matrícula:", matricula);
+ 					let _equipamento 	= prompt("Descrição do equipamento:", equipamento);
+ 					let _serial			= prompt("Nº de série:", serial);
+ 					let _dataA			= prompt("Data:", dataBR);
+ 					let _horaA			= prompt("Hora:", horaA);
+				//	CONVERSÃO DA DATA NO FORMATO BR PARA EUA
+					let diaEUA = _dataA.substr(6,4);
+					let mesEUA = "-"+_dataA.substr(3,2);
+					let anoEUA = "-"+_dataA.substr(0,2);
+					let dataEUA = diaEUA+mesEUA+anoEUA;
 				//
+ 				//	MODAL DE EDIÇÃO
+ 					modalEditarAlunoA(_nome, _equipamento, _matricula, _serial, dataBR, _horaA);
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					reserva  = new ReservaAluno(_nome, _equipamento, status, _matricula, _serial, dataEUA, horaA, dataB, horaB, horaC);
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Aluno");
 				//
  				}
+ 			} 
+ 			else {
+ 				modalEditarAlunoB(nome);
  			}
  		}
  		return editar;
@@ -859,7 +937,7 @@
  	}
 //
 //	BOTÃO EXCLUIR
-	let botaoExcluirAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let botaoExcluirAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//	BOTAO DE EXCLUSÃO
  		excluir 			= document.createElement("button");
  		excluir.className 	= 'btn btn-outline-danger btn-sm';
@@ -872,10 +950,35 @@
 			let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+nome+"? R: Sim ou Não", "Não");
 		//	VALIDAÇÃO DE EXCLUSÃO
 			if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-			//	COR DO STATUS
-				let corStatus = status == "Em uso" ? '<span class="text-success"><b>'+status+'</b></span>' : '<span class="text-primary"><b>'+status+'</b></span>';
+ 			//	COR DO STATUS
+ 				let statusB = null;
+ 			//	AGUARDANDO
+				if(status == "Aguardando") { 
+					statusB = '<span class="text-danger"><b>'+status+'</b></span>';
+				}
+			//	EM USO 
+				else if (status == "Em uso") {
+					statusB = '<span class="text-success"><b>'+status+'</b></span>';
+				}
+			//	RECOLHIDO 
+				else {
+					statusB = '<span class="text-primary"><b>'+status+'</b></span>';
+				}
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBRA = dataA.substr(8,2);
+				let mesBRA = "/"+dataA.substr(5,2);
+				let anoBRA = "/"+dataA.substr(0,4);
+				let dataBRA = diaBRA+mesBRA+anoBRA;
+			//
+			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+				let diaBRB = dataB.substr(8,2);
+				let mesBRB = "/"+dataB.substr(5,2);
+				let anoBRB = "/"+dataB.substr(0,4);
+				let dataBRB = diaBRB+mesBRB+anoBRB;
+			//
 			//	MODAL DE EXCLUSÃO
-				modalExcluirAluno(nome, matricula, equipamento, serial, corStatus, dataA, horaA, dataB, horaB);
+				modalExcluirAluno(nome, matricula, equipamento, serial, statusB, dataBRA, horaA, dataBRB, horaB, horaC);
 			//	FORMATAR O ID
 				let id = this.id.replace('id-excluir-','');
 			//	REMOVE A RESERVA
@@ -921,7 +1024,7 @@
  	}
 //
 //	BOTÃO VERIFICAR
-	let botaoVerificarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let botaoVerificarAluno = function(id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//	BOTÃO VERIFICAR RESERVA
  		verificar 			= document.createElement("button");
  		verificar.className = "btn btn-outline-primary btn-sm";
@@ -930,9 +1033,9 @@
  		verificar.id 		= `id-verifica-${id}`;
  		verificar.onclick 	= function() {
  		//
- 			if(status ==  "Em uso") {
-		//	PRONPT DE VERIFICAÇÃO
-			let resposta = prompt("A reserva do(a) "+nome+" está verificada? R: Sim ou Não", "Não");
+ 			if(status ==  "Aguardando") {
+			//	PRONPT DE VERIFICAÇÃO
+				let resposta = prompt("A reserva do(a) "+nome+" está em uso? R: Sim ou Não", "Não");
 			//	VALIDAÇÃO DE EXCLUSÃO
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 				///	FORMATAR O ID
@@ -940,32 +1043,144 @@
 				//	REMOVE A RESERVA
 					bancodedados.removerReserva(id);
 				//	NOVOS VALORES
-					let nomeB 			= nome;
-					let equipamentoB 	= equipamento;
-					let statusB 		= "Recolhido";
-					let matriculaB		= matricula;
-					let serialB			= serial;
-					let dataB			= dataA;
-					let horaB 			= horaA;
-					let dataC 			= retornaData();
-					let horaC 			= retornaHora();
-				//	COR DO STATUS
-					let corStatus = statusB == "Em uso" ? '<span class="text-success"><b>'+statusB+'</b></span>' : '<span class="text-primary"><b>'+statusB+'</b></span>';
+					let _nome 			= nome;
+					let _equipamento 	= equipamento;
+					let _status 		= "Em uso";
+					let _matricula		= matricula;
+					let _serial			= serial;
+					let _dataA			= dataA;
+					let _horaA 			= horaA;
+					let _dataB 			= retornaData();
+					let _horaB 			= retornaHora();
+					let _horaC 			= horaC;
+ 					//	COR DO STATUS
+ 						let statusB = null;
+ 					//	AGUARDANDO
+						if(_status == "Aguardando") { 
+							statusB = '<span class="text-danger"><b>'+_status+'</b></span>';
+						}
+					//	EM USO 
+						else if (_status == "Em uso") {
+							statusB = '<span class="text-success"><b>'+_status+'</b></span>';
+						}
+					//	RECOLHIDO 
+						else {
+							statusB = '<span class="text-primary"><b>'+_status+'</b></span>';
+						}
+					//
+					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+						let diaBRA = dataA.substr(8,2);
+						let mesBRA = "/"+dataA.substr(5,2);
+						let anoBRA = "/"+dataA.substr(0,4);
+						let dataBRA = diaBRA+mesBRA+anoBRA;
+					//
+					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+						let diaBRB = _dataB.substr(8,2);
+						let mesBRB = "/"+_dataB.substr(5,2);
+						let anoBRB = "/"+_dataB.substr(0,4);
+						let dataBRB = diaBRB+mesBRB+anoBRB;
+					//
+				//
 				//	MODAL DE VERIFICAÇÃO
-					modalVerificaReservaAluno(nomeB, equipamentoB, corStatus, matriculaB, serialB, dataB, horaB, dataC, horaC);
+					modalVerificaReservaAluno(_nome, _equipamento, statusB, _matricula, _serial, dataBRA, _horaA, dataBRB, _horaB, _horaC);
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reserva  = new ReservaAluno(nomeB, equipamentoB, statusB, matriculaB, serialB, dataB, horaB, dataC, horaC);
+					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Aluno");
+				//
+	 			}
+ 			}	
+ 			else if(status == "Em uso") {
+			//	PRONPT DE VERIFICAÇÃO
+				let resposta = prompt("A reserva do(a) "+nome+" está recolhida? R: Sim ou Não", "Não");
+			//	VALIDAÇÃO DE EXCLUSÃO
+				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+				///	FORMATAR O ID
+					let id = this.id.replace('id-verifica-','');
+				//	REMOVE A RESERVA
+					bancodedados.removerReserva(id);
+				//	NOVOS VALORES
+					let _nome 			= nome;
+					let _equipamento 	= equipamento;
+					let _status 		= "Recolhido";
+					let _matricula		= matricula;
+					let _serial			= serial;
+					let _dataA			= dataA;
+					let _horaA 			= horaA;
+					let _dataB 			= retornaData();
+					let _horaB 			= horaB;		
+					let _horaC 			= retornaHora();
+ 					//	COR DO STATUS
+ 						let statusB = null;
+ 					//	AGUARDANDO
+						if(_status == "Aguardando") { 
+							statusB = '<span class="text-danger"><b>'+_status+'</b></span>';
+						}
+					//	EM USO 
+						else if (_status == "Em uso") {
+							statusB = '<span class="text-success"><b>'+_status+'</b></span>';
+						}
+					//	RECOLHIDO 
+						else {
+							statusB = '<span class="text-primary"><b>'+_status+'</b></span>';
+						}
+					//
+					//
+					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+						let diaBRA = _dataA.substr(8,2);
+						let mesBRA = "/"+_dataA.substr(5,2);
+						let anoBRA = "/"+_dataA.substr(0,4);
+						let dataBRA = diaBRA+mesBRA+anoBRA;
+					//
+					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+						let diaBRB = _dataB.substr(8,2);
+						let mesBRB = "/"+_dataB.substr(5,2);
+						let anoBRB = "/"+_dataB.substr(0,4);
+						let dataBRB = diaBRB+mesBRB+anoBRB;
+					//
+				//
+				//	MODAL DE VERIFICAÇÃO
+					modalVerificaReservaAluno(_nome, _equipamento, statusB, _matricula, _serial, dataBRA, _horaA, dataBRB, _horaB, _horaC);
+				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
+				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+					bancodedados.gravar(reserva, "Aluno");
+				//
 	 			}
  			} 
- 			else if(status == "Recolhido") {
-			//	COR DO STATUS
-				let corStatus = status == "Em uso" ? '<span class="text-danger"><b>'+status+'</b></span>' : '<span class="text-primary"><b>'+status+'</b></span>';
- 			//	MODAL DE ERRO 					
-				modalVerificaReservaAlunoErro(nome, equipamento, corStatus, matricula, serial, dataA, horaA, dataB, horaB);
- 			//
+
+ 			else {
+ 				//	COR DO STATUS
+ 					let statusB = null;
+ 				//	AGUARDANDO
+					if(status == "Aguardando") { 
+						statusB = '<span class="text-danger"><b>'+status+'</b></span>';
+					}
+				//	EM USO 
+					else if (status == "Em uso") {
+						statusB = '<span class="text-success"><b>'+status+'</b></span>';
+					}
+				//	RECOLHIDO 
+					else {
+						statusB = '<span class="text-primary"><b>'+status+'</b></span>';
+					}
+				//
+				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+					let diaBRA = dataA.substr(8,2);
+					let mesBRA = "/"+dataA.substr(5,2);
+					let anoBRA = "/"+dataA.substr(0,4);
+					let dataBRA = diaBRA+mesBRA+anoBRA;
+				//
+				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+					let diaBRB = dataB.substr(8,2);
+					let mesBRB = "/"+dataB.substr(5,2);
+					let anoBRB = "/"+dataB.substr(0,4);
+					let dataBRB = diaBRB+mesBRB+anoBRB;
+				//
+					modalVerificaReservaAlunoErro(nome, equipamento, statusB, matricula, serial, diaBRA, horaA, dataBRB, horaB, horac);
+ 				//
  			}
+
  		}
  		return verificar;
 	}
@@ -1097,14 +1312,14 @@
 	//
 	}
 //	MODAL CADASTRAR ALUNO
-	let modalCadastarAlunoSucesso = function(nome, matricula, equipamento, serial, dataEUA, horaA) {
+	let modalCadastarAlunoSucesso = function(nome, matricula, equipamento, serial, dataA, horaA) {
 	//
 		$('#modal1').modal('show');
 		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi cadadastrada com <span class="text-success"><b>sucesso!</b></span>'
-		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
 	//
@@ -1159,14 +1374,14 @@
 	//
 	}
 //	MODAL DE VIZUALIÇÃO ALUNO
-	let modalVizualizarAluno = function(nome, equipamento, corStatus, matricula, serial, dataA, horaA, dataB, horaB) {
+	let modalVizualizarAluno = function(nome, equipamento, corStatus, matricula, serial, dataA, horaA, dataB, horaB,  horac) {
 	//
  		$('#modal2').modal('show');
  		document.getElementById('modal-titulo-2').innerHTML 	= '<i class="fas fa-eye"></i> Informações';
 		document.getElementById('modal-documento-2').className	= 'modal-dialog modal-lg border border-info rounded alert-info';
 		document.getElementById('modal-cabecalho-2').className  = 'modal-header text-white bg-info';
 		document.getElementById('modal-conteudo-2').innerHTML 	= 'Detalhes da reserva do(a) aluno(a) <span class="text-info"><b>'+nome+'</b></span>:';
-		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+corStatus+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-2').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-info"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horac+'</td><td>'+corStatus+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-2').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-info';
 	//
@@ -1185,14 +1400,14 @@
 	//
 	}
 //
-	let modalEditarAlunoA = function(nome, equipamento, matricula, serial) {
+	let modalEditarAlunoA = function(nome, equipamento, matricula, serial, dataA, horaA) {
 	//
  		$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-pencil-alt"></i> Editar';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog border border-success rounded alert-success';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-success';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-success"><b>'+nome+'</b></span> foi alterada com <span class="text-success"><b>sucesso!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML   += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-success"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-success';
 	//
@@ -1235,14 +1450,14 @@
 	//
 	}
 //
-	let modalExcluirAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB) {
+	let modalExcluirAluno = function(nome, matricula, equipamento, serial, status, dataEUA, horaA, dataB, horaB, horaC) {
 	//
 	 	$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fa fa-trash-alt"></i> Excluir';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-danger rounded alert-danger';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-danger';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-danger"><b>'+nome+'</b></span> irá ser <span class="text-danger"><b>excluida!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataEUA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-danger';
 	//
@@ -1261,14 +1476,14 @@
 	//
 	}
 //
-	let modalVerificaReservaAluno = function(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let modalVerificaReservaAluno = function(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//
  		$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-user-check"></i> Verificada';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-primary rounded alert-primary';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-primary';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-primary"><b>'+nome+'</b></span> foi <span class="text-primary"><b>verificada!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-primary"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-primary';
 	//
@@ -1488,11 +1703,11 @@
 	//	MENSAGEM
 		let mensagem = null;
 	//
-		mensagem = horas >= "06" && horas <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia, " : mensagem; 
-		mensagem = horas >= "12" && horas <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde, ": mensagem;	
-		mensagem = horas >= "18" || horas <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite, ": mensagem;
+		mensagem = horas >= "06" && horas <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia! " 	: mensagem; 
+		mensagem = horas >= "12" && horas <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "	: mensagem;	
+		mensagem = horas >= "18" || horas <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! ": mensagem;
 	//
-		document.getElementById("tempo").innerHTML = mensagem+" "+data+" "+hora;
+		document.getElementById("tempo").innerHTML = mensagem+"hoje é "+data+" e são "+hora+" |";
 	//
 	}
 //
@@ -1508,8 +1723,8 @@
 	//	AJUSTE NA DATA
 		mes = mes < 10 ? mes = "0"+mes : mes;
 		dia = dia < 10 ? dia = "0"+dia : dia;
-	//	DATA NO FORMATO BRASILEIRO
-		let data = dia+"/"+mes+"/"+ano;
+	//	DATA NO FORMATO EUA
+		let data = ano+"-"+mes+"-"+dia;
 	//
 		return data;
 	//
@@ -1520,8 +1735,8 @@
     //	INSTÂNCIA DATA
 		let time = new Date();
     //	HORA
-		let horas = time.getHours();
-		let minutos = time.getMinutes();
+		let horas 	 = time.getHours();
+		let minutos  = time.getMinutes();
 		let segundos = time.getSeconds();
 	//	AJUSTE NA HORAs
 		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
