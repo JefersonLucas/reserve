@@ -345,16 +345,11 @@
 	//	INSTÂNCIA DA RESERVA DO PROFESSOR
 		reserva = new ReservaProfessor(nome.value, equipamento.value, status, sala.value, dataA.value, horaA.value, dataB, horaB.value, horaC, horaD);
 	//	VALIDAÇÃO
-		if(reserva.validarDados()) {
+		 if(reserva.validarDados()) {	
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Professor");
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA = reserva.dataA.substr(8,2);
-			let mesA = "/"+reserva.dataA.substr(5,2);
-			let anoA = "/"+reserva.dataA.substr(0,4);
-			dataA = diaA+mesA+anoA;
 		//	MODAL DE SUCESSO
-			modalCadastarProfessorSucesso(reserva.nome, reserva.equipamento, reserva.status ,reserva.sala, dataA, reserva.horaA, reserva.dataB, reserva.horaB);
+			modalCadastarProfessorSucesso(reserva.nome, reserva.equipamento, reserva.status, reserva.sala, dataBR(reserva.dataA), reserva.horaA, reserva.dataB, reserva.horaB);
 		//	LIMPA OS VALORES
 			nome.value 			= "";
 			equipamento.value 	= "";
@@ -385,22 +380,12 @@
 		let dataB 		= null;
 		let horaC 		= "00:00:00";
 
-		let time = new Date();
-		
-		let horas = time.getHours();
-		let minutos = time.getMinutes();
-
-		horas 	= horas   < 10 ? horas 	 = "0"+horas 	: horas; 
-		minutos = minutos < 10 ? minutos = "0"+minutos 	: minutos; 
-
-		horaX 	= horas+":"+minutos;
-
-		if(horaA.value == horaX && dataA.value == retornaData()) {
+		if(horaA.value == retornaHoraB(0,0) && dataA.value == retornaData()) {
 		//	STATUS
 			status = "Em uso";
 		//	HORA
-			horaA = retornaHora();
-			horaB = retornaHora();
+			horaA = retornaHora(0,0,0);
+			horaB = retornaHora(0,0,0);
 		//	DATA
 			dataA = retornaData();
 			dataB = retornaData();
@@ -423,13 +408,8 @@
 		if(reserva.validarDados()){
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Aluno");
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA  = reserva.dataA.substr(8,2);
-			let mesA  = "/"+reserva.dataA.substr(5,2);
-			let anoA  = "/"+reserva.dataA.substr(0,4);
-			let dataA = diaA+mesA+anoA;
 		//	MODAL DE SUCESSO
-			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, dataA, reserva.horaA);
+			modalCadastarAlunoSucesso(reserva.nome, reserva.matricula, reserva.equipamento, reserva.serial, dataBR(reserva.dataA), reserva.horaA);
 		//	LIMPA OS VALORES
 			nome.value 			= "";
 			matricula.value 	= "";
@@ -452,7 +432,7 @@
 		let id = localStorage.getItem("idFuncionario");
 	//	DATA E HORA EXATAS
 		let dataA = retornaData();
-		let horaA = retornaHora();
+		let horaA = retornaHora(0,0,0);
 	//	DEFININDO NOVA VERSÃO DO APP
 		bancodedados.versaoApp();
 		let versao = bancodedados.retornaVersao();
@@ -469,8 +449,9 @@
 				bancodedados.gravarFuncionario(funcionario);
 			//	MODAL DE BEM VINDO
 				modalCadastarFuncionarioSucesso(funcionario.nome);
-			//	SE NÃO
-			} else{
+			}
+		//	SE NÃO
+			else{
 			//	RECARREGA A PÁGINA
            		window.location.reload();
            	//
@@ -487,8 +468,8 @@
 	//	RELÓGIO
 		relogio();
 	//	ALERTA
-		alerta();		
-		alertaB();
+		alertaP();		
+		alertaA();
 	//
 	//	ARRAY FUNCIONÁRIO
 		let funcionario = Array();
@@ -510,17 +491,6 @@
 	//
 	//	LISTANTO A RESERVA
  		reservas.forEach(function(p) {
-		//	COR DO STATUS
-			let status;
-		//
-			if(p.status == "Aguardando") {
-				status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-			} else if(p.status == "Em uso") {
-				status = '<span class="text-success"><b>'+p.status+'</b></span>';
-			} else {
-				status = '<span class="text-primary"><b>'+p.status+'</b></span>';
-			}
-		//
  		//	CRIANDO A LINHA (TR)
  			let linha =	listaReservas.insertRow();
  		//	CRIAR AS COLUNAS (TD)
@@ -528,7 +498,7 @@
  			linha.insertCell(1).innerHTML = p.equipamento;
  			linha.insertCell(2).innerHTML = p.sala;
 		//
-			linha.insertCell(3).innerHTML = status;
+			linha.insertCell(3).innerHTML = cor(p.status);
  		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO/VERIFICAÇÃO
  			linha.insertCell(4).append(
  				botaoVizualizarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
@@ -565,27 +535,8 @@
 			modalPesquisaErro();
 		//
 		} else {
-		//
 		//	LISTANDO A PESQUISA
 			reservas.forEach(function(p) {
-			//	TRATAMENTO DE DADOS
-				//	COR DO STATUS
-					let status;
-				//	VERIFICAÇÃO DE STATUS
-					if(p.status == "Aguardando") {
-						status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-					} else if(p.status == "Em uso") {
-						status = '<span class="text-success"><b>'+p.status+'</b></span>';
-					} else {
-						status = '<span class="text-primary"><b>'+p.status+'</b></span>';
-					}
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaA = p.dataA.substr(8,2);
-					let mesA = "/"+p.dataA.substr(5,2);
-					let anoA = "/"+p.dataA.substr(0,4);
-					dataA = diaA+mesA+anoA;
-				//
-			//
 			//	CRIANDO A LINHA
 				let linha = listaReservas.insertRow();
 			//
@@ -593,14 +544,14 @@
  				linha.insertCell(0).innerHTML = p.nome;
  				linha.insertCell(1).innerHTML = p.equipamento;
  				linha.insertCell(2).innerHTML = p.sala;
-				linha.insertCell(3).innerHTML = status
+				linha.insertCell(3).innerHTML = cor(p.status);
  			//
  			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO/VERIFICAÇÃO
  				linha.insertCell(4).append(
- 					botaoVizualizarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 					botaoEditarProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 					botaoExcluirProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 					botaoVerificarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)
+ 					botaoVizualizarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
+ 					botaoEditarProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
+ 					botaoExcluirProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
+ 					botaoVerificarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)
  			//
  				);
  			//
@@ -616,8 +567,8 @@
 	//	RELÓGIO
 		relogio();
 	//	ALERTA
-		alerta();
-		alertaB();
+		alertaP();		
+		alertaA();
 	//
 	//	ARRAY FUNCIONÁRIO
 		let funcionario = Array();
@@ -638,23 +589,6 @@
 		let listaReservas = document.getElementById("listaAlunos");
 	//	LISTANTO A RESERVA
  		reservas.forEach(function(a) {
- 		//	TRATAMENTO DE DADOS
- 			//	COR DO STATUS
- 				let status = null;
- 			//	AGUARDANDO
-				if(a.status == "Aguardando") { 
-					status = '<span class="text-danger"><b>'+a.status+'</b></span>';
-				}
-			//	EM USO 
-				else if (a.status == "Em uso") {
-					status = '<span class="text-success"><b>'+a.status+'</b></span>';
-				}
-			//	RECOLHIDO 
-				else {
-					status = '<span class="text-primary"><b>'+a.status+'</b></span>';
-				}
-			//
-		//
 		//	CRIANDO A LINHA (TR)
  			let linha =	listaReservas.insertRow();
  		//	CRIAR AS COLUNAS (TD)
@@ -662,7 +596,7 @@
  			linha.insertCell(1).innerHTML = a.matricula;
  			linha.insertCell(2).innerHTML = a.equipamento;
  			linha.insertCell(3).innerHTML = a.serial;
- 			linha.insertCell(4).innerHTML = status;
+ 			linha.insertCell(4).innerHTML = cor(a.status);
 		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
  			linha.insertCell(5).append(
  			//
@@ -711,24 +645,14 @@
 				linha.insertCell(1).innerHTML = a.matricula;
 				linha.insertCell(2).innerHTML = a.equipamento;
 				linha.insertCell(3).innerHTML = a.serial;
-	 		//	COR DO STATUS
-	 			let status = null;
-				if(a.status == "Aguardando") { 
-					status = '<span class="text-danger"><b>'+a.status+'</b></span>';
-				} else if (a.status == "Em uso") {
-					status = '<span class="text-success"><b>'+a.status+'</b></span>';
-				} else {
-					status = '<span class="text-primary"><b>'+a.status+'</b></span>';
-				}
-			//
-					linha.insertCell(4).innerHTML = status;
+				linha.insertCell(4).innerHTML = cor(a.status);
 			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
  				linha.insertCell(5).append(
  				//
- 					botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial,  a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 					botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial,  a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 					botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial,  a.dataA, a.horaA, a.dataB, a.horaB)," ",
- 					botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial,  a.dataA, a.horaA, a.dataB, a.horaB)
+ 					botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 					botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 					botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
+ 					botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)
  				//
  				);
  			//
@@ -747,34 +671,8 @@
  		ver.id 			= `id-ver-${id}`;
  	//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
  		ver.onclick 	= function() {
- 		//	COR DO STATUS
- 			let statusB = null;
- 		//	AGUARDANDO
-			if(status == "Aguardando") { 
-				statusB = '<span class="text-danger"><b>'+status+'</b></span>';
-			}
-		//	EM USO 
-			else if (status == "Em uso") {
-				statusB = '<span class="text-success"><b>'+status+'</b></span>';
-			}
-		//	RECOLHIDO 
-			else {
-				statusB = '<span class="text-primary"><b>'+status+'</b></span>';
-			}
-		//
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let _diaA = dataA.substr(8,2);
-			let _mesA = "/"+dataA.substr(5,2);
-			let _anoA = "/"+dataA.substr(0,4);
-			let _dataA = _diaA+_mesA+_anoA;
-		//
-			let _diaB = dataB.substr(8,2);
-			let _mesB = "/"+dataB.substr(5,2);
-			let _anoB = "/"+dataB.substr(0,4);
-			let _dataB = _diaB+_mesB+_anoB;
-		//
 		//	MODAL DE VIZUALIÇÃO
-			modalVizualizarAluno(nome, equipamento, statusB, matricula, serial, _dataA, horaA, _dataB, horaB, horaC);
+			modalVizualizarAluno(nome, equipamento, cor(status), matricula, serial, dataBR(dataA), horaA, dataBR(dataB), horaB, horaC);
 		//
  		}
  		return ver;
@@ -789,34 +687,8 @@
  		ver.innerHTML 	= '<i class="far fa-eye"></i>';
  		ver.id 			= `id-ver-${id}`;
  		ver.onclick 	= function() {
- 		//	COR DO STATUS
- 			let statusB = null;
- 		//	AGUARDANDO
-			if(status == "Aguardando") { 
-				statusB = '<span class="text-danger"><b>'+status+'</b></span>';
-			}
-		//	EM USO 
-			else if (status == "Em uso") {
-				statusB = '<span class="text-success"><b>'+status+'</b></span>';
-			}
-		//	RECOLHIDO 
-			else {
-				statusB = '<span class="text-primary"><b>'+status+'</b></span>';
-			}
-		//
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let _diaA = dataA.substr(8,2);
-			let _mesA = "/"+dataA.substr(5,2);
-			let _anoA = "/"+dataA.substr(0,4);
-			let _dataA = _diaA+_mesA+_anoA;
-		//
-			let _diaB = dataB.substr(8,2);
-			let _mesB = "/"+dataB.substr(5,2);
-			let _anoB = "/"+dataB.substr(0,4);
-			let _dataB = _diaB+_mesB+_anoB;
-		//
  		//	MODAL DE VIZUALIÇÃO		
- 			modalVizualizarProfessor(nome, equipamento, statusB, sala, _dataA, horaA, _dataB, horaB, horaC, horaD);
+ 			modalVizualizarProfessor(nome, equipamento, cor(status), sala, dataBR(dataA), horaA, dataBR(dataB), horaB, horaC, horaD);
 		//
  		}
  		return ver;
@@ -834,19 +706,8 @@
  	//
  		editar.onclick 		= function() {
  		//
- 			let time 	 = new Date();
- 			let horas 	 = time.getHours();
- 			let minutos  = time.getMinutes() + 5;
- 			let segundos = time.getSeconds();
-
- 			horas 		= horas 	< 10 ? horas 	= "0"+horas 	: horas;
- 			minutos 	= minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
- 			segundos 	= segundos 	< 10 ? segundos = "0"+segundos 	: segundos;
-			
-			let horaX = horas+":"+minutos+":"+segundos;
-
  			if(dataA >= retornaData()) {
- 				if(horaX <= horaA) {
+ 				if(retornaHora(0,5,0) <= horaA) {
 	 				if(status == "Aguardando") {
 		 			//	VERIFICAÇÃO
 		 				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
@@ -857,28 +718,18 @@
 							let id = this.id.replace('id-editar-','');
 						//	REMOVE A RESERVA
 							bancodedados.removerReserva(id);
-						//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-							let diaBR = dataA.substr(8,2);
-							let mesBR = "/"+dataA.substr(5,2);
-							let anoBR = "/"+dataA.substr(0,4);
-							let dataBR = diaBR+mesBR+anoBR;
 						//	NOVOS VALORES SERÃO RECEBIDOS
 		 					let _nome 			= prompt("Nome do(a) Aluno(a):", nome);
 		 					let _matricula		= prompt("Matrícula:", matricula);
 		 					let _equipamento 	= prompt("Descrição do equipamento:", equipamento);
 		 					let _serial			= prompt("Nº de série:", serial);
-		 					let _dataA			= prompt("Data:", dataBR);
+		 					let _dataA			= prompt("Data:", dataBR(dataA));
 		 					let _horaA			= prompt("Hora:", horaA);
-						//	CONVERSÃO DA DATA NO FORMATO BR PARA EUA
-							let diaEUA = _dataA.substr(6,4);
-							let mesEUA = "-"+_dataA.substr(3,2);
-							let anoEUA = "-"+_dataA.substr(0,2);
-							let dataEUA = diaEUA+mesEUA+anoEUA;
 						//
 		 				//	MODAL DE EDIÇÃO
-		 					modalEditarAlunoA(_nome, _equipamento, _matricula, _serial, dataBR, _horaA);
+		 					modalEditarAlunoA(_nome, _equipamento, _matricula, _serial, _dataA, _horaA);
 						//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-							reserva  = new ReservaAluno(_nome, _equipamento, status, _matricula, _serial, dataEUA, _horaA, dataB, horaB, horaC);
+							reserva  = new ReservaAluno(_nome, _equipamento, status, _matricula, _serial, dataEUA(_dataA), _horaA, dataB, horaB, horaC);
 						//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 							bancodedados.gravar(reserva, "Aluno");
 						//
@@ -910,44 +761,28 @@
  	//
  		editar.onclick 		= function() {
  		//
- 			let time 	 = new Date();
- 			let horas 	 = time.getHours();
- 			let minutos  = time.getMinutes() + 5;
- 			let segundos = time.getSeconds();
-
- 			horas 		= horas 	< 10 ? horas 	= "0"+horas 	: horas;
- 			minutos 	= minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
- 			segundos 	= segundos 	< 10 ? segundos = "0"+segundos 	: segundos;
-			
-			let horaX = horas+":"+minutos+":"+segundos;
-
  			if(dataA >= retornaData()) {
- 				if(horaX <= horaA) {
+ 				if(retornaHora(0,5,0) <= horaA) {
 	 				if(status == "Aguardando") {
 	 				//	VERIFICAÇÃO
 	 				let = resposta = prompt("Deseja EDITAR a reserva do(a) "+nome+"? R: Sim ou Não","Não");
 	 				//	VALIDAÇÃO DE VERIFICAÇÃO
 	 				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
-	 				//	NOVOS VALORES SERÃO RECEBIDOS
+	 				//	FORMATAR O ID
+						let id = this.id.replace('id-editar-','');
+					//	REMOVE A RESERVA
+						bancodedados.removerReserva(id);
+					//	NOVOS VALORES SERÃO RECEBIDOS
 	 					let _nome 			= prompt("Nome do(a) Professor(a):", nome);
 	 					let _equipamento 	= prompt("Descrição do equipamento:",equipamento);
 	 					let _sala 			= prompt("Nome da sala:",sala);
 	 					let _horaA 			= prompt("Início da aula:",horaA);
 	 					let _horaB 			= prompt("Término da aula:",horaB);
-	 					let _dataA 			= prompt("Data da aula:",dataA);
-					//	CONVERSÃO DA DATA NO FORMATO BR PARA EUA
-						let diaEUA = dataA.substr(6,4);
-						let mesEUA = "-"+dataA.substr(3,2);
-						let anoEUA = "-"+dataA.substr(0,2);
-						_dataA = diaEUA+mesEUA+anoEUA;
+	 					let _dataA 			= prompt("Data da aula:",dataBR(dataA));
 	 				//	MODAL DE EDIÇÃO
-	 					modalEditarProfessorA(_nome, _equipamento, _sala, dataA, _horaA, _horaB);
-	 				//	FORMATAR O ID
-						let id = this.id.replace('id-editar-','');
-					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
-					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-						let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, _dataA, _horaA, dataB, _horaB, horaC, horaD);
+	 					modalEditarProfessorA(_nome, _equipamento, _sala, _dataA, _horaA, _horaB);
+	 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+						let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, dataEUA(_dataA), _horaA, dataB, _horaB, horaC, horaD);
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 						bancodedados.gravar(reserva, "Professor");
 					//
@@ -982,35 +817,8 @@
 			let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+nome+"? R: Sim ou Não", "Não");
 		//	VALIDAÇÃO DE EXCLUSÃO
 			if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
- 			//	COR DO STATUS
- 				let statusB = null;
- 			//	AGUARDANDO
-				if(status == "Aguardando") { 
-					statusB = '<span class="text-danger"><b>'+status+'</b></span>';
-				}
-			//	EM USO 
-				else if (status == "Em uso") {
-					statusB = '<span class="text-success"><b>'+status+'</b></span>';
-				}
-			//	RECOLHIDO 
-				else {
-					statusB = '<span class="text-primary"><b>'+status+'</b></span>';
-				}
-			//
-			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-				let diaBRA = dataA.substr(8,2);
-				let mesBRA = "/"+dataA.substr(5,2);
-				let anoBRA = "/"+dataA.substr(0,4);
-				let dataBRA = diaBRA+mesBRA+anoBRA;
-			//
-			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-				let diaBRB = dataB.substr(8,2);
-				let mesBRB = "/"+dataB.substr(5,2);
-				let anoBRB = "/"+dataB.substr(0,4);
-				let dataBRB = diaBRB+mesBRB+anoBRB;
-			//
 			//	MODAL DE EXCLUSÃO
-				modalExcluirAluno(nome, matricula, equipamento, serial, statusB, dataBRA, horaA, dataBRB, horaB, horaC);
+				modalExcluirAluno(nome, matricula, equipamento, serial, cor(status), dataBR(dataA), horaA, dataBR(dataB), horaB, horaC);
 			//	FORMATAR O ID
 				let id = this.id.replace('id-excluir-','');
 			//	REMOVE A RESERVA
@@ -1033,33 +841,12 @@
 			let resposta = prompt("Deseja EXCLUIR a reserva do(a) "+nome+"? R: Sim ou Não", "Não");
 		//	VALIDAÇÃO DE EXCLUSÃO
 			if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			//	MODAL DE EXCLUSÃO 				
+				modalExcluirProfessor(nome, equipamento, cor(status), sala, dataBR(dataA), horaA, dataBR(dataB), horaB, horaC, horaD);
 			//	FORMATAR O ID
 				let id = this.id.replace('id-excluir-','');
 			//	REMOVE A RESERVA
  				bancodedados.removerReserva(id);
- 			//	COR DO STATUS
-				let corStatus;
-			//
-				if(status == "Aguardando") {
-					corStatus = '<span class="text-danger"><b>'+status+'</b></span>';
-				} else if(status == "Em uso") {
-					corStatus = '<span class="text-success"><b>'+status+'</b></span>';
-				} else {
-					corStatus = '<span class="text-primary"><b>'+status+'</b></span>';
-				}
-			//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-				let _diaA = dataA.substr(8,2);
-				let _mesA = "/"+dataA.substr(5,2);
-				let _anoA = "/"+dataA.substr(0,4);
-				let _dataA = _diaA+_mesA+_anoA;
-			//
-				let _diaB = dataB.substr(8,2);
-				let _mesB = "/"+dataB.substr(5,2);
-				let _anoB = "/"+dataB.substr(0,4);
-				let _dataB = _diaB+_mesB+_anoB;
-			//
-			//	MODAL DE EXCLUSÃO 				
-				modalExcluirProfessor(nome, equipamento, corStatus, sala, _dataA, horaA, _dataB, horaB, horaC, horaD);
 			}
  		}
  		return excluir;
@@ -1094,38 +881,11 @@
 					let _dataA			= dataA;
 					let _horaA 			= horaA;
 					let _dataB 			= retornaData();
-					let _horaB 			= retornaHora();
+					let _horaB 			= retornaHora(0,0,0);
 					let _horaC 			= horaC;
- 					//	COR DO STATUS
- 						let statusB = null;
- 					//	AGUARDANDO
-						if(_status == "Aguardando") { 
-							statusB = '<span class="text-danger"><b>'+_status+'</b></span>';
-						}
-					//	EM USO 
-						else if (_status == "Em uso") {
-							statusB = '<span class="text-success"><b>'+_status+'</b></span>';
-						}
-					//	RECOLHIDO 
-						else {
-							statusB = '<span class="text-primary"><b>'+_status+'</b></span>';
-						}
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRA = dataA.substr(8,2);
-						let mesBRA = "/"+dataA.substr(5,2);
-						let anoBRA = "/"+dataA.substr(0,4);
-						let dataBRA = diaBRA+mesBRA+anoBRA;
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRB = _dataB.substr(8,2);
-						let mesBRB = "/"+_dataB.substr(5,2);
-						let anoBRB = "/"+_dataB.substr(0,4);
-						let dataBRB = diaBRB+mesBRB+anoBRB;
-					//
 				//
 				//	MODAL DE VERIFICAÇÃO
-					modalVerificaReservaAluno(_nome, _equipamento, statusB, _matricula, _serial, dataBRA, _horaA, dataBRB, _horaB, _horaC);
+					modalVerificaReservaAluno(_nome, _equipamento, cor(_status), _matricula, _serial, dataBR(_dataA), _horaA, dataBR(_dataB), _horaB, _horaC);
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
@@ -1138,7 +898,7 @@
 				let resposta = prompt("A reserva do(a) "+nome+" está recolhida? R: Sim ou Não", "Não");
 			//	VALIDAÇÃO DE EXCLUSÃO
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-				///	FORMATAR O ID
+				//	FORMATAR O ID
 					let id = this.id.replace('id-verifica-','');
 				//	REMOVE A RESERVA
 					bancodedados.removerReserva(id);
@@ -1152,38 +912,9 @@
 					let _horaA 			= horaA;
 					let _dataB 			= retornaData();
 					let _horaB 			= horaB;		
-					let _horaC 			= retornaHora();
- 					//	COR DO STATUS
- 						let statusB = null;
- 					//	AGUARDANDO
-						if(_status == "Aguardando") { 
-							statusB = '<span class="text-danger"><b>'+_status+'</b></span>';
-						}
-					//	EM USO 
-						else if (_status == "Em uso") {
-							statusB = '<span class="text-success"><b>'+_status+'</b></span>';
-						}
-					//	RECOLHIDO 
-						else {
-							statusB = '<span class="text-primary"><b>'+_status+'</b></span>';
-						}
-					//
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRA = _dataA.substr(8,2);
-						let mesBRA = "/"+_dataA.substr(5,2);
-						let anoBRA = "/"+_dataA.substr(0,4);
-						let dataBRA = diaBRA+mesBRA+anoBRA;
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRB = _dataB.substr(8,2);
-						let mesBRB = "/"+_dataB.substr(5,2);
-						let anoBRB = "/"+_dataB.substr(0,4);
-						let dataBRB = diaBRB+mesBRB+anoBRB;
-					//
-				//
+					let _horaC 			= retornaHora(0,0,0);
 				//	MODAL DE VERIFICAÇÃO
-					modalVerificaReservaAluno(_nome, _equipamento, statusB, _matricula, _serial, dataBRA, _horaA, dataBRB, _horaB, _horaC);
+					modalVerificaReservaAluno(_nome, _equipamento, cor(_status), _matricula, _serial, dataBR(_dataA), _horaA, dataBR(_dataB), _horaB, _horaC);
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
@@ -1192,35 +923,9 @@
 	 			}
  			} 
 
- 			else {
- 				//	COR DO STATUS
- 					let statusB = null;
- 				//	AGUARDANDO
-					if(status == "Aguardando") { 
-						statusB = '<span class="text-danger"><b>'+status+'</b></span>';
-					}
-				//	EM USO 
-					else if (status == "Em uso") {
-						statusB = '<span class="text-success"><b>'+status+'</b></span>';
-					}
-				//	RECOLHIDO 
-					else {
-						statusB = '<span class="text-primary"><b>'+status+'</b></span>';
-					}
+ 			else  {
 				//
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBRA = dataA.substr(8,2);
-					let mesBRA = "/"+dataA.substr(5,2);
-					let anoBRA = "/"+dataA.substr(0,4);
-					let dataBRA = diaBRA+mesBRA+anoBRA;
-				//
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBRB = dataB.substr(8,2);
-					let mesBRB = "/"+dataB.substr(5,2);
-					let anoBRB = "/"+dataB.substr(0,4);
-					let dataBRB = diaBRB+mesBRB+anoBRB;
-				//
-					modalVerificaReservaAlunoErro(nome, equipamento, statusB, matricula, serial, diaBRA, horaA, dataBRB, horaB, horac);
+					modalVerificaReservaAlunoErro(nome, equipamento, cor(status), matricula, serial, dataBR(dataA), horaA, dataBR(dataB), horaB, horaC);
  				//
  			}
 
@@ -1256,39 +961,18 @@
 					let _horaA 		 = horaA;
 					let _horaB 		 = horaB;
 					let _dataB 		 = retornaData();
-					let _horaC 		 = retornaHora();
+					let _horaC 		 = retornaHora(0,0,0);
 					let _horaD 		 = horaD;
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBRA = _dataA.substr(8,2);
-					let mesBRA = "/"+_dataA.substr(5,2);
-					let anoBRA = "/"+_dataA.substr(0,4);
-					let dataBRA = diaBRA+mesBRA+anoBRA;
-				//
-				//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-					let diaBRB = _dataB.substr(8,2);
-					let mesBRB = "/"+_dataB.substr(5,2);
-					let anoBRB = "/"+_dataB.substr(0,4);
-					let dataBRB = diaBRB+mesBRB+anoBRB;
-				//
-				//	COR DO STATUS
-					let status = null;
-				//
-					if(_status == "Aguardando") {
-						status = '<span class="text-danger"><b>'+_status+'</b></span>';
-					} else if(_status == "Em uso") {
-						status = '<span class="text-success"><b>'+_status+'</b></span>';
-					} else {
-						status = '<span class="text-primary"><b>'+_status+'</b></span>';
-					}
-				//
 				//	MODAL DE VERIFICAÇÃO
-					modalVerificaReservaProfessor(_nome, _equipamento, status, _sala, dataBRA, _horaA, dataBRB, _horaB, _horaC, _horaD);
+					modalVerificaReservaProfessor(_nome, _equipamento, cor(_status), _sala, dataBR(_dataA), _horaA, dataBR(_dataB), _horaB, _horaC, _horaD);
 				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 					reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 					bancodedados.gravar(reserva, "Professor");
 	 			}
- 			} 	else if(status == "Em uso") {
+ 			} 	
+ 		//	STATUS EM USO
+ 			else if(status == "Em uso") {
 				//	PRONPT DE VERIFICAÇÃO
 					let resposta = prompt("A reserva do(a) "+nome+" foi retirada? R: Sim ou Não", "Não");
 				//	VALIDAÇÃO DE EXCLUSÃO
@@ -1300,75 +984,260 @@
 					//	NOVOS VALORES					
 						let _nome 		 = nome;
 						let _equipamento = equipamento;
-						let _status 	 = "Retirado";
+						let _status 	 = "Recolhido";
 						let _sala 		 = sala;
 						let _dataA 		 = dataA;
 						let _horaA 		 = horaA;
 						let _horaB 		 = horaB;
 						let _dataB 		 = dataB;
 						let _horaC 		 = horaC;
-						let _horaD 		 = retornaHora();
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRA = _dataA.substr(8,2);
-						let mesBRA = "/"+_dataA.substr(5,2);
-						let anoBRA = "/"+_dataA.substr(0,4);
-						let dataBRA = diaBRA+mesBRA+anoBRA;
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRB = _dataB.substr(8,2);
-						let mesBRB = "/"+_dataB.substr(5,2);
-						let anoBRB = "/"+_dataB.substr(0,4);
-						let dataBRB = diaBRB+mesBRB+anoBRB;
-					//
-					//	COR DO STATUS
-						let status = null;
-					//
-						if(_status == "Aguardando") {
-							status = '<span class="text-danger"><b>'+_status+'</b></span>';
-						} else if(_status == "Em uso") {
-								status = '<span class="text-success"><b>'+_status+'</b></span>';
-						} else {
-							status = '<span class="text-primary"><b>'+_status+'</b></span>';
-						}
-					//	
+						let _horaD 		 = retornaHora(0,0,0);
 					//	MODAL DE VERIFICAÇÃO
-						modalVerificaReservaProfessor(_nome, _equipamento, status, _sala, dataBRA, _horaA, dataBRB, _horaB, _horaC, _horaD);
+						modalVerificaReservaProfessor(_nome, _equipamento, cor(_status), _sala, dataBR(_dataA), _horaA, dataBR(_dataB), _horaB, _horaC, _horaD);
 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
 						reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
 					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 						bancodedados.gravar(reserva, "Professor");
 				}
- 			}	else {
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRA = dataA.substr(8,2);
-						let mesBRA = "/"+dataA.substr(5,2);
-						let anoBRA = "/"+dataA.substr(0,4);
-						let dataBRA = diaBRA+mesBRA+anoBRA;
-					//
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaBRB = dataB.substr(8,2);
-						let mesBRB = "/"+dataB.substr(5,2);
-						let anoBRB = "/"+dataB.substr(0,4);
-						let dataBRB = diaBRB+mesBRB+anoBRB;
-					//
-					//	COR DO STATUS
-						let _status = null;
-					//
-						if(status == "Aguardando") {
-							_status = '<span class="text-danger"><b>'+status+'</b></span>';
-						} else if(status == "Em uso") {
-								_status = '<span class="text-success"><b>'+status+'</b></span>';
-						} else {
-							_status = '<span class="text-primary"><b>'+status+'</b></span>';
-						}
-					//	
+ 			}	
+ 		//	STATUS RECOLHIDO
+ 			else {	
  				//	MODAL DE ERRO 					
-					modalVerificaReservaProfessorErro(nome, equipamento, _status, sala, dataBRA, horaA, dataBRB, horaB, horaC, horaD);
+					modalVerificaReservaProfessorErro(nome, equipamento, cor(status), sala, dataBR(dataA), horaA, dataBR(dataB), horaB, horaC, horaD);
  				//
  			}
  		}
  		return verificar;
 	}
+//
+//	ALERTA DA RESERVA DO PROFESSOR
+	let alertaP = function() { setInterval(alertarReservaP, 30000); }
+//	FUNÇÃO ALERTA DE RESERVA 
+	function alertarReservaP() {
+		
+		reservas = bancodedados.recuperaReservaProfessor();
+
+		reservas.forEach(function(p) {
+		//	SE A DATA DA RESERVA FOR IGUAL A DATA ATUAL
+			if(p.dataA == retornaData()) {
+			//	SE O STATUS FOR AGURARDANDO
+				if(p.status == "Aguardando") {
+				//	SE A HORA DE MONTAGEM FOR MAIOR OU IGUAL O DO HORA ATUAL
+					if(retornaHoraB(0,0) >= p.horaA){
+					//	ALERTA DE RESERVA
+						modalAlertaReservaA(p.nome, p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), p.horaA, dataBR(retornaData()), p.horaB, retornaHora(0,0,0), p.horaD);
+					//
+					}
+				}
+			//	SE O STATUS FOR EM USO
+				if(p.status == "Em uso") {
+				//	SE A HORA DE RETIRADA FOR MAIOR OU IGUAL O DO HORA ATUAL
+					if(retornaHoraB(0,0) >= p.horaB){
+					//	ALERTA DE RESERVA
+						modalAlertaReservaB(p.nome, p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), p.horaA, dataBR(p.dataB), p.horaB, p.horaC, retornaHora(0,0,0));
+					//
+					}
+				//
+				}
+			//
+			}
+		//
+		})
+	//
+	}
+//
+//	ALERTA DA RESERVA DO ALUNO
+	let alertaA = function() { setInterval(alertarReservaA, 30000); }
+//	FUNÇÃO ALERTA DE RESERVA 
+	function alertarReservaA() {
+		
+		reservas = bancodedados.recuperaReservaAluno();
+
+		reservas.forEach(function(a) {
+		//	SE A DATA DA RESERVA FOR IGUAL A DATA ATUAL
+			if(a.dataA == retornaData()) {
+			//	SE O STATUS FOR AGURARDANDO
+				if(a.status == "Aguardando") {
+				//	SE A HORA DE MONTAGEM FOR MAIOR OU IGUAL O DO HORA ATUAL
+					if(retornaHoraB(0,0) >= a.horaA){
+					//	ALERTA DE RESERVA
+						modalAlertaReservaC(a.nome, a.equipamento, cor(a.status), a.matricula, a.serial, dataBR(a.dataA), a.horaA);
+					//
+					}
+				}
+			//
+			}
+		//
+		})
+	//
+	}
+//
+//	MODIFICA A COR DO STATUS
+	let cor = function(status){
+		let cor = null;
+
+		if(status == "Aguardando") {
+			cor = '<span class="text-danger"><b>'+status+'</b></span>';
+		}
+		else if(status == "Em uso") {
+			cor = '<span class="text-success"><b>'+status+'</b></span>';
+		}
+		else {
+			cor = '<span class="text-primary"><b>'+status+'</b></span>';
+		}
+		return cor;
+	}
+//
+//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
+	let dataBR = function(dataEUA) {
+	//
+		let diaBR  = dataEUA.substr(8,2);
+		let mesBR  = "/"+dataEUA.substr(5,2);
+		let anoBR  = "/"+dataEUA.substr(0,4);
+		let dataBR = diaBR+mesBR+anoBR;
+	//
+		return dataBR;
+	//
+	}					
+//
+//	CONVERSÃO DA DATA NO FORMATO BR PARA EUA
+	let dataEUA = function(dataBR) {
+	//
+		let diaEUA  = dataBR.substr(6,4);
+		let mesEUA  = "-"+dataBR.substr(3,2);
+		let anoEUA  = "-"+dataBR.substr(0,2);
+		let dataEUA = diaEUA+mesEUA+anoEUA;
+	//
+		return dataEUA;
+	//
+	}
+//
+//	2.9.0 - RELÓGIO
+	let relogio = function() {
+		setInterval(calendario, 100);
+	}
+//
+//	2.10.0 - CALENDÁRIO
+	function calendario() {
+	//	DATA
+		let data = retornaData();
+	//	HORA
+		let hora = retornaHora(0,0,0);
+	//	MENSAGEM
+		let mensagem = null;
+	//
+		mensagem = hora >= "06:00:00" && hora <= "12:00:00" ? mensagem = "<i class='fas fa-sun'></i> Bom dia! "    : mensagem; 
+		mensagem = hora >= "12:00:00" && hora <= "18:00:00" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "  : mensagem;	
+		mensagem = hora >= "18:00:00" || hora <= "06:00:00" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! " : mensagem;
+	//
+		document.getElementById("tempo").innerHTML = mensagem+"hoje é "+dataBR(data)+" e são "+hora+" |";
+	//
+	}
+//
+//	RETORNA A DATA ATUAL
+    let retornaData = function() {
+	//
+	//	INSTÂNCIA DATA
+		let time = new Date();
+	//	DATA
+		let ano = time.getFullYear();
+		let mes = time.getMonth() + 1;
+		let dia = time.getDate();
+	//	AJUSTE NA DATA
+		mes = mes < 10 ? mes = "0"+mes : mes;
+		dia = dia < 10 ? dia = "0"+dia : dia;
+	//	DATA NO FORMATO EUA
+		let data = ano+"-"+mes+"-"+dia;
+	//
+		return data;
+	//
+    }
+//
+//
+//	RETORNA A HORA ATUAL COM SEGUNDOS
+    let retornaHora = function(h, m, s) {
+    //	INSTÂNCIA DATA
+		let time = new Date();
+    //	HORA
+		let horas 	 = time.getHours() + h;
+		let minutos  = time.getMinutes() + m;
+		let segundos = time.getSeconds() + s;
+	//	AJUSTE NA HORAs
+		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
+		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
+		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
+	//	
+		let hora = horas+":"+minutos+":"+segundos;
+	//
+		return hora;
+	//
+    }
+//
+//	RETORNA A HORA ATUAL SEM OS SEGUNDOS
+    let retornaHoraB = function(h, m) {
+    //	INSTÂNCIA DATA
+		let time = new Date();
+    //	HORA
+		let horas 	 = time.getHours() + h;
+		let minutos  = time.getMinutes() + m;
+	//	AJUSTE NA HORAs
+		horas 	= horas   < 10 ? horas 	 = "0"+horas   : horas;
+		minutos = minutos < 10 ? minutos = "0"+minutos : minutos;
+	//	7
+		let hora = horas+":"+minutos;
+	//
+		return hora;
+	//
+    }
+//
+//	INFORMAÇÃO DO APP
+	function informacaoApp() {
+	//	ARRAY FUNCIONÁRIO
+		let funcionario = Array();
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		funcionario = bancodedados.recuperaFuncionario();
+	//	LISTANTO A RESERVA
+ 		funcionario.forEach(function(f) {
+ 		//	MODAL DE VIZUALIÇÃO
+ 			modalInformacaoApp(f.nome, f.versao, dataBR(f.dataA), f.horaA);
+		//
+		})
+	//
+	}
+//
+//	2.7.0 - IMPRIME AS RESERVAS
+	function imprimir() {
+	//
+	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
+        let imprime = document.getElementById('conteudo-imprecao').innerHTML;
+    //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
+        telaImpressao = window.open('about:blank');
+    //	IMPRESÃO DO CONTEÚDO
+        telaImpressao.document.write(imprime);
+        telaImpressao.window.print();
+        telaImpressao.window.close();
+    }
+//
+//	2.6.0 - ATUALIZA A PÁGINA
+ 	function atualizar() {
+ 	//	ATUALIZA A PÁGINA
+ 		window.location.reload();
+	}
+//
+//=============================================================||
+//	3 - FUNÇÕES BOOTSTRAP
+//
+//	3.1.0 - POPOVER
+	$(function () {
+  		$('[data-toggle="popover"]').popover();
+	})
+//
+//	3.2.0 - TOOLTIP
+	$(function () {
+  		$('[data-toggle="tooltip"]').tooltip();
+	})
+//==============================================================||
+//	MODAIS
 //
 //	MODAL INFORMAÇÃO DO APP
 	let modalInformacaoApp = function(nome, versao, dataA, horaA) {
@@ -1561,14 +1430,14 @@
 	//
 	}
 //
-	let modalVerificaReservaAlunoErro = function(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB) {
+	let modalVerificaReservaAlunoErro = function(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//
  		$('#modal1').modal('show');
  		document.getElementById('modal-titulo-1').innerHTML 	= '<i class="fas fa-user-check"></i> Verificada';
 		document.getElementById('modal-documento-1').className	= 'modal-dialog modal-lg border border-danger rounded alert-danger';
 		document.getElementById('modal-cabecalho-1').className  = 'modal-header text-white bg-danger';
 		document.getElementById('modal-conteudo-1').innerHTML 	= 'A reserva do(a) aluno(a) <span class="text-danger"><b>'+nome+'</b></span> já foi <span class="text-danger"><b>recolhida!</b></span>';
-		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+'</td><td>'+status+'</td></tr></tbody></table>';
+		document.getElementById('modal-conteudo-1').innerHTML  += '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-danger"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
 		document.getElementById('modal-botao-1').innerHTML 		= 'Voltar';
 		document.getElementById('modal-botao-1').className 		= 'btn btn-outline-danger';
 	//
@@ -1640,319 +1509,4 @@
 	//
 	}
 //
-//	ALERTA
-	let alerta = function() { setInterval(alertarReserva, 30000); }
-//	FUNÇÃO ALERTA DE RESERVA 
-	function alertarReserva() {
-		
-		reservas = bancodedados.recuperaReservaProfessor();
-
-		reservas.forEach(function(p) {
-		//	INSTÂNCIA DO TEMPO
-			let time = new Date();
-		//
-		//	HORA
-			let horas 	= time.getHours();
-			let minutos = time.getMinutes();
-		//	AJUSTE DE HORAs
-			minutos = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
-			horas 	= horas 	< 10 ? horas 	= "0"+horas 	: horas;
-		//	HORA
-			let hora = horas+":"+minutos;
-		//
-		//	DATA
-			let ano = time.getFullYear();
-			let mes = time.getMonth() + 1;
-			let dia = time.getDate();
-		//	AJUSTE DA DATA
-			dia = dia < 10 ? dia = "0"+dia : dia;
-			mes = mes < 10 ? mes = "0"+mes : mes;
-		//	DATA
-			let data = dia+"/"+mes+"/"+ano;
-		//
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA = p.dataA.substr(8,2);
-			let mesA = "/"+p.dataA.substr(5,2);
-			let anoA = "/"+p.dataA.substr(0,4);
-			dataA = diaA+mesA+anoA;
-		//	SE A DATA DA RESERVA FOR IGUAL A DATA ATUAL
-			if(dataA == data) {
-			//	SE O STATUS FOR AGURARDANDO
-				if(p.status == "Aguardando") {
-				//	SE A HORA DE MONTAGEM FOR IGUAL A DO hora
-					if(hora >= p.horaA){
-					//
-						let nome 		= p.nome;
-						let equipamento = p.equipamento;
-						let sala 		= p.sala;
-						let dataA 		= p.dataA;
-						let horaA 		= p.horaA;
-						let horaB 		= p.horaB;
-						let dataB 		= retornaData();
-						let horaC 		= retornaHora();
-						let horaD 		= p.horaD;
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaA = p.dataA.substr(8,2);
-						let mesA = "/"+p.dataA.substr(5,2);
-						let anoA = "/"+p.dataA.substr(0,4);
-						dataA = diaA+mesA+anoA;
-					//	COR DO STATUS
-						let status;
-					//
-						if(p.status == "Aguardando") {
-							status = '<span class="text-danger"><b>'+p.status+'</b></span>';
-						} else if(p.status == "Em uso") {
-							status = '<span class="text-success"><b>'+p.status+'</b></span>';
-						} else if(p.status == "Retirado"){
-							status = '<span class="text-primary"><b>'+p.status+'</b></span>';
-						}
-					//	ALERTA DE RESERVA
-						modalAlertaReservaA(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD);
-					//
-					}
-				}
-			//	SE O STATUS FOR Em uso
-				if(p.status == "Em uso") {
-				//	SE A HORA DE RETIRADA FOR IGUAL A DO TEMPO
-					if(hora >= p.horaB){
-					//
-						let nome 		= p.nome;
-						let equipamento = p.equipamento;
-						let status 		= "Retirado";
-						let sala 		= p.sala;
-						let horaA 		= p.horaA;
-						let dataB 		= p.dataB;
-						let horaB 		= p.horaB;
-						let horaC 		= p.horaC;
-						let horaD 		= retornaHora();
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaA = p.dataA.substr(8,2);
-						let mesA = "/"+p.dataA.substr(5,2);
-						let anoA = "/"+p.dataA.substr(0,4);
-						dataA = diaA+mesA+anoA;
-					//	COR DO STATUS
-						let corStatus;
-					//
-						if(p.status == "Aguardando") {
-							corStatus = '<span class="text-danger"><b>'+p.status+'</b></span>';
-						} else if(p.status == "Em uso") {
-							corStatus = '<span class="text-success"><b>'+p.status+'</b></span>';
-						} else if(p.status == "Retirado"){
-							corStatus = '<span class="text-primary"><b>'+p.status+'</b></span>';
-						}
-					//	ALERTA DE RESERVA
-						modalAlertaReservaB(nome, equipamento, corStatus, sala, dataA, horaA, dataB, horaB, horaC, horaD);
-					//
-					}
-				//
-				}
-			//
-			}
-		//
-		})
-	//
-	}
-//	ALERTA
-	let alertaB = function() { setInterval(alertarReservaB, 30000); }
-//	FUNÇÃO ALERTA DE RESERVA 
-	function alertarReservaB() {
-		
-		reservas = bancodedados.recuperaReservaAluno();
-
-		reservas.forEach(function(a) {
-		//	INSTÂNCIA DO TEMPO
-			let time = new Date();
-		//
-		//	HORA
-			let horas 	= time.getHours();
-			let minutos = time.getMinutes();
-		//	AJUSTE DE HORAs
-			minutos = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
-			horas 	= horas 	< 10 ? horas 	= "0"+horas 	: horas;
-		//	HORA
-			let hora = horas+":"+minutos;
-		//
-		//	DATA
-			let ano = time.getFullYear();
-			let mes = time.getMonth() + 1;
-			let dia = time.getDate();
-		//	AJUSTE DA DATA
-			dia = dia < 10 ? dia = "0"+dia : dia;
-			mes = mes < 10 ? mes = "0"+mes : mes;
-		//	DATA
-			let data = dia+"/"+mes+"/"+ano;
-		//
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA = a.dataA.substr(8,2);
-			let mesA = "/"+a.dataA.substr(5,2);
-			let anoA = "/"+a.dataA.substr(0,4);
-			dataA = diaA+mesA+anoA;
-
-		//	SE A DATA DA RESERVA FOR IGUAL A DATA ATUAL
-			if(dataA == data) {
-			//	SE O STATUS FOR AGURARDANDO
-				if(a.status == "Aguardando") {
-				//	SE A HORA DE MONTAGEM FOR IGUAL A DO hora
-					if(hora >= a.horaA){
-					//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-						let diaA = a.dataA.substr(8,2);
-						let mesA = "/"+a.dataA.substr(5,2);
-						let anoA = "/"+a.dataA.substr(0,4);
-						let dataA = diaA+mesA+anoA;
-					//	COR DO STATUS
-						let status = null;
-					//
-						if(a.status == "Aguardando") {
-							status = '<span class="text-danger"><b>'+a.status+'</b></span>';
-						} else if(a.status == "Em uso") {
-							status = '<span class="text-success"><b>'+a.status+'</b></span>';
-						} else if(a.status == "Retirado"){
-							status = '<span class="text-primary"><b>'+a.status+'</b></span>';
-						}
-					//	ALERTA DE RESERVA
-						modalAlertaReservaC(a.nome, a.equipamento, status, a.matricula, a.serial, dataA, a.horaA);
-					//
-					}
-				}
-			//
-			}
-		//
-		})
-	//
-	}
-//
-//	2.9.0 - RELÓGIO
-	let relogio = function() {
-		setInterval(calendario, 100);
-	}
-//
-//	2.10.0 - CALENDÁRIO
-	function calendario() {
-	//
-	//	INSTÂNCIA DATA
-		let time = new Date();
-	//	DATA
-		let ano = time.getFullYear();
-		let mes = time.getMonth() + 1;
-		let dia = time.getDate();
-	//	AJUSTE NA DATA
-		mes = mes < 10 ? mes = "0"+mes : mes;
-		dia = dia < 10 ? dia = "0"+dia : dia;
-	//
-		let data = dia+"/"+mes+"/"+ano;
-	//
-	//	HORA
-		let horas = time.getHours();
-		let minutos = time.getMinutes();
-		let segundos = time.getSeconds();
-	//	AJUSTE NA HORAs
-		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
-		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
-		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
-	//	
-		let hora = horas+":"+minutos+":"+segundos;
-	//
-	//	MENSAGEM
-		let mensagem = null;
-	//
-		mensagem = horas >= "06" && horas <= "12" ? mensagem = "<i class='fas fa-sun'></i> Bom dia! " 	: mensagem; 
-		mensagem = horas >= "12" && horas <= "18" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "	: mensagem;	
-		mensagem = horas >= "18" || horas <= "06" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! ": mensagem;
-	//
-		document.getElementById("tempo").innerHTML = mensagem+"hoje é "+data+" e são "+hora+" |";
-	//
-	}
-//
-//	RETORNA A DATA ATUAL
-    let retornaData = function() {
-	//
-	//	INSTÂNCIA DATA
-		let time = new Date();
-	//	DATA
-		let ano = time.getFullYear();
-		let mes = time.getMonth() + 1;
-		let dia = time.getDate();
-	//	AJUSTE NA DATA
-		mes = mes < 10 ? mes = "0"+mes : mes;
-		dia = dia < 10 ? dia = "0"+dia : dia;
-	//	DATA NO FORMATO EUA
-		let data = ano+"-"+mes+"-"+dia;
-	//
-		return data;
-	//
-    }
-//
-//	RETORNA A HORA ATUAL
-    let retornaHora = function() {
-    //	INSTÂNCIA DATA
-		let time = new Date();
-    //	HORA
-		let horas 	 = time.getHours();
-		let minutos  = time.getMinutes();
-		let segundos = time.getSeconds();
-	//	AJUSTE NA HORAs
-		horas 	 = horas 	< 10 ? horas 	= "0"+horas 	: horas;
-		minutos  = minutos 	< 10 ? minutos 	= "0"+minutos 	: minutos;
-		segundos = segundos < 10 ? segundos = "0"+segundos 	: segundos;
-	//	
-		let hora = horas+":"+minutos+":"+segundos;
-	//
-		return hora;
-	//
-    }
-//
-//	INFORMAÇÃO DO APP
-	function informacaoApp() {
-	//	ARRAY FUNCIONÁRIO
-		let funcionario = Array();
-	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-		funcionario = bancodedados.recuperaFuncionario();
-	//	LISTANTO A RESERVA
- 		funcionario.forEach(function(f) {
-		//	CONVERSÃO DA DATA NO FORMATO EUA PARA O BR
-			let diaA = f.dataA.substr(8,2);
-			let mesA = "/"+f.dataA.substr(5,2);
-			let anoA = "/"+f.dataA.substr(0,4);
-			let dataA = diaA+mesA+anoA;
-		//
- 		//	MODAL DE VIZUALIÇÃO
- 			modalInformacaoApp(f.nome, f.versao, dataA, f.horaA);
-		//
-		})
-	//
-	}
-//
-//	2.7.0 - IMPRIME AS RESERVAS
-	function imprimir() {
-	//
-	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
-        let imprime = document.getElementById('conteudo-imprecao').innerHTML;
-    //	UMA NOVA JANELA ABRE E É SETADA EM UMA VARIÁVEL
-        telaImpressao = window.open('about:blank');
-    //	IMPRESÃO DO CONTEÚDO
-        telaImpressao.document.write(imprime);
-        telaImpressao.window.print();
-        telaImpressao.window.close();
-    }
-//
-//	2.6.0 - ATUALIZA A PÁGINA
- 	function atualizar() {
- 	//	ATUALIZA A PÁGINA
- 		window.location.reload();
-	}
-//
 //=============================================================||
-//=============================================================||
-//	3 - FUNÇÕES BOOTSTRAP
-//
-//	3.1.0 - POPOVER
-	$(function () {
-  		$('[data-toggle="popover"]').popover();
-	})
-//
-//	3.2.0 - TOOLTIP
-	$(function () {
-  		$('[data-toggle="tooltip"]').tooltip();
-	})
-//==============================================================||
-//==============================================================||
