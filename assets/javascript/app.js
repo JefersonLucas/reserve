@@ -6,16 +6,16 @@
 //	DESCRIÇÃO: CORE PARA CADASTRO/CONSULTA/FILTRO/VISUALIZAÇÃO
 //	/EDIÇÃO E EXCLUSÃO DE RESERVAS DE PROFESSORES E ALUNOS
 //==============================================================||
-//	1 - CLASSES DO APP
+//	CLASSES DO APP
 //
-//	1.0.0 - CLASSE PAI / RESERVA
+//	CLASSE PAI / RESERVA
 	class Reserva {
 		constructor(nome, equipamento, status) {
 			this.nome 			= nome;
 			this.equipamento 	= equipamento;
 			this.status			= status; 
 		}
-	//	1.0.1 - VALIDAR DADOS DE RESERVA
+	//	VALIDAR DADOS DE RESERVA
 		validarDados() {
 		//	VALIDAR OS DADOS DA RESERVA
 			for (let r in this){
@@ -30,7 +30,7 @@
 		}
 	}
 ///
-//	1.2.0 - CLASSE FILHO / RESERVA DO PROFESSOR
+//	CLASSE FILHO / RESERVA DO PROFESSOR
 	class ReservaProfessor extends Reserva {
 		constructor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
@@ -45,7 +45,7 @@
 		}
 	}
 //
-//	1.3.0 - CLASSE FILHO / RESERVA DO ALUNO
+//	CLASSE FILHO / RESERVA DO ALUNO
 	class ReservaAluno extends Reserva {
 		constructor(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 		//	ACESSO AO ATRIBUTO PAI RESERVA
@@ -78,7 +78,7 @@
 		}
 	}	
 //
-//	1.4.0 - CLASSE BANCO DE DADOS
+//	CLASSE BANCO DE DADOS
 	class BancodeDados {
 		constructor(){
 		//	RECEBE O ID E SETA EM UMA VARIÁVEL
@@ -94,7 +94,7 @@
 				localStorage.setItem('idProfessor', 0);
 			}
 		}
-	//	1.4.1 - PEGAR UM NO ID
+	//	PEGAR UM NOVO ID
 		getProximoId(nome) {
 		//	PEGO O ID DO ALUNO E PROFESSOR E CONVERTE PARA INTEIRO
 			let idAluno 	= parseInt(localStorage.getItem('idAluno')); 
@@ -162,7 +162,7 @@
 			}
 		//
 		}
-	//	1.4.2 - GRAVAR RESERVA
+	//	GRAVAR RESERVA
 		gravar(reserva, nome) {
 		//	VALOR DA getProximoId ATRIBUÍDO A UMA VARIÁVEL ID
 			let id = this.getProximoId(nome);
@@ -178,7 +178,7 @@
 			localStorage.setItem(id, JSON.stringify(funcionario));
 			localStorage.setItem("idFuncionario", id);
 		}
-	//	1.4.3 - RECUPERAR DADOS DA RESERVA DO PROFESSOR
+	//	RECUPERAR DADOS DA RESERVA DO PROFESSOR
 		recuperaReservaProfessor() {
 		//	DEFINIÇÃO DE UM ARRAY DE RESERVAS
 			let reservas = Array();
@@ -200,7 +200,7 @@
 		//	RETORNA AS RESERVAS
 			return reservas;
 		}
-	//	1.4.4 - RECUPERAR DADOS DA RESERVA DO ALUNO
+	//	RECUPERAR DADOS DA RESERVA DO ALUNO
 		recuperaReservaAluno() {
 		//	DEFINIÇÃO DE UM ARRAY DE RESERVAS
 			let reservas = Array();
@@ -239,7 +239,7 @@
 			return funcionarios;
 		//
 		}
-	//	1.4.5 - PESQUISAR E FILTRAR OS DADOS DA RESERVA
+	//	PESQUISAR E FILTRAR OS DADOS DA RESERVA
 		pesquisaReserva(reserva, nome) {
 		//	VERIFICAÇÃO
 			if(nome == "Professor") {
@@ -321,14 +321,14 @@
 //
 //==============================================================||
 //
-//	1.5.0 - VARIÁVEl GLOBAl
+//	VARIÁVEl GLOBAl
 //
 	let bancodedados = new BancodeDados();
 //
 //==============================================================||
-//	2 - FUNÇÕES DO APP
+//	FUNÇÕES DO APP
 //
-//	2.0.0 - FUNÇÃO CADASTRAR A RESERVA DO PROFESSOR
+//	FUNÇÃO CADASTRAR A RESERVA DO PROFESSOR
 	function cadastrarReservaProfessor() {
 	//	RESGATANDO O VALOR DA RESERVA	
 		let nome 		= document.getElementById('professor');
@@ -365,7 +365,7 @@
 		}
 	}
 //
-//	2.1.0 - FUNÇÃO CADASTRAR A RESERVA DO ALUNO
+//	FUNÇÃO CADASTRAR A RESERVA DO ALUNO
 	function cadastrarReservaAluno() {
 	//	RESGATANDO O VALOR DA RESERVA
 		let nome 		= document.getElementById('aluno');
@@ -462,27 +462,16 @@
 	//
 	}
 //
-//	2.2.0 - LISTA DE RESERVAS DOS PROFESSORES
+//	LISTA DE RESERVAS DOS PROFESSORES
 	function ListaReservasProfessores() {
-	//	VERIFICA O NOME DO FUNCIONÁRIO
+	//	VERIFICA O NOME DO FUNCIONÁRIO E EXIBE DADOS DO FUNCIONÁRIO
 		cadastrarFuncionario();
+		dadosFuncionário();
 	//	RELÓGIO
 		relogio();
 	//	ALERTA
-		alertaP();		
+		alertaP();
 		alertaA();
-	//
-	//	ARRAY FUNCIONÁRIO
-		let funcionario = Array();
-	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-		funcionario = bancodedados.recuperaFuncionario();
-	//	LISTANTO O FUNCIONÁRIO
- 		funcionario.forEach(function(f) {
- 		//	NOME DO FUNCIONÁRIO É EXIBIDO
-			document.getElementById("funcionario").innerHTML = f.nome;
-		//
-		})
-	//
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
 	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
@@ -512,7 +501,7 @@
 		})
 	}
 //
-//	2.3.0 - PESQUISAR RESERVA DO PROFESSOR
+//	PESQUISAR RESERVA DO PROFESSOR
 	function pesquisarReservaProfessor() {
 	//	RECUPERANDO OS VALORES DOS CAMPOS
 		let nome 		= document.getElementById('professor').value;
@@ -531,7 +520,7 @@
 		}
 		else {
 		//	PASANDO VALORES PARA UMA NOVA INSTÂNCIA
-			let reserva = new ReservaProfessor(nome, equipamento, status , sala, dataA, horaA, dataB, horaB);
+			let reserva = new ReservaProfessor(nome, equipamento, status, sala, dataA, horaA, dataB, horaB);
 		//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
 			let reservas = bancodedados.pesquisaReserva(reserva, "Professor");
 		//	SELECIONANDO O ELEMENTO DA TABELA
@@ -563,27 +552,16 @@
 	//
 	}
 //
-//	2.4.0 - LISTA DE RESERVAS DOS ALUNOS
+//	LISTA DE RESERVAS DOS ALUNOS
 	function ListasReservasAlunos() {
-	//	VERIFICA O NOME DO FUNCIONÁRIO
-		cadastrarFuncionario();
+	//	VERIFICA O NOME DO FUNCIONÁRIO E EXIBE DADOS DO FUNCIONÁRIO
+		cadastrarFuncionario();		
+		dadosFuncionário();
 	//	RELÓGIO
 		relogio();
 	//	ALERTA
 		alertaP();		
 		alertaA();
-	//
-	//	ARRAY FUNCIONÁRIO
-		let funcionario = Array();
-	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-		funcionario = bancodedados.recuperaFuncionario();
-	//	LISTANTO O FUNCIONÁRIO
- 		funcionario.forEach(function(f) {
- 		//	NOME DO FUNCIONÁRIO É EXIBIDO
-			document.getElementById("funcionario").innerHTML = f.nome;
-		//
-		})
-	//
 	//	DECLARAÇÃO DO ARRAY RESERVAS
 		let reservas = Array();
 	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
@@ -614,7 +592,7 @@
 	//
 	}
 //
-//	2.5.0 PESQUISA RESERVA DO ALUNO
+//	PESQUISA RESERVA DO ALUNO
 	function pesquisarReservaAluno() {
 	//	RESGATANDO O VALOR DA RESERVA	
 		let nome 		= document.getElementById('aluno').value;		
@@ -623,22 +601,21 @@
 		let serial 		= document.getElementById('serial').value;
 		let dataA 		= document.getElementById('dataA').value;
 		let horaA 		= document.getElementById('horaA').value;
-	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome, equipamento,"", matricula, serial, dataA, horaA);
-	//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
-		let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
-	//	SELECIONANDO O ELEMENTO DA TABELA
-		let listaReservas = document.getElementById("listaAlunos");
-	//	LIMPANDO TABELA
-		listaReservas.innerHTML = "";
-	//
 	//	VALIDAÇÃO DA PESQUISA
 		if(nome == "" && equipamento == "" && matricula == "" && serial == "" && dataA == "" && horaA == "") {
 		//	MODAL DE ERRO
 			modalPesquisarErro();
 		//
-		} else {
-		//
+		} 
+		else {
+		//	INSTÂNCIA DA RESERVA DO ALUNO
+			reserva  = new ReservaAluno(nome, equipamento,"", matricula, serial, dataA, horaA);
+		//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
+			let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
+		//	SELECIONANDO O ELEMENTO DA TABELA
+			let listaReservas = document.getElementById("listaAlunos");	
+		//	LIMPANDO TABELA
+			listaReservas.innerHTML = "";
 		//	LISTANDO A PESQUISA
 			reservas.forEach(function(a) {
 			//	CRIANDO A LINHA
@@ -1103,6 +1080,21 @@
 	//
 	}
 //
+	let dadosFuncionário = function() {
+	//	ARRAY FUNCIONÁRIO
+		let funcionario = Array();
+	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
+		funcionario = bancodedados.recuperaFuncionario();
+	//	LISTANTO O FUNCIONÁRIO
+ 		funcionario.forEach(function(f) {
+ 		//	NOME DO FUNCIONÁRIO É EXIBIDO
+			document.getElementById("funcionario").innerHTML = f.nome;
+		//
+		})
+	//
+	}
+//
+//
 //	ALERTA DA RESERVA DO ALUNO
 	let alertaA = function() { setInterval(alertarReservaA, 30000); }
 //	FUNÇÃO ALERTA DE RESERVA 
@@ -1132,7 +1124,7 @@
 //
 	let tabelaProfessorA = function(bg, equipamento, sala, dataA, horaA, horaB) {
 	//	TABELA DO PROFESSOR
-		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td></tr></tbody></table>';
+		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário da reserva"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td></tr></tbody></table>';
 	//	RETORNO
 		return tabela;
 	//
@@ -1148,7 +1140,7 @@
 //
 	let tabelaProfessorB = function(bg, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) {
 	//	TABELA DO PROFESSOR
-		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+dataB+'<br>'+horaC+' / '+horaD+'</td><td>'+status+'</td></tr></tbody></table>';
+		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário da reserva"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+dataB+'<br>'+horaC+' / '+horaD+'</td><td>'+status+'</td></tr></tbody></table>';
 	//	RETORNO
 		return tabela;
 	//
@@ -1156,7 +1148,7 @@
 //
 	let tabelaAlunoB = function(bg, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
 	//	TABELA DO ALUNO
-		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário inicial"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
+		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário da reserva"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
 	//	RETORNO
 		return tabela;
 	//
@@ -1215,12 +1207,12 @@
 	//
 	}
 //
-//	2.9.0 - RELÓGIO
+//	RELÓGIO
 	let relogio = function() {
 		setInterval(calendario, 100);
 	}
 //
-//	2.10.0 - CALENDÁRIO
+//	CALENDÁRIO
 	function calendario() {
 	//	DATA
 		let data = dataAtual();
@@ -1308,7 +1300,7 @@
 	//
 	}
 //
-//	2.7.0 - IMPRIME AS RESERVAS
+//	IMPRIME AS RESERVAS
 	function imprimir() {
 	//
 	//	VARIÁVEL RECEBE O CONTEÚDO DA DIV TABELA
@@ -1321,21 +1313,21 @@
         telaImpressao.window.close();
     }
 //
-//	2.6.0 - ATUALIZA A PÁGINA
+//	ATUALIZA A PÁGINA
  	function atualizar() {
  	//	ATUALIZA A PÁGINA
  		window.location.reload();
 	}
 //
 //=============================================================||
-//	3 - FUNÇÕES BOOTSTRAP
+//	FUNÇÕES BOOTSTRAP
 //
-//	3.1.0 - POPOVER
+//	POPOVER
 	$(function () {
   		$('[data-toggle="popover"]').popover();
 	})
 //
-//	3.2.0 - TOOLTIP
+//	TOOLTIP
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip();
 	})
@@ -1487,7 +1479,7 @@
 		document.getElementById('modal-botao-2').className 		= 'btn btn-outline-info';
 	//
 	}
-
+//
 	let modalCadastarFuncionario = function(nome) {
 	//
 		$('#modal2').modal('show');
