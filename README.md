@@ -15,7 +15,9 @@ O aplicativo foi desenvolvido com base nas tecnologias:
 * Armazenamento no [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/LocalStorage).
 
 ## Como funciona?
-O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse aplicativo será possível: efetuar cadastros de reservas, visualizar lista de reservas cadastradas, pesquisar e filtrar reservas, editar os cadastros, excluir os cadastros e imprimir as reservas cadastras.
+O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. 
+
+Com esse aplicativo será possível: efetuar cadastros de reservas, visualizar lista de reservas cadastradas, pesquisar e filtrar reservas, editar os cadastros, excluir os cadastros e imprimir as reservas cadastras.
 
 ## Como utilizar?
 
@@ -31,22 +33,42 @@ O aplicativo funciona baseado na funcionalidade CRUD no localStorage do navegado
 #### Primeiro acesso
 No primeiro acesso no aplicativo ele irá pedir um nome de usuário para que possa indentificar que está utilizando. Depois da indetificação o nome do usuário será exibido na barra de navegação ao lado do calendário e o relógio.
 
-**Importante:** O aplicativo deve ser utilizado um navegador de preferência, pois os dados armazenados são gravados no navegador, ou seja, os dados gravados em um navegador não será repassado pra outro navegador.
+**Importante**: O aplicativo deve ser utilizado um navegador de preferência, pois os dados armazenados são gravados no navegador, ou seja, os dados gravados em um navegador não será repassado pra outro navegador.
 
-#### Efetuando uma Reserva
+#### Efetuando uma reserva
 Com os dados do aluno ou professor deve-se informa nos seus devidos campos respectivos, com tudo certo basta confirmar no botão de cadastro abaixo dos campos, se tudo estiver certo, um modal de confirmação da reserva irá ser exibido, caso ao contrário um modal de erro irá ser exibido.
 
-Depois da conclusão de uma reserva ela automaticamente é exibida em uma tabela com os seus devidos dados cadastrados. Cada reserva vem exibida junto com seus dados, um status e um coleção de botões de opção de reserva. 
-As reservas são dividas em três status: 
-* Aguardando: quando o horário da reserva ainda não está no hora prevista, quando atingir a hora um modal de alerta é exibido informando o nome do aluno ou professor responsável pela reserva;
-* Em uso: Quando a reserva está em uso pelo responsável pelo equipamento;
-* Recolhido: Quando a reserva já está em poder dos funcionários responsáveis pela equipamento.
+Depois da conclusão de uma reserva ela automaticamente exibida em uma tabela com os dados cadastrados. Cada reserva vem exibida junto um status, e botões de opção de reserva.
+
+As reservas são dividas em três status:
+* **Aguardando**: quando o horário da reserva ainda não está no hora prevista, quando atingir a hora um modal de alerta é exibido informando o nome do aluno ou professor responsável pela reserva;
+* **Em uso**: Quando a reserva está em uso pelo responsável pelo equipamento;
+* **Recolhida**: Quando a reserva já está em poder dos funcionários responsáveis pela equipamento.
 
 Botões de opções da reserva:
-* Vizualizar: exibe em um modal todos os detatlhes da reserva;
-* Editar: tem a possibilidade de editar uma determinada reserva modificando os seus dados, depois da alteração um modal é exibido contendo os dados modificados;
-* Excluir: exclui o reserva e todos os seus dados;
-* Verificar: verifica e checa a reserva modificando o seu status.
+* **Vizualizar**: exibe em um modal todos os detatlhes da reserva;
+* **Editar**: tem a possibilidade de editar uma determinada reserva modificando os seus dados, depois da alteração um modal é exibido contendo os dados modificados;
+* **Excluir**: exclui o reserva e todos os seus dados;
+* **Verificar**: verifica e checa a reserva modificando o seu status.
+
+#### Vizualizando uma reserva
+Após ter efetuado uma reserva, procure na coluna "Opções" um botão com um ícone semelhante a uma visão, esse botão dá a possibilidade de visualizar todos os detalhes da reserva desde a hora e data da reserva até a hora de montagem (uso de reserva) e recolhimento da reserva.
+
+#### Alterando uma reserva
+Caso sinta necessidade de alterar algum item de uma reserva, procure na coluna "Opções" um botão com um ícone de um lápis, esse botão altera os itens da reserva substituindo os valores da antiga e cadastrando novos valores.
+
+ **Atenção**: O aplicativo permite alterar a reserva até no mesmo dia da reserva e 5 minutos antes do horário programado para a reserva ser utilizada, depois disso o aplicativo não permite mais alterações.
+
+#### Excluindo uma reserva
+Se o usuário sentir necessidade de excluir alguma determinada reserva, na coluna "Opções" tem um botão com um ícone de uma lixeira que apaga do registro do armazenamento as informações da reserva.
+
+**Atenção**: após confirmação da exclusão da reserva, essa operação não há mais volta, tenha cuidado com essa função.
+
+#### Verificando uma reserva
+Se alguma reserva já estiver em uso ou ela estiver sido recolhida, na coluna "Opções" um botão com um ícone semelhante há um usuário verificado, esse botão trata com os diferentes status da reserva modificando o status, ele guarda a data e a hora da reserva em uso e a reserva recolhida.
+
+#### Alerta de reserva
+Quando uma reserva estiver no dia e na hora de seu uso, um alerta será exibido informando todos os detalhes da reserva, facilitando o gerênciamento das reservas.
 
 ## Changelog / Versões
 
@@ -67,22 +89,22 @@ Botões de opções da reserva:
 
 ### Bugs / Defeitos
 
-| Bug | Correção |
-| :---| :-----------------:|
-| *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro. | (descontinuado na versão 1.0.1) |
-| Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome). | (descontinuado na versão 1.0.1) |
-| Botão de informação com a função *popover* pode ser clicado abaixo do própio botão. | (corrigido na versão 1.0.1) |
-| Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação. | (corrigido na versão 1.0.2.) |
-| A página consulta atualiza quando todos os campos são preenchidos na pesquisa sem retornar nenhum resultado. | *** |
+| Correção | Bug |
+| :------: | :---|
+| (descontinuado na versão 1.0.1) | *Tooltip* continua ativado mesmo com o mouse não estando em cima do botão de filtro. |
+| (descontinuado na versão 1.0.1) | Parte do placeholder do input "*data*" some em janela reduzida (somente no navegador Chrome). |
+| (corrigido na versão 1.0.1) | Botão de informação com a função *popover* pode ser clicado abaixo do própio botão. |
+| (corrigido na versão 1.0.2) | Quebra de alinhamento do link do GitHub e o indentificador do da versão no menu de navegação. |
+| *** | A página consulta atualiza quando todos os campos são preenchidos na pesquisa sem retornar nenhum resultado. |
 
 ### Paths / Correções
 
-| Correção | Versão de correção |
-| :------- | :----------------: |
+| Correção | Versão  |
+| :------: | :------ |
 | Ortografia. | (versão 1.0.0) |
-| Substituição do placeholder e da variável "*Professor*" por "*Responsável*". | (versão 1.0.1) |
-| Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas. | (versão 1.0.1) |
-| União do horário de início e término em um única coluna na tabela de consulta. | (versão 1.0.1) |
-| Validação de cadastro. | (versão 1.2.1-beta) |
-| Formatação da data EUA para BR. | (versão 1.2.2-beta) |
-| Validação duplas de edição e exclusão de cadastro. | (versão 1.3.0-beta) |
+| (versão 1.0.1) | Substituição do placeholder e da variável "*Professor*" por "*Responsável*". |
+| (versão 1.0.1) | Realocamento dos botões de visualizar e excluir quando carrega a lista de reserva para quando o usuário filtra as reservas. |
+| (versão 1.0.1) | União do horário de início e término em um única coluna na tabela de consulta. |
+| (versão 1.2.1-beta) | Validação de cadastro. |
+| (versão 1.2.2-beta) | Formatação da data EUA para BR. |
+| (versão 1.3.0-beta) | Validação duplas de edição e exclusão de cadastro. |

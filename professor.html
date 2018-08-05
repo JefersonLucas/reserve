@@ -1,7 +1,7 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 17/06/2018
-//  DATA DE MODIFICAÇÃO: 26/07/2018
+//  DATA DE MODIFICAÇÃO: 28/07/2018
 //  VERSÃO: 1.6.0-BETA
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE PROFESSORES
 //==============================================================|| -->
@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Reserve - Professores | SENA AIRES &#8211; Colégio e Faculdade</title>
+        <title>Reserve - Professores | SENA AIRES </title>
         <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/imagens/logo16x16.png" type="image/x-icon">
         <!-- Bootstrap -->
@@ -18,9 +18,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/javascript/app-comentado.js"></script>
+        <script src="assets/javascript/app.min.js"></script>
         <!-- STYLE -->
         <style type="text/css">
             a.nounderline:link { 
@@ -31,7 +31,7 @@
 
     <body onload="ListaReservasProfessores()">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary mb-5">
             
             <!-- IMAGEM SENA AIRES -->
             <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank" class="border-right" title="Faculdade Sena Aires – FACESA">
@@ -46,16 +46,9 @@
             <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Professores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="alunos.html">Alunos</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="professor.html">Professores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aluno.html">Alunos</a></li>
                 </ul>
-                
-                <!-- GITHUB -->
-                <span class="navbar-text" data-toggle="tooltip" data-placement="bottom" title="GitHub">
-                    <a href="https://github.com/JefersonLucas/reserve" target="_blank" class="nounderline">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </span>&nbsp;
                 
                 <!-- DATA E HORA -->
                 <span class="navbar-text" id="tempo"></span>&nbsp;
@@ -63,7 +56,7 @@
                 <!-- NOME DO FUNCIONÁRIO -->
                 <span class="navbar-text active">
                     <i class="fas fa-user-circle"></i>
-                    Funcionário: <a href="#" class="nounderline" id="funcionario"></a>
+                    Funcionário: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
                 </span>
             </div>
 
@@ -152,7 +145,7 @@
                                     <i class="fas fa-calendar-alt" title="Data"></i>
                                 </div>
                             </div>
-                            <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" id="data" min="2018-01-01" max="2020-12-31" required>
+                            <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" id="dataA" required>
                         </div>                    
 
                         <!-- BOTÃO CADASTRAR RESERVA -->
@@ -171,14 +164,14 @@
                 
                         <!-- BOTÃO IMPRIMIR -->
                         <div class="col-md-1">
-                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimeReservas()">
+                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimir()">
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </div>
 
                         <!-- BOTÃO ATUALIZAR -->
                         <div class="col-md-1">
-                            <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary btn-lg" onclick="atualiza()">
+                            <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary btn-lg" onclick="atualizar()">
                                 <i class="fas fa-redo-alt"></i>
                             </button>
                         </div>
@@ -198,9 +191,10 @@
                             <tr class="text-center bg-dark">
                                 <th class="text-white" title="Professor"><i class="fas fa-user-tie" title="Professor"></i>&nbsp;Professor</th>
                                 <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th><!-- 
                                 <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
-                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th>
+                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th> -->
+                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
                                 <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i>&nbsp;Opções</th>
                             </tr>
                         </thead>
@@ -216,84 +210,32 @@
             </div>
             <!-- FIM TABELA DAS RESERVAS -->
 
-            <!-- MODAL VALIDAÇÃO SUCESSO -->
-            <div class="modal fade" id="modalCadastraReservaSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-success rounded alert-success" role="document">
+            <!-- MODAL TIPO 1 -->
+            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                <!-- DOCUMENTO -->
+                <div class="modal-dialog" role="document" id="modal-documento-1">
                 
                     <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-success">
+                        
+                        <!-- CABEÇALHO -->
+                        <div id="modal-cabecalho-1">
 
-                            <h5 class="modal-title" id="modal-titulo-success"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
+                            <!-- TÍTULO -->
+                            <h5 class="modal-title" id="modal-titulo-1"></h5>
+                            <!-- BOTÃO FECHAR MODAL -->
+                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-success"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-success" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>        
-            <!-- FIM MODAL VALIDAÇÃO SUCESSO -->
-
-            <!-- MODAL VALIDAÇÃO ERRO -->
-            <div class="modal fade" id="modalCadastraReservaErro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-erro">
-
-                            <h5 class="modal-title" id="modal-titulo-erro"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-erro"></div>
+                        
+                        <!-- CONTEÚDO -->
+                        <div class="modal-body" id="modal-conteudo-1"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="" id="modal-btn-erro"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>        
-            <!-- FIM MODAL VALIDAÇÃO ERRO -->
-
-            <!-- MODAL VALIDAÇÃO DE FILTRO -->
-            <div class="modal fade" id="modalValidaReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-danger rounded alert-danger" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div">
-
-                            <h5 class="modal-title" id="modal-titulo"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn"></button>
+                            <!-- BOTÃO -->
+                            <button type="button" data-dismiss="modal" id="modal-botao-1" onclick="atualizar()"></button>
                         </div>
 
                     </div>
@@ -301,28 +243,34 @@
                 </div>
             
             </div>
-            <!-- FIM MODAL VALIDAÇÃO DE FILTRO -->
+            <!-- FIM MODAL TIPO 1 -->
 
-            <!-- MODAL VIZUALIZAÇÃO -->
-            <div class="modal fade bd-example-modal-lg" id="modalVizualizaReserva" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div class="modal-dialog border border-primary rounded alert-primary" role="document">
+            <!-- MODAL TIPO 2 -->
+            <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                <!-- DOCUMENTO -->
+                <div class="modal-dialog" role="document" id="modal-documento-2">
                 
                     <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-ver">
+                        
+                        <!-- CABEÇALHO -->
+                        <div id="modal-cabecalho-2">
 
-                            <h5 class="modal-title" id="modal-titulo-ver"></h5>
+                            <!-- TÍTULO -->
+                            <h5 class="modal-title" id="modal-titulo-2"></h5>
+                            <!-- BOTÃO FECHAR MODAL -->
                             <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
 
                         </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-ver"></div>
+                        
+                        <!-- CONTEÚDO -->
+                        <div class="modal-body" id="modal-conteudo-2"></div>
                     
                         <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-ver"></button>
+                            <!-- BOTÃO -->
+                            <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
                         </div>
 
                     </div>
@@ -330,36 +278,8 @@
                 </div>
             
             </div>
-            <!-- FIM MODAL VIZUALIZAÇÃO -->
+            <!-- FIM MODAL TIPO 2 -->
 
-            <!-- MODAL ALTERA A RESERVA -->
-            <div class="modal fade" id="modalAlteraReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            
-                <div id="modal-dialog-altera" role="document">
-                
-                    <div class="modal-content">
-                    
-                        <div id="modal-titulo-div-altera">
-
-                            <h5 class="modal-title" id="modal-titulo-altera"></h5>
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualiza()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                    
-                        <div class="modal-body" id="modal-conteudo-altera"></div>
-                    
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" id="modal-btn-altera" onclick="atualiza()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL ALTERA A RESERVA -->
         </div>
 
     </body>
