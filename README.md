@@ -88,7 +88,8 @@ Quando uma reserva estiver no dia e na hora de seu uso, um alerta será exibido 
 | (v1.3.0-beta) | 02/07/2018 | Nova função de lista de consulta exibindo uma coluna "opções" com os botôes de visualização, edição e exclusão; Validação dupla na exclusão da reserva; Recuperendo valores das reservas e setando como default na edição das reservas. |
 | (v1.4.0-beta) | 03/07/2018 | Apresentação de um modal de confirmação com as informações do cadastro da quando uma reserva é editada; Revisão no texto de validação. |
 | (v1.5.0-beta) | 24/07/2018 | Adição de cadastro, vizualização, edição e exclusão de reservas para Alunos; Todas as funcionalidades em uma única página; Mudança da aparência dos inputs; Alteração do background dos modais e cor do texto das tabelas dos modais; botões; Troca de ícones e botões.  |
-| (v1.6.0-beta) **new** | 05/08/2018 | Indentificação de usuário; data e relógio exibidos no menu de navegação; alerta de reserva; status de reserva; verificação de reserva; código mais inteligente e funcional. |
+| (v1.6.0-beta) | 05/08/2018 | Indentificação de usuário; data e relógio exibidos no menu de navegação; alerta de reserva; status de reserva; verificação de reserva; código mais inteligente e funcional. |
+| (v1.6.1-beta) **new** | 09/08/2018 | Modificação nas funções de call back por arrow functions; organização das funções; ajuste no texto nos modais e enxutamento do código. |
 
 ### Bugs / Defeitos
 
