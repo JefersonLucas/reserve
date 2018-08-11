@@ -296,10 +296,10 @@
 					reservasFiltradas = reservasFiltradas.filter(a => a.serial == reserva.serial);
 				}
 				if(reserva.dataA != "") {
-					reservasFiltradas = reservasFiltradas.filter(p => p.dataA == reserva.dataA);
+					reservasFiltradas = reservasFiltradas.filter(a => a.dataA == reserva.dataA);
 				}
 				if(reserva.horaA != "") {
-					reservasFiltradas = reservasFiltradas.filter(p => p.horaA == reserva.horaA);
+					reservasFiltradas = reservasFiltradas.filter(a => a.horaA == reserva.horaA);
 				}
 			//	RETORNA O FILTRO
 				return reservasFiltradas;
@@ -348,7 +348,7 @@
 		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
 			bancodedados.gravar(reserva, "Professor");
 		//	MODAL DE SUCESSO
-			modalCadastar(reserva.nome, tabelaProfessorA("success", reserva.equipamento, reserva.sala, dataBR(reserva.dataA), reserva.horaA, reserva.horaB), "Professor");
+			modalCadastar(reserva.nome, tabelaProfessorA("success", reserva.equipamento, reserva.sala, dataBR(reserva.dataA), horaSeg(reserva.horaA), horaSeg(reserva.horaB)), "Professor");
 		//	LIMPA OS VALORES
 			nome.value 			= "";
 			equipamento.value 	= "";
@@ -684,7 +684,7 @@
  		//	DATA DA RESERVA FOR MAIOR OU IGUAL A DATA EXATA
  			if(dataA >= dataAtual()) {
  			//	HORA 5 MIM ANTES
- 				if(horaAtual(0,5,0) <= horaA) {
+ 				if(horaAtualB(0,5) <= horaA) {
  				//	STATUS AGUARDANDO
 	 				if(status == "Aguardando") {
 		 			//	VERIFICAÇÃO
@@ -707,7 +707,7 @@
 							//	REMOVE A RESERVA
 								bancodedados.removerReserva(id);						
 							//	MODAL DE EDIÇÃO
-		 						modalEditar(_nome, tabelaAlunoA("success", _equipamento, _matricula, _serial, _dataA, _horaA), "Aluno");
+		 						modalEditar(_nome, tabelaAlunoA("success", _equipamento, _matricula, _serial, _dataA, horaSeg(_horaA)), "Aluno");
 							//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 								bancodedados.gravar(reserva, "Aluno");
 							//					
@@ -749,7 +749,7 @@
  		//	DATA DA RESERVA FOR MAIOR OU IGUAL A DATA EXATA
  			if(dataA >= dataAtual()) {
  			//	HORA 5 MIM ANTES
- 				if(horaAtual(0,5,0) <= horaA) {
+ 				if(horaAtualB(0,5) <= horaA) {
  				//	STATUS AGUARDANDO
 	 				if(status == "Aguardando") {
 	 				//	VERIFICAÇÃO
@@ -772,7 +772,7 @@
 							//	REMOVE A RESERVA
 								bancodedados.removerReserva(id);
 							//	MODAL DE EDIÇÃO
-	 							modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, _horaA, _horaB), "Professor");
+	 							modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, horaSeg(_horaA), horaSeg(_horaB)), "Professor");
 	 						//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
 								bancodedados.gravar(reserva, "Professor");
 							//		 			
@@ -967,8 +967,8 @@
  		verificar.onclick 	= function() {
  		//	STATUS AGUARDANDO
  			if(status ==  "Aguardando") {
-		//	PRONPT DE VERIFICAÇÃO
-			let resposta = prompt("A reserva do(a) Professor(a) "+nome+" já está em uso?", "Não");
+			//	PRONPT DE VERIFICAÇÃO
+				let resposta = prompt("A reserva do(a) Professor(a) "+nome+" já está em uso?", "Não");
 			//	VALIDAÇÃO DE EXCLUSÃO
 				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
 				//	NOVOS VALORES					
@@ -1003,7 +1003,7 @@
 					//
 					}
 	 			}
- 			} 	
+ 			}
  		//	STATUS EM USO
  			else if(status == "Em uso") {
 			//	PRONPT DE VERIFICAÇÃO
@@ -1253,7 +1253,7 @@
 				//	SE A HORA DE MONTAGEM FOR MAIOR OU IGUAL O DO HORA ATUAL
 					if(horaAtualB(0,0) >= p.horaA){
 					//	ALERTA DE RESERVA
-						modalAlertarReserva(p.nome, tabelaProfessorB("warning", p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), horaSeg(p.horaA), dataBR(dataAtual()), p.horaB, horaAtual(0,0,0), p.horaD), "Professor", "iniciar");
+						modalAlertarReserva(p.nome, tabelaProfessorB("warning", p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), horaSeg(p.horaA), dataBR(dataAtual()), horaSeg(p.horaB), horaAtual(0,0,0), p.horaD), "Professor", "iniciar");
 					//
 					}
 				}
@@ -1262,7 +1262,7 @@
 				//	SE A HORA DE RETIRADA FOR MAIOR OU IGUAL O DO HORA ATUAL
 					if(horaAtualB(0,0) >= p.horaB){
 					//	ALERTA DE RESERVA
-						modalAlertarReserva(p.nome, tabelaProfessorB("warning", p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), horaSeg(p.horaA), dataBR(p.dataB), p.horaB, p.horaC, horaAtual(0,0,0)), "Professor", "acabar");
+						modalAlertarReserva(p.nome, tabelaProfessorB("warning", p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), horaSeg(p.horaA), dataBR(p.dataB), horaSeg(p.horaB), p.horaC, horaAtual(0,0,0)), "Professor", "acabar");
 					//
 					}
 				//
