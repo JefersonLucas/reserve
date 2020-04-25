@@ -747,11 +747,11 @@
  	//
  		editar.onclick 		= function() {
  		//	DATA DA RESERVA FOR MAIOR OU IGUAL A DATA EXATA
- 			if(dataA >= dataAtual()) {
- 			//	HORA 5 MIM ANTES
- 				if(horaAtualB(0,5) <= horaA) {
- 				//	STATUS AGUARDANDO
-	 				if(status == "Aguardando") {
+ 			// if(dataA >= dataAtual()) {
+ 			// //	HORA 5 MIM ANTES
+ 			// 	if(horaAtualB(0,0) <= horaA) {
+ 			// 	//	STATUS AGUARDANDO
+	 		// 		if(status == "Aguardando") {
 	 				//	VERIFICAÇÃO
 	 					let = resposta = prompt("Deseja EDITAR a reserva do(a) Professor(a) "+nome+"?","Não");
 	 					//	VALIDAÇÃO DE VERIFICAÇÃO
@@ -784,18 +784,18 @@
 	 						//
 	 						}
 						}
-		 			}
-		 			else {
-	 					modalEditarErro(nome, "Professor");
-	 				}
-	 			}
- 				else { 				
-	 				modalEditarErro(nome, "Professor");
- 				}  
- 			}
- 			else { 				
-	 			modalEditarErro(nome, "Professor");
- 			}  			
+		 	// 		}
+		 	// 		else {
+	 		// 			modalEditarErro(nome, "Professor");
+	 		// 		}
+	 		// 	}
+ 			// 	else { 				
+	 		// 		modalEditarErro(nome, "Professor");
+ 			// 	}  
+ 			// }
+ 			// else { 				
+	 		// 	modalEditarErro(nome, "Professor");
+ 			// }  			
  		}
  	//	RETORNO
  		return editar;
