@@ -3,7 +3,7 @@
 //  DATA DE CRIAÇÃO: 17/06/2018
 //  DATA DE MODIFICAÇÃO: 03/06/2020
 //  VERSÃO: 1.6.1-BETA
-//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS DE PROFESSORES
+//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
 <html>
     <head>
@@ -35,8 +35,8 @@
         <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-5">
             
             <!-- IMAGEM SENA AIRES -->
-            <a class="navbar-brand" href="http://www.senaaires.com.br/" target="_blank" class="border-right" title="Faculdade Sena Aires – FACESA">
-                <img src="assets/imagens/logo-gray.png" width="35" height="35" alt="Logo Sena Aires Lateral">
+            <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
+                <img src="assets/imagens/logo-gray.png" width="50" height="50" alt="Reserve">
             </a>
 
             <!-- BOTÃO TOGLLER -->
@@ -47,8 +47,6 @@
             <!-- LINKS DE NAVEGAÇÃO -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="professor.html">Professores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="aluno.html">Alunos</a></li>
                 </ul>
                 
                 <!-- DATA E HORA -->
@@ -69,7 +67,7 @@
                 
                 <!-- TÍTULO -->
                 <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-user-tie"></i>&nbsp;Professor</h1>
+                    <h1 class="display-5"><i class="fas fa-user"></i>&nbsp;Usuário</h1>
                 </div>
 
                 <!-- INFO -->
@@ -93,10 +91,10 @@
                         <div class="input-group col-md-4 mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-user-tie" title="Professor"></i>
+                                    <i class="fas fa-user" title="Usuário"></i>
                                 </div>
                             </div>
-                            <input type="text" title="Nome do professor" class="form-control" placeholder="Ex.: José" id="professor" required>
+                            <input type="text" title="Nome do suário" class="form-control" placeholder="Ex.: José" id="professor" required>
                         </div>                    
                         
                         <!-- EQUIPAMENTO -->                        
@@ -190,11 +188,9 @@
                     <table class="table table-hover table-bordered d-print-table">
                         <thead>
                             <tr class="text-center bg-dark">
-                                <th class="text-white" title="Professor"><i class="fas fa-user-tie" title="Professor"></i>&nbsp;Professor</th>
+                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i>&nbsp;Usuário</th>
                                 <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th><!-- 
-                                <th class="text-white" title="Horário"><i class="fas fa-clock" title="Horário"></i>&nbsp;Horário</th>
-                                <th class="text-white" title="Data"><i class="fas fa-calendar-alt" title="Data"></i>&nbsp;Data</th> -->
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
                                 <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
                                 <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i>&nbsp;Opções</th>
                             </tr>
