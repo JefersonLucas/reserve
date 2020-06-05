@@ -7,82 +7,81 @@
 //==============================================================|| -->
 <html>
     <head>
+		<title>Reserve</title>        
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta lang="pt-br">
         <meta name="autor" content="Jeferson Lucas">
-        <title>Reserve</title>
+        <!-- RESPONSÍVEL -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
         <!-- ÍCONE -->
         <link rel="shortcut icon" href="assets/imagens/logo-gray.ico" type="image/x-icon">
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <!-- Font Awesome -->
+    	<!-- BOOTSTRAP CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <!-- BOOTSTRAP JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <!-- FONT AWESOME -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <!-- APP -->
-        <script src="assets/javascript/app.js"></script>
+        <script src="assets/js/app.js"></script>
         <!-- STYLE -->
-        <style type="text/css">
-            a.nounderline:link { 
-                text-decoration:none;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
 
-    <body onload="ListaReservasProfessores()">
+<body onload="ListaReservasProfessores()">
 
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-5">
+    <!-- NAVBAR -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-5">
             
-            <!-- IMAGEM SENA AIRES -->
-            <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
-                <img src="assets/imagens/logo-gray.png" width="30" height="30" alt="Reserve">
-            </a>
+        <!-- IMAGEM RESERVE -->
+        <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
+            <img src="assets/imagens/logo-gray.png" width="30" height="30" alt="Reserve">
+		</a>
 
-            <!-- BOTÃO TOGLLER -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- BOTÃO TOGLLER -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
             
-            <!-- LINKS DE NAVEGAÇÃO -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                </ul>
+        <!-- LINKS DE NAVEGAÇÃO -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
                 
-                <!-- DATA E HORA -->
-                <span class="navbar-text" id="tempo"></span>&nbsp;
+            <!-- DATA E HORA -->
+            <span class="navbar-text" id="tempo"></span>&nbsp;
 
-                <!-- NOME DO FUNCIONÁRIO -->
-                <span class="navbar-text active">
-                    <i class="fas fa-user-circle"></i>
-                    Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
-                </span>
+            <!-- NOME DO FUNCIONÁRIO -->
+            <span class="navbar-text active">
+                <i class="fas fa-user-circle"></i>Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
+            </span>
+
             </div>
 
-        </nav>
+    </nav>
 
-        <div class="container">
+    <div class="container">
 
-            <div class="row">
+        <div class="row">
                 
-                <!-- TÍTULO -->
-                <div class="col mb-5">
-                    <h1 class="display-5"><i class="fas fa-user"></i>&nbsp;Usuário</h1>
-                </div>
-
-                <!-- INFO -->
-                <div class="col-md-1 mb-5">
-                    <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
-                        <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
-                    </a>
-                </div>
-            
+            <!-- TÍTULO -->
+            <div class="col mb-5">
+                <h1 class="display-5"><i class="fas fa-user"></i>&nbsp;Usuário</h1>
             </div>
 
-            <div class="row mb-2">
+            <!-- INFO -->
+            <div class="col-md-1 mb-5">
+                <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
+                    <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
+                </a>
+            </div>
+            
+        </div>
+
+        <div class="row mb-2">
                                 
-                <!-- FORMULÁRIO COM VALIDAÇÃO -->
-                <form class="needs-validation" novalidate>
+            <!-- FORMULÁRIO COM VALIDAÇÃO -->
+            <form class="needs-validation" novalidate>
                     
                     <!-- DIV DO FORMULÁRIO -->
                     <div class="form-row">
@@ -279,8 +278,6 @@
 
         </div>
 
-    </body>
-
     <script>
     //  VALIDAÇÃO DE CADASTRO
         (function() {
@@ -303,4 +300,5 @@
         })();
     </script>
 
+</body>
 </html>
