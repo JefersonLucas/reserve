@@ -1352,18 +1352,6 @@
 	}
 //
 //=============================================================||
-//	FUNÇÕES BOOTSTRAP
-//
-//	POPOVER
-	$(function () {
-  		$('[data-toggle="popover"]').popover();
-	})
-//
-//	TOOLTIP
-	$(function () {
-  		$('[data-toggle="tooltip"]').tooltip();
-	})
-//
 //==============================================================||
 //	FUNÇÕES MODAIS
 //

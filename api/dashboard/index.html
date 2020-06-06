@@ -3,7 +3,7 @@
 //  DATA DE CRIAÇÃO: 06/06/2020
 //  DATA DE MODIFICAÇÃO: 06/06/2020
 //  VERSÃO: 1.0.0-BETA
-//  DESCRIÇÃO: NOVA API DO RESERVE
+//  DESCRIÇÃO: NOVA API DASHBOARD DO RESERVE
 //==============================================================|| -->
 <!DOCTYPE html>
 <html>
@@ -13,23 +13,15 @@
 	<meta name="description" content="">
 	<meta name="author" content="Jeferson Lucas">
 	<title>Reserve · Dashboard </title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+	<!-- ÍCONE -->
+    <link rel="shortcut icon" href="../../assets/img/logo-white.ico" type="image/x-icon">
     
     <!-- BOOTSTRAP CORE CSS -->
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- FAVICONS -->
-	<link rel="apple-touch-icon" href="assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-	<link rel="icon" href="assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-	<link rel="icon" href="assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-	<link rel="manifest" href="assets/img/favicons/manifest.json">
-	<link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-	<link rel="icon" href="assets/img/favicons/favicon.ico">
-	<meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml">
-    
+	    
     <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
     <!-- APP -->
     <script src="assets/js/app.js"></script>
     
@@ -42,7 +34,6 @@
         -ms-user-select: none;
         user-select: none;
       }
-
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -54,22 +45,20 @@
 </head>
 <body onload="ListaReservasProfessores()">
 	
+	<!-- NAVBAR -->
 	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-muted text-center" href="https://jefersonlucas.github.io/reserve/" target="_blank">
-  			<img src="../../assets/imagens/logo-gray.png" class="mr-3 text-primary" width="32" height="32" alt="Reserve">Reserve
+  		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold" href="https://jefersonlucas.github.io/reserve/" target="_blank">
+  			<img src="../../assets/img/logo-white.png" class="mr-3" width="32" height="32" alt="Reserve">Reserve
   		</a>
 
   		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
   		</button>
-
-  		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+		 <span class="mr-4">
+		 	<i id="tempo"></i>
+  			<i id="funcionario"></i>
+        </span>
   		
-  		<ul class="navbar-nav px-3">
-    		<li class="nav-item text-nowrap">
-      			<a class="nav-link" href="#">Sign out</a>
-    		</li>
-  		</ul>
 
 	</nav>
 
@@ -77,6 +66,7 @@
   
   		<div class="row">
 
+  			<!-- SIDEBAR -->
     		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       		
       			<div class="sidebar-sticky pt-3">
@@ -90,85 +80,89 @@
           				
           				<li class="nav-item">
 				            <a class="nav-link" href="#">
-				              <span data-feather="file"></span>Orders
+				              	<span data-feather="file-text"></span>Reservas
+				              	<span class="badge badge-pill badge-primary">3</span>
 				            </a>
           				</li>
 
 			          	<li class="nav-item">
 			            	<a class="nav-link" href="#">
-			              		<span data-feather="shopping-cart"></span>Products
-			            	</a>
-			          	</li>
-
-			          	<li class="nav-item">
-			            	<a class="nav-link" href="#">
-			            		<span data-feather="users"></span>Customers
+			            		<span data-feather="users"></span>Usuários
 			           	 	</a>
 			          	</li>
 			          
-			          	<li class="nav-item">
+        			</ul>
+        			
+        			<!-- MENSAGEM -->
+        			<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
+          				Mensagem
+          				<a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            				<span data-feather="sun"></span>
+          				</a>
+        			</h6>
+        			
+        			<ul class="nav flex-column mb-2">
+          				
+        				<!-- NOME DO FUNCIONÁRIO -->	
+          				<li class="nav-item">
+            				<a class="nav-link" href="#">
+              					<span data-feather="user"></span>              		
+				            	<span>Administrador</span>
+				            </a>
+          				</li>
+          				
+          				<!-- DATA -->
+          				<li class="nav-item">
 			            	<a class="nav-link" href="#">
-			            		<span data-feather="bar-chart-2"></span>Reports
+			              		<span data-feather="calendar"></span>
+			            		<span>01/01/2020</span>			            		
 			            	</a>
 			          	</li>
 
-          				<li class="nav-item">
-            				<a class="nav-link" href="#">
-              					<span data-feather="layers"></span>Integrations
-            				</a>
-          				</li>
+			          	<!-- HORA -->
+			          	<li class="nav-item">
+			            	<a class="nav-link" href="#">
+			              		<span data-feather="clock"></span>
+			            		<span>00:00:00</span>
+			            	</a>
+			          	</li>
+
+			          	<!-- INFO -->
+			          	<li class="nav-item">
+			            	<a class="nav-link" href="#">
+			              		<span data-feather="info"></span>
+			            		<span>info</span>
+			            	</a>
+			          	</li>
+
+			          	<!-- CONFIG -->
+			          	<li class="nav-item">
+			            	<a class="nav-link" href="#">
+			            		<span class="fa fa-cog"></span>
+			            		<span>Configuração</span>
+			            	</a>
+			          	</li>
+
+			          		
         			</ul>
-        			<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              		
-        					<!-- NOME DO FUNCIONÁRIO -->
-            <span class="navbar-text active">
-                <i class="fas fa-user-circle"></i>Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
-            </span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-<!-- DATA E HORA -->
-            				<span class="navbar-text" id="tempo"></span>&nbsp;            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li>
-        </ul>
         					
             
 	        
     		</nav>
 
+    		<!-- CONTEÚDO PRINCIPAL -->
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 	      		
-	      		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	     
-	        		<h1 class="h2">Dashboard</h1>
+	      		<!-- TÍTULO -->
+	      		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">					   
+	        		<h1 class="h2"><span class="fa fa-home"></span> Dashboard</h1>
 	      		</div>
 
+	      		<!-- GRÁFICO -->
 	      		<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-	      		<h2>Reservas</h2>
+	      		<!-- RESERVAS -->
+	      		<h2><span class="fa fa-table"></span> Reservas</h2>
 
 			    <div class="table-responsive">
 			        
@@ -192,7 +186,19 @@
 	    	</main>
 		</div>
 	</div>
+	
+	<hr>
 
+	<!-- RODAÉ -->
+	<footer class="footer">
+
+		<p class="mt-2 mb-1 align-middle text-center text-muted">&copy; 2018-2020 | <a href="https://github.com/JefersonLucas" target="_blank">Jeferson Lucas</a></p>
+	    <p class="text-right align-middle mr-4"><a href="#" class="text-decoration-none"><i class="fas fa-arrow-up"></i> Back to top</a>
+  
+
+	</footer>
+
+	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script>window.jQuery || document.write('<script src="assets/js/jquery/jquery.slim.min.js"><\/script>')</script>
     <script src="assets/js/bootstrap.bundle.min.js"d></script>
