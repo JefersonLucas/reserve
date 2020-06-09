@@ -1,7 +1,7 @@
 <!-- ==============================================================||
 //  AUTOR: JEFERSON LUCAS
 //  DATA DE CRIAÇÃO: 06/06/2020
-//  DATA DE MODIFICAÇÃO: 06/06/2020
+//  DATA DE MODIFICAÇÃO: 08/06/2020
 //  VERSÃO: 1.0.0-BETA
 //  DESCRIÇÃO: NOVA API DASHBOARD DO RESERVE
 //==============================================================|| -->
@@ -14,34 +14,16 @@
 	<meta name="author" content="Jeferson Lucas">
 	<title>Reserve · Dashboard </title>
 	<!-- ÍCONE -->
-    <link rel="shortcut icon" href="../../assets/img/logo-white.ico" type="image/x-icon">
-    
+    <link rel="shortcut icon" href="../../assets/img/logo-white.ico" type="image/x-icon">    
     <!-- BOOTSTRAP CORE CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	    
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">	    
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">    
     <!-- APP -->
-    <script src="assets/js/app.js"></script>
-    
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+    <script src="assets/js/app.js"></script>    
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
+
 </head>
 <body onload="ListaReservasProfessores()">
 	
@@ -54,7 +36,7 @@
   		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
   		</button>
-		 <span class="mr-4">
+		 <span class="text-light mr-5">
 		 	<i id="tempo"></i>
   			<i id="funcionario"></i>
         </span>
@@ -95,10 +77,7 @@
         			
         			<!-- MENSAGEM -->
         			<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
-          				Mensagem
-          				<a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            				<span data-feather="sun"></span>
-          				</a>
+          				<span id="mensagem"></span>
         			</h6>
         			
         			<ul class="nav flex-column mb-2">
@@ -107,7 +86,7 @@
           				<li class="nav-item">
             				<a class="nav-link" href="#">
               					<span data-feather="user"></span>              		
-				            	<span>Administrador</span>
+				            	<span id="usuario"></span>
 				            </a>
           				</li>
           				
@@ -115,7 +94,7 @@
           				<li class="nav-item">
 			            	<a class="nav-link" href="#">
 			              		<span data-feather="calendar"></span>
-			            		<span>01/01/2020</span>			            		
+			            		<span id="calendario"></span>			            		
 			            	</a>
 			          	</li>
 
@@ -123,7 +102,7 @@
 			          	<li class="nav-item">
 			            	<a class="nav-link" href="#">
 			              		<span data-feather="clock"></span>
-			            		<span>00:00:00</span>
+			            		<span id="hora-atual"></span>
 			            	</a>
 			          	</li>
 
@@ -131,23 +110,23 @@
 			          	<li class="nav-item">
 			            	<a class="nav-link" href="#">
 			              		<span data-feather="info"></span>
-			            		<span>info</span>
+			            		<span onclick="infoApp()">info</span>
 			            	</a>
 			          	</li>
 
 			          	<!-- CONFIG -->
 			          	<li class="nav-item">
 			            	<a class="nav-link" href="#">
-			            		<span class="fa fa-cog"></span>
+			            		<i class="fa fa-cog"></i>			            		
 			            		<span>Configuração</span>
 			            	</a>
+			          	
 			          	</li>
 
-			          		
         			</ul>
-        					
-            
-	        
+
+           		</div>
+
     		</nav>
 
     		<!-- CONTEÚDO PRINCIPAL -->
@@ -162,7 +141,7 @@
 	      		<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
 	      		<!-- RESERVAS -->
-	      		<h2><span class="fa fa-table"></span> Reservas</h2>
+	      		<h2><span class="fa fa-file-alt"></span> Reservas</h2>
 
 			    <div class="table-responsive">
 			        
@@ -181,19 +160,94 @@
 			          	<tbody id="listaProfessores" class="text-center">
 			            	
 			          	</tbody>
+
 			    	</table>
+
 				</div>
+
 	    	</main>
+
 		</div>
+
 	</div>
+	
+    <!-- MODAL TIPO 1 -->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+        <!-- DOCUMENTO -->
+        <div class="modal-dialog" role="document" id="modal-documento-1">
+                
+            <div class="modal-content">
+                        
+                <!-- CABEÇALHO -->
+                <div id="modal-cabecalho-1">
+
+                    <!-- TÍTULO -->
+                    <h5 class="modal-title" id="modal-titulo-1"></h5>
+                    <!-- BOTÃO FECHAR MODAL -->
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                       
+                    <!-- CONTEÚDO -->
+                <div class="modal-body" id="modal-conteudo-1"></div>
+                    
+                <div class="modal-footer">
+                    <!-- BOTÃO -->
+                    <button type="button" data-dismiss="modal" id="modal-botao-1" onclick="atualizar()"></button>
+                </div>
+
+            </div>
+
+        </div>
+            
+    </div>
+    <!-- FIM MODAL TIPO 1 -->
+
+    <!-- MODAL TIPO 2 -->
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+        <!-- DOCUMENTO -->
+        <div class="modal-dialog" role="document" id="modal-documento-2">
+                
+            <div class="modal-content">
+                        
+                <!-- CABEÇALHO -->
+                <div id="modal-cabecalho-2">
+
+                    <!-- TÍTULO -->
+                    <h5 class="modal-title" id="modal-titulo-2"></h5>
+                    <!-- BOTÃO FECHAR MODAL -->
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                        
+                <!-- CONTEÚDO -->
+                <div class="modal-body" id="modal-conteudo-2"></div>
+                    
+                <div class="modal-footer">
+                    <!-- BOTÃO -->
+                    <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
+                </div>
+           
+            </div>
+
+        </div>
+            
+    </div>
+    <!-- FIM MODAL TIPO 2 -->
 	
 	<hr>
 
-	<!-- RODAÉ -->
+	<!-- RODAPÉ -->
 	<footer class="footer">
 
-		<p class="mt-2 mb-1 align-middle text-center text-muted">&copy; 2018-2020 | <a href="https://github.com/JefersonLucas" target="_blank">Jeferson Lucas</a></p>
-	    <p class="text-right align-middle mr-4"><a href="#" class="text-decoration-none"><i class="fas fa-arrow-up"></i> Back to top</a>
+		<p class="align-middle text-center text-muted">&copy; 2018-2020 | <a href="https://github.com/JefersonLucas" target="_blank">Jeferson Lucas</a></p>
+	    <p class="align-middle text-right mr-4"><a href="#" class="text-decoration-none"><i class="fas fa-arrow-up"></i> Back to top</a>
   
 
 	</footer>

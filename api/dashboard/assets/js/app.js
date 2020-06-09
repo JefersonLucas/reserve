@@ -44,21 +44,6 @@
 		}
 	}
 //
-//	CLASSE FILHO / RESERVA DO ALUNO
-	class ReservaAluno extends Reserva {
-		constructor(nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) {
-		//	ACESSO AO ATRIBUTO PAI RESERVA
-			super(nome, equipamento, status);
-			this.matricula 	= matricula;
-			this.serial 	= serial;
-			this.dataA 		= dataA;
-			this.dataB 		= dataB;
-			this.horaA 		= horaA;
-			this.horaB 		= horaB;
-			this.horaC 		= horaC;
-		}
-	}
-//
 //	CLASSE FUNCIONÁRIO
 	class Funcionario {
 		constructor(nome, dataA, horaA, versao) {
@@ -205,28 +190,7 @@
 		//	RETORNA AS RESERVAS
 			return reservas;
 		}
-	//	RECUPERAR DADOS DA RESERVA DO ALUNO
-		recuperaReservaAluno() {
-		//	DEFINIÇÃO DE UM ARRAY DE RESERVAS
-			let reservas = Array();
-		//	PEGANDO O ID DO ALUNO NO LOCAL STORAGE
-			let id = localStorage.getItem("idAluno");
-		//	ESTRUTURA FOR PRA EXTRAIR OS IDS DAS RESERVAS 
-			for(let i = 0; i <= id; i++){
-			//	CONVERTENDO AS RESERVAS EM JSON 
-				let reserva = JSON.parse(localStorage.getItem(i));
-			//	CASO ALGUM ITEM DA RESERVA SEJA INDEFINIDO CONTINUA E IGNORA A RESERVA
-				if(reserva === null || reserva.nome === undefined || reserva.equipamento === undefined || reserva.matricula === undefined || reserva.serial === undefined) {
-					continue;
-				}
-			//	ID DA RESERVA RECEBE O VALOR DE I
-				reserva.id = i;
-			//	INSERÇÃO DAS RESERVAS NO ARRAY RESERVAS
-				reservas.push(reserva);
-			}
-		//	RETORNA AS RESERVAS
-			return reservas;
-		}
+
 	//	RECUPERAR DADOS DO FUNCIONÁRIO
 		recuperarDadosFuncionario() {
 		//		
@@ -364,65 +328,6 @@
 		}
 	}
 //
-//	FUNÇÃO CADASTRAR A RESERVA DO ALUNO
-	function cadastrarReservaAluno() {
-	//	RESGATANDO O VALOR DA RESERVA
-		let nome 		= document.getElementById('aluno');
-		let equipamento = document.getElementById('equipamento');
-		let matricula 	= document.getElementById('matricula');
-		let serial 		= document.getElementById('serial');
-		let dataA 		= document.getElementById('dataA');
-		let horaA  		= document.getElementById('horaA');
-		let status 		= null;
-		let horaB 		= null;
-		let dataB 		= null;
-		let horaC 		= "00:00:00";
-
-		if(horaA.value == horaAtualB(0,0) && dataA.value == dataAtual()) {
-		//	STATUS
-			status = "Em uso";
-		//	HORA
-			horaA = horaAtualB(0,0);
-			horaB = horaAtual(0,0,0);
-		//	DATA
-			dataA = dataAtual();
-			dataB = dataAtual();
-		}
-		else {
-		//	STATUS
-			status = "Aguardando";
-		//	HORA
-			horaA = document.getElementById('horaA').value;
-			horaB = "00:00:00";
-		//	DATA
-			dataA = document.getElementById('dataA').value;
-			dataB = "0000-00-00";
-		}
-	//
-	//	INSTÂNCIA DA RESERVA DO ALUNO
-		reserva  = new ReservaAluno(nome.value.trim(), equipamento.value.trim(), status, matricula.value.trim(), serial.value.trim(), dataA, horaA, dataB, horaB, horaC);
-	//	VALIDAÇÃO
-		if(reserva.validarDados()){
-		// 	GRAVA AS INFORMAÇÕES DA RESERVA NA CLASSE BANCODEDADOS
-			bancodedados.gravar(reserva, "Aluno");
-		//	MODAL DE SUCESSO
-			modalCadastar(reserva.nome, tabelaAlunoA("success", reserva.matricula, reserva.equipamento, reserva.serial, dataBR(reserva.dataA), horaSeg(reserva.horaA)), "Aluno");
-		//	LIMPA OS VALORES
-			nome.value 			= "";
-			matricula.value 	= "";
-			equipamento.value 	= "";
-			serial.value 		= "";
-			horaA.value 		= "";
-			dataA.value 		= "";
-		//
-		} else {
-		//	MODAL DE ERRO
-			modalCadastrarErro();
-		//
-		}
-	//
-	}
-//
 //	CADASTRAR NOME DO FUNCIONÁRIO
 	function cadastrarFuncionario() {
 	//	VERIFICA O NOME NO LOCAL STORAGE
@@ -545,113 +450,7 @@
 	}
 //
 //=============================================================||
-//	PÁGINA DO ALUNO
-//
-//	LISTA DE RESERVAS DOS ALUNOS
-	function ListasReservasAlunos() {
-	//	CHAMA FUNÇÕES DO APP
-		app();	
-	//
-	//	DECLARAÇÃO DO ARRAY RESERVAS
-		let reservas = Array();
-	//	SETANDO O VALOR DO ARRAY NA VARIÁVEL
-		reservas = bancodedados.recuperaReservaAluno();
-	//	SELECIONANDO O ELEMENTO TBODY
-		let listaReservas = document.getElementById("listaAlunos");
-	//	LISTANTO A RESERVA
- 		reservas.forEach(function(a) {
-		//	CRIANDO A LINHA (TR)
- 			let linha =	listaReservas.insertRow();
- 		//	CRIAR AS COLUNAS (TD)
- 			linha.insertCell(0).innerHTML = a.nome;
- 			linha.insertCell(1).innerHTML = a.matricula;
- 			linha.insertCell(2).innerHTML = a.equipamento;
- 			linha.insertCell(3).innerHTML = a.serial;
- 			linha.insertCell(4).innerHTML = cor(a.status);
-		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 			linha.insertCell(5).append(
- 			//
- 				botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 				botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 				botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 				botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)
- 			//
- 			);
- 		//
-		})
-	//
-	}
-//
-//	PESQUISA RESERVA DO ALUNO
-	function pesquisarReservaAluno() {
-	//	RESGATANDO O VALOR DA RESERVA	
-		let nome 		= document.getElementById('aluno').value;		
-		let equipamento = document.getElementById('equipamento').value;
-		let matricula 	= document.getElementById('matricula').value;
-		let serial 		= document.getElementById('serial').value;
-		let dataA 		= document.getElementById('dataA').value;
-		let horaA 		= document.getElementById('horaA').value;
-		let status 		= "";
-	//	VALIDAÇÃO DA PESQUISA
-		if(nome == "" && equipamento == "" && matricula == "" && serial == "" && dataA == "" && horaA == "") {
-		//	MODAL DE ERRO
-			modalPesquisarErro();
-		//
-		} 
-		else {
-		//	INSTÂNCIA DA RESERVA DO ALUNO
-			reserva  = new ReservaAluno(nome.trim(), equipamento.trim(), status, matricula.trim(), serial.trim(), dataA, horaA);
-			console.log(reserva);
-		//	INTÂNCIA DA RESERVA SENDO PASSADA PRO MÉTODO DE PESQUISA
-			let reservas = bancodedados.pesquisaReserva(reserva, "Aluno");
-		//	SELECIONANDO O ELEMENTO DA TABELA
-			let listaReservas = document.getElementById("listaAlunos");	
-		//	LIMPANDO TABELA
-			listaReservas.innerHTML = "";
-		//	LISTANDO A PESQUISA
-			reservas.forEach(function(a) {
-			//	CRIANDO A LINHA
-				let linha = listaReservas.insertRow();
-			//	CRIAR AS COLUNAS
-				linha.insertCell(0).innerHTML = a.nome;
-				linha.insertCell(1).innerHTML = a.matricula;
-				linha.insertCell(2).innerHTML = a.equipamento;
-				linha.insertCell(3).innerHTML = a.serial;
-				linha.insertCell(4).innerHTML = cor(a.status);
-			//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO
- 				linha.insertCell(5).append(
- 				//
- 					botaoVizualizarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 					botaoEditarAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 					botaoExcluirAluno(		a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)," ",
- 					botaoVerificarAluno(	a.id, a.nome, a.equipamento, a.status, a.matricula, a.serial, a.dataA, a.horaA, a.dataB, a.horaB, a.horaC)
- 				//
- 				);
- 			//
-			})
-		}
-	}
-//
-//=============================================================||
 //	FUNÇÕES DOS BOTÕES
-//
-//	BOTÃO VIZUALIZAÇÃO
-	let botaoVizualizarAluno = (id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) => {
-	//	BOTAO DE VIZUALIZAÇÃO
- 		let ver 		= document.createElement("button");
- 		ver.className	= 'btn btn-outline-info btn-sm';
- 		ver.title 		= "Vizualizar";
- 		ver.innerHTML 	= '<i class="fa fa-eye"></i>';
- 		ver.id 			= `id-ver-${id}`;
- 	//	NO CLICAR DO BOTÃO OS DETALHES DA RESERVA SERÁ EXIBIDO EM UM MODAL
- 		ver.onclick 	= function() {
-		//	MODAL DE VIZUALIÇÃO
-			modalVizualizar(nome, tabelaAlunoB("info", equipamento, cor(status), matricula, serial, dataBR(dataA), horaSeg(horaA), dataBR(dataB), horaB, horaC), "Aluno");
-		//
- 		}
- 	//	RETORNO
- 		return ver;
-	}
 //
 //	BOTAO DE VIZUALIZAÇÃO
 	let botaoVizualizarProfessor = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
@@ -670,71 +469,6 @@
  		return ver;
 	}
 //
-//	BOTÃO EDITAR
-	let botaoEditarAluno = (id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) => {
-	//	BOTAO DE EDIÇÃO
- 		let editar 			= document.createElement("button");
- 		editar.className 	= 'btn btn-outline-success btn-sm';
- 		editar.title 		= "Editar";
- 		editar.innerHTML 	= '<i class="fas fa-pencil-alt"></i>';
- 		editar.id 			= `id-editar-${id}`;
- 	//
- 		editar.onclick 		= function() {
- 		//	DATA DA RESERVA FOR MAIOR OU IGUAL A DATA EXATA
- 			if(dataA >= dataAtual()) {
- 			//	HORA 5 MIM ANTES
- 				if(horaAtualB(0,5) <= horaA) {
- 				//	STATUS AGUARDANDO
-	 				if(status == "Aguardando") {
-		 			//	VERIFICAÇÃO
-		 				let = resposta = prompt("Deseja EDITAR a reserva do(a) Aluno(a) "+nome+"?","Não");
-		 			//	VALIDAÇÃO DE VERIFICAÇÃO
-		 				if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
-						//	NOVOS VALORES SERÃO RECEBIDOS
-		 					let _nome 			= prompt("Nome do(a) Aluno(a):", nome).trim();
-		 					let _matricula		= prompt("Matrícula:", matricula).trim();
-		 					let _equipamento 	= prompt("Descrição do equipamento:", equipamento).trim();
-		 					let _serial			= prompt("Nº de série:", serial).trim();
-		 					let _dataA			= prompt("Data:", dataBR(dataA)).trim();
-		 					let _horaA			= prompt("Hora:", horaA).trim();
-						//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-							reserva  = new ReservaAluno(_nome, _equipamento, status, _matricula, _serial, dataEUA(_dataA), _horaA, dataB, horaB, horaC);
-						//	VALIDAR DADOS
-							if (reserva.validarDados()) {
-							//	FORMATAR O ID
-								let id = this.id.replace('id-editar-','');
-							//	REMOVE A RESERVA
-								bancodedados.removerReserva(id);						
-							//	MODAL DE EDIÇÃO
-		 						modalEditar(_nome, tabelaAlunoA("success", _equipamento, _matricula, _serial, _dataA, horaSeg(_horaA)), "Aluno");
-							//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-								bancodedados.gravar(reserva, "Aluno");
-							//					
-							}
-						//	ERRO
-							else {
-							//
-								modalErro();
-							//
-							}
-		 				}
-		 			}
-		 			else {
-	 				modalEditarErro(nome, "Aluno");
-	 				}
-	 			}
- 				else { 				
-	 				modalEditarErro(nome, "Aluno");
- 				}  
- 			}
- 			else { 				
-	 			modalEditarErro(nome, "Aluno");
- 			}  			
- 		}
- 	//	RETORNO
- 		return editar;
- 	}
-//
 //
 	let botaoEditarProfessor = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
 	//	BOTAO DE EDIÇÃO
@@ -745,88 +479,43 @@
  		editar.id 			= `id-editar-${id}`;
  	//
  		editar.onclick 		= function() {
- 		//	DATA DA RESERVA FOR MAIOR OU IGUAL A DATA EXATA
- 			// if(dataA >= dataAtual()) {
- 			// //	HORA 5 MIM ANTES
- 			// 	if(horaAtualB(0,0) <= horaA) {
- 			// 	//	STATUS AGUARDANDO
-	 		// 		if(status == "Aguardando") {
-	 				//	VERIFICAÇÃO
-	 					let = resposta = prompt("Deseja EDITAR a reserva do(a) Professor(a) "+nome+"?","Não");
-	 					//	VALIDAÇÃO DE VERIFICAÇÃO
-	 					if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
-	 					//	NOVOS VALORES SERÃO RECEBIDOS
-	 						let _nome 			= prompt("Nome do(a) Professor(a):", nome).trim();
-	 						let _equipamento 	= prompt("Descrição do equipamento:",equipamento).trim();
-	 						let _sala 			= prompt("Nome da sala:",sala).trim();
-	 						let _horaA 			= prompt("Início da aula:",horaA).trim();
-	 						let _horaB 			= prompt("Término da aula:",horaB).trim();
-	 						let _dataA 			= prompt("Data da aula:",dataBR(dataA)).trim();
-	 					//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-							let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, dataEUA(_dataA), _horaA, dataB, _horaB, horaC, horaD);
-						//	VALIDAR DADOS
-							if (reserva.validarDados()) {
-							//	FORMATAR O ID
-								let id = this.id.replace('id-editar-','');
-							//	REMOVE A RESERVA
-								bancodedados.removerReserva(id);
-							//	MODAL DE EDIÇÃO
-	 							modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, horaSeg(_horaA), horaSeg(_horaB)), "Professor");
-	 						//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-								bancodedados.gravar(reserva, "Professor");
-							//		 			
-	 						}
-	 					//	ERRO
-	 						else{
-	 						//
-	 							modalErro();
-	 						//
-	 						}
-						}
-		 	// 		}
-		 	// 		else {
-	 		// 			modalEditarErro(nome, "Professor");
-	 		// 		}
-	 		// 	}
- 			// 	else { 				
-	 		// 		modalEditarErro(nome, "Professor");
- 			// 	}  
- 			// }
- 			// else { 				
-	 		// 	modalEditarErro(nome, "Professor");
- 			// }  			
+	 		//	VERIFICAÇÃO
+	 		let = resposta = prompt("Deseja EDITAR a reserva do(a) Professor(a) "+nome+"?","Não");
+	 		//	VALIDAÇÃO DE VERIFICAÇÃO
+	 			if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+	 		//	NOVOS VALORES SERÃO RECEBIDOS
+	 				let _nome 			= prompt("Nome do(a) Professor(a):", nome).trim();
+	 				let _equipamento 	= prompt("Descrição do equipamento:",equipamento).trim();
+	 				let _sala 			= prompt("Nome da sala:",sala).trim();
+	 				let _horaA 			= prompt("Início da aula:",horaA).trim();
+	 				let _horaB 			= prompt("Término da aula:",horaB).trim();
+	 				let _dataA 			= prompt("Data da aula:",dataBR(dataA)).trim();
+	 			//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
+					let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, dataEUA(_dataA), _horaA, dataB, _horaB, horaC, horaD);
+				//	VALIDAR DADOS
+					if (reserva.validarDados()) {
+					//	FORMATAR O ID
+						let id = this.id.replace('id-editar-','');
+					//	REMOVE A RESERVA
+						bancodedados.removerReserva(id);
+					//	MODAL DE EDIÇÃO
+	 					modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, horaSeg(_horaA), horaSeg(_horaB)), "Professor");
+	 				//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
+						bancodedados.gravar(reserva, "Professor");
+					//		 			
+	 				}
+	 			//	ERRO
+	 				else{
+	 			//
+	 			modalErro();
+	 			//
+	 			}
+			}
  		}
  	//	RETORNO
  		return editar;
  	}
 //
-//	BOTÃO EXCLUIR
-	let botaoExcluirAluno = (id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) => {
-	//	BOTAO DE EXCLUSÃO
- 		excluir 			= document.createElement("button");
- 		excluir.className 	= 'btn btn-outline-danger btn-sm';
- 		excluir.title 		= 'Excluir';
- 		excluir.innerHTML 	= '<i class="fa fa-trash-alt"></i>';
- 		excluir.id 			= `id-excluir-${id}`;
- 	//
- 		excluir.onclick = function() {
- 	 	//	PRONPT DE VERIFICAÇÃO
-			let resposta = prompt("Deseja EXCLUIR a reserva do(a) Aluno(a) "+nome+"?", "Não");
-		//	VALIDAÇÃO DE EXCLUSÃO
-			if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-			//	FORMATAR O ID
-				let id = this.id.replace('id-excluir-','');
-			//	REMOVE A RESERVA
- 				bancodedados.removerReserva(id);
- 			//	MODAL DE EXCLUSÃO
-				modalExcluir(nome, tabelaAlunoB("danger", equipamento, cor(status), matricula, serial, dataBR(dataA), horaSeg(horaA), dataBR(dataB), horaB, horaC), "Aluno");
-			//
- 			}
- 		}
- 	//	RETORNO
- 		return excluir;
- 	//
-	}
 //
 	let botaoExcluirProfessor = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
  	//	BOTAO DE EXCLUSÃO
@@ -854,105 +543,6 @@
  		return excluir;
  	//
  	}
-//
-//	BOTÃO VERIFICAR
-	let botaoVerificarAluno = (id, nome, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) => {
-	//	BOTÃO VERIFICAR RESERVA
- 		verificar 			= document.createElement("button");
- 		verificar.className = "btn btn-outline-primary btn-sm";
- 		verificar.title 	= "Verificar";
- 		verificar.innerHTML = '<i class="fas fa-user-check"></i>';
- 		verificar.id 		= `id-verifica-${id}`;
- 	//
- 		verificar.onclick 	= function() {
- 		//	STATUS AGUARDANDO
- 			if(status ==  "Aguardando") {
-			//	PRONPT DE VERIFICAÇÃO
-				let resposta = prompt("A reserva do(a) Aluno(a) "+nome+" está em uso?", "Não");
-			//	VALIDAÇÃO DE EXCLUSÃO
-				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-				//	NOVOS VALORES
-					let _nome 			= nome;
-					let _equipamento 	= equipamento;
-					let _status 		= "Em uso";
-					let _matricula		= matricula;
-					let _serial			= serial;
-					let _dataA			= dataA;
-					let _horaA 			= horaA;
-					let _dataB 			= dataAtual();
-					let _horaB 			= horaAtual(0,0,0);
-					let _horaC 			= horaC;
-				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
-				//	VALIDAÇÃO
-					if(reserva.validarDados()){
-					//	FORMATAR O ID
-						let id = this.id.replace('id-verifica-','');
-					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
-					//	MODAL DE VERIFICAÇÃO
-						modalVerificar(_nome, tabelaAlunoB("primary", _equipamento, cor(_status), _matricula, _serial, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), _horaB, _horaC), "Aluno", _status);
-					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reserva, "Aluno");
-					// 			
-					}
-				//	ERRO
-					else {
-					//
-						modalErro();
-					//
-					}
-				}
- 			}
- 		//	STATUS EM USO
- 			else if(status == "Em uso") {
-			//	PRONPT DE VERIFICAÇÃO
-				let resposta = prompt("A reserva do(a) Aluno(a) "+nome+" está recolhida?", "Não");
-			//	VALIDAÇÃO DE EXCLUSÃO
-				if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-				//	NOVOS VALORES
-					let _nome 			= nome;
-					let _equipamento 	= equipamento;
-					let _status 		= "Recolhida";
-					let _matricula		= matricula;
-					let _serial			= serial;
-					let _dataA			= dataA;
-					let _horaA 			= horaA;
-					let _dataB 			= dataAtual();
-					let _horaB 			= horaB;		
-					let _horaC 			= horaAtual(0,0,0);
-				//	CRIAÇÃO DE UMA NOVA INSTÂNCIA RESERVA
-					reserva  = new ReservaAluno(_nome, _equipamento, _status, _matricula, _serial, _dataA, _horaA, _dataB, _horaB, _horaC);
-				//	VALIDAÇÃO
-					if(reserva.validarDados()) {
-					//	FORMATAR O ID
-						let id = this.id.replace('id-verifica-','');
-					//	REMOVE A RESERVA
-						bancodedados.removerReserva(id);
-					//	MODAL DE VERIFICAÇÃO
-						modalVerificar(_nome, tabelaAlunoB("primary", _equipamento, cor(_status), _matricula, _serial, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), _horaB, _horaC), "Aluno", _status);
-					//	GRAVA AS INFORMAÇÕES NO BANCO DE DADOS
-						bancodedados.gravar(reserva, "Aluno");
-					//
-					}
-				//	ERRO
-					else {
-					//
-						modalErro();
-					//
-					}
-				}
- 			} 
- 		//	STATUS RECOLHIDO
- 			else  {
-				//
-					modalVerificarErro(nome, "Aluno");
- 				//
- 			}
- 		}
- 	//	RETORNO
- 		return verificar;
-	}
 //
 //	BOTÃO VERIFICAR
 	let botaoVerificarProfessor = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
@@ -1135,8 +725,9 @@
 		mensagem = hora >= "12:00:00" && hora <= "18:00:00" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "  : mensagem;	
 		mensagem = hora >= "18:00:00" || hora <= "06:00:00" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! " : mensagem;
 	//
-		document.getElementById("tempo").innerHTML = mensagem+"hoje é "+dataBR(data)+" e são "+hora+" |";
-	//
+		document.getElementById("mensagem").innerHTML = mensagem;
+		document.getElementById("calendario").innerHTML = dataBR(data);
+		document.getElementById("hora-atual").innerHTML = hora;
 	}
 //
 //	RETORNA A DATA ATUAL
@@ -1207,23 +798,6 @@
 	let tabelaProfessorB = (bg, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
 	//	
 		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-desktop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-compass" title="Local"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário da reserva"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+equipamento+'</td><td>'+sala+'</td><td>'+dataA+'<br>'+horaA+' / '+horaB+'</td><td>'+dataB+'<br>'+horaC+' / '+horaD+'</td><td>'+status+'</td></tr></tbody></table>';
-	//	RETORNO
-		return tabela;
-	//
-	}
-//
-//	TABELA DO ALUNO
-	let tabelaAlunoA = (bg, equipamento, matricula, serial, dataA, horaA) => {
-	//	
-		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Data e hora"></i></i></th></tr></thead><tbody><tr><th class="font-weight-normal">'+matricula+'</th><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td></tr></tbody></table>';
-	//	RETORNO
-		return tabela;
-	//
-	}
-//
-	let tabelaAlunoB = (bg, equipamento, status, matricula, serial, dataA, horaA, dataB, horaB, horaC) => {
-	//	
-		let tabela = '<br><br><table class="table table-bordered text-center"><thead><tr class="text-center bg-'+bg+'"><th scope="col" class="text-white"><i class="fas fa-address-card" title="Matrícula"></i></th><th scope="col" class="text-white"><i class="fas fa-laptop" title="Equipamento"></i></th><th scope="col" class="text-white"><i class="fas fa-barcode" title="Nº de série"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário da reserva"></i></th><th scope="col" class="text-white"><i class="fas fa-user-clock" title="Horário final"></i></th><th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i></th></tr></thead><tbody><tr><td>'+matricula+'</td><td>'+equipamento+'</td><td>'+serial+'</td><td>'+dataA+'<br>'+horaA+'</td><td>'+dataB+'<br>'+horaB+' / '+horaC+'</td><td>'+status+'</td></tr></tbody></table>';
 	//	RETORNO
 		return tabela;
 	//
@@ -1326,7 +900,7 @@
 	//	LISTANTO O FUNCIONÁRIO
  		funcionario.forEach(function(f) {
  		//	NOME DO FUNCIONÁRIO É EXIBIDO
-			document.getElementById("funcionario").innerHTML = f.nome;
+			document.getElementById("usuario").innerHTML = f.nome;
 		//
 		})
 	//
@@ -1351,7 +925,6 @@
  	//
 	}
 //
-//=============================================================||
 //==============================================================||
 //	FUNÇÕES MODAIS
 //
