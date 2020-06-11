@@ -463,7 +463,7 @@
 //	PÁGINA DO PROFESSOR
 //
 //	LISTA DE RESERVAS DOS PROFESSORES
-	function ListaReservasProfessores() {
+	window.onload = function () {
 	//	CHAMA FUNÇÕES DO APP
 		app();	
 	//

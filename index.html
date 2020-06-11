@@ -5,15 +5,15 @@
 //  VERSÃO: 1.6.1-BETA
 //  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
 //==============================================================|| -->
-<html>
+<html lang="pt-br">
     <head>
 		<title>Reserve</title>        
         <meta charset="utf-8">
-        <meta lang="pt-br">
         <meta name="autor" content="Jeferson Lucas">
         <!-- RESPONSÍVEL -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
         <!-- ÍCONE -->
+        <link rel="shortcut icon" href="assets/img/logo-white.ico" type="image/x-icon">
     	<!-- BOOTSTRAP CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <!-- BOOTSTRAP JS -->
@@ -28,34 +28,38 @@
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
 
-<body onload="ListaReservasProfessores()">
+<body>
 
     <!-- NAVBAR -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-5">
-            
-        <!-- IMAGEM RESERVE -->
-        <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
-            <img src="assets/imagens/logo-gray.png" width="30" height="30" alt="Reserve">
-		</a>
+    <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark mb-2">
+        
+        <div class="container">
 
-        <!-- BOTÃO TOGLLER -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-            
-        <!-- LINKS DE NAVEGAÇÃO -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
+            <!-- IMAGEM RESERVE -->
+            <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
+                <img src="assets/img/logo-white.png" width="30" height="30" alt="Reserve">
+    		</a>
+
+            <!-- BOTÃO TOGLLER -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
                 
-            <!-- DATA E HORA -->
-            <span class="navbar-text" id="tempo"></span>&nbsp;
+            <!-- LINKS DE NAVEGAÇÃO -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"></ul>
+                    
+                <!-- DATA E HORA -->
+                <span class="navbar-text" id="tempo"></span>&nbsp;
 
-            <!-- NOME DO FUNCIONÁRIO -->
-            <span class="navbar-text active">
-                <i class="fas fa-user-circle"></i>Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
-            </span>
+                <!-- NOME DO FUNCIONÁRIO -->
+                <span class="navbar-text active">
+                    <i class="fas fa-user-circle"></i> Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
+                </span>
 
             </div>
+        
+        </div>
 
     </nav>
 
@@ -67,17 +71,10 @@
             <div class="col mb-5">
                 <h1 class="display-5"><i class="fas fa-user"></i>&nbsp;Usuário</h1>
             </div>
-
-            <!-- INFO -->
-            <div class="col-md-1 mb-5">
-                <a data-toggle="popover" class="float-right" data-placement="right" title="Reserva de Professores" data-content="Cadastre, filtre, vizualize, edite e exclua as reservas cadastradas.">
-                    <abbr title="O que esta página faz?"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
-                </a>
-            </div>
             
         </div>
 
-        <div class="row mb-2">
+        <div class="row col-12 mb-2">
                                 
             <!-- FORMULÁRIO COM VALIDAÇÃO -->
             <form class="needs-validation" novalidate>
@@ -145,32 +142,35 @@
                             <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" id="dataA" required>
                         </div>                    
 
+                        <div class="input-group col-sm-6 mb-2">
                         <!-- BOTÃO CADASTRAR RESERVA -->
-                        <div class="col-md-1">
+                        <div class="col-3">
                             <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaProfessor()">
                                 <i class="fas fa-save"></i>
                             </button>
                         </div>
 
                         <!-- BOTÃO PESQUISAR -->
-                        <div class="col-md-1">
+                        <div class="col-3">
                             <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReservaProfessor()">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>                     
                         </div>
                 
                         <!-- BOTÃO IMPRIMIR -->
-                        <div class="col-md-1">
+                        <div class="col-3">
                             <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimir()">
                                 <i class="fa fa-print" aria-hidden="true"></i>
                             </button>
                         </div>
 
                         <!-- BOTÃO ATUALIZAR -->
-                        <div class="col-md-1">
+                        <div class="col-3">
                             <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary btn-lg" onclick="atualizar()">
                                 <i class="fas fa-redo-alt"></i>
                             </button>
+                        </div>
+
                         </div>
 
                     </div>
