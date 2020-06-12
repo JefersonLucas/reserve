@@ -1,8 +1,8 @@
 //==============================================================||
 //	AUTOR: JEFERSON LUCAS
-//	DATA DE CRIAÇÃO: 06/06/2020
-//  DATA DE MODIFICAÇÃO: 06/06/2020
-//  VERSÃO: 1.0.0-BETA
+//	CRIAÇÃO: 06/06/2020
+//  MODIFICAÇÃO: 06/06/2020
+//  VERSÃO: 1.0.0
 //	DESCRIÇÃO: CORE DO RESERVE
 //==============================================================||
 //	CLASSES DO APP
@@ -66,14 +66,9 @@
 	class BancodeDados {
 		constructor(){
 		//	RECEBE O ID E SETA EM UMA VARIÁVEL
-			let idAluno 	= localStorage.getItem('idAluno');
 			let idProfessor = localStorage.getItem('idProfessor');
 			let versao 		= localStorage.getItem("versao");		
 		//	SE O ID FOR NULL
-			if (idAluno === null) {
-			//	SETA UM NOVO ID/CHAVE/VALOR
-				localStorage.setItem('idAluno', 0);
-			}
 			if (idProfessor === null) {
 			//	SETA UM NOVO ID/CHAVE/VALOR
 				localStorage.setItem('idProfessor', 0);
@@ -85,72 +80,11 @@
 			}
 		}
 	//	PEGAR UM NOVO ID
-		getProximoId(nome) {
-		//	PEGO O ID DO ALUNO E PROFESSOR E CONVERTE PARA INTEIRO
-			let idAluno 	= parseInt(localStorage.getItem('idAluno')); 
-			let idProfessor = parseInt(localStorage.getItem('idProfessor'));
-			let proximoId 	= null;
-		//
-		//	SE O NOME FOR DO PROFESSOR
-			if (nome == "Professor") {
-			//	VERIFICAÇÃO
-				if(idAluno > idProfessor) {
-				//	ESTRUTURA FOR PARA RETORNAR NOVO VALOR DE ID
-					for(let i = 0; i <= idAluno; i++) {
-						proximoId = i + 1;
-					}
-				//	VALOR DE RETORNO
-					return proximoId;
-				//
-				} else if(idProfessor > idAluno) {
-				//	VALOR DE RETORNO
-					proximoId = (idProfessor + 1);
-				//	RETORNO DO NOVO VALOR DE ID
-					return proximoId;
-				//
-				} else if(idProfessor == idAluno) {
-				//	VALOR DE RETORNO
-					proximoId = (idProfessor + 1);
-				//	RETORNO DO NOVO VALOR DE ID
-					return proximoId;
-				}
-				else {
-				//	CASO NÃO TENHA VALOR RETORNO 0
-					return 0;
-				//
-				}
-			} 
-		//	SE O NOME FOR DO ALUNO
-			else if(nome == "Aluno") {
-			//	VERIFICAÇÃO
-				if(idProfessor > idAluno) {
-				//	ESTRUTURA FOR PARA RETORNAR NOVO VALOR DE ID
-					for(let i = 0; i <= idProfessor; i++){
-						proximoId = i + 1;
-					}
-				//	RETORNO DO NOVO VALOR DE ID
-					return proximoId;
-				//	
-				} else if(idAluno > idProfessor) {
-				//	VALOR DE RETORNO
-					proximoId = (idAluno + 1);
-				//	
-					return proximoId;
-				//
-				} else if(idAluno == idProfessor) {
-				//	VALOR DE RETORNO
-					proximoId = (idAluno + 1);
-				//	
-					return proximoId;
-				//
-				} else {
-				//	CASO NÃO TENHA VALOR RETORNO 0
-					return 0;
-				//
-				}
-				//				
-			}
-		//
+		getProximoId() {
+		//	RECUPERA O ITEM NO LOCALSTORAGE
+			let proximoId = localStorage.getItem('id');
+		//	RETORNA O ID CONVERTIDO PARA INTEIRO E RECEBE + 1 
+			return parseInt(proximoId) + 1;
 		}
 	//	GRAVAR RESERVA
 		gravar(reserva, nome) {
@@ -367,7 +301,7 @@
 //	PÁGINA DO PROFESSOR
 //
 //	LISTA DE RESERVAS DOS PROFESSORES
-	function ListaReservasProfessores() {
+	window.onload = function() {
 	//	CHAMA FUNÇÕES DO APP
 		app();	
 	//
@@ -389,14 +323,7 @@
 		//
 			linha.insertCell(3).innerHTML = cor(p.status);
  		//	INSERÇÃO DO BOTÃO DE VIZUALIZAÇÃO/EDIÇÃO/EXCLUSÃO/VERIFICAÇÃO
- 			linha.insertCell(4).append(
- 				botaoVizualizarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 				botaoEditarProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 				botaoExcluirProfessor(		p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)," ",
- 				botaoVerificarProfessor(	p.id ,p.nome, p.equipamento, p.status, p.sala, p.dataA, p.horaA, p.dataB, p.horaB, p.horaC, p.horaD)
- 		//
- 			);
- 		//
+		//
 		})
 	}
 //
@@ -651,7 +578,6 @@
 		relogio();
 	//	ALERTA
 		alertaP();
-		alertaA();
 	//
 	}
 //
@@ -836,33 +762,6 @@
 					if(horaAtualB(0,0) >= p.horaB){
 					//	ALERTA DE RESERVA
 						modalAlertarReserva(p.nome, tabelaProfessorB("warning", p.equipamento, cor(p.status), p.sala, dataBR(p.dataA), horaSeg(p.horaA), dataBR(p.dataB), horaSeg(p.horaB), p.horaC, horaAtual(0,0,0)), "Professor", "acabar");
-					//
-					}
-				//
-				}
-			//
-			}
-		//
-		})
-	//
-	}
-//
-//	ALERTA DA RESERVA DO ALUNO
-	let alertaA = () => { setInterval(alertarReservaA, 30000); }
-//	FUNÇÃO ALERTA DE RESERVA 
-	function alertarReservaA() {
-		
-		reservas = bancodedados.recuperaReservaAluno();
-
-		reservas.forEach(function(a) {
-		//	SE A DATA DA RESERVA FOR IGUAL A DATA ATUAL
-			if(a.dataA == dataAtual()) {
-			//	SE O STATUS FOR AGURARDANDO
-				if(a.status == "Aguardando") {
-				//	SE A HORA DE MONTAGEM FOR MAIOR OU IGUAL O DO HORA ATUAL
-					if(horaAtualB(0,0) >= a.horaA){
-					//	ALERTA DE RESERVA
-						modalAlertarReserva(a.nome, tabelaAlunoB("warning", a.equipamento, cor(a.status), a.matricula, a.serial, dataBR(a.dataA), horaSeg(a.horaA), dataBR(a.dataB), a.horaB, a.horaC), "Aluno", "iniciar");
 					//
 					}
 				//

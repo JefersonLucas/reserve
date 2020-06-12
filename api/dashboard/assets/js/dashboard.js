@@ -12,23 +12,23 @@
     type: 'line',
     data: {
       labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
+        'Domingo',
+        'Segunda',
+        'Terça',
+        'Quarta',
+        'Quinta',
+        'Sexta',
+        'Sábado'
       ],
       datasets: [{
         data: [
-          15339,
-          21345,
-          18483,
-          24003,
-          23489,
-          24092,
-          12034
+          0,
+          10,
+          8,
+          11,
+          10,
+          8,
+          5
         ],
         lineTension: 0,
         backgroundColor: 'transparent',
