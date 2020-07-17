@@ -5,13 +5,24 @@
  * Creation: 06/06/2020
  * Modification: 16/07/2020
  * Version: 1.0.0
- * Description: Auxiliary information.
+ * Description: Script helpers
  *
  * Copyright (c) 2020 Jeferson Luckas
  * Released under the MIT license
- * https://github.com/JefersonLucas/hora-de-respirar/blob/master/LICENSE
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
  *
  */
+
+const toTop = document.querySelector(".to-top");
+
+window.addEventListener("scroll", () => {
+	if (window.pageYOffset > 100) {
+    	toTop.classList.add("active");
+  	}
+  	else {
+    	toTop.classList.remove("active");
+  	}
+})
 
 setInterval(()=>{
 	let data 		= new Date();

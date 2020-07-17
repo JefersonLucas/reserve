@@ -1,5 +1,22 @@
+/* 
+ * Jeferson Luckas - reserve
+ *
+ * Author: Jeferson Luckas
+ * Creation: 06/06/2020
+ * Modification: 16/07/2020
+ * Version: 1.0.0
+ * Description: Reserve style
+ *
+ * Copyright (c) 2020 Jeferson Luckas
+ * Released under the MIT license
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
+ */
+
+html {
+	scroll-behavior: smooth;
+}
 body {
-  font-size: .875rem;
+	font-size: .875rem;
 }
 
 .feather {
@@ -100,4 +117,43 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.to-top {
+    background-color: #ccc;
+    background-color: rgba(0,0,0,.2);
+  	position: fixed;
+  	bottom: 16px;
+  	right:32px;
+    width: 45px;
+    height: 45px;
+  	border-radius: 50%;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	font-size:32px;
+  	color:#1f1f1f;
+  	text-decoration: none;
+  	opacity:0;
+  	pointer-events: none;
+    text-align: center;
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translateZ(0px);
+    transition: all .2s ease-in-out;
+}
+
+.to-top i {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.to-top.active {
+	bottom:32px;
+	pointer-events: auto;
+	opacity:1;
 }

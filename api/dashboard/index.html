@@ -5,11 +5,11 @@
  * Creation: 06/06/2020
  * Modification: 16/07/2020
  * Version: 1.0.0
- * Description: Dashboard Reserve.
+ * Description: Dashboard Reserve
  *
  * Copyright (c) 2020 Jeferson Luckas
  * Released under the MIT license
- * https://github.com/JefersonLucas/hora-de-respirar/blob/master/LICENSE
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
  *
  * -->
 <!DOCTYPE html>
@@ -19,40 +19,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="Jeferson Lucas">
-	<title>Reserve · Dashboard </title>
-	<!-- ÍCONE -->
-    <link rel="shortcut icon" href="assets/img/logo-white-2.ico" type="image/x-icon">    
-    <!-- BOOTSTRAP CORE CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">	    
-    <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">    
-    <!-- APP --> 
-    <!--<script src="assets/js/app.js"></script>-->
-    <!-- Custom styles for this template -->
-    <link href="assets/css/dashboard.css" rel="stylesheet">
-
+	<title>Dashboard · Reserve</title>
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+    <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 	
 	<!-- NAVBAR -->
 	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold" href="https://jefersonlucas.github.io/reserve/" target="_blank">
-  			<img src="assets/img/logo-white-2.png" class="mr-3" width="25" height="30" alt="Reserve">Reserve
+  			<img src="assets/img/logo.png" class="mr-1" width="30" height="30" alt="Reserve">Reserve
   		</a>
 
   		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    		<span class="navbar-toggler-icon"></span>
+    	   <span class="navbar-toggler-icon"></span>
   		</button>
-		 <span class="text-light mr-5">
-		 	<i id="tempo"></i>
-  			<i id="funcionario"></i>
-        </span>
-  		
-
 	</nav>
 
 	<div class="container-fluid">
-  
+
   		<div class="row">
 
   			<!-- SIDEBAR -->
@@ -240,6 +227,7 @@
                                 <td>ipsum</td>
                                 <td>dolor</td>
                             </tr>
+                            <tr>
 
                         </tbody>
 
@@ -258,9 +246,8 @@
 	<!-- RODAPÉ -->
 	<footer class="footer">
 
-		<p class="align-middle text-center text-muted">&copy; 2018-2020 | <a href="https://github.com/JefersonLucas" target="_blank">Jeferson Lucas</a></p>
-	    <p class="align-middle text-right mr-4"><a href="#" class="text-decoration-none"><i class="fas fa-arrow-up"></i> Back to top</a>
-  
+		<p class="align-middle text-center text-muted">Copyright &copy; 2018-2020 | Jeferson Luckas - <a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">Reserve</a></p>
+        <a href="#" class="to-top"><i class="fas fa-chevron-up"></i></a>
 
 	</footer>
 
@@ -284,7 +271,7 @@
 
                 </div>
                        
-                    <!-- CONTEÚDO -->
+                <!-- CONTEÚDO -->
                 <div class="modal-body" id="modal-conteudo-1"></div>
                     
                 <div class="modal-footer">
@@ -339,7 +326,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/info.js"></script>
+    <script src="assets/js/helpers.js"></script>
     
 </body>
 </html>
