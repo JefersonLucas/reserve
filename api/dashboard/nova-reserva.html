@@ -1,0 +1,402 @@
+ <!--
+ * Jeferson Luckas - reserve
+ *
+ * Author: Jeferson Luckas
+ * Creation: 06/06/2020
+ * Modification: 16/07/2020
+ * Version: 1.0.0
+ * Description: Dashboard Reserve
+ *
+ * Copyright (c) 2020 Jeferson Luckas
+ * Released under the MIT license
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
+ *
+ * -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Jeferson Lucas">
+	<title>Nova reserva · Reserve</title>
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+	
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold" href="https://jefersonlucas.github.io/reserve/" target="_blank">
+  			<img src="assets/img/logo.png" class="mr-1" width="30" height="30" alt="Reserve">Reserve
+  		</a>
+
+  		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    	   <span class="navbar-toggler-icon"></span>
+  		</button>
+	</nav>
+
+	<div class="container-fluid">
+
+  		<div class="row">
+
+  			<!-- SIDEBAR -->
+    		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      		
+      			<div class="sidebar-sticky pt-3">
+        	
+        			<ul class="nav flex-column">
+          				<li class="nav-item">
+            				<a class="nav-link" href="#">
+              					<span data-feather="home"></span>Dashboard
+            				</a>
+          				</li>
+          				
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="user-plus"></span>Nova reserva<span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                      
+          				<li class="nav-item">
+				            <a class="nav-link" href="#">
+				              	<span data-feather="file-text"></span>Reservas
+				              	<span class="badge badge-pill badge-primary">3</span>
+				            </a>
+          				</li>
+
+        			</ul>
+        			
+        			<!-- MENSAGEM -->
+        			<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
+          				<span id="mensagem"></span>
+        			</h6>
+        			
+        			<ul class="nav flex-column mb-2">
+          				
+        				<!-- NOME DO FUNCIONÁRIO -->	
+          				<li class="nav-item">
+            				<a class="nav-link">
+              					<span data-feather="user"></span>              		
+				            	<span id="usuario"></span>
+				            </a>
+          				</li>
+          				
+          				<!-- DATA -->
+          				<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="calendar"></span>
+			            		<span id="calendario"></span>			            		
+			            	</a>
+			          	</li>
+
+			          	<!-- HORA -->
+			          	<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="clock"></span>
+			            		<span id="relogio"></span>
+			            	</a>
+			          	</li>
+
+			          	<!-- INFO -->
+			          	<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="info"></span>
+			            		<span onclick="infoApp()">info</span>
+			            	</a>
+			          	</li>
+
+			          	<!-- CONFIG -->
+			          	<li class="nav-item">
+			            	<a class="nav-link">
+			            		<i class="fa fa-cog"></i>			            		
+			            		<span>Configuração</span>
+			            	</a>
+			          	
+			          	</li>
+
+        			</ul>
+
+           		</div>
+
+    		</nav>
+
+    		<!-- CONTEÚDO PRINCIPAL -->
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+	      		
+	      		<!-- TÍTULO -->
+	      		<div class="d-flex justify-content-between pt-3 pb-2 mb-3 border-bottom">					   
+	        		<h2><span class="fa fa-user-plus"></span> Nova reserva</h2>                    
+	      		</div>
+
+	      		<div class="row col-12 mb-2 mt-4">
+                                        
+                    <!-- FORMULÁRIO COM VALIDAÇÃO -->
+                    <form class="needs-validation" novalidate>
+                            
+                            <!-- DIV DO FORMULÁRIO -->
+                            <div class="form-row">
+
+                                <!-- PROFESSOR -->
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-user" title="Usuário"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" title="Nome do suário" class="form-control" placeholder="Ex.: José" id="professor" required>
+                                </div>                    
+                                
+                                <!-- EQUIPAMENTO -->                        
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-desktop" title="Equipamento"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" title="Nome do equipamento" class="form-control" placeholder="Ex.: Data Show S27" id="equipamento" required>
+                                </div>
+
+                                <!-- SALA -->                        
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-compass" title="Local"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" title="Nome da sala" class="form-control" placeholder="Ex.: Anatomia I" id="sala" required>
+                                </div>
+
+                                <!-- INÍCIO DA AULA -->                        
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-clock" title="Horário Inicial"></i>
+                                        </div>
+                                    </div>
+                                    <input type="time" title="Horário inicial" class="form-control" placeholder="00:00" id="horaA" required>
+                                </div>
+
+                                <!-- TÉRMINO DA AULA -->                        
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-clock" title="Horário Final"></i>
+                                        </div>
+                                    </div>
+                                    <input type="time" title="Horário final" class="form-control" placeholder="00:00" id="horaB" required>
+                                </div>
+
+                                <!-- DATA -->                        
+                                <div class="input-group col-md-4 mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-dark text-white">
+                                            <i class="fas fa-calendar-alt" title="Data"></i>
+                                        </div>
+                                    </div>
+                                    <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" id="dataA" required>
+                                </div>                    
+
+                                <div class="input-group justify-content-center col-sm-12 col-md-12 mb-2">
+                                    <!-- BOTÃO CADASTRAR RESERVA -->
+                                    <button type="submit" title="Cadastrar" class="btn btn-outline-primary mx-1" onclick="cadastrarReservaProfessor()">
+                                        <i class="fas fa-save"></i> Cadastrar
+                                    </button>
+                                    <!-- BOTÃO PESQUISAR -->
+                                    <button type="submit" title="Pesquisar" class="btn btn-outline-primary mx-1" onclick="pesquisarReservaProfessor()">
+                                        <i class="fa fa-search" aria-hidden="true"></i> Pesquisar
+                                    </button>                     
+                                    <!-- BOTÃO IMPRIMIR -->
+                                    <button id="botao" title="Imprimir" class="btn btn-outline-primary mx-1" onclick="imprimir()">
+                                        <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+                                    </button>
+                                    <!-- BOTÃO ATUALIZAR -->
+                                    <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary mx-1" onclick="atualizar()">
+                                        <i class="fas fa-redo-alt"></i> Atualizar
+                                    </button>
+                                </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 pb-2 mb-3 border-bottom">                      
+                    <h2><span class="fas fa-file-alt"></span> Lista de reservas</h2>                    
+                </div>
+
+                <div class="table-responsive mt-4 border-bottom">
+                    
+                    <table class="table table-striped table-sm">
+                        
+                       <thead>
+                            <tr class="text-center bg-dark">
+                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i>&nbsp;Usuário</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
+                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="text-center">
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,002</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,004</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,005</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,006</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,007</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,008</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,009</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,010</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            	
+	    	</main>
+
+		</div>
+
+	</div>
+
+	<!-- RODAPÉ -->
+	<footer class="footer my-3">
+
+		<p class="align-middle text-center text-muted">Copyright &copy; 2018-2020 | Jeferson Luckas - <a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">Reserve</a></p>
+        <a href="#" class="to-top"><i class="fas fa-chevron-up"></i></a>
+
+	</footer>
+
+    <!-- MODAL TIPO 1 -->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+        <!-- DOCUMENTO -->
+        <div class="modal-dialog" role="document" id="modal-documento-1">
+                
+            <div class="modal-content">
+                        
+                <!-- CABEÇALHO -->
+                <div id="modal-cabecalho-1">
+
+                    <!-- TÍTULO -->
+                    <h5 class="modal-title" id="modal-titulo-1"></h5>
+                    <!-- BOTÃO FECHAR MODAL -->
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                       
+                <!-- CONTEÚDO -->
+                <div class="modal-body" id="modal-conteudo-1"></div>
+                    
+                <div class="modal-footer">
+                    <!-- BOTÃO -->
+                    <button type="button" data-dismiss="modal" id="modal-botao-1" onclick="atualizar()"></button>
+                </div>
+
+            </div>
+
+        </div>
+            
+    </div> <!-- FIM MODAL TIPO 1 --> 
+
+    <!-- MODAL TIPO 2 -->
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+        <!-- DOCUMENTO -->
+        <div class="modal-dialog" role="document" id="modal-documento-2">
+                
+            <div class="modal-content">
+                        
+                <!-- CABEÇALHO -->
+                <div id="modal-cabecalho-2">
+
+                    <!-- TÍTULO -->
+                    <h5 class="modal-title" id="modal-titulo-2"></h5>
+                    <!-- BOTÃO FECHAR MODAL -->
+                    <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                        
+                <!-- CONTEÚDO -->
+                <div class="modal-body" id="modal-conteudo-2"></div>
+                    
+                <div class="modal-footer">
+                    <!-- BOTÃO -->
+                    <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
+                </div>
+           
+            </div>
+
+        </div>
+            
+    </div> <!-- FIM MODAL TIPO 2 -->
+    
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/jquery/jquery.slim.min.js"><\/script>')</script>
+    <script src="assets/js/bootstrap.bundle.min.js"d></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/helpers.js"></script>
+    
+</body>
+</html>
