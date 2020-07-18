@@ -1,0 +1,245 @@
+ <!--
+ * Jeferson Luckas - reserve
+ *
+ * Author: Jeferson Luckas
+ * Creation: 06/06/2020
+ * Modification: 16/07/2020
+ * Version: 1.0.0
+ * Description: Dashboard Reserve
+ *
+ * Copyright (c) 2020 Jeferson Luckas
+ * Released under the MIT license
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
+ *
+ * -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Jeferson Lucas">
+	<title>Dashboard · Reserve</title>
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+	
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold" href="https://jefersonlucas.github.io/reserve/" target="_blank">
+			<img src="assets/img/logo-quadrado.png" class="mr-1" width="30" height="30" alt="Reserve">
+            <span>Reserve</span>
+  		</a>
+
+  		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    	   <span class="navbar-toggler-icon"></span>
+  		</button>
+	</nav>
+
+	<div class="container-fluid">
+
+  		<div class="row">
+
+  			<!-- SIDEBAR -->
+    		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      		
+      			<div class="sidebar-sticky pt-3">
+        	
+        			<ul class="nav flex-column">
+          				<li class="nav-item">
+            				<a class="nav-link active" href="#">
+              					<span data-feather="home"></span>Dashboard<span class="sr-only">(current)</span>
+            				</a>
+          				</li>
+          				
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>Reservas
+                                <span class="badge badge-pill badge-primary">3</span>
+                            </a>
+                        </li>
+                      
+          				<li class="nav-item">
+				            <a class="nav-link" href="#">
+				              	<span data-feather="user"></span>Perfil
+				            </a>
+          				</li>
+
+        			</ul>
+        			
+        			<!-- MENSAGEM -->
+        			<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
+          				<span id="mensagem"></span>
+        			</h6>
+        			
+        			<ul class="nav flex-column mb-2">
+          				
+        				<!-- NOME DO FUNCIONÁRIO -->	
+          				<li class="nav-item">
+            				<a class="nav-link">
+              					<span data-feather="user"></span>              		
+				            	<span id="usuario"></span>
+				            </a>
+          				</li>
+          				
+          				<!-- DATA -->
+          				<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="calendar"></span>
+			            		<span id="calendario"></span>			            		
+			            	</a>
+			          	</li>
+
+			          	<!-- HORA -->
+			          	<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="clock"></span>
+			            		<span id="relogio"></span>
+			            	</a>
+			          	</li>
+
+			          	<!-- INFO -->
+			          	<li class="nav-item">
+			            	<a class="nav-link">
+			              		<span data-feather="info"></span>
+			            		<span id="info">info</span>
+			            	</a>
+			          	</li>
+
+        			</ul>
+
+           		</div>
+
+    		</nav>
+
+    		<!-- CONTEÚDO PRINCIPAL -->
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+	      		
+	      		<!-- TÍTULO -->
+	      		<div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">					   
+	        		<h1><span class="fa fa-home"></span> Dashboard</h1>
+	      		</div>
+
+	      		<!-- GRÁFICO -->
+                <h2><i class="fas fa-chart-line"></i> Reservas Semanais</h2>
+                <canvas class="my-4 w-100" id="myChart" width="900" height="280"></canvas>
+                
+                <h2><span class="fas fa-fifas fa-table"></span> Reservas do dia</h2>
+                
+                <div class="table-responsive">
+                    
+                    <table class="table table-striped table-sm shadow">
+                        
+                       <thead>
+                            <tr class="text-center bg-dark">
+                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i> Usuário</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i> Equipamento</th>
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i> Local</th>
+                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i> Status</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="text-center">
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,002</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,004</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,005</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,006</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,007</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,008</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,009</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,010</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            	
+	    	</main>
+
+		</div>
+
+	</div>
+	
+	<hr>
+
+	<!-- RODAPÉ -->
+    <footer class="footer my-3 text-center text-small">
+
+        <p class="align-middle text-center text-muted">&copy; 2018-2020 Jeferson Luckas</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">License</a></li>
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li> 
+        </ul>
+        <a href="#" class="to-top"><i class="fas fa-chevron-up"></i></a>
+
+    </footer>
+
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/jquery/jquery.slim.min.js"><\/script>')</script>
+    <script src="assets/js/bootstrap.bundle.min.js"d></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="assets/js/chart.js"></script>
+    <script src="assets/js/helpers.js"></script>
+    
+</body>
+</html>
