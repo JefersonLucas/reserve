@@ -1,7 +1,7 @@
 <h1 align="center">Reserve</h1>
 
 <p align="center">
-  <img src="assets/img/logo-black.png" width="200">
+  <img src="assets/img/logo.png" width="200">
 </p>
     <p align="center"><em>Tenha sempre o controle fácil, rápido e seguro das suas reservas.</em></p>    
     <p align="center">
