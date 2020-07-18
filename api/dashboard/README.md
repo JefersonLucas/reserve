@@ -1,20 +1,22 @@
-![JefersonLuckas](https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue)
-![GitHub language count](https://img.shields.io/github/languages/count/JefersonLucas/reserve)
-![GitHub top language](https://img.shields.io/github/languages/top/JefersonLucas/reserve)
-![GitHub repo size](https://img.shields.io/github/repo-size/JefersonLucas/reserve)
-![GitHub](https://img.shields.io/github/license/JefersonLucas/reserve)
-![GitHub contributors](https://img.shields.io/github/contributors/JefersonLucas/reserve)
-![GitHub stars](https://img.shields.io/github/stars/JefersonLucas/reserve?style=social)
-![GitHub forks](https://img.shields.io/github/forks/JefersonLucas/reserve?style=social)
-
 <h1 align="center">Reserve</h1>
 
 <p align="center">
   <img src="assets/img/logo-black.png" width="200">
 </p>
-    <p align="center"><em>Tenha sempre o controle fácil, rápido e seguro das suas reservas.</em></p>
+    <p align="center"><em>Tenha sempre o controle fácil, rápido e seguro das suas reservas.</em></p>    
+    <p align="center">
+        <img src="https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue" alt="Project">
+        <img src="https://img.shields.io/github/languages/count/JefersonLucas/reserve" alt="language count">
+        <img src="https://img.shields.io/github/license/JefersonLucas/reserve" alt="License">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="contributors">
+        <img src="https://img.shields.io/github/stars/JefersonLucas/reserve?style=social" alt="stars">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="forks">
+  	</p>
 </p>
-
+<p align="center">
+	<img src="assets/img/capture-01.png" alt="Dashboard">
+	<img src="assets/img/capture-02.png" alt="Reservas">
+</p>
 
 ## Traduções
 

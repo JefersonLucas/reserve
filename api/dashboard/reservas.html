@@ -19,7 +19,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="Jeferson Lucas">
-	<title>Nova reserva · Reserve</title>
+	<title>Reservas · Reserve</title>
     <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
@@ -30,7 +30,8 @@
 	<!-- NAVBAR -->
 	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold" href="https://jefersonlucas.github.io/reserve/" target="_blank">
-  			<img src="assets/img/logo.png" class="mr-1" width="30" height="30" alt="Reserve">Reserve
+  			<img src="assets/img/logo.png" class="mr-1" width="30" height="30" alt="Reserve">
+            <span>Reserve</span>
   		</a>
 
   		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,16 +57,16 @@
           				
                         <li class="nav-item">
                             <a class="nav-link active" href="#">
-                                <span data-feather="user-plus"></span>Nova reserva<span class="sr-only">(current)</span>
+                                <span data-feather="file-text"></span>Reservas<span class="sr-only">(current)</span>
+                                <span class="badge badge-pill badge-primary">3</span>
                             </a>
                         </li>
                       
-          				<li class="nav-item">
-				            <a class="nav-link" href="#">
-				              	<span data-feather="file-text"></span>Reservas
-				              	<span class="badge badge-pill badge-primary">3</span>
-				            </a>
-          				</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="user"></span>Perfil
+                            </a>
+                        </li>
 
         			</ul>
         			
@@ -104,17 +105,8 @@
 			          	<li class="nav-item">
 			            	<a class="nav-link">
 			              		<span data-feather="info"></span>
-			            		<span onclick="infoApp()">info</span>
+			            		<span id="info">info</span>
 			            	</a>
-			          	</li>
-
-			          	<!-- CONFIG -->
-			          	<li class="nav-item">
-			            	<a class="nav-link">
-			            		<i class="fa fa-cog"></i>			            		
-			            		<span>Configuração</span>
-			            	</a>
-			          	
 			          	</li>
 
         			</ul>
@@ -127,16 +119,38 @@
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 	      		
 	      		<!-- TÍTULO -->
-	      		<div class="d-flex justify-content-between pt-3 pb-2 mb-3 border-bottom">					   
-	        		<h2><span class="fa fa-user-plus"></span> Nova reserva</h2>                    
+	      		<div class="d-flex justify-content-center pt-3 pb-2 mb-3 border-bottom">					   
+	        		<h1><span class="fas fa-file-alt"></span> Reservas</h1>                    
 	      		</div>
+                
+	      		
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
+                    <h2><span class="fa fa-file-medical"></span> Cadastrar</h2>  
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <!-- BOTÃO ALARME -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-bell"></i> Alarme</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuReference">
+                                    <h6 class="dropdown-header">Alarme Ativado</h6>                             
+                                    <a class="dropdown-item active" href="#"><i class="fas fa-bell"></i> Ativado</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-bell-slash"></i> Desativado</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-	      		<div class="row col-12 mb-2 mt-4">
-                                        
+
+                <div class="row col-12 my-2">
+
                     <!-- FORMULÁRIO COM VALIDAÇÃO -->
                     <form class="needs-validation" novalidate>
                             
-                            <!-- DIV DO FORMULÁRIO -->
+                            <!-- FORMULÁRIO -->
                             <div class="form-row">
 
                                 <!-- PROFESSOR -->
@@ -146,7 +160,7 @@
                                             <i class="fas fa-user" title="Usuário"></i>
                                         </div>
                                     </div>
-                                    <input type="text" title="Nome do suário" class="form-control" placeholder="Ex.: José" id="professor" required>
+                                    <input class="form-control" id="professor" placeholder="Ex.: José" title="Nome do suário" type="text" required>
                                 </div>                    
                                 
                                 <!-- EQUIPAMENTO -->                        
@@ -156,7 +170,7 @@
                                             <i class="fas fa-desktop" title="Equipamento"></i>
                                         </div>
                                     </div>
-                                    <input type="text" title="Nome do equipamento" class="form-control" placeholder="Ex.: Data Show S27" id="equipamento" required>
+                                    <input class="form-control" id="equipamento" placeholder="Ex.: Data Show S27" title="Nome do equipamento" type="text" required>
                                 </div>
 
                                 <!-- SALA -->                        
@@ -166,7 +180,7 @@
                                             <i class="fas fa-compass" title="Local"></i>
                                         </div>
                                     </div>
-                                    <input type="text" title="Nome da sala" class="form-control" placeholder="Ex.: Anatomia I" id="sala" required>
+                                    <input class="form-control" id="sala" placeholder="Ex.: Anatomia I" title="Nome da sala" type="text" required>
                                 </div>
 
                                 <!-- INÍCIO DA AULA -->                        
@@ -176,7 +190,7 @@
                                             <i class="fas fa-clock" title="Horário Inicial"></i>
                                         </div>
                                     </div>
-                                    <input type="time" title="Horário inicial" class="form-control" placeholder="00:00" id="horaA" required>
+                                    <input class="form-control" id="horaA" placeholder="00:00" title="Horário inicial" type="time" required>
                                 </div>
 
                                 <!-- TÉRMINO DA AULA -->                        
@@ -186,7 +200,7 @@
                                             <i class="fas fa-clock" title="Horário Final"></i>
                                         </div>
                                     </div>
-                                    <input type="time" title="Horário final" class="form-control" placeholder="00:00" id="horaB" required>
+                                    <input class="form-control" id="horaB" placeholder="00:00" title="Horário final" type="time" required>
                                 </div>
 
                                 <!-- DATA -->                        
@@ -196,35 +210,39 @@
                                             <i class="fas fa-calendar-alt" title="Data"></i>
                                         </div>
                                     </div>
-                                    <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" id="dataA" required>
+                                    <input class="form-control" id="dataA" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" title="Data" type="date" required>
                                 </div>                    
 
                                 <div class="input-group justify-content-center col-sm-12 col-md-12 mb-2">
                                     <!-- BOTÃO CADASTRAR RESERVA -->
-                                    <button type="submit" title="Cadastrar" class="btn btn-outline-primary mx-1" onclick="cadastrarReservaProfessor()">
+                                    <button class="btn btn-outline-primary mx-1" id="cadastrar" title="Cadastrar" type="submit">
                                         <i class="fas fa-save"></i> Cadastrar
                                     </button>
                                     <!-- BOTÃO PESQUISAR -->
-                                    <button type="submit" title="Pesquisar" class="btn btn-outline-primary mx-1" onclick="pesquisarReservaProfessor()">
-                                        <i class="fa fa-search" aria-hidden="true"></i> Pesquisar
-                                    </button>                     
-                                    <!-- BOTÃO IMPRIMIR -->
-                                    <button id="botao" title="Imprimir" class="btn btn-outline-primary mx-1" onclick="imprimir()">
-                                        <i class="fa fa-print" aria-hidden="true"></i> Imprimir
-                                    </button>
-                                    <!-- BOTÃO ATUALIZAR -->
-                                    <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary mx-1" onclick="atualizar()">
-                                        <i class="fas fa-redo-alt"></i> Atualizar
+                                    <button class="btn btn-outline-primary mx-1" id="pesquisar" title="Pesquisar" type="submit">
+                                        <i class="fa fa-search"></i> Pesquisar
                                     </button>
                                 </div>
                         </div>
                     </form>
 
                 </div>
-
-                <div class="d-flex justify-content-between pt-3 pb-2 mb-3 border-bottom">                      
-                    <h2><span class="fas fa-file-alt"></span> Lista de reservas</h2>                    
-                </div>
+                   
+               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-2">
+                    <h2><span class="fas fa-fifas fa-table"></span> Reservas</h2>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">       
+                            <!-- BOTÃO IMPRIMIR -->
+                            <button class="btn btn-secondary" id="imprimir" title="Imprimir" type="button">
+                                <i class="fa fa-print"></i>
+                            </button>
+                            <!-- BOTÃO ATUALIZAR -->
+                            <button class="btn btn-secondary" id="atualizar" title="Atualizar" type="button">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>                                   
 
                 <div class="table-responsive mt-4 border-bottom">
                     
@@ -232,10 +250,11 @@
                         
                        <thead>
                             <tr class="text-center bg-dark">
-                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i>&nbsp;Usuário</th>
-                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
-                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
+                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i> Usuário</th>
+                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i> Equipamento</th>
+                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i> Local</th>
+                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i> Status</th>
+                                <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i> Opções</th>
                             </tr>
                         </thead>
                         
@@ -245,60 +264,70 @@
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,002</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,003</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,004</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,005</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,006</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,007</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,008</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,009</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
                                 <td>1,010</td>
                                 <td>Lorem</td>
                                 <td>ipsum</td>
                                 <td>dolor</td>
+                                <td>sit</td>
                             </tr>
                             <tr>
 
@@ -315,9 +344,14 @@
 	</div>
 
 	<!-- RODAPÉ -->
-	<footer class="footer my-3">
+	<footer class="footer my-3 text-center text-small">
 
-		<p class="align-middle text-center text-muted">Copyright &copy; 2018-2020 | Jeferson Luckas - <a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">Reserve</a></p>
+		<p class="align-middle text-center text-muted">&copy; 2018-2020 Jeferson Luckas</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">License</a></li>
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li> 
+        </ul>
         <a href="#" class="to-top"><i class="fas fa-chevron-up"></i></a>
 
 	</footer>
@@ -393,9 +427,8 @@
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script>window.jQuery || document.write('<script src="assets/jquery/jquery.slim.min.js"><\/script>')</script>
-    <script src="assets/js/bootstrap.bundle.min.js"d></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-    <script src="assets/js/dashboard.js"></script>
     <script src="assets/js/helpers.js"></script>
     
 </body>

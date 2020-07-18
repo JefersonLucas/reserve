@@ -13,6 +13,8 @@
  *
  */
 
+// Botão para subir a página
+
 const toTop = document.querySelector(".to-top");
 
 window.addEventListener("scroll", () => {
@@ -24,7 +26,36 @@ window.addEventListener("scroll", () => {
   	}
 })
 
+// Botões: Atualizar e Imprimir a Página
+
+let atualizar = document.getElementById("atualizar")
+let imprimir = document.getElementById("imprimir")
+
+// Atualizar
+try {
+	atualizar.onclick = () => window.location.reload();
+}
+catch(atualizar) {
+ 	tratarErro(atualizar);
+}
+
+// Imprimir
+
+try {
+	imprimir.onclick = () =>  window.print();
+}
+catch(imprimir) {
+ 	tratarErro(imprimir);
+}
+
+function tratarErro(erro) {
+	return false;
+}
+
+// Data, Hora e Mensagem
+
 setInterval(()=>{
+
 	let data 		= new Date();
 	let horas 		= data.getHours();
 	let minutos 	= data.getMinutes();
@@ -53,3 +84,7 @@ setInterval(()=>{
 	document.getElementById("relogio").innerHTML = relogio;
 	document.getElementById("mensagem").innerHTML = mensagem;
 })
+
+// Feather
+
+feather.replace()
