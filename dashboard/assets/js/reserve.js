@@ -13,6 +13,30 @@
  *
  */
 
+class Reserva {
+	constructor(usuario, equipamento, local, horaInicial, horaFinal, data) {
+		this.usuario 		= usuario;
+		this.equipamento 	= equipamento;
+		this.local 			= local;
+		this.horaInicial 	= horaInicial;
+		this.horaFinal 		= horaFinal;
+		this.data 			= data;
+	}
+}
+
+let cadastrar = document.getElementById("cadastrar");
+
+cadastrar.onclick = () => {
+	let usuario 	= document.getElementById("usuario");
+	let equipamento = document.getElementById("equipamento");
+	let local 		= document.getElementById("local");
+	let horaInicial = document.getElementById("hora-inicial");
+	let horaFinal 	= document.getElementById("hora-final");
+	let data 		= document.getElementById("data");
+
+	console.log(usuario.value, equipamento.value, local.value, horaInicial.value, horaFinal.value,data.value)
+}
+
 // Botões: Atualizar, Imprimir e Alarme da Página
 
 let atualizar = document.getElementById("atualizar");
@@ -25,14 +49,14 @@ imprimir.onclick = () =>  window.print();
 
 alarmeAtivado.onclick = () => {
 	document.getElementById("alarme-info").innerHTML = "Alarme ativado";
-	document.getElementById("alarme-icone").className = "fas fa-bell";
+	document.getElementById("alarme-icone").className = "fas fa-bell fa-md";
 	document.getElementById("alarme-ativado").className = "dropdown-item active";
 	document.getElementById("alarme-desativado").className = "dropdown-item";
 }
 
 alarmeDesativado.onclick = () => {
 	document.getElementById("alarme-info").innerHTML = "Alarme desativado";
-	document.getElementById("alarme-icone").className = "fas fa-bell-slash";
+	document.getElementById("alarme-icone").className = "fas fa-bell-slash fa-md";
 	document.getElementById("alarme-ativado").className = "dropdown-item";
 	document.getElementById("alarme-desativado").className = "dropdown-item active";
 }

@@ -16,11 +16,11 @@
 // Links
 
 const DASHBOARD_PAGE = document.getElementById("dashboard-page");
-const RESERVAS_PAGE = document.getElementById("reservas-page");
+const RESERVAS_PAGE = document.getElementById("reserva-page");
 const PERFIL_PAGE = document.getElementById("perfil-page");
 
 DASHBOARD_PAGE.onclick = () => window.location.href = "index.html";
-RESERVAS_PAGE.onclick = () => window.location.href = "reservas.html";
+RESERVAS_PAGE.onclick = () => window.location.href = "reserva.html";
 PERFIL_PAGE.onclick = () => window.location.href = "perfil.html";
 
 
@@ -65,7 +65,7 @@ setInterval(()=>{
 	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "  : mensagem;	
 	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! " : mensagem;
 
-	document.getElementById("usuario").innerHTML = "Jeferson Luckas";
+	document.getElementById("administrador").innerHTML = "Jeferson Luckas";
 	document.getElementById("calendario").innerHTML = calendario;
 	document.getElementById("relogio").innerHTML = relogio;
 	document.getElementById("mensagem").innerHTML = mensagem;
