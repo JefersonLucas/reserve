@@ -48,6 +48,7 @@ atualizar.onclick = () => window.location.reload();
 imprimir.onclick = () =>  window.print();
 
 alarmeAtivado.onclick = () => {
+	$('#toast').toast('show');
 	document.getElementById("alarme-info").innerHTML = "Alarme ativado";
 	document.getElementById("alarme-icone").className = "fas fa-bell fa-md";
 	document.getElementById("alarme-ativado").className = "dropdown-item active";
@@ -55,6 +56,7 @@ alarmeAtivado.onclick = () => {
 }
 
 alarmeDesativado.onclick = () => {
+	$('#toast').toast('hide');
 	document.getElementById("alarme-info").innerHTML = "Alarme desativado";
 	document.getElementById("alarme-icone").className = "fas fa-bell-slash fa-md";
 	document.getElementById("alarme-ativado").className = "dropdown-item";

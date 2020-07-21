@@ -23,7 +23,7 @@
 	<link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
-	<link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">	
 </head>
 <body>
 	
@@ -37,6 +37,7 @@
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 		   <span class="navbar-toggler-icon"></span>
 		</button>
+	<!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar..." aria-label="Search" disabled> -->	
 	</nav>
 
 	<div class="container-fluid">
@@ -112,7 +113,21 @@
 				<div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">				   
 					<h1><span class="fa fa-user"></span> Perfil</h1>
 				</div>
-
+				
+				<!-- ALERTA -->
+				<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" id="toast">
+					<div class="toast-header">										
+						<strong class="mr-auto"><i class="fas fa-bell fa-md"></i> Alerta</strong>
+						<small>11 mins ago</small>
+						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body">
+						Hello, world! This is a toast message.
+					</div>
+				</div>
+				
 				<!-- GRÁFICO -->
 				<h2 class="mb-4"><i class="fas fa-user-cog"></i> Configurações</h2>
 				
@@ -121,13 +136,13 @@
 				  	<div class="form-row">
 						
 						<div class="col-md-6 mb-3">
-					  		<label for="validationServer01">Primeiro nome</label>
+					  		<label for="validationServer01"><i class="fas fa-signature"></i> Primeiro nome</label>
 					  		<input type="text" class="form-control is-valid" id="validationServer01" value="Jeferson" required>
 					  		<div class="valid-feedback">Parece bom!</div>
 						</div>
 						
 						<div class="col-md-6 mb-3">
-					  		<label for="validationServer02">Sobrenome</label>
+					  		<label for="validationServer02"><i class="fas fa-signature"></i> Sobrenome</label>
 					  		<input type="text" class="form-control is-valid" id="validationServer02" value="Luckas" required>
 					  		<div class="valid-feedback">Parece bom!</div>
 						</div>
@@ -137,7 +152,7 @@
 				  	<div class="form-row">
 					
 						<div class="col-md-4 mb-3">
-					  		<label for="validationServer04">Cor primária</label>
+					  		<label for="validationServer04"><i class="fas fa-palette"></i>  Cor primária</label>
 					  		<select class="custom-select is-invalid" id="validationServer04" disabled required>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
@@ -146,7 +161,7 @@
 						</div>
 					
 						<div class="col-md-4 mb-3">
-					  		<label for="validationServer04">Cor secundária</label>
+					  		<label for="validationServer04"><i class="fas fa-palette"></i> Cor secundária</label>
 					  		<select class="custom-select is-invalid" id="validationServer04" disabled required>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
@@ -155,7 +170,7 @@
 						</div>
 						
 						<div class="col-md-4 mb-3">
-					  		<label for="validationServer04">Botões</label>
+					  		<label for="validationServer04"><i class="fas fa-tint"></i> Botões</label>
 					  		<select class="custom-select is-invalid" id="validationServer04" disabled required>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
