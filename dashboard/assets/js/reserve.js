@@ -13,6 +13,8 @@
  *
  */
 
+// Classes
+
 class Reserva {
 	constructor(usuario, equipamento, local, horaInicial, horaFinal, data) {
 		this.usuario 		= usuario;
@@ -22,11 +24,21 @@ class Reserva {
 		this.horaFinal 		= horaFinal;
 		this.data 			= data;
 	}
+	validarReserva() {
+		for (let r in this){
+			if(this[r] === "" || this[r] === null || this[r] === undefined){
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
-let cadastrar = document.getElementById("cadastrar");
+// Cadastrar
 
-cadastrar.onclick = () => {
+let cadastrar_usuario = document.getElementById("cadastrar-usuario");
+
+cadastrar_usuario.onclick = () => {
 	let usuario 	= document.getElementById("usuario");
 	let equipamento = document.getElementById("equipamento");
 	let local 		= document.getElementById("local");
@@ -34,20 +46,27 @@ cadastrar.onclick = () => {
 	let horaFinal 	= document.getElementById("hora-final");
 	let data 		= document.getElementById("data");
 
-	console.log(usuario.value, equipamento.value, local.value, horaInicial.value, horaFinal.value,data.value)
+	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),horaInicial.value,horaFinal.value,data.value)
+
+	if(reserva.validarReserva()) {
+		console.log("Sucesso!");
+	}
+	else {
+		console.log("Erro!");
+	}
 }
 
-// Botões: Atualizar, Imprimir e Alarme da Página
+// Botões
 
-let atualizar = document.getElementById("atualizar");
-let imprimir = document.getElementById("imprimir");
-let alarmeAtivado = document.getElementById("alarme-ativado");
-let alarmeDesativado = document.getElementById("alarme-desativado");
+let atualizar 			= document.getElementById("atualizar");
+let imprimir 			= document.getElementById("imprimir");
+let alarme_ativado 		= document.getElementById("alarme-ativado");
+let alarme_desativado 	= document.getElementById("alarme-desativado");
 
-atualizar.onclick = () => window.location.reload();
-imprimir.onclick = () =>  window.print();
+atualizar.onclick 	= () => window.location.reload();
+imprimir.onclick 	= () =>  window.print();
 
-alarmeAtivado.onclick = () => {
+alarme_ativado.onclick = () => {
 	$('#toast').toast('show');
 	document.getElementById("alarme-info").innerHTML = "Alarme ativado";
 	document.getElementById("alarme-icone").className = "fas fa-bell fa-md";
@@ -55,7 +74,7 @@ alarmeAtivado.onclick = () => {
 	document.getElementById("alarme-desativado").className = "dropdown-item";
 }
 
-alarmeDesativado.onclick = () => {
+alarme_desativado.onclick = () => {
 	$('#toast').toast('hide');
 	document.getElementById("alarme-info").innerHTML = "Alarme desativado";
 	document.getElementById("alarme-icone").className = "fas fa-bell-slash fa-md";
