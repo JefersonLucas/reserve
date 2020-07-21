@@ -49,7 +49,9 @@ setInterval(()=>{
 	let ano 		= data.getFullYear();
 	let mes 		= data.getMonth() + 1;
 	let dia 		= data.getDate();
+	let semana 		= data.getDay();
 	let mensagem 	= null;
+	let icone 		= document.getElementById("icone");
 
 	mes = mes < 10 ? mes = `0${mes}` : mes;
 	dia = dia < 10 ? dia = `0${dia}` : dia;
@@ -58,17 +60,44 @@ setInterval(()=>{
 	minutos  = minutos 	< 10 ? minutos 	= `0${minutos}` : minutos;
 	segundos = segundos < 10 ? segundos = `0${segundos}`: segundos;
 	
+	switch(semana) {
+		case 0:
+			semana = "Domingo";
+			break
+		case 1:
+			semana = "Segunda-feira";
+			break
+		case 2: 
+			semana = "Terça-feira";
+			break
+		case 3:
+			semana = "Quarta-feira";
+			break
+		case 4:
+			semana = "Quinta-feira";
+			break
+		case 5:
+			semana = "Sexta-feira";
+			break
+		case 6:
+			semana = "Sábado";
+			break
+	}
+	
 	let relogio = `${horas}:${minutos}:${segundos}`;
 	let calendario = `${dia}/${mes}/${ano}`;
 
-	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "<i class='fas fa-sun'></i> Bom dia! "    : mensagem; 
-	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "<i class='fas fa-sun'></i> Boa tarde! "  : mensagem;	
-	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "<i class='fas fa-moon'></i> Boa noite! " : mensagem;
+	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "<i class='fas fa-sun fa-lg'></i> Bom dia!"    : mensagem; 
+	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "<i class='fas fa-sun fa-lg'></i> Boa tarde!"  : mensagem;	
+	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "<i class='fas fa-moon fa-lg'></i> Boa noite!" : mensagem;
 
 	document.getElementById("administrador").innerHTML = "Jeferson Luckas";
 	document.getElementById("calendario").innerHTML = calendario;
 	document.getElementById("relogio").innerHTML = relogio;
 	document.getElementById("mensagem").innerHTML = mensagem;
+	document.getElementById("semana").innerHTML = semana;
+
+
 })
 
 // Feather

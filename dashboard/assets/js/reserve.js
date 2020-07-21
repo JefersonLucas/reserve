@@ -16,12 +16,12 @@
 // Classes
 
 class Reserva {
-	constructor(usuario, equipamento, local, horaInicial, horaFinal, data) {
+	constructor(usuario, equipamento, local, hora_inicial, hora_final, data) {
 		this.usuario 		= usuario;
 		this.equipamento 	= equipamento;
 		this.local 			= local;
-		this.horaInicial 	= horaInicial;
-		this.horaFinal 		= horaFinal;
+		this.hora_inicial 	= hora_inicial;
+		this.hora_final 		= hora_final;
 		this.data 			= data;
 	}
 	validarReserva() {
@@ -39,22 +39,109 @@ class Reserva {
 let cadastrar_usuario = document.getElementById("cadastrar-usuario");
 
 cadastrar_usuario.onclick = () => {
-	let usuario 	= document.getElementById("usuario");
-	let equipamento = document.getElementById("equipamento");
-	let local 		= document.getElementById("local");
-	let horaInicial = document.getElementById("hora-inicial");
-	let horaFinal 	= document.getElementById("hora-final");
-	let data 		= document.getElementById("data");
+	let usuario 		= document.getElementById("usuario");
+	let equipamento 	= document.getElementById("equipamento");
+	let local 			= document.getElementById("local");
+	let hora_inicial 	= document.getElementById("hora-inicial");
+	let hora_final 		= document.getElementById("hora-final");
+	let data 			= document.getElementById("data");
 
-	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),horaInicial.value,horaFinal.value,data.value)
+	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),hora_inicial.value,hora_final.value,data.value)
 
 	if(reserva.validarReserva()) {
-		console.log("Sucesso!");
+		modalCadastarSucesso(reserva.usuario, tabelaReserva("success", reserva.equipamento, reserva.local, reserva.data, reserva.hora_inicial, reserva.hora_final));
+		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
 	}
 	else {
-		console.log("Erro!");
+		modalCadastrarErro();
 	}
 }
+
+// Validação 
+
+(() => {
+	"use strict";
+	window.addEventListener("load", () => {
+		let formulario = document.getElementsByClassName("needs-validation");
+			let validacao = Array.prototype.filter.call(formulario, (form) => {
+				form.addEventListener("submit", (evento) => {
+
+				if (form.checkValidity() === false) {
+					evento.preventDefault();
+					evento.stopPropagation();
+				}
+				form.classList.add("was-validated");
+			}, false);
+		});
+	}, false);
+})();
+
+// Modal
+
+let modalCadastarSucesso = (nome, tabela) => {
+	$('#modal-01').modal('show');
+	document.getElementById('modal-titulo-01').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
+	document.getElementById('modal-documento-01').className		= 'modal-dialog border border-success rounded alert-success';
+	document.getElementById('modal-cabecalho-01').className  	= 'modal-header text-white bg-success';
+	document.getElementById('modal-conteudo-01').innerHTML 		= `A reserva do(a) <span class="text-success"><b>${nome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	document.getElementById('modal-botao-01').innerHTML 		= 'Voltar';
+	document.getElementById('modal-botao-01').className 		= 'btn btn-outline-success';
+}
+let modalCadastrarErro = () => {
+	$('#modal-02').modal('show');
+	document.getElementById('modal-titulo-02').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
+	document.getElementById('modal-documento-02').className		= 'modal-dialog border border-danger rounded alert-danger';
+	document.getElementById('modal-cabecalho-02').className  	= 'modal-header text-white bg-danger';
+	document.getElementById('modal-conteudo-02').innerHTML		= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	document.getElementById('modal-botao-02').innerHTML			= 'Voltar';
+	document.getElementById('modal-botao-02').className 		= 'btn btn-outline-danger';
+}
+
+// Tabela
+
+let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => {
+	let tabela = `
+	<table class="table table-bordered text-center mt-4">
+		<thead>
+			<tr class="text-center bg-${bg}">
+				<th scope="col" class="text-white"><i class="fas fa-laptop fa-lg" title="Equipamento"></i></th>
+				<th scope="col" class="text-white"><i class="fas fa-map-marker-alt fa-lg" title="Local"></i></th>
+				<th scope="col" class="text-white" colspan="2"><i class="fas fa-user-clock fa-lg" title="Horário da reserva"></i></th>
+			</tr>
+			</thead>
+		<tbody>
+			<tr>
+				<td>${equipamento}</td>
+				<td>${local}</td>
+				<td>${hora_inicial} / ${hora_final}</td>
+				<td>${data}</td>
+			</tr>
+		</tbody>
+	</table>`;
+	return tabela;
+}
+
+// Funções auxiliares
+
+//	Converter datas
+let data_BR = data_USA => {
+	let dia  		= data_USA.substr(8,2);
+	let mes  		= `/${data_USA.substr(5,2)}`;
+	let ano  		= `/${data_USA.substr(0,4)}`;
+	let data_BR 	= `${dia}${mes}${ano}`;
+
+	return data_BR;
+}
+
+let data_USA = data_BR => {
+	let ano  		= data_BR.substr(6,4);
+	let mes  		= `-${data_BR.substr(3,2)}`;	
+	let dia  		= `-${data_BR.substr(0,2)}`;
+	let data_USA 	= `${ano}${mes}${dia}`;
+
+	return data_USA;
+}
+
 
 // Botões
 
