@@ -13,30 +13,59 @@
  *
  */
 
-// Links
+// Banco de Dados
+
+class BancodeDadosAdministrador {
+	constructor() {
+		let idAdministrador = localStorage.getItem("idAdministrador");
+		idAdministrador = idAdministrador === null ? localStorage.setItem("idAdministrador", 0) : idAdministrador;
+	}
+	recuperaDadosAdministrador() {
+		let administrador = Array();
+
+		let id = localStorage.getItem("idAdministrador");
+
+		for(let i = 0; i <= id; i++) {
+			let admin = JSON.parse(localStorage.getItem(i));
+			if (admin === null) {
+				continue
+			}
+			admin.id = i;
+			administrador.push(admin); 
+		}
+		return administrador;
+	}
+}
+
+// Variáveis globais
+
+let bancodedados_administrador = new BancodeDadosAdministrador();
+	
+let calendario = "00/00/0000";
+let relogio = "--:--";
+
+let scrool_subir_pagina = document.querySelector(".to-top");
 
 const DASHBOARD_PAGE 	= document.getElementById("dashboard-page");
 const RESERVAS_PAGE 	= document.getElementById("reserva-page");
 const PERFIL_PAGE 		= document.getElementById("perfil-page");
 
+// Links
+
 DASHBOARD_PAGE.onclick 	= () => window.location.href = "index.html";
 RESERVAS_PAGE.onclick 	= () => window.location.href = "reserva.html";
 PERFIL_PAGE.onclick 	= () => window.location.href = "perfil.html";
 
-
-// Botão para subir a página
-
-const toTop = document.querySelector(".to-top");
+// Scroll para subir a página
 
 window.addEventListener("scroll", () => {
 	if (window.pageYOffset > 100) {
-    	toTop.classList.add("active");
+    	scrool_subir_pagina.classList.add("active");
   	}
   	else {
-    	toTop.classList.remove("active");
+    	scrool_subir_pagina.classList.remove("active");
   	}
 })
-
 
 // Data, Hora e Mensagem
 
@@ -50,8 +79,9 @@ setInterval(()=>{
 	let mes 		= data.getMonth() + 1;
 	let dia 		= data.getDate();
 	let semana 		= data.getDay();
-	let mensagem 	= null;
+	let mensagem 	= "";
 	let icone 		= null;
+	let administrador = Array();
 
 	mes = mes < 10 ? mes = `0${mes}` : mes;
 	dia = dia < 10 ? dia = `0${dia}` : dia;
@@ -84,22 +114,25 @@ setInterval(()=>{
 			break
 	}
 	
-	let calendario = `${dia}/${mes}/${ano}`;
-	let relogio = `${horas}:${minutos}:${segundos}`;
+	calendario = `${dia}/${mes}/${ano}`;
+	relogio = `${horas}:${minutos}:${segundos}`;
 	
 	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "Bom dia!"   : mensagem; 
 	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "Boa tarde!" : mensagem;	
 	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "Boa noite!" : mensagem;
 
-	icone = mensagem === "Bom dia!"   ? document.getElementById("icone").className = "fas fa-sun fa-lg"			: icone;
-	icone = mensagem === "Boa tarde!" ? document.getElementById("icone").className = "fas fa-cloud-sun fa-lg"	: icone;
-	icone = mensagem === "Boa noite!" ? document.getElementById("icone").className = "fas fa-moon fa-lg"		: icone;
+	icone = mensagem === "Bom dia!"   ? document.getElementById("icone").className = "fas fa-sun fa-lg"		  : icone;
+	icone = mensagem === "Boa tarde!" ? document.getElementById("icone").className = "fas fa-cloud-sun fa-lg" : icone;
+	icone = mensagem === "Boa noite!" ? document.getElementById("icone").className = "fas fa-moon fa-lg"	  : icone;
+	
+	administrador = bancodedados_administrador.recuperaDadosAdministrador();
 
-	document.getElementById("administrador").innerHTML 	= "Jeferson Luckas";
-	document.getElementById("calendario").innerHTML 	= calendario;
-	document.getElementById("relogio").innerHTML 		= relogio;
-	document.getElementById("mensagem").innerHTML 		= mensagem;
-	document.getElementById("semana").innerHTML 		= semana;
+	document.getElementById("calendario").innerHTML = calendario;
+	document.getElementById("relogio").innerHTML 	= relogio;
+	document.getElementById("mensagem").innerHTML 	= mensagem;
+	document.getElementById("semana").innerHTML 	= semana;
+	
+	administrador.forEach((a) => document.getElementById("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
 
 })
 

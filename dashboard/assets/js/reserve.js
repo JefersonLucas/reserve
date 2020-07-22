@@ -34,33 +34,24 @@ class Reserva {
 	}
 }
 
-// Cadastrar
+// Variáveis globais
 
-let cadastrar_usuario = document.getElementById("cadastrar-usuario");
+let usuario 	 		= document.getElementById("usuario");
+let equipamento  		= document.getElementById("equipamento");
+let local 		 		= document.getElementById("local");
+let hora_inicial 		= document.getElementById("hora-inicial");
+let hora_final 	 		= document.getElementById("hora-final");
+let data 		 		= document.getElementById("data");
+let atualizar 			= document.getElementById("atualizar");
+let imprimir 			= document.getElementById("imprimir");
+let alarme_ativado 		= document.getElementById("alarme-ativado");
+let alarme_desativado 	= document.getElementById("alarme-desativado");
 
-cadastrar_usuario.onclick = () => {
-	let usuario 		= document.getElementById("usuario");
-	let equipamento 	= document.getElementById("equipamento");
-	let local 			= document.getElementById("local");
-	let hora_inicial 	= document.getElementById("hora-inicial");
-	let hora_final 		= document.getElementById("hora-final");
-	let data 			= document.getElementById("data");
+// Validações
 
-	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),hora_inicial.value,hora_final.value,data.value)
-
-	if(reserva.validarReserva()) {
-		modalCadastarSucesso(reserva.usuario, tabelaReserva("success", reserva.equipamento, reserva.local, reserva.data, reserva.hora_inicial, reserva.hora_final));
-		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
-	}
-	else {
-		modalCadastrarErro();
-	}
-}
-
-// Validação 
+// Formulário
 
 (() => {
-	"use strict";
 	window.addEventListener("load", () => {
 		let formulario = document.getElementsByClassName("needs-validation");
 			let validacao = Array.prototype.filter.call(formulario, (form) => {
@@ -76,7 +67,78 @@ cadastrar_usuario.onclick = () => {
 	}, false);
 })();
 
-// Modal
+// Imput
+
+setInterval(() =>{
+
+	if (usuario.value === "" || usuario.value === null || usuario.value === undefined) {
+		document.getElementById("valida-usuario").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-usuario").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-usuario").innerHTML = "Parece bom!";
+		document.getElementById("valida-usuario").className = "valid-feedback";
+	}
+	if (equipamento.value === "" || equipamento.value === null || equipamento.value === undefined) {
+		document.getElementById("valida-equipamento").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-equipamento").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-equipamento").innerHTML = "Parece bom!";
+		document.getElementById("valida-equipamento").className = "valid-feedback";
+	}
+	if (local.value === "" || local.value === null || local.value === undefined) {
+		document.getElementById("valida-local").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-local").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-local").innerHTML = "Parece bom!";
+		document.getElementById("valida-local").className = "valid-feedback";
+	}
+	if (hora_inicial.value === "" || hora_inicial.value === null || hora_inicial.value === undefined) {
+		document.getElementById("valida-hora-inicial").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-hora-inicial").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-hora-inicial").innerHTML = "Parece bom!";
+		document.getElementById("valida-hora-inicial").className = "valid-feedback";
+	}
+	if (hora_final.value === "" || hora_final.value === null || hora_final.value === undefined) {
+		document.getElementById("valida-hora-final").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-hora-final").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-hora-final").innerHTML = "Parece bom!";
+		document.getElementById("valida-hora-final").className = "valid-feedback";
+	}
+	if (data.value === "" || data.value === null || data.value === undefined) {
+		document.getElementById("valida-data").innerHTML = "Por favor, selecione uma opção válida.";
+		document.getElementById("valida-data").className = "invalid-feedback";
+	}
+	else {
+		document.getElementById("valida-data").innerHTML = "Parece bom!";
+		document.getElementById("valida-data").className = "valid-feedback";
+	}
+});
+
+// Cadastrar Reserva
+
+let cadastrar_usuario = document.getElementById("cadastrar-usuario");
+
+cadastrar_usuario.onclick = () => {
+
+	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),hora_inicial.value,hora_final.value,data.value)
+
+	if(reserva.validarReserva()) {
+		modalCadastarSucesso(reserva.usuario, tabelaReserva("success", reserva.equipamento, reserva.local, data_BR(reserva.data), reserva.hora_inicial, reserva.hora_final));
+		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
+	}
+	else {
+		modalCadastrarErro();
+	}
+}
+
+// Modais
 
 let modalCadastarSucesso = (nome, tabela) => {
 	$('#modal-01').modal('show');
@@ -97,7 +159,7 @@ let modalCadastrarErro = () => {
 	document.getElementById('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
 
-// Tabela
+// Tabelas
 
 let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => {
 	let tabela = `
@@ -121,9 +183,14 @@ let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => 
 	return tabela;
 }
 
+window.onload = () => {
+	
+}
+
 // Funções auxiliares
 
 //	Converter datas
+
 let data_BR = data_USA => {
 	let dia  		= data_USA.substr(8,2);
 	let mes  		= `/${data_USA.substr(5,2)}`;
@@ -142,29 +209,23 @@ let data_USA = data_BR => {
 	return data_USA;
 }
 
-
 // Botões
-
-let atualizar 			= document.getElementById("atualizar");
-let imprimir 			= document.getElementById("imprimir");
-let alarme_ativado 		= document.getElementById("alarme-ativado");
-let alarme_desativado 	= document.getElementById("alarme-desativado");
 
 atualizar.onclick 	= () => window.location.reload();
 imprimir.onclick 	= () => window.print();
 
 alarme_ativado.onclick = () => {
 	$('#toast').toast('show');
-	document.getElementById("alarme-info").innerHTML = "Alarme ativado";
-	document.getElementById("alarme-icone").className = "fas fa-bell fa-md";
-	document.getElementById("alarme-ativado").className = "dropdown-item active";
-	document.getElementById("alarme-desativado").className = "dropdown-item";
+	document.getElementById("alarme-info").innerHTML 		= "Alarme ativado";
+	document.getElementById("alarme-icone").className 		= "fas fa-bell fa-md";
+	document.getElementById("alarme-ativado").className 	= "dropdown-item active";
+	document.getElementById("alarme-desativado").className 	= "dropdown-item";
 }
 
 alarme_desativado.onclick = () => {
 	$('#toast').toast('hide');
-	document.getElementById("alarme-info").innerHTML = "Alarme desativado";
-	document.getElementById("alarme-icone").className = "fas fa-bell-slash fa-md";
-	document.getElementById("alarme-ativado").className = "dropdown-item";
-	document.getElementById("alarme-desativado").className = "dropdown-item active";
+	document.getElementById("alarme-info").innerHTML 		= "Alarme desativado";
+	document.getElementById("alarme-icone").className 		= "fas fa-bell-slash fa-md";
+	document.getElementById("alarme-ativado").className 	= "dropdown-item";
+	document.getElementById("alarme-desativado").className 	= "dropdown-item active";
 }

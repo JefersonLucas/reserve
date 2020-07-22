@@ -59,7 +59,7 @@
 						
 						<li class="nav-item">
 							<a class="nav-link active" href="#" id="reserva-page">
-								<span data-feather="file-text"></span>Reserva<span class="sr-only">(current)</span>
+								<span data-feather="file"></span>Reserva<span class="sr-only">(current)</span>
 							</a>
 						</li>
 					  
@@ -83,7 +83,7 @@
 						<li class="nav-item">
 							<a class="nav-link">
 								<span class="fas fa-user-tie fa-lg mr-1"></span>
-								<span id="administrador"></span>
+								<span id="administrador-nome"></span>
 							</a>
 						</li>
 
@@ -161,6 +161,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="usuario" placeholder="Ex.: José" title="Nome do usuário" type="text" required>
+					  			<div id="valida-usuario"></div>
 							</div>								
 							<!-- EQUIPAMENTO -->                        
 							<div class="input-group col-md-4 mb-3">
@@ -170,6 +171,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="equipamento" placeholder="Ex.: Data Show S27" title="Nome do equipamento" type="text" required>
+								<div id="valida-equipamento"></div>
 							</div>
 							<!-- LOCAL -->                        
 							<div class="input-group col-md-4 mb-3">
@@ -179,6 +181,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="local" placeholder="Ex.: Anatomia I" title="Local da reserva" type="text" required>
+								<div id="valida-local"></div>							
 							</div>
 							<!-- HORÁRIO INÍCIAL -->                        
 							<div class="input-group col-md-4 mb-3">
@@ -188,6 +191,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="hora-inicial" placeholder="00:00" title="Horário inicial da reserva" type="time" required>
+								<div id="valida-hora-inicial"></div>
 							</div>
 							<!-- HORÁRIO FINAL -->                        
 							<div class="input-group col-md-4 mb-3">
@@ -197,6 +201,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="hora-final" placeholder="00:00" title="Horário final da reserva" type="time" required>
+								<div id="valida-hora-final"></div>
 							</div>
 							<!-- DATA -->                        
 							<div class="input-group col-md-4 mb-3">
@@ -206,6 +211,7 @@
 									</div>
 								</div>
 								<input class="form-control" id="data" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" title="Data da reserva" type="date" required>
+								<div id="valida-data"></div>							
 							</div>                    
 							<div class="input-group justify-content-center col-sm-12 col-md-12 mb-2">
 								<!-- BOTÃO CADASTRAR RESERVA -->

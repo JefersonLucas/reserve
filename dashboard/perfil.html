@@ -58,7 +58,7 @@
 						
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="reserva-page">
-								<span data-feather="file-text"></span>Reserva
+								<span data-feather="file"></span>Reserva
 							</a>
 						</li>
 					  
@@ -81,7 +81,7 @@
 						<li class="nav-item">
 							<a class="nav-link">
 								<span class="fas fa-user-tie fa-lg mr-1"></span>
-								<span id="administrador"></span>
+								<span id="administrador-nome"></span>
 							</a>
 						</li>
 
@@ -147,13 +147,13 @@
 						<div class="col-md-6 mb-3">
 					  		<label for="nome-01"><i class="fas fa-signature"></i> Primeiro nome</label>
 					  		<input type="text" class="form-control is-valid" id="nome-01" value="Jeferson" required>
-					  		<div class="valid-feedback">Parece bom!</div>
+					  		<div id="valida-nome-01"></div>
 						</div>
 						
 						<div class="col-md-6 mb-3">
 					  		<label for="nome-02"><i class="fas fa-signature"></i> Sobrenome</label>
 					  		<input type="text" class="form-control is-valid" id="nome-02" value="Luckas" required>
-					  		<div class="valid-feedback">Parece bom!</div>
+					  		<div id="valida-nome-02"></div>
 						</div>
 				  	
 				  	</div>
@@ -162,7 +162,7 @@
 					
 						<div class="col-md-4 mb-3">
 					  		<label for="cor-01"><i class="fas fa-palette"></i>  Cor primária</label>
-					  		<select class="custom-select is-invalid" id="cor-01" disabled required>
+					  		<select class="custom-select is-invalid" id="cor-01" disabled>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
 					  		</select>
@@ -171,7 +171,7 @@
 					
 						<div class="col-md-4 mb-3">
 					  		<label for="cor-02"><i class="fas fa-palette"></i> Cor secundária</label>
-					  		<select class="custom-select is-invalid" id="cor-02" disabled required>
+					  		<select class="custom-select is-invalid" id="cor-02" disabled>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
 					  		</select>
@@ -180,7 +180,7 @@
 						
 						<div class="col-md-4 mb-3">
 					  		<label for="cor-botao"><i class="fas fa-tint"></i> Botões</label>
-					  		<select class="custom-select is-invalid" id="cor-botao" disabled required>
+					  		<select class="custom-select is-invalid" id="cor-botao" disabled>
 								<option selected disabled value="">Escolha...</option>
 								<option>...</option>
 					  		</select>
@@ -198,7 +198,9 @@
 		</div>
 
 	</div>
+	
 	<hr>
+	
 	<!-- RODAPÉ -->
 	<footer class="footer my-2 text-center text-small">
 
@@ -212,6 +214,74 @@
 
 	</footer>
 
+	<!-- MODAL TIPO 1 -->
+	<div class="modal fade" id="modal-01" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				
+		<!-- DOCUMENTO -->
+		<div class="modal-dialog" role="document" id="modal-documento-01">
+				
+			<div class="modal-content">
+						
+				<!-- CABEÇALHO -->
+				<div id="modal-cabecalho-01">
+
+					<!-- TÍTULO -->
+					<h5 class="modal-title" id="modal-titulo-01"></h5>
+					<!-- BOTÃO FECHAR MODAL -->
+					<button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+					   
+				<!-- CONTEÚDO -->
+				<div class="modal-body" id="modal-conteudo-01"></div>
+					
+				<div class="modal-footer">
+					<!-- BOTÃO -->
+					<button type="button" data-dismiss="modal" id="modal-botao-01"></button>
+				</div>
+
+			</div>
+
+		</div>
+			
+	</div>
+
+	<!-- MODAL TIPO 2 -->
+	<div class="modal fade" id="modal-02" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				
+		<!-- DOCUMENTO -->
+		<div class="modal-dialog" role="document" id="modal-documento-02">
+				
+			<div class="modal-content">
+						
+				<!-- CABEÇALHO -->
+				<div id="modal-cabecalho-02">
+
+					<!-- TÍTULO -->
+					<h5 class="modal-title" id="modal-titulo-02"></h5>
+					<!-- BOTÃO FECHAR MODAL -->
+					<button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+						
+				<!-- CONTEÚDO -->
+				<div class="modal-body" id="modal-conteudo-02"></div>
+					
+				<div class="modal-footer">
+					<!-- BOTÃO -->
+					<button type="button" data-dismiss="modal" id="modal-botao-02"></button>
+				</div>
+		   
+			</div>
+
+		</div>
+			
+	</div>
+
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script>window.jQuery || document.write('<script src="assets/jquery/jquery.slim.min.js"><\/script>')</script>
@@ -219,6 +289,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="assets/js/helpers.js"></script>
-	
+	<script src="assets/js/perfil.js"></script>
+
 </body>
 </html>
