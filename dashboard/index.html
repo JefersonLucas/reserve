@@ -22,7 +22,8 @@
 	<title>Dashboard · Reserve</title>
 	<link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 	<link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -52,13 +53,13 @@
 					<ul class="nav flex-column">
 						<li class="nav-item">
 							<a class="nav-link active" href="#" id="dashboard-page">
-								<span data-feather="home"></span>Dashboard
+								<span data-feather="home"></span>Dashboard<span class="sr-only">(current)</span>
 							</a>
 						</li>
 						
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="reserva-page">
-								<span data-feather="file"></span>Reserva<span class="sr-only">(current)</span>
+								<span data-feather="file-text"></span>Reserva
 							</a>
 						</li>
 					  
@@ -70,33 +71,42 @@
 					</ul>
 					
 					<!-- MENSAGEM -->
-					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">                        
+					<h6 class="text-xl-left d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 						<span id="mensagem"></span>
+						<span id="icone"></span>
 					</h6>
 					
 					<ul class="nav flex-column mb-2">
 						
-						<!-- NOME DO FUNCIONÁRIO -->    
+						<!-- ADMINISTRADOR -->	
 						<li class="nav-item">
 							<a class="nav-link">
-								<span data-feather="user"></span>                   
+								<span class="fas fa-user-tie fa-lg mr-1"></span>
 								<span id="administrador"></span>
-							</a>
-						</li>
-						
-						<!-- DATA -->
-						<li class="nav-item">
-							<a class="nav-link">
-								<span data-feather="calendar"></span>
-								<span id="calendario"></span>                               
 							</a>
 						</li>
 
 						<!-- HORA -->
 						<li class="nav-item">
 							<a class="nav-link">
-								<span data-feather="clock"></span>
+								<span class="fas fa-clock fa-lg mr-1"></span>
 								<span id="relogio"></span>
+							</a>
+						</li>
+
+						<!-- SEMANA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-week fa-lg mr-1"></span>
+								<span id="semana"></span>
+							</a>
+						</li>
+
+						<!-- DATA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-alt fa-lg mr-1"></span>
+								<span id="calendario"></span>			            		
 							</a>
 						</li>
 
@@ -134,17 +144,17 @@
 
 				<h2><span class="fas fa-file-alt"></span> Total</h2>
 				
-				<div class="table-responsive">
+				<div class="table-responsive border-bottom rounded-top mt-4">
 					
 					<table class="table table-striped table-sm shadow">
 						
 					   <thead>
 							<tr class="text-center bg-dark">
-								<th class="text-white" title="Usuário"><i class="fas fa-user fa-lg" title="Usuário"></i></th>
-								<th class="text-white" title="Equipamento"><i class="fas fa-laptop fa-lg" title="Equipamento"></i></th>
-								<th class="text-white" title="Local"><i class="fas fa-map-marker-alt fa-lg" title="Local"></i></th>
-								<th class="text-white" title="Status"><i class="fas fa-info-circle fa-lg" title="Status"></i></th>
-								<th class="text-white" title="Opções"><i class="fas fa-file-signature fa-lg" title="Opções"></i></th>
+								<th class="text-white" title="Usuário"><i class="fas fa-user fa-lg"></i></th>
+								<th class="text-white" title="Equipamento"><i class="fas fa-laptop fa-lg"></i></th>
+								<th class="text-white" title="Local"><i class="fas fa-map-marker-alt fa-lg"></i></th>
+								<th class="text-white" title="Status"><i class="fas fa-info-circle fa-lg"></i></th>
+								<th class="text-white" title="Horário" colspan="2"><i class="fas fa-user-clock fa-lg"></i></th>
 							</tr>
 						</thead>
 						
@@ -155,6 +165,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,002</td>
@@ -162,6 +173,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,003</td>
@@ -169,6 +181,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,004</td>
@@ -176,6 +189,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,005</td>
@@ -183,6 +197,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,006</td>
@@ -190,6 +205,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,007</td>
@@ -197,6 +213,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,008</td>
@@ -204,6 +221,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,009</td>
@@ -211,6 +229,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 							<tr>
 								<td>1,010</td>
@@ -218,6 +237,7 @@
 								<td>ipsum</td>
 								<td>dolor</td>
 								<td>sit</td>
+								<td>amet</td>
 							</tr>
 						</tbody>
 
@@ -230,8 +250,6 @@
 		</div>
 
 	</div>
-	
-	<hr>
 
 	<!-- RODAPÉ -->
 	<footer class="footer my-3 text-center text-small">

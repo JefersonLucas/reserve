@@ -53,28 +53,28 @@
 					<ul class="nav flex-column align-items-left">
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="dashboard-page">
-								<span class="fas fa-home fa-lg mr-1"></span>Dashboard
+								<span data-feather="home"></span>Dashboard
 							</a>
 						</li>
 						
 						<li class="nav-item">
 							<a class="nav-link active" href="#" id="reserva-page">
-								<span class="fas fa-file-alt fa-lg mr-1"></span>Reserva<span class="sr-only">(current)</span>								
+								<span data-feather="file-text"></span>Reserva<span class="sr-only">(current)</span>
 							</a>
 						</li>
 					  
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="perfil-page">
-								<span class="fas fa-user-tie fa-lg mr-1"></span>Perfil
+								<span data-feather="user"></span>Perfil
 							</a>
 						</li>
 
 					</ul>
 					
 					<!-- MENSAGEM -->
-					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
+					<h6 class="text-xl-left d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 						<span id="mensagem"></span>
-						<span id="icone"></span>Ícone
+						<span id="icone"></span>
 					</h6>
 					
 					<ul class="nav flex-column mb-2">
@@ -82,11 +82,19 @@
 						<!-- ADMINISTRADOR -->	
 						<li class="nav-item">
 							<a class="nav-link">
-								<span class="fas fa-user fa-lg mr-1"></span>
+								<span class="fas fa-user-tie fa-lg mr-1"></span>
 								<span id="administrador"></span>
 							</a>
 						</li>
-						
+
+						<!-- HORA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-clock fa-lg mr-1"></span>
+								<span id="relogio"></span>
+							</a>
+						</li>
+
 						<!-- SEMANA -->
 						<li class="nav-item">
 							<a class="nav-link">
@@ -102,15 +110,6 @@
 								<span id="calendario"></span>			            		
 							</a>
 						</li>
-
-						<!-- HORA -->
-						<li class="nav-item">
-							<a class="nav-link">
-								<span class="fas fa-clock fa-lg mr-1"></span>
-								<span id="relogio"></span>
-							</a>
-						</li>
-
 
 					</ul>
 
@@ -158,7 +157,7 @@
 							<div class="input-group col-md-4 mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text bg-dark text-white">
-										<i class="fas fa-user " title="Usuário"></i>
+										<i class="fas fa-user" title="Usuário"></i>
 									</div>
 								</div>
 								<input class="form-control" id="usuario" placeholder="Ex.: José" title="Nome do usuário" type="text" required>
@@ -176,7 +175,7 @@
 							<div class="input-group col-md-4 mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text bg-dark text-white">
-										<i class="fas fa-map-marker-alt fa-sm" title="Local"></i>
+										<i class="fas fa-map-marker-alt" title="Local"></i>
 									</div>
 								</div>
 								<input class="form-control" id="local" placeholder="Ex.: Anatomia I" title="Local da reserva" type="text" required>
@@ -185,7 +184,7 @@
 							<div class="input-group col-md-4 mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text bg-dark text-white">
-										<i class="fas fa-clock fa-sm" title="Horário Inicial"></i>
+										<i class="fas fa-clock" title="Horário Inicial"></i>
 									</div>
 								</div>
 								<input class="form-control" id="hora-inicial" placeholder="00:00" title="Horário inicial da reserva" type="time" required>
@@ -194,7 +193,7 @@
 							<div class="input-group col-md-4 mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text bg-dark text-white">
-										<i class="fas fa-clock fa-sm" title="Horário Final"></i> 
+										<i class="fas fa-clock" title="Horário Final"></i> 
 									</div>
 								</div>
 								<input class="form-control" id="hora-final" placeholder="00:00" title="Horário final da reserva" type="time" required>
@@ -203,7 +202,7 @@
 							<div class="input-group col-md-4 mb-3">
 								<div class="input-group-prepend">
 									<div class="input-group-text bg-dark text-white">
-										<i class="fas fa-calendar fa-sm" title="Data da reserva"></i>
+										<i class="fas fa-calendar" title="Data da reserva"></i>
 									</div>
 								</div>
 								<input class="form-control" id="data" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" title="Data da reserva" type="date" required>
@@ -261,7 +260,7 @@
 					</div>
 				</div>                                   
 
-				<div class="table-responsive mt-1 border-bottom">
+				<div class="table-responsive mt-1 border-bottom rounded-top">
 										
 					<div class="nav-scroller bg-dark shadow-sm text-white d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center">
 						<nav class="nav nav-underline">
@@ -376,7 +375,6 @@
 
 	</div>
 
-
 	<!-- RODAPÉ -->
 	<footer class="footer my-3 text-center text-small">
 
@@ -465,5 +463,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 	<script src="assets/js/helpers.js"></script>
 	<script src="assets/js/reserve.js"></script>
+
 </body>
 </html>

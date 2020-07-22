@@ -22,7 +22,7 @@
 	<title>Perfil · Reserve</title>
 	<link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 	<link href="assets/css/style.css" rel="stylesheet">	
 </head>
 <body>
@@ -57,8 +57,8 @@
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link " href="#" id="reserva-page">
-								<span data-feather="file"></span>Reserva
+							<a class="nav-link" href="#" id="reserva-page">
+								<span data-feather="file-text"></span>Reserva
 							</a>
 						</li>
 					  
@@ -70,33 +70,42 @@
 					</ul>
 					
 					<!-- MENSAGEM -->
-					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">          				
+					<h6 class="text-xl-left d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 						<span id="mensagem"></span>
+						<span id="icone"></span>
 					</h6>
 					
 					<ul class="nav flex-column mb-2">
 						
-						<!-- NOME DO FUNCIONÁRIO -->	
+						<!-- ADMINISTRADOR -->	
 						<li class="nav-item">
 							<a class="nav-link">
-								<span data-feather="user"></span>              		
+								<span class="fas fa-user-tie fa-lg mr-1"></span>
 								<span id="administrador"></span>
-							</a>
-						</li>
-						
-						<!-- DATA -->
-						<li class="nav-item">
-							<a class="nav-link">
-								<span data-feather="calendar"></span>
-								<span id="calendario"></span>			            		
 							</a>
 						</li>
 
 						<!-- HORA -->
 						<li class="nav-item">
 							<a class="nav-link">
-								<span data-feather="clock"></span>
+								<span class="fas fa-clock fa-lg mr-1"></span>
 								<span id="relogio"></span>
+							</a>
+						</li>
+
+						<!-- SEMANA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-week fa-lg mr-1"></span>
+								<span id="semana"></span>
+							</a>
+						</li>
+
+						<!-- DATA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-alt fa-lg mr-1"></span>
+								<span id="calendario"></span>			            		
 							</a>
 						</li>
 

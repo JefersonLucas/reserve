@@ -10,11 +10,11 @@
 	data: {
 	  labels: [
 		'Domingo',
-		'Segunda',
-		'Terça',
-		'Quarta',
-		'Quinta',
-		'Sexta',
+		'Segunda-feira',
+		'Terça-feira',
+		'Quarta-feira',
+		'Quinta-feira',
+		'Sexta-feira',
 		'Sábado'
 	  ],
 	  datasets: [{

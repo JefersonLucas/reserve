@@ -15,13 +15,13 @@
 
 // Links
 
-const DASHBOARD_PAGE = document.getElementById("dashboard-page");
-const RESERVAS_PAGE = document.getElementById("reserva-page");
-const PERFIL_PAGE = document.getElementById("perfil-page");
+const DASHBOARD_PAGE 	= document.getElementById("dashboard-page");
+const RESERVAS_PAGE 	= document.getElementById("reserva-page");
+const PERFIL_PAGE 		= document.getElementById("perfil-page");
 
-DASHBOARD_PAGE.onclick = () => window.location.href = "index.html";
-RESERVAS_PAGE.onclick = () => window.location.href = "reserva.html";
-PERFIL_PAGE.onclick = () => window.location.href = "perfil.html";
+DASHBOARD_PAGE.onclick 	= () => window.location.href = "index.html";
+RESERVAS_PAGE.onclick 	= () => window.location.href = "reserva.html";
+PERFIL_PAGE.onclick 	= () => window.location.href = "perfil.html";
 
 
 // Botão para subir a página
@@ -51,7 +51,7 @@ setInterval(()=>{
 	let dia 		= data.getDate();
 	let semana 		= data.getDay();
 	let mensagem 	= null;
-	let icone 		= document.getElementById("icone");
+	let icone 		= null;
 
 	mes = mes < 10 ? mes = `0${mes}` : mes;
 	dia = dia < 10 ? dia = `0${dia}` : dia;
@@ -84,19 +84,22 @@ setInterval(()=>{
 			break
 	}
 	
-	let relogio = `${horas}:${minutos}:${segundos}`;
 	let calendario = `${dia}/${mes}/${ano}`;
+	let relogio = `${horas}:${minutos}:${segundos}`;
+	
+	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "Bom dia!"   : mensagem; 
+	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "Boa tarde!" : mensagem;	
+	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "Boa noite!" : mensagem;
 
-	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "<i class='fas fa-sun fa-lg'></i> Bom dia!"    : mensagem; 
-	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "<i class='fas fa-sun fa-lg'></i> Boa tarde!"  : mensagem;	
-	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "<i class='fas fa-moon fa-lg'></i> Boa noite!" : mensagem;
+	icone = mensagem === "Bom dia!"   ? document.getElementById("icone").className = "fas fa-sun fa-lg"			: icone;
+	icone = mensagem === "Boa tarde!" ? document.getElementById("icone").className = "fas fa-cloud-sun fa-lg"	: icone;
+	icone = mensagem === "Boa noite!" ? document.getElementById("icone").className = "fas fa-moon fa-lg"		: icone;
 
-	document.getElementById("administrador").innerHTML = "Jeferson Luckas";
-	document.getElementById("calendario").innerHTML = calendario;
-	document.getElementById("relogio").innerHTML = relogio;
-	document.getElementById("mensagem").innerHTML = mensagem;
-	document.getElementById("semana").innerHTML = semana;
-
+	document.getElementById("administrador").innerHTML 	= "Jeferson Luckas";
+	document.getElementById("calendario").innerHTML 	= calendario;
+	document.getElementById("relogio").innerHTML 		= relogio;
+	document.getElementById("mensagem").innerHTML 		= mensagem;
+	document.getElementById("semana").innerHTML 		= semana;
 
 })
 

@@ -21,7 +21,7 @@ class Reserva {
 		this.equipamento 	= equipamento;
 		this.local 			= local;
 		this.hora_inicial 	= hora_inicial;
-		this.hora_final 		= hora_final;
+		this.hora_final 	= hora_final;
 		this.data 			= data;
 	}
 	validarReserva() {
@@ -108,7 +108,7 @@ let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => 
 				<th scope="col" class="text-white"><i class="fas fa-map-marker-alt fa-lg" title="Local"></i></th>
 				<th scope="col" class="text-white" colspan="2"><i class="fas fa-user-clock fa-lg" title="Horário da reserva"></i></th>
 			</tr>
-			</thead>
+		</thead>
 		<tbody>
 			<tr>
 				<td>${equipamento}</td>
@@ -151,7 +151,7 @@ let alarme_ativado 		= document.getElementById("alarme-ativado");
 let alarme_desativado 	= document.getElementById("alarme-desativado");
 
 atualizar.onclick 	= () => window.location.reload();
-imprimir.onclick 	= () =>  window.print();
+imprimir.onclick 	= () => window.print();
 
 alarme_ativado.onclick = () => {
 	$('#toast').toast('show');
