@@ -33,9 +33,27 @@ class Reserva {
 		return true;
 	}
 }
+class BancoDadosReserve {
+	constructor() {
+		let idReserva = localStorage.getItem('idReserva');
+		if (idReserva === null) {
+			localStorage.setItem('idReserva', 0);
+		}
+	}
+	pegaProximoId(nome) {
+		let proximo_Id = localStorage.getItem(`idReserva`);
+		return parseInt(proximo_Id) + 1;
+	}
+	gravar(reserva, nome) {
+		let id = this.pegaProximoId(nome);
+
+		localStorage.setItem(id, JSON.stringify(reserva));
+		localStorage.setItem(`id${nome}`, id); 
+	}
+}
 
 // Variáveis globais
-
+let banco_dados_reserve = new BancoDadosReserve(); 
 let usuario 	 		= pegaId("usuario");
 let equipamento  		= pegaId("equipamento");
 let local 		 		= pegaId("local");
@@ -142,6 +160,7 @@ cadastrar_usuario.onclick = () => {
 	);
 
 	if(reserva.validarReserva()) {
+		banco_dados_reserve.gravar(reserva, "Reserva");
 		modalCadastarSucesso(
 			reserva.usuario,
 			tabelaReserva(
