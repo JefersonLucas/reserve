@@ -36,16 +36,16 @@ class Reserva {
 
 // Variáveis globais
 
-let usuario 	 		= document.getElementById("usuario");
-let equipamento  		= document.getElementById("equipamento");
-let local 		 		= document.getElementById("local");
-let hora_inicial 		= document.getElementById("hora-inicial");
-let hora_final 	 		= document.getElementById("hora-final");
-let data 		 		= document.getElementById("data");
-let atualizar 			= document.getElementById("atualizar");
-let imprimir 			= document.getElementById("imprimir");
-let alarme_ativado 		= document.getElementById("alarme-ativado");
-let alarme_desativado 	= document.getElementById("alarme-desativado");
+let usuario 	 		= pegaId("usuario");
+let equipamento  		= pegaId("equipamento");
+let local 		 		= pegaId("local");
+let hora_inicial 		= pegaId("hora-inicial");
+let hora_final 	 		= pegaId("hora-final");
+let data 		 		= pegaId("data");
+let atualizar 			= pegaId("atualizar");
+let imprimir 			= pegaId("imprimir");
+let alarme_ativado 		= pegaId("alarme-ativado");
+let alarme_desativado 	= pegaId("alarme-desativado");
 
 // Validações
 
@@ -67,70 +67,91 @@ let alarme_desativado 	= document.getElementById("alarme-desativado");
 	}, false);
 })();
 
-// Imput
+// Input
 
-setInterval(() =>{
+setInterval(() => {
 
-	if (usuario.value === "" || usuario.value === null || usuario.value === undefined) {
-		document.getElementById("valida-usuario").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-usuario").className = "invalid-feedback";
+	let valido 		= "valid-feedback";
+	let invalido 	= "invalid-feedback";
+	let mensagem_01 = "Por favor, selecione uma opção válida.";
+	let mensagem_02 = "Parece bom!";
+
+	if (usuario.value === "") {
+		pegaId("valida-usuario").innerHTML = mensagem_01;
+		pegaId("valida-usuario").className = invalido;
 	}
 	else {
-		document.getElementById("valida-usuario").innerHTML = "Parece bom!";
-		document.getElementById("valida-usuario").className = "valid-feedback";
+		pegaId("valida-usuario").innerHTML = mensagem_02;
+		pegaId("valida-usuario").className = valido;
 	}
-	if (equipamento.value === "" || equipamento.value === null || equipamento.value === undefined) {
-		document.getElementById("valida-equipamento").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-equipamento").className = "invalid-feedback";
-	}
-	else {
-		document.getElementById("valida-equipamento").innerHTML = "Parece bom!";
-		document.getElementById("valida-equipamento").className = "valid-feedback";
-	}
-	if (local.value === "" || local.value === null || local.value === undefined) {
-		document.getElementById("valida-local").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-local").className = "invalid-feedback";
+	if (equipamento.value === "") {
+		pegaId("valida-equipamento").innerHTML = mensagem_01;
+		pegaId("valida-equipamento").className = invalido;
 	}
 	else {
-		document.getElementById("valida-local").innerHTML = "Parece bom!";
-		document.getElementById("valida-local").className = "valid-feedback";
+		pegaId("valida-equipamento").innerHTML = mensagem_02;
+		pegaId("valida-equipamento").className = valido;
 	}
-	if (hora_inicial.value === "" || hora_inicial.value === null || hora_inicial.value === undefined) {
-		document.getElementById("valida-hora-inicial").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-hora-inicial").className = "invalid-feedback";
-	}
-	else {
-		document.getElementById("valida-hora-inicial").innerHTML = "Parece bom!";
-		document.getElementById("valida-hora-inicial").className = "valid-feedback";
-	}
-	if (hora_final.value === "" || hora_final.value === null || hora_final.value === undefined) {
-		document.getElementById("valida-hora-final").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-hora-final").className = "invalid-feedback";
+	if (local.value === "") {
+		pegaId("valida-local").innerHTML = mensagem_01;
+		pegaId("valida-local").className = invalido;
 	}
 	else {
-		document.getElementById("valida-hora-final").innerHTML = "Parece bom!";
-		document.getElementById("valida-hora-final").className = "valid-feedback";
+		pegaId("valida-local").innerHTML = mensagem_02;
+		pegaId("valida-local").className = valido;
 	}
-	if (data.value === "" || data.value === null || data.value === undefined) {
-		document.getElementById("valida-data").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-data").className = "invalid-feedback";
+	if (hora_inicial.value === "") {
+		pegaId("valida-hora-inicial").innerHTML = mensagem_01;
+		pegaId("valida-hora-inicial").className = invalido;
 	}
 	else {
-		document.getElementById("valida-data").innerHTML = "Parece bom!";
-		document.getElementById("valida-data").className = "valid-feedback";
+		pegaId("valida-hora-inicial").innerHTML = mensagem_02;
+		pegaId("valida-hora-inicial").className = valido;
+	}
+	if (hora_final.value === "") {
+		pegaId("valida-hora-final").innerHTML = mensagem_01;
+		pegaId("valida-hora-final").className = invalido;
+	}
+	else {
+		pegaId("valida-hora-final").innerHTML = mensagem_02;
+		pegaId("valida-hora-final").className = valido;
+	}
+	if (data.value === "") {
+		pegaId("valida-data").innerHTML = mensagem_01;
+		pegaId("valida-data").className = invalido;
+	}
+	else {
+		pegaId("valida-data").innerHTML = mensagem_02;
+		pegaId("valida-data").className = valido;
 	}
 });
 
 // Cadastrar Reserva
 
-let cadastrar_usuario = document.getElementById("cadastrar-usuario");
+let cadastrar_usuario = pegaId("cadastrar-usuario");
 
 cadastrar_usuario.onclick = () => {
 
-	let reserva = new Reserva(usuario.value.trim(),equipamento.value.trim(),local.value.trim(),hora_inicial.value,hora_final.value,data.value)
+	let reserva = new Reserva(
+		usuario.value.trim(),
+		equipamento.value.trim(),
+		local.value.trim(),
+		hora_inicial.value,
+		hora_final.value,
+		data.value
+	);
 
 	if(reserva.validarReserva()) {
-		modalCadastarSucesso(reserva.usuario, tabelaReserva("success", reserva.equipamento, reserva.local, data_BR(reserva.data), reserva.hora_inicial, reserva.hora_final));
+		modalCadastarSucesso(
+			reserva.usuario,
+			tabelaReserva(
+				"success",
+				reserva.equipamento,
+				reserva.local,
+				data_BR(reserva.data),
+				reserva.hora_inicial,
+				reserva.hora_final
+		));
 		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
 	}
 	else {
@@ -142,21 +163,28 @@ cadastrar_usuario.onclick = () => {
 
 let modalCadastarSucesso = (nome, tabela) => {
 	$('#modal-01').modal('show');
-	document.getElementById('modal-titulo-01').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
-	document.getElementById('modal-documento-01').className		= 'modal-dialog border border-success rounded alert-success';
-	document.getElementById('modal-cabecalho-01').className  	= 'modal-header text-white bg-success';
-	document.getElementById('modal-conteudo-01').innerHTML 		= `A reserva do(a) <span class="text-success"><b>${nome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
-	document.getElementById('modal-botao-01').innerHTML 		= 'Voltar';
-	document.getElementById('modal-botao-01').className 		= 'btn btn-outline-success';
+	
+	let botao 	= pegaId('modal-botao-01');
+	let fechar 	= pegaId('fechar-modal-01');
+	
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
+	pegaId('modal-documento-01').className	= 'modal-dialog border border-success rounded alert-success';
+	pegaId('modal-cabecalho-01').className  = 'modal-header text-white bg-success';
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${nome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-01').className 		= 'btn btn-outline-success';
+	
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
 }
 let modalCadastrarErro = () => {
 	$('#modal-02').modal('show');
-	document.getElementById('modal-titulo-02').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-	document.getElementById('modal-documento-02').className		= 'modal-dialog border border-danger rounded alert-danger';
-	document.getElementById('modal-cabecalho-02').className  	= 'modal-header text-white bg-danger';
-	document.getElementById('modal-conteudo-02').innerHTML		= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
-	document.getElementById('modal-botao-02').innerHTML			= 'Voltar';
-	document.getElementById('modal-botao-02').className 		= 'btn btn-outline-danger';
+	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
+	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
+	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
+	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	pegaId('modal-botao-02').innerHTML		= 'Voltar';
+	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
 
 // Tabelas
@@ -175,19 +203,14 @@ let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => 
 			<tr>
 				<td>${equipamento}</td>
 				<td>${local}</td>
-				<td>${hora_inicial} / ${hora_final}</td>
+				<td>${hora_inicial} - ${hora_final}</td>
 				<td>${data}</td>
 			</tr>
 		</tbody>
 	</table>`;
+
 	return tabela;
 }
-
-window.onload = () => {
-	
-}
-
-// Funções auxiliares
 
 //	Converter datas
 
@@ -209,6 +232,12 @@ let data_USA = data_BR => {
 	return data_USA;
 }
 
+// Substitui o getElementById
+
+function pegaId(id) {
+	return document.getElementById(id);
+}
+
 // Botões
 
 atualizar.onclick 	= () => window.location.reload();
@@ -216,16 +245,16 @@ imprimir.onclick 	= () => window.print();
 
 alarme_ativado.onclick = () => {
 	$('#toast').toast('show');
-	document.getElementById("alarme-info").innerHTML 		= "Alarme ativado";
-	document.getElementById("alarme-icone").className 		= "fas fa-bell fa-md";
-	document.getElementById("alarme-ativado").className 	= "dropdown-item active";
-	document.getElementById("alarme-desativado").className 	= "dropdown-item";
+	pegaId("alarme-info").innerHTML 		= "Alarme ativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item active";
+	pegaId("alarme-desativado").className 	= "dropdown-item";
 }
 
 alarme_desativado.onclick = () => {
 	$('#toast').toast('hide');
-	document.getElementById("alarme-info").innerHTML 		= "Alarme desativado";
-	document.getElementById("alarme-icone").className 		= "fas fa-bell-slash fa-md";
-	document.getElementById("alarme-ativado").className 	= "dropdown-item";
-	document.getElementById("alarme-desativado").className 	= "dropdown-item active";
+	pegaId("alarme-info").innerHTML 		= "Alarme desativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell-slash fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item";
+	pegaId("alarme-desativado").className 	= "dropdown-item active";
 }

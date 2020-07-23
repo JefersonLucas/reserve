@@ -14,7 +14,7 @@
  */
 
 class Administrador {
-	constructor(nome, sobrenome) {
+	constructor(nome = "Nome", sobrenome = "Sobrenome") {
 		this.nome 		= nome;
 		this.sobrenome 	= sobrenome;
 	}
@@ -27,7 +27,7 @@ class Administrador {
 		return true;
 	}
 }
-class BancodeDadosReserva {
+class BancodeDadosPerfil {
 	constructor() {
 		let idAdministrador = localStorage.getItem("idAdministrador");
 		idAdministrador = idAdministrador === null ? localStorage.setItem("idAdministrador", 0) : idAdministrador;
@@ -45,51 +45,65 @@ class BancodeDadosReserva {
 		for(let i = 0; i <= id; i++) {
 			let admin = JSON.parse(localStorage.getItem(i));
 			if (admin === null) {
-				continue
+				continue;
 			}
 			admin.id = i;
-			administrador.push(admin); 
+			administrador.push(admin);
 		}
 		return administrador;
 	}
 }
 
-let bancodedados = new BancodeDadosReserva();
+let bancodedados_perfil = new BancodeDadosPerfil();
 
-let cadastrar_administrador = document.getElementById("cadastar-administrador");
+let nome_01 = pegaId("nome-01");
+let nome_02 = pegaId("nome-02");
 
-let nome_01 = document.getElementById("nome-01");
-let nome_02 = document.getElementById("nome-02");
+setInterval(() => {
 
-setInterval(() =>{
+	let valido 		= "valid-feedback";
+	let invalido 	= "invalid-feedback";
+	let mensagem_01 = "Por favor, selecione uma opção válida.";
+	let mensagem_02 = "Parece bom!";
 
 	if (nome_01.value === "" || nome_01.value === null || nome_01.value === undefined) {
-		document.getElementById("valida-nome-01").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-nome-01").className = "invalid-feedback";
+		pegaId("valida-nome-01").innerHTML = mensagem_01;
+		pegaId("valida-nome-01").className = invalido;
 	}
 	else {
-		document.getElementById("valida-nome-01").innerHTML = "Parece bom!";
-		document.getElementById("valida-nome-01").className = "valid-feedback";
+		pegaId("valida-nome-01").innerHTML = mensagem_02
+		pegaId("valida-nome-01").className = valido;
 	}
 	if (nome_02.value === "" || nome_02.value === null || nome_02.value === undefined) {
-		document.getElementById("valida-nome-02").innerHTML = "Por favor, selecione uma opção válida.";
-		document.getElementById("valida-nome-02").className = "invalid-feedback";
+		pegaId("valida-nome-02").innerHTML = mensagem_01
+		pegaId("valida-nome-02").className = invalido;
 	}
 	else {
-		document.getElementById("valida-nome-02").innerHTML = "Parece bom!";
-		document.getElementById("valida-nome-02").className = "valid-feedback";
+		pegaId("valida-nome-02").innerHTML = mensagem_02;
+		pegaId("valida-nome-02").className = valido;
 	}
 });
 
+let cadastrar_administrador = pegaId("cadastar-administrador");
+
 cadastrar_administrador.onclick = () => {
 
-	let administrador = new Administrador(nome_01.value.trim(), nome_02.value.trim());
+	let administrador = new Administrador(
+		nome_01.value.trim(),
+		nome_02.value.trim()
+	);
 
-	if (administrador.validarAdministrador()) {
-
-		modalCadastarSucesso(administrador.nome, administrador.sobrenome, tabelaReserva("success", administrador.nome, administrador.sobrenome));
+	if (administrador.validarAdministrador()) {		
+		modalCadastarSucesso(
+			administrador.nome,
+			administrador.sobrenome,
+			tabelaReserva(
+				"success",
+				administrador.nome,
+				administrador.sobrenome
+		));
 		
-		bancodedados.gravarAdministrador(administrador);
+		bancodedados_perfil.gravarAdministrador(administrador);
 		
 		nome_01.value = nome_02.value = "";
 	}
@@ -98,40 +112,31 @@ cadastrar_administrador.onclick = () => {
 	}
 }
 
-let dadosAdministrador = () => {
-	let administrador = Array();
-
-	administrador = bancodedados.recuperaDadosAdministrador();
-
-	administrador.forEach((a) => {
-		document.getElementById("nome-01").value = a.nome;
-		document.getElementById("nome-02").value = a.sobrenome;
-	})
-}
-
-window.onload = () => {
-	dadosAdministrador();
-}
-
-
-let modalCadastarSucesso = (nome, sobrenome ,tabela) => {
+let modalCadastarSucesso = (nome, sobrenome, tabela) => {
 	$('#modal-01').modal('show');
-	document.getElementById('modal-titulo-01').innerHTML 		= '<i class="fas fa-check-circle"></i> Sucesso!';
-	document.getElementById('modal-documento-01').className		= 'modal-dialog border border-success rounded alert-success';
-	document.getElementById('modal-cabecalho-01').className  	= 'modal-header text-white bg-success';
-	document.getElementById('modal-conteudo-01').innerHTML 		= `A reserva do(a) <span class="text-success"><b>${nome} ${sobrenome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
-	document.getElementById('modal-botao-01').innerHTML 		= 'Voltar';
-	document.getElementById('modal-botao-01').className 		= 'btn btn-outline-success';
+
+	let botao 		= pegaId('modal-botao-01');
+	let fechar 		= pegaId('fechar-modal-01');
+	
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
+	pegaId('modal-documento-01').className	= 'modal-dialog border border-success rounded alert-success';
+	pegaId('modal-cabecalho-01').className  = 'modal-header text-white bg-success';
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${nome} ${sobrenome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-01').className 		= 'btn btn-outline-success';
+
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
 }
 
 let modalCadastrarErro = () => {
 	$('#modal-02').modal('show');
-	document.getElementById('modal-titulo-02').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
-	document.getElementById('modal-documento-02').className		= 'modal-dialog border border-danger rounded alert-danger';
-	document.getElementById('modal-cabecalho-02').className  	= 'modal-header text-white bg-danger';
-	document.getElementById('modal-conteudo-02').innerHTML		= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
-	document.getElementById('modal-botao-02').innerHTML			= 'Voltar';
-	document.getElementById('modal-botao-02').className 		= 'btn btn-outline-danger';
+	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
+	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
+	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
+	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	pegaId('modal-botao-02').innerHTML		= 'Voltar';
+	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
 
 let tabelaReserva = (bg, nome, sobrenome) => {
@@ -150,4 +155,19 @@ let tabelaReserva = (bg, nome, sobrenome) => {
 		</tbody>
 	</table>`;
 	return tabela;
+}
+
+function pegaId(id){
+	return document.getElementById(id);
+}
+
+window.onload  = () => {
+	let administrador = Array();
+
+	administrador = bancodedados_perfil.recuperaDadosAdministrador();
+
+	administrador.forEach((a) => {
+		pegaId("nome-01").value = a.nome;
+		pegaId("nome-02").value = a.sobrenome;
+	})
 }

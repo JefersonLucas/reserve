@@ -20,8 +20,8 @@
 
 ## Traduções
 
-* :us: [Original](https://github.com/JefersonLucas/reserve/blob/master/README.md)
-* :brazil: [English](https://github.com/JefersonLucas/reserve/blob/master/translations/en/README.md)
+* :brazil: [Original](https://github.com/JefersonLucas/reserve/blob/master/README.md)
+* :us: [English](https://github.com/JefersonLucas/reserve/blob/master/translations/en/README.md)
 
 ## Sobre
 

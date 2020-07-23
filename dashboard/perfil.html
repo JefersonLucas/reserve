@@ -13,7 +13,7 @@
  *
  * -->
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -69,9 +69,9 @@
 						</li>
 					</ul>
 					
-					<!-- MENSAGEM -->
+					<!-- PERÍODO -->
 					<h6 class="text-xl-left d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<span id="mensagem"></span>
+						<span id="periodo"></span>
 						<span id="icone"></span>
 					</h6>
 					
@@ -145,14 +145,14 @@
 				  	<div class="form-row">
 						
 						<div class="col-md-6 mb-3">
-					  		<label for="nome-01"><i class="fas fa-signature"></i> Primeiro nome</label>
-					  		<input type="text" class="form-control is-valid" id="nome-01" value="Jeferson" required>
+					  		<label for="nome-01"><i class="fas fa-signature"></i> Nome</label>
+					  		<input type="text" class="form-control is-valid" id="nome-01" required>
 					  		<div id="valida-nome-01"></div>
 						</div>
 						
 						<div class="col-md-6 mb-3">
 					  		<label for="nome-02"><i class="fas fa-signature"></i> Sobrenome</label>
-					  		<input type="text" class="form-control is-valid" id="nome-02" value="Luckas" required>
+					  		<input type="text" class="form-control is-valid" id="nome-02" required>
 					  		<div id="valida-nome-02"></div>
 						</div>
 				  	
@@ -204,6 +204,7 @@
 	<!-- RODAPÉ -->
 	<footer class="footer my-2 text-center text-small">
 
+
 		<p class="align-middle text-center text-muted">&copy; 2018-2020 Jeferson Luckas</p>
 		<ul class="list-inline">
 			<li class="list-inline-item"><a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">License</a></li>
@@ -215,10 +216,10 @@
 	</footer>
 
 	<!-- MODAL TIPO 1 -->
-	<div class="modal fade" id="modal-01" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modal-01" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				
 		<!-- DOCUMENTO -->
-		<div class="modal-dialog" role="document" id="modal-documento-01">
+		<div class="modal-dialog" id="modal-documento-01">
 				
 			<div class="modal-content">
 						
@@ -228,7 +229,7 @@
 					<!-- TÍTULO -->
 					<h5 class="modal-title" id="modal-titulo-01"></h5>
 					<!-- BOTÃO FECHAR MODAL -->
-					<button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="fechar-modal-01">
 						<span aria-hidden="true">&times;</span>
 					</button>
 
@@ -239,7 +240,7 @@
 					
 				<div class="modal-footer">
 					<!-- BOTÃO -->
-					<button type="button" data-dismiss="modal" id="modal-botao-01"></button>
+					<button data-dismiss="modal" type="button" id="modal-botao-01"></button>
 				</div>
 
 			</div>
@@ -262,7 +263,7 @@
 					<!-- TÍTULO -->
 					<h5 class="modal-title" id="modal-titulo-02"></h5>
 					<!-- BOTÃO FECHAR MODAL -->
-					<button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
+					<button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" >
 						<span aria-hidden="true">&times;</span>
 					</button>
 

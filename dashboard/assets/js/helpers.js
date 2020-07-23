@@ -15,7 +15,7 @@
 
 // Banco de Dados
 
-class BancodeDadosAdministrador {
+class BancodeDadosHelpers {
 	constructor() {
 		let idAdministrador = localStorage.getItem("idAdministrador");
 		idAdministrador = idAdministrador === null ? localStorage.setItem("idAdministrador", 0) : idAdministrador;
@@ -28,7 +28,7 @@ class BancodeDadosAdministrador {
 		for(let i = 0; i <= id; i++) {
 			let admin = JSON.parse(localStorage.getItem(i));
 			if (admin === null) {
-				continue
+				continue;
 			}
 			admin.id = i;
 			administrador.push(admin); 
@@ -39,22 +39,31 @@ class BancodeDadosAdministrador {
 
 // Variáveis globais
 
-let bancodedados_administrador = new BancodeDadosAdministrador();
+let bancodedados_helpers = new BancodeDadosHelpers();
 	
-let calendario = "00/00/0000";
-let relogio = "--:--";
+let administrador 		= Array();
+let calendario 			= "00/00/0000";
+let icone 				= null;
+let periodo 			= "";
+let relogio 			= "--:--";
 
 let scrool_subir_pagina = document.querySelector(".to-top");
 
-const DASHBOARD_PAGE 	= document.getElementById("dashboard-page");
-const RESERVAS_PAGE 	= document.getElementById("reserva-page");
-const PERFIL_PAGE 		= document.getElementById("perfil-page");
+const DASHBOARD_PAGE 	= pegaId("dashboard-page");
+const RESERVAS_PAGE 	= pegaId("reserva-page");
+const PERFIL_PAGE 		= pegaId("perfil-page");
 
 // Links
 
 DASHBOARD_PAGE.onclick 	= () => window.location.href = "index.html";
 RESERVAS_PAGE.onclick 	= () => window.location.href = "reserva.html";
 PERFIL_PAGE.onclick 	= () => window.location.href = "perfil.html";
+
+// Substitui o getElementById
+
+function pegaId(id){
+	return document.getElementById(id);
+}
 
 // Scroll para subir a página
 
@@ -65,9 +74,9 @@ window.addEventListener("scroll", () => {
   	else {
     	scrool_subir_pagina.classList.remove("active");
   	}
-})
+});
 
-// Data, Hora e Mensagem
+// Atualização de data, hora e periodo
 
 setInterval(()=>{
 
@@ -79,9 +88,6 @@ setInterval(()=>{
 	let mes 		= data.getMonth() + 1;
 	let dia 		= data.getDate();
 	let semana 		= data.getDay();
-	let mensagem 	= "";
-	let icone 		= null;
-	let administrador = Array();
 
 	mes = mes < 10 ? mes = `0${mes}` : mes;
 	dia = dia < 10 ? dia = `0${dia}` : dia;
@@ -97,7 +103,7 @@ setInterval(()=>{
 		case 1:
 			semana = "Segunda-feira";
 			break
-		case 2: 
+		case 2:
 			semana = "Terça-feira";
 			break
 		case 3:
@@ -117,24 +123,25 @@ setInterval(()=>{
 	calendario = `${dia}/${mes}/${ano}`;
 	relogio = `${horas}:${minutos}:${segundos}`;
 	
-	mensagem = relogio >= "06:00:00" && relogio <= "12:00:00" ? mensagem = "Bom dia!"   : mensagem; 
-	mensagem = relogio >= "12:00:00" && relogio <= "18:00:00" ? mensagem = "Boa tarde!" : mensagem;	
-	mensagem = relogio >= "18:00:00" || relogio <= "06:00:00" ? mensagem = "Boa noite!" : mensagem;
+	periodo = relogio >= "06:00:00" && relogio <= "12:00:00" ? periodo = "Bom dia!"   : periodo; 
+	periodo = relogio >= "12:00:00" && relogio <= "18:00:00" ? periodo = "Boa tarde!" : periodo;	
+	periodo = relogio >= "18:00:00" || relogio <= "06:00:00" ? periodo = "Boa noite!" : periodo;
 
-	icone = mensagem === "Bom dia!"   ? document.getElementById("icone").className = "fas fa-sun fa-lg"		  : icone;
-	icone = mensagem === "Boa tarde!" ? document.getElementById("icone").className = "fas fa-cloud-sun fa-lg" : icone;
-	icone = mensagem === "Boa noite!" ? document.getElementById("icone").className = "fas fa-moon fa-lg"	  : icone;
+	icone = periodo === "Bom dia!"   ? pegaId("icone").className = "fas fa-sun fa-lg"		  	: icone;
+	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-cloud-sun fa-lg" 	: icone;
+	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg"			: icone;
 	
-	administrador = bancodedados_administrador.recuperaDadosAdministrador();
+	administrador = bancodedados_helpers.recuperaDadosAdministrador();
 
-	document.getElementById("calendario").innerHTML = calendario;
-	document.getElementById("relogio").innerHTML 	= relogio;
-	document.getElementById("mensagem").innerHTML 	= mensagem;
-	document.getElementById("semana").innerHTML 	= semana;
+	pegaId("calendario").innerHTML 			= calendario;
+	pegaId("relogio").innerHTML 			= relogio;
+	pegaId("periodo").innerHTML 			= periodo;
+	pegaId("semana").innerHTML 				= semana;
+	pegaId("administrador-nome").innerHTML 	= "Nome Sobrenome";
 	
-	administrador.forEach((a) => document.getElementById("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
-
-})
+	administrador.forEach((a) => pegaId("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
+	
+});
 
 // Feather
 
