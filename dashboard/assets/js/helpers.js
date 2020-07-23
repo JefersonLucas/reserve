@@ -15,7 +15,7 @@
 
 // Banco de Dados
 
-class BancodeDadosHelpers {
+class BancoDadosHelpers {
 	constructor() {
 		let idAdministrador = localStorage.getItem("idAdministrador");
 		idAdministrador = idAdministrador === null ? localStorage.setItem("idAdministrador", 0) : idAdministrador;
@@ -39,7 +39,7 @@ class BancodeDadosHelpers {
 
 // Variáveis globais
 
-let bancodedados_helpers = new BancodeDadosHelpers();
+let banco_dados_helpers = new BancoDadosHelpers();
 	
 let administrador 		= Array();
 let calendario 			= "00/00/0000";
@@ -131,7 +131,7 @@ setInterval(()=>{
 	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-cloud-sun fa-lg" 	: icone;
 	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg"			: icone;
 	
-	administrador = bancodedados_helpers.recuperaDadosAdministrador();
+	administrador = banco_dados_helpers.recuperaDadosAdministrador();
 
 	pegaId("calendario").innerHTML 			= calendario;
 	pegaId("relogio").innerHTML 			= relogio;

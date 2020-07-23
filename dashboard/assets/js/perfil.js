@@ -27,7 +27,7 @@ class Administrador {
 		return true;
 	}
 }
-class BancodeDadosPerfil {
+class BancoDadosPerfil {
 	constructor() {
 		let idAdministrador = localStorage.getItem("idAdministrador");
 		idAdministrador = idAdministrador === null ? localStorage.setItem("idAdministrador", 0) : idAdministrador;
@@ -54,7 +54,7 @@ class BancodeDadosPerfil {
 	}
 }
 
-let bancodedados_perfil = new BancodeDadosPerfil();
+let banco_dados_perfil = new BancoDadosPerfil();
 
 let nome_01 = pegaId("nome-01");
 let nome_02 = pegaId("nome-02");
@@ -103,7 +103,7 @@ cadastrar_administrador.onclick = () => {
 				administrador.sobrenome
 		));
 		
-		bancodedados_perfil.gravarAdministrador(administrador);
+		banco_dados_perfil.gravarAdministrador(administrador);
 		
 		nome_01.value = nome_02.value = "";
 	}
@@ -164,7 +164,7 @@ function pegaId(id){
 window.onload  = () => {
 	let administrador = Array();
 
-	administrador = bancodedados_perfil.recuperaDadosAdministrador();
+	administrador = banco_dados_perfil.recuperaDadosAdministrador();
 
 	administrador.forEach((a) => {
 		pegaId("nome-01").value = a.nome;

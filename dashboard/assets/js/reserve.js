@@ -35,13 +35,11 @@ class Reserva {
 }
 class BancoDadosReserve {
 	constructor() {
-		let idReserva = localStorage.getItem('idReserva');
-		if (idReserva === null) {
-			localStorage.setItem('idReserva', 0);
-		}
+		let idReserva = localStorage.getItem("idReserva");
+		idReserva = idReserva === null ? localStorage.setItem("idReserva", 0) : idReserva;
 	}
 	pegaProximoId(nome) {
-		let proximo_Id = localStorage.getItem(`idReserva`);
+		let proximo_Id = localStorage.getItem("idReserva");
 		return parseInt(proximo_Id) + 1;
 	}
 	gravar(reserva, nome) {
@@ -49,6 +47,26 @@ class BancoDadosReserve {
 
 		localStorage.setItem(id, JSON.stringify(reserva));
 		localStorage.setItem(`id${nome}`, id); 
+	}
+	verificaIdReserva() {
+		let id = localStorage.getItem("idReserva");
+		
+		id = id > 0 ? true : false;
+		
+		return id;
+	}
+	removerReserva(id) {
+		localStorage.removeItem(id);
+	}
+	removeTodasReservas() {
+		let id = localStorage.getItem("idReserva");
+		
+		for(let i = 0; i <= id; i++) {
+			localStorage.removeItem(id);
+			if (id === null || id === null || id > 0) {
+				localStorage.setItem("idReserva", 0);
+			}
+		}
 	}
 }
 
@@ -62,6 +80,7 @@ let hora_final 	 		= pegaId("hora-final");
 let data 		 		= pegaId("data");
 let atualizar 			= pegaId("atualizar");
 let imprimir 			= pegaId("imprimir");
+let excluir 			= pegaId("excluir");
 let alarme_ativado 		= pegaId("alarme-ativado");
 let alarme_desativado 	= pegaId("alarme-desativado");
 
@@ -178,6 +197,22 @@ cadastrar_usuario.onclick = () => {
 	}
 }
 
+// Excluir todas as Reservas
+
+excluir.onclick = () => {
+	
+	if(banco_dados_reserve.verificaIdReserva()) {
+		let pergunta = prompt("Essa ação irá remover todas as reservas.\nDeseja continuar?", "Não");
+
+		if (pergunta === "Sim" || pergunta === "S" || pergunta === "sim" || pergunta === "s") {
+			modalExcluiTodasReservas();
+			banco_dados_reserve.removeTodasReservas();
+		}
+
+	}
+
+} 
+
 // Modais
 
 let modalCadastarSucesso = (nome, tabela) => {
@@ -202,6 +237,15 @@ let modalCadastrarErro = () => {
 	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
 	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
 	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	pegaId('modal-botao-02').innerHTML		= 'Voltar';
+	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
+}
+let modalExcluiTodasReservas = () => {
+	$('#modal-02').modal('show');
+	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-trash-alt"></i> Excluir';
+	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
+	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
+	pegaId('modal-conteudo-02').innerHTML	= 'Todas as suas reservas foram <span class="text-danger"><b>excluídas</b></span>!';
 	pegaId('modal-botao-02').innerHTML		= 'Voltar';
 	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
