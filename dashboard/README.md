@@ -14,8 +14,7 @@
   	</p>
 </p>
 <p align="center">
-    <img src="assets/img/capture-01.png" alt="Dashboard" width="500">
-    <img src="assets/img/capture-02.png" alt="Reservas" width="200">
+    <img src="assets/img/capture.png" alt="Dashboard" width="500">
 </p>
 
 ## Traduções

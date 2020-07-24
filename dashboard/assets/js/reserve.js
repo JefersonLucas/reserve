@@ -55,6 +55,29 @@ class BancoDadosReserve {
 		
 		return id;
 	}
+	recuperaReservas() {
+		let reservas = Array();
+
+		let id = localStorage.getItem("idReserva");
+
+		for(let i = 0; i <= id; i++) {
+			let reserva = JSON.parse(localStorage.getItem(i));
+
+			if (
+				reserva 				=== null 		||
+				reserva.usuario 		=== undefined 	||
+				reserva.equipamento 	=== undefined 	||
+				reserva.local 			=== undefined 	||
+				reserva.hora_inicial 	=== undefined 	||
+				reserva.hora_final 		=== undefined 	||
+				reserva.data 			=== undefined) {
+				continue;
+			}
+			reserva.id = i;
+			reservas.push(reserva)
+		}
+		return reservas;
+	}
 	removerReserva(id) {
 		localStorage.removeItem(id);
 	}
@@ -211,7 +234,27 @@ excluir.onclick = () => {
 
 	}
 
-} 
+}
+
+// Exibindo a lista de reservas no Dashboard
+
+window.onload = () => {
+
+	let reservas = Array();
+	let lista_reservas = pegaId("lista-reservas-02");
+
+	reservas = banco_dados_reserve.recuperaReservas();
+
+	reservas.forEach((r) =>{
+		let linha = lista_reservas.insertRow();
+
+		linha.insertCell(0).innerHTML = r.usuario;
+		linha.insertCell(1).innerHTML = r.equipamento;
+		linha.insertCell(2).innerHTML = r.local;
+		linha.insertCell(3).innerHTML = `${r.hora_inicial} - ${r.hora_final}`;
+		linha.insertCell(4).innerHTML = data_BR(r.data);
+	});
+};
 
 // Modais
 

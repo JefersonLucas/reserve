@@ -1,51 +1,52 @@
-![JefersonLuckas](https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue)
-![GitHub language count](https://img.shields.io/github/languages/count/JefersonLucas/reserve)
-![GitHub top language](https://img.shields.io/github/languages/top/JefersonLucas/reserve)
-![GitHub repo size](https://img.shields.io/github/repo-size/JefersonLucas/reserve)
-![GitHub](https://img.shields.io/github/license/JefersonLucas/reserve)
-![GitHub contributors](https://img.shields.io/github/contributors/JefersonLucas/reserve)
-![GitHub stars](https://img.shields.io/github/stars/JefersonLucas/reserve?style=social)
-![GitHub forks](https://img.shields.io/github/forks/JefersonLucas/reserve?style=social)
-
 <h1 align="center">Reserve</h1>
 
 <p align="center">
-  <img src="assets/img/logo-black.png" width="200">
+  <img src="assets/img/logo.png" width="200">
 </p>
-    <p align="center"><em>Tenha sempre o controle fácil, rápido e seguro das suas reservas.</em></p>
+    <p align="center"><em>Always have easy, fast and secure control of your reservations.</em></p>    
+    <p align="center">
+        <img src="https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue" alt="Project">
+        <img src="https://img.shields.io/github/languages/count/JefersonLucas/reserve" alt="language count">
+        <img src="https://img.shields.io/github/license/JefersonLucas/reserve" alt="License">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="contributors">
+        <img src="https://img.shields.io/github/stars/JefersonLucas/reserve?style=social" alt="stars">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="forks">
+  	</p>
+</p>
+<p align="center">
+    <img src="assets/img/capture.png" alt="Dashboard" width="500">
 </p>
 
+## Translations
 
-## Traduções
+* :brazil: [Original](https://github.com/JefersonLucas/reserve/blob/master/README.md)
+* :us: [English](https://github.com/JefersonLucas/reserve/blob/master/translations/en/README.md)
 
-* :us: [Original](https://github.com/JefersonLucas/reserve/blob/master/README.md)
-* :brazil: [English](https://github.com/JefersonLucas/reserve/blob/master/translations/en/README.md)
+## About
 
-## Sobre
+Reserve is a reservation application that uses the functionality of the API - localStorage of the browser to store information, making it possible to insert, read, edit and remove the reservations made. With this application it will be possible to:
 
-O Reserve é um aplicativo de reservas que utiliza as funcionalidades da API - localStorage do navegador para armazenamento das informações, sendo possível efetuar inserção, leitura, edição e remoção das reservas efetuadas. Com esse aplicativo será possível:
+- [x] Register;
+- [x] Filter;
+- [x] Preview;
+- [x] Edit;
+- [x] Exclude; and
+- [x] Print reservations.
 
-- [x] Cadastrar;
-- [x] Filtrar;
-- [x] Visualizar;
-- [x] Editar;
-- [x] Excluir; e
-- [x] Imprimir reservas.
+## Starting
 
-## Começando
+These instructions will provide a copy of the project running on your local machine.
 
-Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local.
+### Installing
 
-### Instalando
+Follow step by step the following ways to obtain the code on your local machine.
 
-Siga passo a passo as seguinte formas de obter o código na sua máquina local.
+#### Cloning the repository
 
-#### Clonando o repositório
-
-Inicie o repositorio na sua máquina local utilizando as seguintes linhas de comando.
+Start the repository on your local machine using the following command lines.
 
 ```
-// Clonar com SSH
+// Clone with SSH
 
 mkdir reserve
 cd reserve
@@ -54,54 +55,54 @@ git clone git@github.com:JefersonLucas/reserve.git
 ```
 
 ```
-// Clonar com HTTPS
+// Clone with HTTPS
 
 mkdir reserve
 cd reserve
 git init
 git clone https://github.com/JefersonLucas/reserve.git
 ```
-Agora os arquivos que estão no repositório remoto estão clonados no repositório local.
+The files that are in the remote repository are now cloned into the local repository.
 
-#### Baixando o repositório
+#### Downloading the repository
 
-Você também pode [baixar](https://github.com/JefersonLucas/reserve/archive/master.zip) o repositório em formato zip.
+You can also [download](https://github.com/JefersonLucas/reserve/archive/master.zip) the repository in zip format.
 
-## Ambiente
+## Environment
 
-Veja aqui o a página desse projeto implantado por @github-pages [ver implantação](https://jefersonlucas.github.io/reserve/).
+See here the page of this project implemented by @github-pages [view environment](https://jefersonlucas.github.io/reserve/).
 
-## Como funciona?
+## How it works?
 
-Leia a nossa [Wiki](https://github.com/JefersonLucas/reserve/wiki) para obter mais informações.
+Read our [Wiki](https://github.com/JefersonLucas/reserve/wiki) for more information.
 
-## Construído com
+## Built with
 
-* [Bootstrap](https://getbootstrap.com/) - Framework front end.
-* [Font Awesome](https://maven.apache.org/) - Framework de pacote de ícones.
+* [Bootstrap](https://getbootstrap.com/) - Front end framework.
+* [Font Awesome](https://maven.apache.org/) - Icon pack framework.
 
-## Contribuindo
+## Contributing
 
-Leia o [CONTRIBUTING.md](https://github.com/JefersonLucas/reserve/blob/master/CONTRIBUTING.md) para obter detalhes sobre nosso código de conduta e o processo para enviar solicitações pull para nós.
+Read the [CONTRIBUTING.md](https://github.com/JefersonLucas/reserve/blob/master/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
 
-## Versionamento
+## Versioning
 
-Usamos o [SemVer](https://semver.org/lang/pt-BR/) para controle de versão. Para as versões disponíveis, consulte as [tags nesse repositório](https://github.com/JefersonLucas/reserve/tags).
+We use [SemVer](https://semver.org/lang/pt-BR/) for version control. For available versions, see the [tags in this repository](https://github.com/JefersonLucas/reserve/tags).
 
-## Autores
+## Authors
 
-* [@JefersonLucas](https://github.com/JefersonLucas) - _Idealizador_.
+* [@JefersonLucas](https://github.com/JefersonLucas) - _Creator_.
 
-Veja também a lista completa de [contribuidores](https://github.com/JefersonLucas/reserve/contributors) que participaram deste projeto.
+See also the complete list of [contributors](https://github.com/JefersonLucas/reserve/contributors) who participated in this project.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE.md](https://github.com/JefersonLucas/reserve/blob/master/LICENSE) para obter detalhes.
+This project is licensed under the MIT license - see the file [LICENSE.md](https://github.com/JefersonLucas/reserve/blob/master/LICENSE) for details.
 
-## Agradecimentos
+## Thanks
 
-Meus sinceros agradecimentos:
+My sincere thanks:
 
-* Primeiramente a Deus. 
-* Meus sinceros agradecimentos a todos que visitam o projeto e deixa uma estrela como reconhecimento.
-* Ao meu professor [Jorge Sant Ana](https://twitter.com/jorgesantanabr) pela inspiração.
+* First to God.
+* My sincere thanks to everyone who visits the project and leaves a star in recognition.
+* To my teacher [Jorge Sant Ana](https://twitter.com/jorgesantanabr) for inspiration.

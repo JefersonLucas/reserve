@@ -169,5 +169,5 @@ window.onload  = () => {
 	administrador.forEach((a) => {
 		pegaId("nome-01").value = a.nome;
 		pegaId("nome-02").value = a.sobrenome;
-	})
+	});
 }

@@ -34,6 +34,29 @@ class BancoDadosHelpers {
 			administrador.push(admin); 
 		}
 		return administrador;
+	}	
+	recuperaReservas() {
+		let reservas = Array();
+
+		let id = localStorage.getItem("idReserva");
+
+		for(let i = 0; i <= id; i++) {
+			let reserva = JSON.parse(localStorage.getItem(i));
+
+			if (
+				reserva === null ||
+				reserva.usuario == undefined ||
+				reserva.equipamento == undefined ||
+				reserva.local === undefined ||
+				reserva.hora_inicial == undefined ||
+				reserva.hora_final == undefined ||
+				reserva.data == undefined) {
+				continue;
+			}
+			reserva.id = i;
+			reservas.push(reserva)
+		}
+		return reservas;
 	}
 }
 
@@ -75,6 +98,26 @@ window.addEventListener("scroll", () => {
     	scrool_subir_pagina.classList.remove("active");
   	}
 });
+
+//	Converter datas
+
+let data_BR_02 = data_USA => {
+	let dia  		= data_USA.substr(8,2);
+	let mes  		= `/${data_USA.substr(5,2)}`;
+	let ano  		= `/${data_USA.substr(0,4)}`;
+	let data_BR 	= `${dia}${mes}${ano}`;
+
+	return data_BR;
+}
+
+let data_USA_02 = data_BR => {
+	let ano  		= data_BR.substr(6,4);
+	let mes  		= `-${data_BR.substr(3,2)}`;	
+	let dia  		= `-${data_BR.substr(0,2)}`;
+	let data_USA 	= `${ano}${mes}${dia}`;
+
+	return data_USA;
+}
 
 // Atualização de data, hora e periodo
 
@@ -142,6 +185,27 @@ setInterval(()=>{
 	administrador.forEach((a) => pegaId("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
 	
 });
+
+// Exibindo a lista de reservas no Dashboard
+
+window.onload = () => {
+
+	let reservas = Array();
+	let lista_reservas = pegaId("lista-reservas-01");
+
+	reservas = banco_dados_helpers.recuperaReservas();
+
+	reservas.forEach((r) =>{
+		let linha = lista_reservas.insertRow();
+
+		linha.insertCell(0).innerHTML = r.usuario;
+		linha.insertCell(1).innerHTML = r.equipamento;
+		linha.insertCell(2).innerHTML = r.local;
+		linha.insertCell(3).innerHTML = r.hora_inicial;
+		linha.insertCell(4).innerHTML = r.hora_final;
+		linha.insertCell(5).innerHTML = data_BR_02(r.data);
+	});
+};
 
 // Feather
 

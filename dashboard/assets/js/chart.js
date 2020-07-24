@@ -23,9 +23,9 @@
 		  10,
 		  8,
 		  11,
-		  10,
 		  8,
-		  5
+		  10,
+		  0
 		],
 		lineTension: 0,
 		backgroundColor: 'transparent',
