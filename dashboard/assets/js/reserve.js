@@ -134,7 +134,7 @@ class BancoDadosReserve {
 
 // Variáveis globais
 
-let banco_dados_reserve = new BancoDadosReserve(); 
+let bancodados_reserve = new BancoDadosReserve(); 
 let usuario 	 		= pegaId("usuario");
 let equipamento  		= pegaId("equipamento");
 let local 		 		= pegaId("local");
@@ -285,7 +285,7 @@ cadastrar_usuario.onclick = () => {
 
 	if(reserva.validarReserva()) {
 
-		banco_dados_reserve.gravar(reserva, "Reserva");
+		bancodados_reserve.gravar(reserva, "Reserva");
 		
 		modalCadastarSucesso(
 			reserva.usuario,
@@ -314,12 +314,12 @@ imprimir.onclick 	= () => window.print();
 
 excluir.onclick 	= () => {
 	
-	if(banco_dados_reserve.verificaIdReserva()) {
+	if(bancodados_reserve.verificaIdReserva()) {
 		let pergunta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
 
 		if (pergunta === "Sim" || pergunta === "S" || pergunta === "sim" || pergunta === "s") {
 			modalExcluiTodasReservas();
-			banco_dados_reserve.removeTodasReservas();
+			bancodados_reserve.removeTodasReservas();
 		}
 	}
 }
@@ -342,11 +342,189 @@ alarme_desativado.onclick = () => {
 	pegaId("alarme-desativado").className 	= "dropdown-item active";
 }
 
+// Grupo de Botões
+
+`<div class="btn-group btn-group-sm d-flex justify-content-center align-items-center" role="group">
+
+	<!-- Botão Editar -->			
+		
+	<!-- Botão Vericar -->
+	<button class="btn btn-sm btn-outline-primary border-0" id="verificar" title="Vericar reserva" type="button">
+		<i class="fas fa-user-plus fa-lg"></i>
+	</button>
+
+	<!-- Botão Excluir -->
+	<button class="btn btn-sm btn-outline-danger border-0" id="excluir" title="Excluir reserva" type="button">
+		<i class="fas fa-user-times fa-lg"></i>
+	</button>
+
+</div>`
+
+let grupo_botoes = (id, editar, verificar, excluir) => {
+
+	let botoes 			= document.createElement("div");
+	botoes.className 	= "btn-group btn-group-sm d-flex justify-content-center align-items-center";
+	botoes.title 		= "Opções";
+	botoes.role 		= "group"
+	botoes.id 			= `id-botoes-${id}`;
+
+	return botoes;
+}
+
+// Editar
+
+// <button class="btn btn-sm btn-outline-success border-0" title="Editar reserva" type="button">
+// <i class="fas fa-user-edit fa-lg"></i>
+
+let botaoEditarReserva = (id, nome, equipamento, local, hora_inicial, hora_final, data, status) => {
+	
+	let editar 			= document.createElement("button");
+	editar.className 	= "btn btn-sm btn-group btn-group-sm border-0 btn-outline-success";
+	editar.title 		= "Editar reserva";
+	editar.innerHTML 	= '<i class="fas fa-user-edit fa-lg"></i>';
+	editar.type	 		= "button";
+	editar.id 			= `id-editar-${id}`;
+
+	// editar.onclick 		= function() {
+
+	// 	let = resposta = prompt("Deseja EDITAR a reserva do(a) Professor(a) "+nome+"?","Não");
+
+	// 		if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+
+	// 			let _nome 			= prompt("Nome do(a) Professor(a):", nome).trim();
+	// 			let _equipamento 	= prompt("Descrição do equipamento:",equipamento).trim();
+	// 			let _sala 			= prompt("Nome da sala:",sala).trim();
+	// 			let _horaA 			= prompt("Início da aula:",horaA).trim();
+	// 			let _horaB 			= prompt("Término da aula:",horaB).trim();
+	// 			let _dataA 			= prompt("Data da aula:",dataBR(dataA)).trim();
+
+	// 			let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, dataEUA(_dataA), _horaA, dataB, _horaB, horaC, horaD);
+
+	// 			if (reserva.validarDados()) {
+
+	// 				let id = this.id.replace('id-editar-','');
+	// 				bancodedados.removerReserva(id);
+
+	// 				modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, horaSeg(_horaA), horaSeg(_horaB)), "Professor");
+	// 				bancodedados.gravar(reserva, "Professor");
+
+	// 			}
+	// 			else{
+	// 				modalErro();
+	// 			}
+	// 		}
+	// 	}
+	return editar;
+}
+
+// Verificar
+
+let botaoVerificarReserva = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
+
+	verificar 			= document.createElement("button");
+	verificar.className = "btn btn-sm btn-group btn-group-sm border-0 btn-outline-primary";
+	verificar.title 	= "Verificar reserva";
+	verificar.innerHTML = '<i class="fas fa-user-plus fa-lg"></i>';
+	verificar.id 		= `id-verificar-${id}`;
+ 	
+ // 	verificar.onclick 	= function() {
+ 	
+ // 			if(status ==  "Aguardando") {
+	
+	// 		let resposta = prompt("A reserva do(a) Professor(a) "+nome+" já está em uso?", "Não");
+	
+	// 		if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+	
+	// 			let _nome 		 = nome;
+	// 			let _equipamento = equipamento;
+	// 			let _status 	 = "Em uso";
+	// 			let _sala 		 = sala;
+	// 			let _dataA 		 = dataA;
+	// 			let _horaA 		 = horaA;
+	// 			let _horaB 		 = horaB;
+	// 			let _dataB 		 = dataAtual();
+	// 			let _horaC 		 = horaAtual(0,0,0);
+	// 			let _horaD 		 = horaD;
+	
+	// 			reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+	
+	// 			if(reserva.validarDados()) {
+	// 				modalVerificar(_nome, tabelaProfessorB("primary", _equipamento, cor(_status), _sala, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), horaSeg(_horaB), _horaC, _horaD), "Professor", _status);
+	// 				let id = this.id.replace('id-verifica-','');
+	// 				bancodedados.removerReserva(id);				
+	// 				bancodedados.gravar(reserva, "Professor");
+	// 			}
+	
+	// 			else {
+	// 				modalErro();
+	// 			}
+	// 		}
+ // 		}
+ 	
+ // 		else if(status == "Em uso") {
+	
+	// 		let resposta = prompt("A reserva do(a) Professor(a) "+nome+" foi recolhida?", "Não");
+	
+	// 		if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+	// 			let _nome 		 = nome;
+	// 			let _equipamento = equipamento;
+	// 			let _status 	 = "Recolhida";
+	// 			let _sala 		 = sala;
+	// 			let _dataA 		 = dataA;
+	// 			let _horaA 		 = horaA;
+	// 			let _horaB 		 = horaB;
+	// 			let _dataB 		 = dataB;
+	// 			let _horaC 		 = horaC;
+	// 			let _horaD 		 = horaAtual(0,0,0);
+	
+	// 			reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+	// 			if(reserva.validarDados()) {
+	// 				let id = this.id.replace('id-verifica-','');
+	// 				bancodedados.removerReserva(id);
+	// 				modalVerificar(_nome, tabelaProfessorB("primary", _equipamento, cor(_status), _sala, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), horaSeg(_horaB), _horaC, _horaD), "Professor", _status);
+	// 				bancodedados.gravar(reserva, "Professor");
+	// 			}
+	// 			else {
+	// 				modalErro();
+	// 			}
+	// 		}
+	// 	}	
+	// 	else {	
+	// 		modalVerificarErro(nome, "Professor");
+	// 	}
+	// }
+	return verificar;
+}
+
+// Excluir
+
+let botaoExcluirReserva = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
+
+	excluir 			= document.createElement("button");
+	excluir.className 	= 'btn btn-sm btn-group btn-group-sm border-0 btn-outline-danger';
+	excluir.title 		= 'Excluir reserva';
+	excluir.innerHTML 	= '<i class="fas fa-user-times fa-lg"></i>';
+	excluir.id 			= `id-excluir-${id}`;
+
+	// excluir.onclick 	= function() {
+
+	// 	let resposta = prompt("Deseja EXCLUIR a reserva do(a) Professor(a) "+nome+"?", "Não");
+
+	// 	if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+
+	// 		let id = this.id.replace('id-excluir-','');
+	// 		bancodedados.removerReserva(id);
+	// 		modalExcluir(nome, tabelaProfessorB("danger", equipamento, cor(status), sala, dataBR(dataA), horaSeg(horaA), dataBR(dataB), horaSeg(horaB), horaC, horaD), "Professor");
+	// 	}
+	// }
+	return excluir;
+}
+
 // Status da Reserva
 
-pegaId("status-01").innerHTML = banco_dados_reserve.pesquisaStatusAguardando();
-pegaId("status-02").innerHTML = banco_dados_reserve.pesquisaStatusEmUso();
-pegaId("status-03").innerHTML = banco_dados_reserve.pesquisaStatusRecolhida();
+pegaId("status-01").innerHTML = bancodados_reserve.pesquisaStatusAguardando();
+pegaId("status-02").innerHTML = bancodados_reserve.pesquisaStatusEmUso();
+pegaId("status-03").innerHTML = bancodados_reserve.pesquisaStatusRecolhida();
 
 // Modais
 
@@ -421,7 +599,7 @@ window.onload = () => {
 	let reservas = Array();
 	let lista_reservas = pegaId("lista-reservas-02");
 
-	reservas = banco_dados_reserve.recuperaReservas();
+	reservas = bancodados_reserve.recuperaReservas();
 
 	reservas.forEach(r =>{
 
@@ -430,7 +608,11 @@ window.onload = () => {
 		linha.insertCell(0).innerHTML = r.usuario;
 		linha.insertCell(1).innerHTML = r.equipamento;
 		linha.insertCell(2).innerHTML = r.local;
-		linha.insertCell(3).innerHTML = data_BR(r.data);
 		linha.insertCell(3).innerHTML = cor_status(r.status);
+		linha.insertCell(4).append(
+			botaoEditarReserva(),
+			botaoVerificarReserva(),
+			botaoExcluirReserva()
+		);
 	});
 };

@@ -144,11 +144,30 @@
 
 				<h2><span class="fas fa-file-alt"></span> Total</h2>
 				
-				<div class="table-responsive border-bottom rounded-top mt-4">
-					
+				<div class="table-responsive border-bottom mt-4">
+				
 					<table class="table table-striped table-hover table-bordered table-sm shadow">
 						
 					   <thead>
+					   		<tr class="text-center bg-dark">
+								<th class="text-white" title="Status das reservas" colspan="6">
+									<!-- STATUS -->
+									<nav class="nav nav-underline d-flex justify-content-center align-items-center">
+										<a class="nav-link" title="Aguardando">
+											<i class="fas fa-file fa-lg"></i>							
+											<span class="badge badge-pill bg-light text-dark" id="status-01"></span>
+										</a>							
+										<a class="nav-link" title="Em uso">
+											<i class="fas fa-file-upload fa-lg"></i>
+											<span class="badge badge-pill bg-light text-dark" id="status-02"></span>
+										</a>
+										<a class="nav-link" title="Recolhido">
+											<i class="fas fa-file-download fa-lg"></i>
+											<span class="badge badge-pill bg-light text-dark" id="status-03"></span>
+										</a>
+									</nav>
+								</th>
+					   		</tr>
 							<tr class="text-center bg-dark">
 								<th class="text-white" title="Usuário"><i class="fas fa-user fa-lg"></i></th>
 								<th class="text-white" title="Equipamento"><i class="fas fa-laptop fa-lg"></i></th>
@@ -191,7 +210,7 @@
 	<script src="assets/js/bootstrap.bundle.min.js"d></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-	<script src="assets/js/chart.js"></script>
+	<script src="assets/js/dashboard.js"></script>
 	<script src="assets/js/helpers.js"></script>
 
 </body>
