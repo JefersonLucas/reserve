@@ -16,13 +16,14 @@
 // Classes
 
 class Reserva {
-	constructor(usuario, equipamento, local, hora_inicial, hora_final, data) {
+	constructor(usuario, equipamento, local, hora_inicial, hora_final, data, status) {
 		this.usuario 		= usuario;
 		this.equipamento 	= equipamento;
 		this.local 			= local;
 		this.hora_inicial 	= hora_inicial;
 		this.hora_final 	= hora_final;
 		this.data 			= data;
+		this.status 		= status;
 	}
 	validarReserva() {
 		for (let r in this){
@@ -33,6 +34,7 @@ class Reserva {
 		return true;
 	}
 }
+
 class BancoDadosReserve {
 	constructor() {
 		let idReserva = localStorage.getItem("idReserva");
@@ -70,7 +72,8 @@ class BancoDadosReserve {
 				reserva.local 			=== undefined 	||
 				reserva.hora_inicial 	=== undefined 	||
 				reserva.hora_final 		=== undefined 	||
-				reserva.data 			=== undefined) {
+				reserva.data 			=== undefined 	||
+				reserva.status 			=== undefined) {
 				continue;
 			}
 			reserva.id = i;
@@ -91,9 +94,46 @@ class BancoDadosReserve {
 			}
 		}
 	}
+	pesquisaStatusAguardando() {
+		let pesquisa = Array();
+
+		pesquisa = this.recuperaReservas();
+
+		pesquisa = pesquisa.filter(p => p.status === "Aguardando");
+		
+		if (pesquisa.length < 10) {
+			pesquisa = `0${pesquisa.length}`;
+		}
+		return pesquisa;
+	}
+	pesquisaStatusEmUso() {
+		let pesquisa = Array();
+
+		pesquisa = this.recuperaReservas();
+
+		pesquisa = pesquisa.filter(p => p.status === "Em uso");
+		
+		if (pesquisa.length < 10) {
+			pesquisa = `0${pesquisa.length}`;
+		}
+		return pesquisa;
+	}
+	pesquisaStatusRecolhida() {
+		let pesquisa = Array();
+
+		pesquisa = this.recuperaReservas();
+
+		pesquisa = pesquisa.filter(p => p.status === "Recolhida");
+		
+		if (pesquisa.length < 10) {
+			pesquisa = `0${pesquisa.length}`;
+		}
+		return pesquisa;
+	}
 }
 
 // Variáveis globais
+
 let banco_dados_reserve = new BancoDadosReserve(); 
 let usuario 	 		= pegaId("usuario");
 let equipamento  		= pegaId("equipamento");
@@ -106,28 +146,10 @@ let imprimir 			= pegaId("imprimir");
 let excluir 			= pegaId("excluir");
 let alarme_ativado 		= pegaId("alarme-ativado");
 let alarme_desativado 	= pegaId("alarme-desativado");
+let cadastrar_usuario 	= pegaId("cadastrar-usuario");
+let status 				= "Aguardando";
 
-// Validações
-
-// Formulário
-
-(() => {
-	window.addEventListener("load", () => {
-		let formulario = document.getElementsByClassName("needs-validation");
-			let validacao = Array.prototype.filter.call(formulario, (form) => {
-				form.addEventListener("submit", (evento) => {
-
-				if (form.checkValidity() === false) {
-					evento.preventDefault();
-					evento.stopPropagation();
-				}
-				form.classList.add("was-validated");
-			}, false);
-		});
-	}, false);
-})();
-
-// Input
+// Validação de input
 
 setInterval(() => {
 
@@ -186,9 +208,68 @@ setInterval(() => {
 	}
 });
 
-// Cadastrar Reserva
+// Validação de formulário
 
-let cadastrar_usuario = pegaId("cadastrar-usuario");
+(() => {
+	window.addEventListener("load", () => {
+		let formulario = document.getElementsByClassName("needs-validation");
+			let validacao = Array.prototype.filter.call(formulario, (form) => {
+				form.addEventListener("submit", (evento) => {
+
+				if (form.checkValidity() === false) {
+					evento.preventDefault();
+					evento.stopPropagation();
+				}
+				form.classList.add("was-validated");
+			}, false);
+		});
+	}, false);
+})();
+
+//	Modifica a cor do Status
+
+let cor_status = status => {
+	let cor = null;
+	
+	if(status == "Aguardando") {
+		cor = `<span class="text-danger"><b>${status}</b></span>`;
+	}
+	else if(status == "Em uso") {
+		cor = `<span class="text-success"><b>${status}</b></span>`;
+	}
+	else {
+		cor = `<span class="text-primary"><b>${status}</b></span>`;
+	}
+	return cor;
+}
+
+//	Converter datas
+
+let data_BR = data_USA => {
+	let dia  		= data_USA.substr(8,2);
+	let mes  		= `/${data_USA.substr(5,2)}`;
+	let ano  		= `/${data_USA.substr(0,4)}`;
+	let data_BR 	= `${dia}${mes}${ano}`;
+
+	return data_BR;
+}
+
+let data_USA = data_BR => {
+	let ano  		= data_BR.substr(6,4);
+	let mes  		= `-${data_BR.substr(3,2)}`;	
+	let dia  		= `-${data_BR.substr(0,2)}`;
+	let data_USA 	= `${ano}${mes}${dia}`;
+
+	return data_USA;
+}
+
+// Substitui o getElementById
+
+function pegaId(id) {
+	return document.getElementById(id);
+}
+
+// Cadastrar Reserva
 
 cadastrar_usuario.onclick = () => {
 
@@ -198,11 +279,14 @@ cadastrar_usuario.onclick = () => {
 		local.value.trim(),
 		hora_inicial.value,
 		hora_final.value,
-		data.value
+		data.value,
+		status
 	);
 
 	if(reserva.validarReserva()) {
+
 		banco_dados_reserve.gravar(reserva, "Reserva");
+		
 		modalCadastarSucesso(
 			reserva.usuario,
 			tabelaReserva(
@@ -220,49 +304,54 @@ cadastrar_usuario.onclick = () => {
 	}
 }
 
-// Excluir todas as Reservas
+// Pesquisar Reserva
 
-excluir.onclick = () => {
+// Botões
+
+atualizar.onclick 	= () => window.location.reload();
+
+imprimir.onclick 	= () => window.print();
+
+excluir.onclick 	= () => {
 	
 	if(banco_dados_reserve.verificaIdReserva()) {
-		let pergunta = prompt("Essa ação irá remover todas as reservas.\nDeseja continuar?", "Não");
+		let pergunta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
 
 		if (pergunta === "Sim" || pergunta === "S" || pergunta === "sim" || pergunta === "s") {
 			modalExcluiTodasReservas();
 			banco_dados_reserve.removeTodasReservas();
 		}
-
 	}
-
 }
 
-// Exibindo a lista de reservas no Dashboard
+alarme_ativado.onclick = () => {
+	$('#toast').toast('show');
+	
+	pegaId("alarme-info").innerHTML 		= "Alarme ativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item active";
+	pegaId("alarme-desativado").className 	= "dropdown-item";
+}
 
-window.onload = () => {
+alarme_desativado.onclick = () => {
+	$('#toast').toast('hide');
 
-	let reservas = Array();
-	let lista_reservas = pegaId("lista-reservas-02");
+	pegaId("alarme-info").innerHTML 		= "Alarme desativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell-slash fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item";
+	pegaId("alarme-desativado").className 	= "dropdown-item active";
+}
 
-	reservas = banco_dados_reserve.recuperaReservas();
+// Status da Reserva
 
-	reservas.forEach((r) =>{
-		let linha = lista_reservas.insertRow();
-
-		linha.insertCell(0).innerHTML = r.usuario;
-		linha.insertCell(1).innerHTML = r.equipamento;
-		linha.insertCell(2).innerHTML = r.local;
-		linha.insertCell(3).innerHTML = `${r.hora_inicial} - ${r.hora_final}`;
-		linha.insertCell(4).innerHTML = data_BR(r.data);
-	});
-};
+pegaId("status-01").innerHTML = banco_dados_reserve.pesquisaStatusAguardando();
+pegaId("status-02").innerHTML = banco_dados_reserve.pesquisaStatusEmUso();
+pegaId("status-03").innerHTML = banco_dados_reserve.pesquisaStatusRecolhida();
 
 // Modais
 
 let modalCadastarSucesso = (nome, tabela) => {
 	$('#modal-01').modal('show');
-	
-	let botao 	= pegaId('modal-botao-01');
-	let fechar 	= pegaId('fechar-modal-01');
 	
 	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
 	pegaId('modal-documento-01').className	= 'modal-dialog border border-success rounded alert-success';
@@ -270,12 +359,17 @@ let modalCadastarSucesso = (nome, tabela) => {
 	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${nome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
 	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
 	pegaId('modal-botao-01').className 		= 'btn btn-outline-success';
+
+	let botao 	= pegaId('modal-botao-01');
+	let fechar 	= pegaId('fechar-modal-01');	
 	
 	botao.onclick 	= () => window.location.reload();
 	fechar.onclick 	= () => window.location.reload();
 }
+
 let modalCadastrarErro = () => {
 	$('#modal-02').modal('show');
+
 	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
 	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
 	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
@@ -283,8 +377,10 @@ let modalCadastrarErro = () => {
 	pegaId('modal-botao-02').innerHTML		= 'Voltar';
 	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
+
 let modalExcluiTodasReservas = () => {
 	$('#modal-02').modal('show');
+	
 	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-trash-alt"></i> Excluir';
 	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
 	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
@@ -318,49 +414,23 @@ let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => 
 	return tabela;
 }
 
-//	Converter datas
+// Exibindo a lista de Reservas no Dashboard
 
-let data_BR = data_USA => {
-	let dia  		= data_USA.substr(8,2);
-	let mes  		= `/${data_USA.substr(5,2)}`;
-	let ano  		= `/${data_USA.substr(0,4)}`;
-	let data_BR 	= `${dia}${mes}${ano}`;
+window.onload = () => {
 
-	return data_BR;
-}
+	let reservas = Array();
+	let lista_reservas = pegaId("lista-reservas-02");
 
-let data_USA = data_BR => {
-	let ano  		= data_BR.substr(6,4);
-	let mes  		= `-${data_BR.substr(3,2)}`;	
-	let dia  		= `-${data_BR.substr(0,2)}`;
-	let data_USA 	= `${ano}${mes}${dia}`;
+	reservas = banco_dados_reserve.recuperaReservas();
 
-	return data_USA;
-}
+	reservas.forEach(r =>{
 
-// Substitui o getElementById
+		let linha = lista_reservas.insertRow();
 
-function pegaId(id) {
-	return document.getElementById(id);
-}
-
-// Botões
-
-atualizar.onclick 	= () => window.location.reload();
-imprimir.onclick 	= () => window.print();
-
-alarme_ativado.onclick = () => {
-	$('#toast').toast('show');
-	pegaId("alarme-info").innerHTML 		= "Alarme ativado";
-	pegaId("alarme-icone").className 		= "fas fa-bell fa-md";
-	pegaId("alarme-ativado").className 		= "dropdown-item active";
-	pegaId("alarme-desativado").className 	= "dropdown-item";
-}
-
-alarme_desativado.onclick = () => {
-	$('#toast').toast('hide');
-	pegaId("alarme-info").innerHTML 		= "Alarme desativado";
-	pegaId("alarme-icone").className 		= "fas fa-bell-slash fa-md";
-	pegaId("alarme-ativado").className 		= "dropdown-item";
-	pegaId("alarme-desativado").className 	= "dropdown-item active";
-}
+		linha.insertCell(0).innerHTML = r.usuario;
+		linha.insertCell(1).innerHTML = r.equipamento;
+		linha.insertCell(2).innerHTML = r.local;
+		linha.insertCell(3).innerHTML = data_BR(r.data);
+		linha.insertCell(3).innerHTML = cor_status(r.status);
+	});
+};
