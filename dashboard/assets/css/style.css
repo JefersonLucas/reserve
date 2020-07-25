@@ -20,8 +20,8 @@ body {
 }
 
 .feather {
-	width: 16px;
-	height: 16px;
+	width: 17px;
+	height: 17px;
 	vertical-align: text-bottom;
 }
 
@@ -65,7 +65,9 @@ body {
 	font-weight: 500;
 	color: #333;
 }
-
+.menu {
+	font-size: 15px;
+}
 .sidebar .nav-link .feather {
 	margin-right: 4px;
 	color: #999;
