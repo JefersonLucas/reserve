@@ -63,21 +63,14 @@ class BancoDadosReserve {
 		let id = localStorage.getItem("idReserva");
 
 		for(let i = 0; i <= id; i++) {
-			let reserva = JSON.parse(localStorage.getItem(i));
+			let r = JSON.parse(localStorage.getItem(i));
+			let u = undefined;
 
-			if (
-				reserva 				=== null 		||
-				reserva.usuario 		=== undefined 	||
-				reserva.equipamento 	=== undefined 	||
-				reserva.local 			=== undefined 	||
-				reserva.hora_inicial 	=== undefined 	||
-				reserva.hora_final 		=== undefined 	||
-				reserva.data 			=== undefined 	||
-				reserva.status 			=== undefined) {
+			if (r === null || r.usuario === u || r.equipamento === u || r.local === u || r.hora_inicial === u || r.hora_final === u || r.data === u || r.status === u) {
 				continue;
 			}
-			reserva.id = i;
-			reservas.push(reserva)
+			r.id = i;
+			reservas.push(r)
 		}
 		return reservas;
 	}
@@ -147,6 +140,8 @@ let excluir 			= pegaId("excluir");
 let alarme_ativado 		= pegaId("alarme-ativado");
 let alarme_desativado 	= pegaId("alarme-desativado");
 let cadastrar_usuario 	= pegaId("cadastrar-usuario");
+let botao 				= pegaId("modal-botao-01");
+let fechar 				= pegaId("fechar-modal-01");
 let status 				= "Aguardando";
 
 // Validação de input
@@ -229,7 +224,7 @@ setInterval(() => {
 //	Modifica a cor do Status
 
 let cor_status = status => {
-	let cor = null;
+	let cor = "";
 	
 	if(status == "Aguardando") {
 		cor = `<span class="text-danger"><b>${status}</b></span>`;
@@ -273,30 +268,14 @@ function pegaId(id) {
 
 cadastrar_usuario.onclick = () => {
 
-	let reserva = new Reserva(
-		usuario.value.trim(),
-		equipamento.value.trim(),
-		local.value.trim(),
-		hora_inicial.value,
-		hora_final.value,
-		data.value,
-		status
-	);
+	let reserva = new Reserva(usuario.value.trim(), equipamento.value.trim(), local.value.trim(), hora_inicial.value, hora_final.value, data.value, status);
 
 	if(reserva.validarReserva()) {
 
 		bancodados_reserve.gravar(reserva, "Reserva");
 		
-		modalCadastarSucesso(
-			reserva.usuario,
-			tabelaReserva(
-				"success",
-				reserva.equipamento,
-				reserva.local,
-				data_BR(reserva.data),
-				reserva.hora_inicial,
-				reserva.hora_final
-		));
+		modalCadastarSucesso("success", reserva.usuario, tabelaReserva(reserva.equipamento, reserva.local,reserva.hora_inicial,reserva.hora_final,data_BR(reserva.data),"success"));
+		
 		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
 	}
 	else {
@@ -342,41 +321,15 @@ alarme_desativado.onclick = () => {
 	pegaId("alarme-desativado").className 	= "dropdown-item active";
 }
 
-// Grupo de Botões
+// Status da Reserva
 
-`<div class="btn-group btn-group-sm d-flex justify-content-center align-items-center" role="group">
-
-	<!-- Botão Editar -->			
-		
-	<!-- Botão Vericar -->
-	<button class="btn btn-sm btn-outline-primary border-0" id="verificar" title="Vericar reserva" type="button">
-		<i class="fas fa-user-plus fa-lg"></i>
-	</button>
-
-	<!-- Botão Excluir -->
-	<button class="btn btn-sm btn-outline-danger border-0" id="excluir" title="Excluir reserva" type="button">
-		<i class="fas fa-user-times fa-lg"></i>
-	</button>
-
-</div>`
-
-let grupo_botoes = (id, editar, verificar, excluir) => {
-
-	let botoes 			= document.createElement("div");
-	botoes.className 	= "btn-group btn-group-sm d-flex justify-content-center align-items-center";
-	botoes.title 		= "Opções";
-	botoes.role 		= "group"
-	botoes.id 			= `id-botoes-${id}`;
-
-	return botoes;
-}
+pegaId("status-01").innerHTML = bancodados_reserve.pesquisaStatusAguardando();
+pegaId("status-02").innerHTML = bancodados_reserve.pesquisaStatusEmUso();
+pegaId("status-03").innerHTML = bancodados_reserve.pesquisaStatusRecolhida();
 
 // Editar
 
-// <button class="btn btn-sm btn-outline-success border-0" title="Editar reserva" type="button">
-// <i class="fas fa-user-edit fa-lg"></i>
-
-let botaoEditarReserva = (id, nome, equipamento, local, hora_inicial, hora_final, data, status) => {
+let botaoEditarReserva = (id, usuario, equipamento, local, hora_inicial, hora_final, data, status) => {
 	
 	let editar 			= document.createElement("button");
 	editar.className 	= "btn btn-sm btn-group btn-group-sm border-0 btn-outline-success";
@@ -385,41 +338,44 @@ let botaoEditarReserva = (id, nome, equipamento, local, hora_inicial, hora_final
 	editar.type	 		= "button";
 	editar.id 			= `id-editar-${id}`;
 
-	// editar.onclick 		= function() {
+	editar.onclick 		= function() {
 
-	// 	let = resposta = prompt("Deseja EDITAR a reserva do(a) Professor(a) "+nome+"?","Não");
+		let = resposta = prompt(`Deseja EDITAR a reserva do(a) ${usuario}?`,"Não");
 
-	// 		if(resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+			if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
 
-	// 			let _nome 			= prompt("Nome do(a) Professor(a):", nome).trim();
-	// 			let _equipamento 	= prompt("Descrição do equipamento:",equipamento).trim();
-	// 			let _sala 			= prompt("Nome da sala:",sala).trim();
-	// 			let _horaA 			= prompt("Início da aula:",horaA).trim();
-	// 			let _horaB 			= prompt("Término da aula:",horaB).trim();
-	// 			let _dataA 			= prompt("Data da aula:",dataBR(dataA)).trim();
+				let _usuario		= prompt("Nome do(a) usuário(a)", usuario).trim();
+				let _equipamento 	= prompt("Descrição do equipamento",equipamento).trim();
+				let _local 			= prompt("Nome do local",local).trim();
+				let _hora_inicial	= prompt("Horário inicial",hora_inicial).trim();
+				let _hora_final		= prompt("Horário final",hora_final).trim();
+				let _data 			= prompt("Data",data_BR(data)).trim();
+				let _status 		= status;
 
-	// 			let reserva = new ReservaProfessor(_nome, _equipamento, status, _sala, dataEUA(_dataA), _horaA, dataB, _horaB, horaC, horaD);
+				let reserva = new Reserva(_usuario, _equipamento, _local, _hora_inicial, _hora_final, data_USA(_data), _status);
 
-	// 			if (reserva.validarDados()) {
+				if (reserva.validarReserva()) {
+					
+					let id = this.id.replace("id-editar-","");
+					
+					bancodados_reserve.removerReserva(id);
+					
+					modalEditarReserva("success", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, _data, "success"));
+					
+					bancodados_reserve.gravar(reserva, "Reserva");
 
-	// 				let id = this.id.replace('id-editar-','');
-	// 				bancodedados.removerReserva(id);
-
-	// 				modalEditar(_nome, tabelaProfessorA("success", _equipamento, _sala, _dataA, horaSeg(_horaA), horaSeg(_horaB)), "Professor");
-	// 				bancodedados.gravar(reserva, "Professor");
-
-	// 			}
-	// 			else{
-	// 				modalErro();
-	// 			}
-	// 		}
-	// 	}
+				}
+				else {
+					modalErro();
+				}
+			}
+		}
 	return editar;
 }
 
 // Verificar
 
-let botaoVerificarReserva = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
+let botaoVerificarReserva = (id, usuario, equipamento, local, hora_inicial, hora_final, data, status) => {
 
 	verificar 			= document.createElement("button");
 	verificar.className = "btn btn-sm btn-group btn-group-sm border-0 btn-outline-primary";
@@ -427,120 +383,116 @@ let botaoVerificarReserva = (id, nome, equipamento, status, sala, dataA, horaA, 
 	verificar.innerHTML = '<i class="fas fa-user-plus fa-lg"></i>';
 	verificar.id 		= `id-verificar-${id}`;
  	
- // 	verificar.onclick 	= function() {
+ 	verificar.onclick 	= function() {
  	
- // 			if(status ==  "Aguardando") {
+ 			if(status ===  "Aguardando") {
 	
-	// 		let resposta = prompt("A reserva do(a) Professor(a) "+nome+" já está em uso?", "Não");
+			let resposta = prompt(`A reserva do(a) ${usuario} já está em uso?`, "Não");
 	
-	// 		if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
+			if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
 	
-	// 			let _nome 		 = nome;
-	// 			let _equipamento = equipamento;
-	// 			let _status 	 = "Em uso";
-	// 			let _sala 		 = sala;
-	// 			let _dataA 		 = dataA;
-	// 			let _horaA 		 = horaA;
-	// 			let _horaB 		 = horaB;
-	// 			let _dataB 		 = dataAtual();
-	// 			let _horaC 		 = horaAtual(0,0,0);
-	// 			let _horaD 		 = horaD;
+				let _usuario 	 	= usuario;
+				let _equipamento 	= equipamento;
+				let _local 		 	= local;
+				let _hora_inicial	= hora_inicial;
+				let _hora_final	 	= hora_final;
+				let _data 		 	= data;
+				let _status 	 	= "Em uso";
 	
-	// 			reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
+				let reserva  = new Reserva(_usuario, _equipamento, _local, _hora_inicial, _hora_final, _data, _status);
 	
-	// 			if(reserva.validarDados()) {
-	// 				modalVerificar(_nome, tabelaProfessorB("primary", _equipamento, cor(_status), _sala, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), horaSeg(_horaB), _horaC, _horaD), "Professor", _status);
-	// 				let id = this.id.replace('id-verifica-','');
-	// 				bancodedados.removerReserva(id);				
-	// 				bancodedados.gravar(reserva, "Professor");
-	// 			}
-	
-	// 			else {
-	// 				modalErro();
-	// 			}
-	// 		}
- // 		}
+				if(reserva.validarReserva()) {
+
+					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
+					
+					let id = this.id.replace('id-verifica-','');
+					
+					bancodados_reserve.removerReserva(id);				
+					
+					bancodados_reserve.gravar(reserva, "Reserva");
+				}	
+				else {
+					modalErro();
+				}
+			}
+ 		}
  	
- // 		else if(status == "Em uso") {
+ 		else if(status == "Em uso") {
 	
-	// 		let resposta = prompt("A reserva do(a) Professor(a) "+nome+" foi recolhida?", "Não");
+			let resposta = prompt(`A reserva do(a) ${usuario} foi recolhida?`, "Não");
 	
-	// 		if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-	// 			let _nome 		 = nome;
-	// 			let _equipamento = equipamento;
-	// 			let _status 	 = "Recolhida";
-	// 			let _sala 		 = sala;
-	// 			let _dataA 		 = dataA;
-	// 			let _horaA 		 = horaA;
-	// 			let _horaB 		 = horaB;
-	// 			let _dataB 		 = dataB;
-	// 			let _horaC 		 = horaC;
-	// 			let _horaD 		 = horaAtual(0,0,0);
+			if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+
+				let _usuario 	 	= usuario;
+				let _equipamento 	= equipamento;
+				let _local 		 	= local;
+				let _hora_inicial	= hora_inicial;
+				let _hora_final	 	= hora_final;
+				let _data 		 	= data;
+				let _status 	 	= "Recolhida";
 	
-	// 			reserva  = new ReservaProfessor(_nome, _equipamento, _status, _sala, _dataA, _horaA, _dataB, _horaB, _horaC, _horaD);
-	// 			if(reserva.validarDados()) {
-	// 				let id = this.id.replace('id-verifica-','');
-	// 				bancodedados.removerReserva(id);
-	// 				modalVerificar(_nome, tabelaProfessorB("primary", _equipamento, cor(_status), _sala, dataBR(_dataA), horaSeg(_horaA), dataBR(_dataB), horaSeg(_horaB), _horaC, _horaD), "Professor", _status);
-	// 				bancodedados.gravar(reserva, "Professor");
-	// 			}
-	// 			else {
-	// 				modalErro();
-	// 			}
-	// 		}
-	// 	}	
-	// 	else {	
-	// 		modalVerificarErro(nome, "Professor");
-	// 	}
-	// }
+				let reserva  = new Reserva(_usuario, _equipamento, _local, _hora_inicial, _hora_final, _data, _status);
+	
+				if(reserva.validarReserva()) {
+
+					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
+					
+					let id = this.id.replace('id-verifica-','');
+					
+					bancodados_reserve.removerReserva(id);				
+					
+					bancodados_reserve.gravar(reserva, "Reserva");
+				}	
+				else {
+					modalErro();
+				}
+			}
+		}	
+		else {	
+			modalVerificarErro("primary", usuario, status);
+		}
+	}
 	return verificar;
 }
 
 // Excluir
 
-let botaoExcluirReserva = (id, nome, equipamento, status, sala, dataA, horaA, dataB, horaB, horaC, horaD) => {
+let botaoExcluirReserva = (id, usuario, equipamento, local, hora_inicial, hora_final, data, status) => {
 
 	excluir 			= document.createElement("button");
-	excluir.className 	= 'btn btn-sm btn-group btn-group-sm border-0 btn-outline-danger';
-	excluir.title 		= 'Excluir reserva';
+	excluir.className 	= "btn btn-sm btn-group btn-group-sm border-0 btn-outline-danger";
+	excluir.title 		= "Excluir reserva";
 	excluir.innerHTML 	= '<i class="fas fa-user-times fa-lg"></i>';
 	excluir.id 			= `id-excluir-${id}`;
 
-	// excluir.onclick 	= function() {
+	excluir.onclick 	= function() {
 
-	// 	let resposta = prompt("Deseja EXCLUIR a reserva do(a) Professor(a) "+nome+"?", "Não");
+		let resposta = prompt(`Deseja EXCLUIR a reserva do(a) ${usuario}?`, "Não");
 
-	// 	if (resposta == 'sim'|| resposta == 'SIM' || resposta == 'Sim' || resposta == 's' || resposta == 'S') {
-
-	// 		let id = this.id.replace('id-excluir-','');
-	// 		bancodedados.removerReserva(id);
-	// 		modalExcluir(nome, tabelaProfessorB("danger", equipamento, cor(status), sala, dataBR(dataA), horaSeg(horaA), dataBR(dataB), horaSeg(horaB), horaC, horaD), "Professor");
-	// 	}
-	// }
+		if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+			
+			let id = this.id.replace("id-excluir-","");
+			
+			bancodados_reserve.removerReserva(id);
+			
+			modalExcluirReserva("danger", usuario, tabelaReserva(equipamento, local, hora_inicial, hora_final, data_BR(data), "danger"));
+		}
+	}
 	return excluir;
 }
 
-// Status da Reserva
-
-pegaId("status-01").innerHTML = bancodados_reserve.pesquisaStatusAguardando();
-pegaId("status-02").innerHTML = bancodados_reserve.pesquisaStatusEmUso();
-pegaId("status-03").innerHTML = bancodados_reserve.pesquisaStatusRecolhida();
-
 // Modais
 
-let modalCadastarSucesso = (nome, tabela) => {
+let modalCadastarSucesso = (estilo, usuario, tabela) => {
 	$('#modal-01').modal('show');
 	
 	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
-	pegaId('modal-documento-01').className	= 'modal-dialog border border-success rounded alert-success';
-	pegaId('modal-cabecalho-01').className  = 'modal-header text-white bg-success';
-	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${nome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-documento-01').className	= `modal-dialog border border-${estilo} rounded alert-${estilo}`;
+	pegaId('modal-cabecalho-01').className  = `modal-header text-white bg-${estilo}`;
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-${estilo}"><b>${usuario}</b></span> foi cadastrada com <span class="text-${estilo}"><b>sucesso</b></span>!${tabela}`;
 	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
-	pegaId('modal-botao-01').className 		= 'btn btn-outline-success';
+	pegaId('modal-botao-01').className 		= `btn btn-outline-${estilo}`;
 
-	let botao 	= pegaId('modal-botao-01');
-	let fechar 	= pegaId('fechar-modal-01');	
-	
 	botao.onclick 	= () => window.location.reload();
 	fechar.onclick 	= () => window.location.reload();
 }
@@ -557,23 +509,90 @@ let modalCadastrarErro = () => {
 }
 
 let modalExcluiTodasReservas = () => {
-	$('#modal-02').modal('show');
+	$('#modal-01').modal('show');
 	
-	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-trash-alt"></i> Excluir';
-	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
-	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
-	pegaId('modal-conteudo-02').innerHTML	= 'Todas as suas reservas foram <span class="text-danger"><b>excluídas</b></span>!';
-	pegaId('modal-botao-02').innerHTML		= 'Voltar';
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-trash-alt"></i> Excluir';
+	pegaId('modal-documento-01').className	= 'modal-dialog border border-danger rounded alert-danger';
+	pegaId('modal-cabecalho-01').className  = 'modal-header text-white bg-danger';
+	pegaId('modal-conteudo-01').innerHTML	= 'Todas as suas reservas foram <span class="text-danger"><b>excluídas</b></span>!';
+	pegaId('modal-botao-01').innerHTML		= 'Voltar';
+	pegaId('modal-botao-01').className 		= 'btn btn-outline-danger';
+	
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
+}
+
+let modalEditarReserva = (estilo, usuario, tabela) => {
+	$('#modal-01').modal('show');
+
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
+	pegaId('modal-documento-01').className	= `modal-dialog border border-${estilo} rounded alert-${estilo}`;
+	pegaId('modal-cabecalho-01').className  = `modal-header text-white bg-${estilo}`;
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${usuario}</b></span> foi alterada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-01').className 		= `btn btn-outline-${estilo}`;
+	
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
+}
+
+let modalVerificarReserva = (estilo, usuario, tabela, status) => {
+	$('#modal-01').modal('show');
+
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-user-plus"></i> Verificada';
+	pegaId('modal-documento-01').className	= `modal-dialog border border-${estilo} rounded alert-${estilo}`;
+	pegaId('modal-cabecalho-01').className  = `modal-header text-white bg-${estilo}`;
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-${estilo}"><b>${usuario}</b></span> está <span class="text-${estilo}"><b>${status}</b></span>!${tabela}`;
+	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-01').className 		= `btn btn-outline-${estilo}`;
+		
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
+}
+
+let modalVerificarErro = (estilo, usuario, status) => {
+	$('#modal-02').modal('show');
+
+	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-user-plus"></i> Verificada';
+	pegaId('modal-documento-02').className	= `modal-dialog border border-${estilo} rounded alert-${estilo}`;
+	pegaId('modal-cabecalho-02').className  = `modal-header text-white bg-${estilo}`;
+	pegaId('modal-conteudo-02').innerHTML 	= `A reserva do(a) <span class="text-${estilo}"><b>${usuario}</b></span> já está <span class="text-${estilo}"><b>${status}</b></span>!`;
+	pegaId('modal-botao-02').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-02').className 		= `btn btn-outline-${estilo}`;
+}
+
+let modalExcluirReserva = (estilo, usuario, tabela) => {
+	$('#modal-01').modal('show');
+
+	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-user-times"></i> Excluir!';
+	pegaId('modal-documento-01').className	= `modal-dialog border border-${estilo} rounded alert-${estilo}`;
+	pegaId('modal-cabecalho-01').className  = `modal-header text-white bg-${estilo}`;
+	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-${estilo}"><b>${usuario}</b></span> foi excluída com <span class="text-${estilo}"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
+	pegaId('modal-botao-01').className 		= `btn btn-outline-${estilo}`;
+	
+	botao.onclick 	= () => window.location.reload();
+	fechar.onclick 	= () => window.location.reload();
+}
+
+let modalErro = () => {
+	$('#modal-02').modal('show');		
+
+	pegaId('modal-titulo-02').innerHTML 		= '<i class="fas fa-times-circle"></i> Erro!';
+	pegaId('modal-documento-02').className		= 'modal-dialog border border-danger rounded alert-danger';
+	pegaId('modal-cabecalho-02').className  	= 'modal-header text-white bg-danger';
+	pegaId('modal-conteudo-02').innerHTML		= 'Nos desculpe, ocorreu algum <span class="text-danger"><b>erro</b></span>!';
+	pegaId('modal-botao-02').innerHTML			= 'Voltar';
 	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
 
-// Tabelas
+// Tabela
 
-let tabelaReserva = (bg, equipamento, local, data, hora_inicial, hora_final) => {
+let tabelaReserva = (equipamento, local, hora_inicial, hora_final, data, estilo) => {
 	let tabela = `
 	<table class="table table-bordered text-center mt-4">
 		<thead>
-			<tr class="text-center bg-${bg}">
+			<tr class="text-center bg-${estilo}">
 				<th scope="col" class="text-white"><i class="fas fa-laptop fa-lg" title="Equipamento"></i></th>
 				<th scope="col" class="text-white"><i class="fas fa-map-marker-alt fa-lg" title="Local"></i></th>
 				<th scope="col" class="text-white" colspan="2"><i class="fas fa-user-clock fa-lg" title="Horário da reserva"></i></th>
@@ -610,9 +629,9 @@ window.onload = () => {
 		linha.insertCell(2).innerHTML = r.local;
 		linha.insertCell(3).innerHTML = cor_status(r.status);
 		linha.insertCell(4).append(
-			botaoEditarReserva(),
-			botaoVerificarReserva(),
-			botaoExcluirReserva()
+			botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+			botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+			botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
 		);
 	});
 };
