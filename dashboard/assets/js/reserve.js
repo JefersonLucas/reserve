@@ -74,12 +74,37 @@ class BancoDadosReserve {
 		}
 		return reservas;
 	}
+	pesquisaReserva(reserva) {
+		let reservas_filtradas = Array();
+	
+		reservas_filtradas = this.recuperaReservas();
+	
+		if(reserva.usuario != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.usuario === reserva.usuario);
+		}
+		if(reserva.equipamento != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.equipamento === reserva.equipamento);
+		}
+		if(reserva.local != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.local === reserva.local);
+		}
+		if(reserva.hora_inicial != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.hora_inicial === reserva.hora_inicial);
+		}
+		if(reserva.hora_inicial != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.hora_inicial === reserva.hora_inicial);
+		}
+		if(reserva.data != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.data === reserva.data);
+		}
+		return reservas_filtradas;
+	}
 	removerReserva(id) {
 		localStorage.removeItem(id);
 	}
 	removeTodasReservas() {
 		let id = localStorage.getItem("idReserva");
-		
+	
 		for(let i = 0; i <= id; i++) {
 			localStorage.removeItem(id);
 			if (id === null || id === null || id > 0) {
@@ -140,6 +165,7 @@ let excluir 			= pegaId("excluir");
 let alarme_ativado 		= pegaId("alarme-ativado");
 let alarme_desativado 	= pegaId("alarme-desativado");
 let cadastrar_usuario 	= pegaId("cadastrar-usuario");
+let pesquisar_usuario 	= pegaId("pesquisar-usuario");
 let botao 				= pegaId("modal-botao-01");
 let fechar 				= pegaId("fechar-modal-01");
 let status 				= "Aguardando";
@@ -279,11 +305,50 @@ cadastrar_usuario.onclick = () => {
 		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
 	}
 	else {
-		modalCadastrarErro();
+		modalAcaoErro("cadastar");
 	}
 }
 
 // Pesquisar Reserva
+
+pesquisar_usuario.onclick = () => {
+	
+	let usuario 	 		= pegaId("usuario").value;
+	let equipamento  		= pegaId("equipamento").value;
+	let local 		 		= pegaId("local").value;
+	let hora_inicial 		= pegaId("hora-inicial").value;
+	let hora_final 	 		= pegaId("hora-final").value;
+	let data 		 		= pegaId("data").value;
+
+	if(usuario === "" && equipamento === "" && local === "" && hora_inicial === "" && hora_final === "" && data === "") {
+		modalAcaoErro("pesquisar");
+	}		
+	else {
+	
+		let reserva = new Reserva(usuario.trim(), equipamento.trim(), local.trim(), hora_inicial, hora_final, data, status);
+	
+		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Professor");
+	
+		let lista_reservas = pegaId("lista-reservas-02");
+		
+		lista_reservas.innerHTML = "";
+	
+		reservas.forEach(r =>{
+
+			let linha = lista_reservas.insertRow();
+
+			linha.insertCell(0).innerHTML = r.usuario;
+			linha.insertCell(1).innerHTML = r.equipamento;
+			linha.insertCell(2).innerHTML = r.local;
+			linha.insertCell(3).innerHTML = cor_status(r.status);
+			linha.insertCell(4).append(
+				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
+			);
+		});
+	}
+}
 
 // Botões
 
@@ -294,9 +359,9 @@ imprimir.onclick 	= () => window.print();
 excluir.onclick 	= () => {
 	
 	if(bancodados_reserve.verificaIdReserva()) {
-		let pergunta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
+		let resposta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
 
-		if (pergunta === "Sim" || pergunta === "S" || pergunta === "sim" || pergunta === "s") {
+		if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
 			modalExcluiTodasReservas();
 			bancodados_reserve.removeTodasReservas();
 		}
@@ -345,11 +410,11 @@ let botaoEditarReserva = (id, usuario, equipamento, local, hora_inicial, hora_fi
 			if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
 
 				let _usuario		= prompt("Nome do(a) usuário(a)", usuario).trim();
-				let _equipamento 	= prompt("Descrição do equipamento",equipamento).trim();
-				let _local 			= prompt("Nome do local",local).trim();
-				let _hora_inicial	= prompt("Horário inicial",hora_inicial).trim();
-				let _hora_final		= prompt("Horário final",hora_final).trim();
-				let _data 			= prompt("Data",data_BR(data)).trim();
+				let _equipamento 	= prompt("Descrição do equipamento", equipamento).trim();
+				let _local 			= prompt("Nome do local", local).trim();
+				let _hora_inicial	= prompt("Horário inicial", hora_inicial).trim();
+				let _hora_final		= prompt("Horário final", hora_final).trim();
+				let _data 			= prompt("Data", data_BR(data)).trim();
 				let _status 		= status;
 
 				let reserva = new Reserva(_usuario, _equipamento, _local, _hora_inicial, _hora_final, data_USA(_data), _status);
@@ -360,10 +425,9 @@ let botaoEditarReserva = (id, usuario, equipamento, local, hora_inicial, hora_fi
 					
 					bancodados_reserve.removerReserva(id);
 					
-					modalEditarReserva("success", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, _data, "success"));
-					
 					bancodados_reserve.gravar(reserva, "Reserva");
-
+					
+					modalEditarReserva("success", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, _data, "success"));
 				}
 				else {
 					modalErro();
@@ -385,7 +449,7 @@ let botaoVerificarReserva = (id, usuario, equipamento, local, hora_inicial, hora
  	
  	verificar.onclick 	= function() {
  	
- 			if(status ===  "Aguardando") {
+ 		if(status ===  "Aguardando") {
 	
 			let resposta = prompt(`A reserva do(a) ${usuario} já está em uso?`, "Não");
 	
@@ -403,13 +467,13 @@ let botaoVerificarReserva = (id, usuario, equipamento, local, hora_inicial, hora
 	
 				if(reserva.validarReserva()) {
 
-					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
+					let id = this.id.replace("id-verificar-","");
 					
-					let id = this.id.replace('id-verifica-','');
-					
-					bancodados_reserve.removerReserva(id);				
+					bancodados_reserve.removerReserva(id);
 					
 					bancodados_reserve.gravar(reserva, "Reserva");
+										
+					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
 				}	
 				else {
 					modalErro();
@@ -417,7 +481,7 @@ let botaoVerificarReserva = (id, usuario, equipamento, local, hora_inicial, hora
 			}
  		}
  	
- 		else if(status == "Em uso") {
+ 		else if(status === "Em uso") {
 	
 			let resposta = prompt(`A reserva do(a) ${usuario} foi recolhida?`, "Não");
 	
@@ -435,13 +499,13 @@ let botaoVerificarReserva = (id, usuario, equipamento, local, hora_inicial, hora
 	
 				if(reserva.validarReserva()) {
 
-					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
+					let id = this.id.replace("id-verificar-","");
 					
-					let id = this.id.replace('id-verifica-','');
-					
-					bancodados_reserve.removerReserva(id);				
+					bancodados_reserve.removerReserva(id);
 					
 					bancodados_reserve.gravar(reserva, "Reserva");
+								
+					modalVerificarReserva("primary", _usuario, tabelaReserva(_equipamento, _local, _hora_inicial, _hora_final, data_BR(_data), "primary"), cor_status(_status));
 				}	
 				else {
 					modalErro();
@@ -497,13 +561,13 @@ let modalCadastarSucesso = (estilo, usuario, tabela) => {
 	fechar.onclick 	= () => window.location.reload();
 }
 
-let modalCadastrarErro = () => {
+let modalAcaoErro = (acao) => {
 	$('#modal-02').modal('show');
 
 	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
 	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
 	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
-	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	pegaId('modal-conteudo-02').innerHTML	= `Houve um erro ao <span class="text-danger"><b>${acao} a sua reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.`;
 	pegaId('modal-botao-02').innerHTML		= 'Voltar';
 	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
@@ -583,7 +647,7 @@ let modalErro = () => {
 	pegaId('modal-cabecalho-02').className  	= 'modal-header text-white bg-danger';
 	pegaId('modal-conteudo-02').innerHTML		= 'Nos desculpe, ocorreu algum <span class="text-danger"><b>erro</b></span>!';
 	pegaId('modal-botao-02').innerHTML			= 'Voltar';
-	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
+	pegaId('modal-botao-02').className 			= 'btn btn-outline-danger';
 }
 
 // Tabela
