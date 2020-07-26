@@ -34,6 +34,44 @@ class ReservaDashboard {
 		return true;
 	}
 }
+class Grafico {
+	constructor(domingo, segunda, terca, quarta, quinta, sexta, sabado) {
+		this.domingo 	= domingo;
+		this.segunda 	= segunda;
+		this.terca		= terca;
+		this.quarta 	= quarta;
+		this.quinta 	= quinta;
+		this.sexta 		= sexta;
+		this.sabado		= sabado;
+	}
+	pegaProximoId() {
+		let proximo_Id = localStorage.getItem("idGrafico");
+		return parseInt(proximo_Id) + 1;
+	}
+	gravar(grafico) {
+		let id = this.pegaProximoId();
+
+		localStorage.setItem(id, JSON.stringify(grafico));
+		localStorage.setItem(`idGrafico`, id); 
+	}
+	recuperaGraficos() {
+		let graficos = Array();
+
+		let id = localStorage.getItem("idGrafico");
+
+		for(let i = 0; i <= id; i++) {
+			let g = JSON.parse(localStorage.getItem(i));
+			let u = undefined;
+
+			if (g === null || g.domingo === u || g.segunda === u || g.terca === u || g.quarta === u || g.quinta === u || g.sexta === u || g.sabado === u) {
+				continue;
+			}
+			g.id = i;
+			graficos.push(g)
+		}
+		return graficos;
+	}
+}
 
 class BancoDadosDashboard {
 	constructor() {
@@ -118,6 +156,15 @@ class BancoDadosDashboard {
 				localStorage.setItem("idReserva", 0);
 			}
 		}
+	}	
+	pesquisaStatusReserva() {
+		let pesquisa = Array();
+
+		pesquisa = this.recuperaReservas();
+
+		pesquisa = pesquisa.filter(p => p.status === "Aguardando" || p.status === "Em uso" || p.status === "Recolhida");
+		
+		return pesquisa.length;
 	}
 	pesquisaStatusAguardando() {
 		let pesquisa = Array();
@@ -249,7 +296,40 @@ window.onload = () => {
 	});
 };
 
-// Chart
+// Gráfico
+
+let semana = Array(); 
+
+semana["dia"] = Array(); 
+
+let data = new Date();
+
+data.getDay();
+
+	switch(data.getDay()) {
+		case 0:
+			semana["dia"]["Domingo"] 		= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 1:
+			semana["dia"]["Segunda-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 2:
+			semana["dia"]["Terça-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 3:
+			semana["dia"]["Quarta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 4:
+			semana["dia"]["Quinta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 5:
+			semana["dia"]["Sexta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
+			break
+		case 6:
+			semana["dia"]["Sábado"] 		= bancodados_dashboard.pesquisaStatusReserva();
+			break
+	}
+
 
 (function () {
   'use strict'
