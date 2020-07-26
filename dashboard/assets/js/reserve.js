@@ -164,8 +164,9 @@ let imprimir 			= pegaId("imprimir");
 let excluir 			= pegaId("excluir");
 let alarme_ativado 		= pegaId("alarme-ativado");
 let alarme_desativado 	= pegaId("alarme-desativado");
-let cadastrar_usuario 	= pegaId("cadastrar-usuario");
-let pesquisar_usuario 	= pegaId("pesquisar-usuario");
+let cadastrar_reserva 	= pegaId("cadastrar-reserva");
+let pesquisar_reserva 	= pegaId("pesquisar-reserva");
+let buscar_reserva 		= pegaId("buscar-reserva");
 let botao 				= pegaId("modal-botao-01");
 let fechar 				= pegaId("fechar-modal-01");
 let status 				= "Aguardando";
@@ -292,7 +293,7 @@ function pegaId(id) {
 
 // Cadastrar Reserva
 
-cadastrar_usuario.onclick = () => {
+cadastrar_reserva.onclick = () => {
 
 	let reserva = new Reserva(usuario.value.trim(), equipamento.value.trim(), local.value.trim(), hora_inicial.value, hora_final.value, data.value, status);
 
@@ -311,7 +312,7 @@ cadastrar_usuario.onclick = () => {
 
 // Pesquisar Reserva
 
-pesquisar_usuario.onclick = () => {
+pesquisar_reserva.onclick = () => {
 	
 	let usuario 	 		= pegaId("usuario").value;
 	let equipamento  		= pegaId("equipamento").value;
@@ -327,13 +328,13 @@ pesquisar_usuario.onclick = () => {
 	
 		let reserva = new Reserva(usuario.trim(), equipamento.trim(), local.trim(), hora_inicial, hora_final, data, status);
 	
-		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Professor");
+		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
 	
 		let lista_reservas = pegaId("lista-reservas-02");
 		
 		lista_reservas.innerHTML = "";
 	
-		reservas.forEach(r =>{
+		reservas.forEach(r => {
 
 			let linha = lista_reservas.insertRow();
 
@@ -348,6 +349,41 @@ pesquisar_usuario.onclick = () => {
 			);
 		});
 	}
+}
+
+// Buscar Reserva
+
+buscar_reserva.onclick = () => {
+
+	setInterval(() => {
+		
+		let usuario = buscar_reserva.value;
+
+		let equipamento = local = hora_inicial = hora_final = data = status = "";
+
+		let reserva = new Reserva(usuario.trim(), equipamento, local, hora_inicial, hora_final, data, status);
+			
+		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
+	
+		let lista_reservas = pegaId("lista-reservas-02");
+		
+		lista_reservas.innerHTML = "";
+	
+		reservas.forEach(r => {
+
+			let linha = lista_reservas.insertRow();
+
+			linha.insertCell(0).innerHTML = r.usuario;
+			linha.insertCell(1).innerHTML = r.equipamento;
+			linha.insertCell(2).innerHTML = r.local;
+			linha.insertCell(3).innerHTML = cor_status(r.status);
+			linha.insertCell(4).append(
+				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
+			);
+		});
+	});
 }
 
 // Botões

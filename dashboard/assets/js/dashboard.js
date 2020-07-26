@@ -15,6 +15,26 @@
 
 // Classe
 
+class ReservaDashboard {
+	constructor(usuario, equipamento, local, hora_inicial, hora_final, data, status) {
+		this.usuario 		= usuario;
+		this.equipamento 	= equipamento;
+		this.local 			= local;
+		this.hora_inicial 	= hora_inicial;
+		this.hora_final 	= hora_final;
+		this.data 			= data;
+		this.status 		= status;
+	}
+	validarReserva() {
+		for (let r in this){
+			if(this[r] === "" || this[r] === null || this[r] === undefined){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
 class BancoDadosDashboard {
 	constructor() {
 		let idReserva = localStorage.getItem("idReserva");
@@ -60,6 +80,31 @@ class BancoDadosDashboard {
 			reservas.push(reserva)
 		}
 		return reservas;
+	}	
+	pesquisaReserva(reserva) {
+		let reservas_filtradas = Array();
+	
+		reservas_filtradas = this.recuperaReservas();
+	
+		if(reserva.usuario != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.usuario === reserva.usuario);
+		}
+		if(reserva.equipamento != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.equipamento === reserva.equipamento);
+		}
+		if(reserva.local != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.local === reserva.local);
+		}
+		if(reserva.hora_inicial != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.hora_inicial === reserva.hora_inicial);
+		}
+		if(reserva.hora_inicial != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.hora_inicial === reserva.hora_inicial);
+		}
+		if(reserva.data != "") {
+			reservas_filtradas = reservas_filtradas.filter(r => r.data === reserva.data);
+		}
+		return reservas_filtradas;
 	}
 	removerReserva(id) {
 		localStorage.removeItem(id);
@@ -118,15 +163,91 @@ function pegaId(id) {
 	return document.getElementById(id);
 }
 
+//	Converter datas
+
+let data_BR = data_USA => {
+	let dia  		= data_USA.substr(8,2);
+	let mes  		= `/${data_USA.substr(5,2)}`;
+	let ano  		= `/${data_USA.substr(0,4)}`;
+	let data_BR 	= `${dia}${mes}${ano}`;
+
+	return data_BR;
+}
+
+let data_USA = data_BR => {
+	let ano  		= data_BR.substr(6,4);
+	let mes  		= `-${data_BR.substr(3,2)}`;	
+	let dia  		= `-${data_BR.substr(0,2)}`;
+	let data_USA 	= `${ano}${mes}${dia}`;
+
+	return data_USA;
+}
+
 // Variáveis globais
 
-let bancodados_dashboard = new BancoDadosDashboard();
+let bancodados_dashboard 	= new BancoDadosDashboard();
+let buscar_reserva 			= pegaId("buscar-reserva");
+
+// Buscar Reserva
+
+buscar_reserva.onfocus = () => {
+
+	setInterval(() => {
+		
+		let usuario = buscar_reserva.value;
+
+		let equipamento = local = hora_inicial = hora_final = data = status = "";
+
+		let reserva = new ReservaDashboard(usuario.trim(), equipamento, local, hora_inicial, hora_final, data, status);
+			
+		let reservas = bancodados_dashboard.pesquisaReserva(reserva, "Reserva");
+	
+		let lista_reservas = pegaId("lista-reservas-01");
+		
+		lista_reservas.innerHTML = "";
+
+		reservas.forEach((r) =>{
+
+			let linha = lista_reservas.insertRow();
+
+			linha.insertCell(0).innerHTML = r.usuario;
+			linha.insertCell(1).innerHTML = r.equipamento;
+			linha.insertCell(2).innerHTML = r.local;
+			linha.insertCell(3).innerHTML = r.hora_inicial;
+			linha.insertCell(4).innerHTML = r.hora_final;
+			linha.insertCell(5).innerHTML = data_BR(r.data);
+		});
+	});
+}
 
 // Status da Reserva
 
 pegaId("status-01").innerHTML = bancodados_dashboard.pesquisaStatusAguardando();
 pegaId("status-02").innerHTML = bancodados_dashboard.pesquisaStatusEmUso();
 pegaId("status-03").innerHTML = bancodados_dashboard.pesquisaStatusRecolhida();
+
+
+// Exibindo a lista de reservas no Dashboard
+
+window.onload = () => {
+
+	let reservas = Array();
+	let lista_reservas = pegaId("lista-reservas-01");
+
+	reservas = bancodados_dashboard.recuperaReservas();
+
+	reservas.forEach(r => {
+
+		let linha = lista_reservas.insertRow();
+
+		linha.insertCell(0).innerHTML = r.usuario;
+		linha.insertCell(1).innerHTML = r.equipamento;
+		linha.insertCell(2).innerHTML = r.local;
+		linha.insertCell(3).innerHTML = r.hora_inicial;
+		linha.insertCell(4).innerHTML = r.hora_final;
+		linha.insertCell(5).innerHTML = data_BR(r.data);
+	});
+};
 
 // Chart
 

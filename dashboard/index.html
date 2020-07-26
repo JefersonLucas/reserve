@@ -38,7 +38,7 @@
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 		   <span class="navbar-toggler-icon"></span>
 		</button>
-	<!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar..." aria-label="Search" disabled> -->	
+		<input class="form-control form-control-dark w-100 mr-2" id="buscar-reserva" type="text" placeholder="Buscar..." aria-label="Search">	
 	</nav>
 
 	<div class="container-fluid">
@@ -153,17 +153,17 @@
 								<th class="text-white" title="Status das reservas" colspan="6">
 									<!-- STATUS -->
 									<nav class="nav nav-underline d-flex justify-content-center align-items-center">
-										<a class="nav-link" title="Aguardando">
-											<i class="fas fa-file fa-lg"></i>							
-											<span class="badge badge-pill bg-light text-dark" id="status-01"></span>
-										</a>							
-										<a class="nav-link" title="Em uso">
-											<i class="fas fa-file-upload fa-lg"></i>
-											<span class="badge badge-pill bg-light text-dark" id="status-02"></span>
+										<a class="nav-link text-danger" title="Aguardando">
+											<i class="fas fa-file fa-lg"></i>
+											<span class="badge badge-pill bg-light text-danger" id="status-01"></span>
 										</a>
-										<a class="nav-link" title="Recolhido">
+										<a class="nav-link text-success" title="Em uso">
+											<i class="fas fa-file-upload fa-lg"></i>
+											<span class="badge badge-pill bg-light text-success" id="status-02"></span>
+										</a>
+										<a class="nav-link text-primary" title="Recolhido">
 											<i class="fas fa-file-download fa-lg"></i>
-											<span class="badge badge-pill bg-light text-dark" id="status-03"></span>
+											<span class="badge badge-pill bg-light text-primary" id="status-03"></span>
 										</a>
 									</nav>
 								</th>
