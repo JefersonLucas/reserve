@@ -4,7 +4,7 @@
  * Author: Jeferson Luckas
  * Creation: 06/06/2020
  * Modification: 16/07/2020
- * Version: 1.0.0
+ * Version: 2.0.0
  * Description: Dashboard core
  *
  * Copyright (c) 2020 Jeferson Luckas
@@ -13,8 +13,19 @@
  *
  */
 
-// Classe
+// Classes
 
+class Grafico {
+	constructor(domingo = 0, segunda = 0, terca = 0, quarta = 0, quinta = 0, sexta = 0, sabado = 0) {
+		this.domingo 	= domingo;
+		this.segunda 	= segunda;
+		this.terca		= terca;
+		this.quarta 	= quarta;
+		this.quinta 	= quinta;
+		this.sexta 		= sexta;
+		this.sabado		= sabado;
+	}
+}
 class ReservaDashboard {
 	constructor(usuario, equipamento, local, hora_inicial, hora_final, data, status) {
 		this.usuario 		= usuario;
@@ -34,45 +45,6 @@ class ReservaDashboard {
 		return true;
 	}
 }
-class Grafico {
-	constructor(domingo, segunda, terca, quarta, quinta, sexta, sabado) {
-		this.domingo 	= domingo;
-		this.segunda 	= segunda;
-		this.terca		= terca;
-		this.quarta 	= quarta;
-		this.quinta 	= quinta;
-		this.sexta 		= sexta;
-		this.sabado		= sabado;
-	}
-	pegaProximoId() {
-		let proximo_Id = localStorage.getItem("idGrafico");
-		return parseInt(proximo_Id) + 1;
-	}
-	gravar(grafico) {
-		let id = this.pegaProximoId();
-
-		localStorage.setItem(id, JSON.stringify(grafico));
-		localStorage.setItem(`idGrafico`, id); 
-	}
-	recuperaGraficos() {
-		let graficos = Array();
-
-		let id = localStorage.getItem("idGrafico");
-
-		for(let i = 0; i <= id; i++) {
-			let g = JSON.parse(localStorage.getItem(i));
-			let u = undefined;
-
-			if (g === null || g.domingo === u || g.segunda === u || g.terca === u || g.quarta === u || g.quinta === u || g.sexta === u || g.sabado === u) {
-				continue;
-			}
-			g.id = i;
-			graficos.push(g)
-		}
-		return graficos;
-	}
-}
-
 class BancoDadosDashboard {
 	constructor() {
 		let idReserva = localStorage.getItem("idReserva");
@@ -202,6 +174,33 @@ class BancoDadosDashboard {
 		}
 		return pesquisa;
 	}
+	pegaProximoIdGrafico() {
+		let proximo_Id = localStorage.getItem("idGrafico");
+		return parseInt(proximo_Id);
+	}
+	gravarGrafico(grafico) {
+		let id = this.pegaProximoId();
+
+		localStorage.setItem(id, JSON.stringify(grafico));
+		localStorage.setItem(`idGrafico`, id); 
+	}
+	recuperaGraficos() {
+		let graficos = Array();
+
+		let id = localStorage.getItem("idGrafico");
+
+		for(let i = 0; i <= id; i++) {
+			let g = JSON.parse(localStorage.getItem(i));
+			let u = undefined;
+
+			if (g === null || g.domingo === u || g.segunda === u || g.terca === u || g.quarta === u || g.quinta === u || g.sexta === u || g.sabado === u) {
+				continue;
+			}
+			g.id = i;
+			graficos.push(g)
+		}
+		return graficos;
+	}
 }
 
 // Substitui o getElementById
@@ -253,7 +252,7 @@ buscar_reserva.onfocus = () => {
 		
 		lista_reservas.innerHTML = "";
 
-		reservas.forEach((r) =>{
+		reservas.forEach((r) => {
 
 			let linha = lista_reservas.insertRow();
 
@@ -306,38 +305,38 @@ let data = new Date();
 
 data.getDay();
 
-	switch(data.getDay()) {
-		case 0:
-			semana["dia"]["Domingo"] 		= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 1:
-			semana["dia"]["Segunda-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 2:
-			semana["dia"]["Terça-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 3:
-			semana["dia"]["Quarta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 4:
-			semana["dia"]["Quinta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 5:
-			semana["dia"]["Sexta-feira"] 	= bancodados_dashboard.pesquisaStatusReserva();
-			break
-		case 6:
-			semana["dia"]["Sábado"] 		= bancodados_dashboard.pesquisaStatusReserva();
-			break
-	}
+switch(data.getDay()) {
+	case 0:
+		semana["dia"]["Domingo"] 	= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 1:
+		semana["dia"]["Segunda"] 	= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 2:
+		semana["dia"]["Terça"] 		= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 3:
+		semana["dia"]["Quarta"] 	= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 4:
+		semana["dia"]["Quinta"] 	= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 5:
+		semana["dia"]["Sexta"] 		= bancodados_dashboard.pesquisaStatusReserva();
+		break
+	case 6:
+		semana["dia"]["Sábado"] 	= bancodados_dashboard.pesquisaStatusReserva();
+		break
+}
 
 
 (function () {
-  'use strict'
+  "use strict"
 
-  var ctx = pegaId('myChart')
+  var ctx = pegaId("myChart")
   // eslint-disable-next-line no-unused-vars
   var myChart = new Chart(ctx, {
-	type: 'line',
+	type: "line",
 	data: {
 	  labels: [
 		'Domingo',

@@ -4,7 +4,7 @@
  * Author: Jeferson Luckas
  * Creation: 06/06/2020
  * Modification: 16/07/2020
- * Version: 1.0.0
+ * Version: 2.0.0
  * Description: Script helpers
  *
  * Copyright (c) 2020 Jeferson Luckas
@@ -150,9 +150,9 @@ setInterval(()=>{
 	periodo = relogio >= "12:00:00" && relogio <= "18:00:00" ? periodo = "Boa tarde!" : periodo;	
 	periodo = relogio >= "18:00:00" || relogio <= "06:00:00" ? periodo = "Boa noite!" : periodo;
 
-	icone = periodo === "Bom dia!"   ? pegaId("icone").className = "fas fa-sun fa-lg"		  	: icone;
-	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-cloud-sun fa-lg" 	: icone;
-	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg"			: icone;
+	icone = periodo === "Bom dia!"   ? pegaId("icone").className = "fas fa-sun fa-lg text-warning"		  	: icone;
+	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-cloud-sun fa-lg text-info" 		: icone;
+	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg text-black-50"		: icone;
 	
 	administrador = bancodados_helpers.recuperaDadosAdministrador();
 
@@ -162,7 +162,7 @@ setInterval(()=>{
 	pegaId("semana").innerHTML 				= semana;
 	pegaId("administrador-nome").innerHTML 	= "Nome Sobrenome";
 	
-	administrador.forEach((a) => pegaId("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
+	administrador.forEach(a => pegaId("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
 	
 });
 
