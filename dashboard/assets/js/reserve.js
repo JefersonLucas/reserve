@@ -99,9 +99,6 @@ class BancoDadosReserve {
 		}
 		return reservas_filtradas;
 	}
-	removerReserva(id) {
-		localStorage.removeItem(id);
-	}
 	removeTodasReservas() {
 		let id = localStorage.getItem("idReserva");
 	
@@ -112,36 +109,15 @@ class BancoDadosReserve {
 			}
 		}
 	}
-	pesquisaStatusAguardando() {
-		let pesquisa = Array();
-
-		pesquisa = this.recuperaReservas();
-
-		pesquisa = pesquisa.filter(p => p.status === "Aguardando");
-		
-		if (pesquisa.length < 10) {
-			pesquisa = `0${pesquisa.length}`;
-		}
-		return pesquisa;
+	removerReserva(id) {
+		localStorage.removeItem(id);
 	}
-	pesquisaStatusEmUso() {
+	pesquisaStatus(status) {
 		let pesquisa = Array();
 
 		pesquisa = this.recuperaReservas();
 
-		pesquisa = pesquisa.filter(p => p.status === "Em uso");
-		
-		if (pesquisa.length < 10) {
-			pesquisa = `0${pesquisa.length}`;
-		}
-		return pesquisa;
-	}
-	pesquisaStatusRecolhida() {
-		let pesquisa = Array();
-
-		pesquisa = this.recuperaReservas();
-
-		pesquisa = pesquisa.filter(p => p.status === "Recolhida");
+		pesquisa = pesquisa.filter(p => p.status === status);
 		
 		if (pesquisa.length < 10) {
 			pesquisa = `0${pesquisa.length}`;
@@ -170,6 +146,8 @@ let buscar_reserva 		= pegaId("buscar-reserva");
 let botao 				= pegaId("modal-botao-01");
 let fechar 				= pegaId("fechar-modal-01");
 let status 				= "Aguardando";
+
+// Funções auxiliares
 
 // Validação de input
 
@@ -290,143 +268,6 @@ let data_USA = data_BR => {
 function pegaId(id) {
 	return document.getElementById(id);
 }
-
-// Cadastrar Reserva
-
-cadastrar_reserva.onclick = () => {
-
-	let reserva = new Reserva(usuario.value.trim(), equipamento.value.trim(), local.value.trim(), hora_inicial.value, hora_final.value, data.value, status);
-
-	if(reserva.validarReserva()) {
-
-		bancodados_reserve.gravar(reserva, "Reserva");
-		
-		modalCadastarSucesso("success", reserva.usuario, tabelaReserva(reserva.equipamento, reserva.local,reserva.hora_inicial,reserva.hora_final,data_BR(reserva.data),"success"));
-		
-		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
-	}
-	else {
-		modalAcaoErro("cadastar");
-	}
-}
-
-// Pesquisar Reserva
-
-pesquisar_reserva.onclick = () => {
-	
-	let usuario 	 		= pegaId("usuario").value;
-	let equipamento  		= pegaId("equipamento").value;
-	let local 		 		= pegaId("local").value;
-	let hora_inicial 		= pegaId("hora-inicial").value;
-	let hora_final 	 		= pegaId("hora-final").value;
-	let data 		 		= pegaId("data").value;
-
-	if(usuario === "" && equipamento === "" && local === "" && hora_inicial === "" && hora_final === "" && data === "") {
-		modalAcaoErro("pesquisar");
-	}		
-	else {
-	
-		let reserva = new Reserva(usuario.trim(), equipamento.trim(), local.trim(), hora_inicial, hora_final, data, status);
-	
-		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
-	
-		let lista_reservas = pegaId("lista-reservas-02");
-		
-		lista_reservas.innerHTML = "";
-	
-		reservas.forEach(r => {
-
-			let linha = lista_reservas.insertRow();
-
-			linha.insertCell(0).innerHTML = r.usuario;
-			linha.insertCell(1).innerHTML = r.equipamento;
-			linha.insertCell(2).innerHTML = r.local;
-			linha.insertCell(3).innerHTML = cor_status(r.status);
-			linha.insertCell(4).append(
-				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
-				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
-				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
-			);
-		});
-	}
-}
-
-// Buscar Reserva
-
-buscar_reserva.onclick = () => {
-
-	setInterval(() => {
-		
-		let usuario = buscar_reserva.value;
-
-		let equipamento = local = hora_inicial = hora_final = data = status = "";
-
-		let reserva = new Reserva(usuario.trim(), equipamento, local, hora_inicial, hora_final, data, status);
-			
-		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
-	
-		let lista_reservas = pegaId("lista-reservas-02");
-		
-		lista_reservas.innerHTML = "";
-	
-		reservas.forEach(r => {
-
-			let linha = lista_reservas.insertRow();
-
-			linha.insertCell(0).innerHTML = r.usuario;
-			linha.insertCell(1).innerHTML = r.equipamento;
-			linha.insertCell(2).innerHTML = r.local;
-			linha.insertCell(3).innerHTML = cor_status(r.status);
-			linha.insertCell(4).append(
-				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
-				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
-				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
-			);
-		});
-	});
-}
-
-// Botões
-
-atualizar.onclick 	= () => window.location.reload();
-
-imprimir.onclick 	= () => window.print();
-
-excluir.onclick 	= () => {
-	
-	if(bancodados_reserve.verificaIdReserva()) {
-		let resposta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
-
-		if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
-			modalExcluiTodasReservas();
-			bancodados_reserve.removeTodasReservas();
-		}
-	}
-}
-
-alarme_ativado.onclick = () => {
-	$('#toast').toast('show');
-	
-	pegaId("alarme-info").innerHTML 		= "Alarme ativado";
-	pegaId("alarme-icone").className 		= "fas fa-bell fa-md";
-	pegaId("alarme-ativado").className 		= "dropdown-item active";
-	pegaId("alarme-desativado").className 	= "dropdown-item";
-}
-
-alarme_desativado.onclick = () => {
-	$('#toast').toast('hide');
-
-	pegaId("alarme-info").innerHTML 		= "Alarme desativado";
-	pegaId("alarme-icone").className 		= "fas fa-bell-slash fa-md";
-	pegaId("alarme-ativado").className 		= "dropdown-item";
-	pegaId("alarme-desativado").className 	= "dropdown-item active";
-}
-
-// Status da Reserva
-
-pegaId("status-01").innerHTML = bancodados_reserve.pesquisaStatusAguardando();
-pegaId("status-02").innerHTML = bancodados_reserve.pesquisaStatusEmUso();
-pegaId("status-03").innerHTML = bancodados_reserve.pesquisaStatusRecolhida();
 
 // Editar
 
@@ -710,6 +551,146 @@ let tabelaReserva = (equipamento, local, hora_inicial, hora_final, data, estilo)
 
 	return tabela;
 }
+
+// Ações
+
+// Cadastrar Reserva
+
+cadastrar_reserva.onclick = () => {
+
+	let reserva = new Reserva(usuario.value.trim(), equipamento.value.trim(), local.value.trim(), hora_inicial.value, hora_final.value, data.value, status);
+
+	if(reserva.validarReserva()) {
+
+		bancodados_reserve.gravar(reserva, "Reserva");
+		
+		modalCadastarSucesso("success", reserva.usuario, tabelaReserva(reserva.equipamento, reserva.local,reserva.hora_inicial,reserva.hora_final,data_BR(reserva.data),"success"));
+		
+		usuario.value = equipamento.value = local.value = data.value = hora_inicial.value = hora_final.value = "";
+	}
+	else {
+		modalAcaoErro("cadastar");
+	}
+}
+
+// Pesquisar Reserva
+
+pesquisar_reserva.onclick = () => {
+	
+	let usuario 	 		= pegaId("usuario").value;
+	let equipamento  		= pegaId("equipamento").value;
+	let local 		 		= pegaId("local").value;
+	let hora_inicial 		= pegaId("hora-inicial").value;
+	let hora_final 	 		= pegaId("hora-final").value;
+	let data 		 		= pegaId("data").value;
+
+	if(usuario === "" && equipamento === "" && local === "" && hora_inicial === "" && hora_final === "" && data === "") {
+		modalAcaoErro("pesquisar");
+	}		
+	else {
+	
+		let reserva = new Reserva(usuario.trim(), equipamento.trim(), local.trim(), hora_inicial, hora_final, data, status);
+	
+		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
+	
+		let lista_reservas = pegaId("lista-reservas-02");
+		
+		lista_reservas.innerHTML = "";
+	
+		reservas.forEach(r => {
+
+			let linha = lista_reservas.insertRow();
+
+			linha.insertCell(0).innerHTML = r.usuario;
+			linha.insertCell(1).innerHTML = r.equipamento;
+			linha.insertCell(2).innerHTML = r.local;
+			linha.insertCell(3).innerHTML = cor_status(r.status);
+			linha.insertCell(4).append(
+				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
+			);
+		});
+	}
+}
+
+// Buscar Reserva
+
+buscar_reserva.onclick = () => {
+
+	setInterval(() => {
+		
+		let usuario = buscar_reserva.value;
+
+		let equipamento = local = hora_inicial = hora_final = data = status = "";
+
+		let reserva = new Reserva(usuario.trim(), equipamento, local, hora_inicial, hora_final, data, status);
+			
+		let reservas = bancodados_reserve.pesquisaReserva(reserva, "Reserva");
+	
+		let lista_reservas = pegaId("lista-reservas-02");
+		
+		lista_reservas.innerHTML = "";
+	
+		reservas.forEach(r => {
+
+			let linha = lista_reservas.insertRow();
+
+			linha.insertCell(0).innerHTML = r.usuario;
+			linha.insertCell(1).innerHTML = r.equipamento;
+			linha.insertCell(2).innerHTML = r.local;
+			linha.insertCell(3).innerHTML = cor_status(r.status);
+			linha.insertCell(4).append(
+				botaoEditarReserva(			r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoVerificarReserva(		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status),
+				botaoExcluirReserva( 		r.id, r.usuario, r.equipamento, r.local, r.hora_inicial, r.hora_final, r.data, r.status)
+			);
+		});
+	});
+}
+
+// Botões
+
+atualizar.onclick 	= () => window.location.reload();
+
+imprimir.onclick 	= () => window.print();
+
+excluir.onclick 	= () => {
+	
+	if(bancodados_reserve.verificaIdReserva()) {
+		let resposta = prompt("Essa ação irá remover todas as reservas.\nDeseja realmente continuar?", "Não");
+
+		if (resposta == "sim" || resposta == "SIM" || resposta == "Sim" || resposta == "s" || resposta == "S") {
+			modalExcluiTodasReservas();
+			bancodados_reserve.removeTodasReservas();
+		}
+	}
+}
+
+alarme_ativado.onclick = () => {
+	$('#toast').toast('show');
+	
+	pegaId("alarme-info").innerHTML 		= "Alarme ativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item active";
+	pegaId("alarme-desativado").className 	= "dropdown-item";
+}
+
+alarme_desativado.onclick = () => {
+	$('#toast').toast('hide');
+
+	pegaId("alarme-info").innerHTML 		= "Alarme desativado";
+	pegaId("alarme-icone").className 		= "fas fa-bell-slash fa-md";
+	pegaId("alarme-ativado").className 		= "dropdown-item";
+	pegaId("alarme-desativado").className 	= "dropdown-item active";
+}
+
+// Status da Reserva
+
+pegaId("status-01").innerHTML = bancodados_reserve.pesquisaStatus("Aguardando");
+pegaId("status-02").innerHTML = bancodados_reserve.pesquisaStatus("Em uso");
+pegaId("status-03").innerHTML = bancodados_reserve.pesquisaStatus("Recolhida");
+
 
 // Exibindo a lista de Reservas no Dashboard
 

@@ -13,7 +13,7 @@
  *
  */
 
-// Banco de Dados
+// Classe
 
 class BancoDadosHelpers {
 	constructor() {
@@ -76,6 +76,8 @@ const DASHBOARD_PAGE 	= pegaId("dashboard-page");
 const RESERVAS_PAGE 	= pegaId("reserva-page");
 const PERFIL_PAGE 		= pegaId("perfil-page");
 
+// Funções auxiliares
+
 // Links
 
 DASHBOARD_PAGE.onclick 	= () => window.location.href = "index.html";
@@ -87,17 +89,6 @@ PERFIL_PAGE.onclick 	= () => window.location.href = "perfil.html";
 function pegaId(id){
 	return document.getElementById(id);
 }
-
-// Scroll para subir a página
-
-window.addEventListener("scroll", () => {
-	if (window.pageYOffset > 100) {
-    	scrool_subir_pagina.classList.add("active");
-  	}
-  	else {
-    	scrool_subir_pagina.classList.remove("active");
-  	}
-});
 
 // Atualização de data, hora e periodo
 
@@ -150,9 +141,9 @@ setInterval(()=>{
 	periodo = relogio >= "12:00:00" && relogio <= "18:00:00" ? periodo = "Boa tarde!" : periodo;	
 	periodo = relogio >= "18:00:00" || relogio <= "06:00:00" ? periodo = "Boa noite!" : periodo;
 
-	icone = periodo === "Bom dia!"   ? pegaId("icone").className = "fas fa-sun fa-lg text-warning"		  	: icone;
-	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-cloud-sun fa-lg text-info" 		: icone;
-	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg text-black-50"		: icone;
+	icone = periodo === "Bom dia!"   ? pegaId("icone").className = "fas fa-cloud-sun fa-lg text-info"	: icone;
+	icone = periodo === "Boa tarde!" ? pegaId("icone").className = "fas fa-sun fa-lg text-warning" 		: icone;
+	icone = periodo === "Boa noite!" ? pegaId("icone").className = "fas fa-moon fa-lg text-black-50"	: icone;
 	
 	administrador = bancodados_helpers.recuperaDadosAdministrador();
 
@@ -160,10 +151,21 @@ setInterval(()=>{
 	pegaId("relogio").innerHTML 			= relogio;
 	pegaId("periodo").innerHTML 			= periodo;
 	pegaId("semana").innerHTML 				= semana;
-	pegaId("administrador-nome").innerHTML 	= "Nome Sobrenome";
+	pegaId("administrador-nome").innerHTML 	= "Administrador";
 	
-	administrador.forEach(a => pegaId("administrador-nome").innerHTML = `${a.nome} ${a.sobrenome}`);
+	administrador.forEach(a => pegaId("administrador-nome").innerHTML = a.nome);
 	
+});
+
+// Scroll para subir a página
+
+window.addEventListener("scroll", () => {
+	if (window.pageYOffset > 100) {
+    	scrool_subir_pagina.classList.add("active");
+  	}
+  	else {
+    	scrool_subir_pagina.classList.remove("active");
+  	}
 });
 
 // Feather

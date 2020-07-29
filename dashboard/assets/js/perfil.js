@@ -13,10 +13,11 @@
  *
  */
 
+// Classes
+
 class Administrador {
-	constructor(nome = "Nome", sobrenome = "Sobrenome") {
-		this.nome 		= nome;
-		this.sobrenome 	= sobrenome;
+	constructor(nome = "Nome") {
+		this.nome = nome;
 	}
 	validarAdministrador() {
 		for(let a in this) {
@@ -53,11 +54,19 @@ class BancoDadosPerfil {
 		return administrador;
 	}
 }
+// Variáveis globais
 
 let banco_dados_perfil = new BancoDadosPerfil();
+let nome_01 = pegaId("nome-administrador");
+let cadastrar_administrador = pegaId("cadastar-administrador");
 
-let nome_01 = pegaId("nome-01");
-let nome_02 = pegaId("nome-02");
+// Funções auxiliares
+
+// Substitui o getElementById
+
+function pegaId(id){
+	return document.getElementById(id);
+}
 
 setInterval(() => {
 
@@ -74,45 +83,11 @@ setInterval(() => {
 		pegaId("valida-nome-01").innerHTML = mensagem_02
 		pegaId("valida-nome-01").className = valido;
 	}
-	if (nome_02.value === "" || nome_02.value === null || nome_02.value === undefined) {
-		pegaId("valida-nome-02").innerHTML = mensagem_01
-		pegaId("valida-nome-02").className = invalido;
-	}
-	else {
-		pegaId("valida-nome-02").innerHTML = mensagem_02;
-		pegaId("valida-nome-02").className = valido;
-	}
 });
 
-let cadastrar_administrador = pegaId("cadastar-administrador");
+// Modais
 
-cadastrar_administrador.onclick = () => {
-
-	let administrador = new Administrador(
-		nome_01.value.trim(),
-		nome_02.value.trim()
-	);
-
-	if (administrador.validarAdministrador()) {		
-		modalCadastarSucesso(
-			administrador.nome,
-			administrador.sobrenome,
-			tabelaReserva(
-				"success",
-				administrador.nome,
-				administrador.sobrenome
-		));
-		
-		banco_dados_perfil.gravarAdministrador(administrador);
-		
-		nome_01.value = nome_02.value = "";
-	}
-	else {
-		modalCadastrarErro();
-	}
-}
-
-let modalCadastarSucesso = (nome, sobrenome, tabela) => {
+let modalCadastarSucesso = (nome, tabela) => {
 	$('#modal-01').modal('show');
 
 	let botao 		= pegaId('modal-botao-01');
@@ -121,7 +96,7 @@ let modalCadastarSucesso = (nome, sobrenome, tabela) => {
 	pegaId('modal-titulo-01').innerHTML 	= '<i class="fas fa-check-circle"></i> Sucesso!';
 	pegaId('modal-documento-01').className	= 'modal-dialog border border-success rounded alert-success';
 	pegaId('modal-cabecalho-01').className  = 'modal-header text-white bg-success';
-	pegaId('modal-conteudo-01').innerHTML 	= `A reserva do(a) <span class="text-success"><b>${nome} ${sobrenome}</b></span> foi cadastrada com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
+	pegaId('modal-conteudo-01').innerHTML 	= `Administrador(a) <span class="text-success"><b>${nome}</b></span> foi atualizado com <span class="text-success"><b>sucesso</b></span>!${tabela}`;
 	pegaId('modal-botao-01').innerHTML 		= 'Voltar';
 	pegaId('modal-botao-01').className 		= 'btn btn-outline-success';
 
@@ -134,40 +109,60 @@ let modalCadastrarErro = () => {
 	pegaId('modal-titulo-02').innerHTML 	= '<i class="fas fa-times-circle"></i> Erro!';
 	pegaId('modal-documento-02').className	= 'modal-dialog border border-danger rounded alert-danger';
 	pegaId('modal-cabecalho-02').className  = 'modal-header text-white bg-danger';
-	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao cadastrar a sua <span class="text-danger"><b>reserva</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
+	pegaId('modal-conteudo-02').innerHTML	= 'Houve um erro ao atualizar as configurações de <span class="text-danger"><b>administrador</b></span>. Por favor, verifique se todos os campos foram preenchidos corretamente.';
 	pegaId('modal-botao-02').innerHTML		= 'Voltar';
 	pegaId('modal-botao-02').className 		= 'btn btn-outline-danger';
 }
 
-let tabelaReserva = (bg, nome, sobrenome) => {
+// Tabela
+
+let tabelaReserva = (bg, nome) => {
 	let tabela = `
 	<table class="table table-bordered text-center mt-4">
 		<thead>
 			<tr class="text-center bg-${bg}">
-				<th scope="col" colspan="2" class="text-white"><i class="fas fa-signature fa-lg" title="Equipamento"></i></th>
+				<th scope="col" colspan="2" class="text-white"><i class="fas fa-user-tie fa-lg" title="Equipamento"></i></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>${nome}</td>
-				<td>${sobrenome}</td>
 			</tr>
 		</tbody>
 	</table>`;
 	return tabela;
 }
 
-function pegaId(id){
-	return document.getElementById(id);
+// Ações
+
+cadastrar_administrador.onclick = () => {
+
+	let administrador = new Administrador(
+		nome_01.value.trim()
+	);
+
+	if (administrador.validarAdministrador()) {		
+		modalCadastarSucesso(
+			administrador.nome,
+			tabelaReserva(
+				"success",
+				administrador.nome
+		));
+		
+		banco_dados_perfil.gravarAdministrador(administrador);
+		
+		nome_01.value = "";
+	}
+	else {
+		modalCadastrarErro();
+	}
 }
 
 window.onload  = () => {
+
 	let administrador = Array();
 
 	administrador = banco_dados_perfil.recuperaDadosAdministrador();
 
-	administrador.forEach((a) => {
-		pegaId("nome-01").value = a.nome;
-		pegaId("nome-02").value = a.sobrenome;
-	});
+	administrador.forEach((a) => pegaId("nome-administrador").value = a.nome);
 }
