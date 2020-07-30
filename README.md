@@ -1,29 +1,52 @@
-![JefersonLuckas](https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue)
-![GitHub language count](https://img.shields.io/github/languages/count/JefersonLucas/reserve)
-![GitHub top language](https://img.shields.io/github/languages/top/JefersonLucas/reserve)
-![GitHub repo size](https://img.shields.io/github/repo-size/JefersonLucas/reserve)
-![GitHub](https://img.shields.io/github/license/JefersonLucas/reserve)
-![GitHub contributors](https://img.shields.io/github/contributors/JefersonLucas/reserve)
-![GitHub stars](https://img.shields.io/github/stars/JefersonLucas/reserve?style=social)
-![GitHub forks](https://img.shields.io/github/forks/JefersonLucas/reserve?style=social)
+<h1 align="center">Reserve</h1>
 
-# Reserve
+<p align="center">
+  <img src="assets/img/logo.png" width="200">
+</p>
+    <p align="center"><em>Tenha sempre o controle fácil, rápido e seguro das suas reservas.</em></p>    
+    <p align="center">
+        <img src="https://img.shields.io/badge/Jeferson%20Lucas-Reserve-blue" alt="Project">
+        <img src="https://img.shields.io/github/languages/count/JefersonLucas/reserve" alt="language count">
+        <img src="https://img.shields.io/github/license/JefersonLucas/reserve" alt="License">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="contributors">
+        <img src="https://img.shields.io/github/stars/JefersonLucas/reserve?style=social" alt="stars">
+        <img src="https://img.shields.io/github/contributors/JefersonLucas/reserve" alt="forks">
+  	</p>
+</p>
+<p align="center">
+    <img src="assets/img/capture.png" alt="Dashboard" width="500">
+</p>
 
-O Reserve é um aplicativo de reservas que utiliza as funcionalidades da API - localStorage do navegador para armazenamento da informações.
+## Traduções
+
+* :brazil: [Original](https://github.com/JefersonLucas/reserve/blob/master/README.md)
+* :us: [English](https://github.com/JefersonLucas/reserve/blob/master/translations/en/README.md)
+
+## Sobre
+
+O Reserve é um aplicativo de reservas que utiliza as funcionalidades da API - localStorage do navegador para armazenamento das informações, sendo possível efetuar inserção, leitura, edição e remoção das reservas efetuadas. Com esse aplicativo será possível:
+
+- [x] Cadastrar;
+- [x] Filtrar;
+- [x] Visualizar;
+- [x] Editar;
+- [x] Excluir; e
+- [x] Imprimir reservas.
 
 ## Começando
 
 Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local.
 
 ### Instalando
+
 Siga passo a passo as seguinte formas de obter o código na sua máquina local.
 
-**1. Clonando o repositório**.
+#### Clonando o repositório
 
-Para clonar o esse repositório na sua máquina local, utilize as linhas de comando:
+Inicie o repositorio na sua máquina local utilizando as seguintes linhas de comando.
 
 ```
-#Clonar com SSH
+// Clonar com SSH
 
 mkdir reserve
 cd reserve
@@ -32,33 +55,31 @@ git clone git@github.com:JefersonLucas/reserve.git
 ```
 
 ```
-#Clonar com HTTPS
+// Clonar com HTTPS
 
 mkdir reserve
 cd reserve
 git init
 git clone https://github.com/JefersonLucas/reserve.git
 ```
+Agora os arquivos que estão no repositório remoto estão clonados no repositório local.
 
-**2. Baixando o repositório**.
+#### Baixando o repositório
 
 Você também pode [baixar](https://github.com/JefersonLucas/reserve/archive/master.zip) o repositório em formato zip.
+
+## Ambiente
+
+Veja aqui o a página desse projeto implantado por @github-pages [ver implantação](https://jefersonlucas.github.io/reserve/).
 
 ## Como funciona?
 
 Leia a nossa [Wiki](https://github.com/JefersonLucas/reserve/wiki) para obter mais informações.
 
-O aplicativo Reserve funciona baseado na funcionalidade do localStorage do navegador para inserção, leitura, edição e remoção das reservas efetuadas. Com esse aplicativo será possível:
-- Efetuar cadastros;
-- Visualizar lista cadastradas;
-- Pesquisar e filtrar;
-- Editar, excluir e imprimir as reservas cadastras.
-
-
 ## Construído com
 
-* [Bootstrap](https://getbootstrap.com/) - Framework front end
-* [Font Awesome](https://maven.apache.org/) - Framework de pacote de ícones
+* [Bootstrap](https://getbootstrap.com/) - Framework front end.
+* [Font Awesome](https://maven.apache.org/) - Framework de pacote de ícones.
 
 ## Contribuindo
 
@@ -74,7 +95,6 @@ Usamos o [SemVer](https://semver.org/lang/pt-BR/) para controle de versão. Para
 
 Veja também a lista completa de [contribuidores](https://github.com/JefersonLucas/reserve/contributors) que participaram deste projeto.
 
-
 ## Licença
 
 Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE.md](https://github.com/JefersonLucas/reserve/blob/master/LICENSE) para obter detalhes.
@@ -83,12 +103,6 @@ Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE.m
 
 Meus sinceros agradecimentos:
 
-* A Deus.
-* Contribuintes do projeto.
-* Todos que visitam o projeto e deixa uma estrela como reconhecimento.
-
-## Siga-me
-
-* Instagram [@jeferson.lucas](https://instagram.com/jeferson.luckas/)
-* Twitter [@JefersonLuckas](https://twitter.com/JefersonLuckas)
-* LinkedIn [Jeferson Lucas](https://www.linkedin.com/in/jeferson-lucas)
+* Primeiramente a Deus. 
+* Meus sinceros agradecimentos a todos que visitam o projeto e deixa uma estrela como reconhecimento.
+* Ao meu professor [Jorge Sant Ana](https://twitter.com/jorgesantanabr) pela inspiração.

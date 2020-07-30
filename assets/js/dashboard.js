@@ -73,21 +73,15 @@ class BancoDadosDashboard {
 		let id = localStorage.getItem("idReserva");
 
 		for(let i = 0; i <= id; i++) {
-			let reserva = JSON.parse(localStorage.getItem(i));
+			let r = JSON.parse(localStorage.getItem(i));
+			let u = undefined;
+			let n = null;
 
-			if (
-				reserva 				=== null 		||
-				reserva.usuario 		=== undefined 	||
-				reserva.equipamento 	=== undefined 	||
-				reserva.local 			=== undefined 	||
-				reserva.hora_inicial 	=== undefined 	||
-				reserva.hora_final 		=== undefined 	||
-				reserva.data 			=== undefined 	||
-				reserva.status 			=== undefined) {
+			if (r === n || r.usuario === u || r.equipamento === u || r.local === u || r.hora_inicial === u || r.hora_final === u || r.data === u || r.status === u) {
 				continue;
 			}
-			reserva.id = i;
-			reservas.push(reserva)
+			r.id = i;
+			reservas.push(r)
 		}
 		return reservas;
 	}	
@@ -138,40 +132,28 @@ class BancoDadosDashboard {
 		
 		return pesquisa.length;
 	}
-	pesquisaStatusAguardando() {
+	pesquisaStatus(status) {
+		
+		switch(status) {
+			case "status-01":
+				status = "Aguardando";
+				break;
+			case "status-02":
+				status = "Utilizando";
+				break;
+			case "status-03":
+				status = "Recolhida";
+				break;
+		}
+		
 		let pesquisa = Array();
 
 		pesquisa = this.recuperaReservas();
 
-		pesquisa = pesquisa.filter(p => p.status === "Aguardando");
+		pesquisa = pesquisa.filter(p => p.status === status);
 		
-		if (pesquisa.length < 10) {
-			pesquisa = `0${pesquisa.length}`;
-		}
-		return pesquisa;
-	}
-	pesquisaStatusEmUso() {
-		let pesquisa = Array();
+		pesquisa = pesquisa.length < 10 ? `0${pesquisa.length}`: pesquisa;
 
-		pesquisa = this.recuperaReservas();
-
-		pesquisa = pesquisa.filter(p => p.status === "Em uso");
-		
-		if (pesquisa.length < 10) {
-			pesquisa = `0${pesquisa.length}`;
-		}
-		return pesquisa;
-	}
-	pesquisaStatusRecolhida() {
-		let pesquisa = Array();
-
-		pesquisa = this.recuperaReservas();
-
-		pesquisa = pesquisa.filter(p => p.status === "Recolhida");
-		
-		if (pesquisa.length < 10) {
-			pesquisa = `0${pesquisa.length}`;
-		}
 		return pesquisa;
 	}
 	pegaProximoIdGrafico() {
@@ -205,8 +187,24 @@ class BancoDadosDashboard {
 
 // Substitui o getElementById
 
-function pegaId(id) {
-	return document.getElementById(id);
+let pega_id = id => document.getElementById(id);
+
+// Variáveis globais
+
+let bancodados_dashboard 	= new BancoDadosDashboard();
+let buscar_reserva 			= pega_id("buscar-reserva");
+let lista_reservas 			= pega_id("lista-reservas-01");
+
+// Métodos das classes BancoDadosReserve
+
+let pesquisa_status = status 	=> bancodados_dashboard.pesquisaStatus(status);
+let pesquisa_reserva = reserva 	=> bancodados_dashboard.pesquisaReserva(reserva);
+let recupera_reservas = () 		=> bancodados_dashboard.recuperaReservas();
+
+// Status da Reserva
+
+for (let i = 1; i <= 3; i++) {
+	pega_id(`status-0${i}`).innerHTML = pesquisa_status(`status-0${i}`);
 }
 
 //	Converter datas
@@ -229,10 +227,24 @@ let data_USA = data_BR => {
 	return data_USA;
 }
 
-// Variáveis globais
+// Estilo dos status
 
-let bancodados_dashboard 	= new BancoDadosDashboard();
-let buscar_reserva 			= pegaId("buscar-reserva");
+let estilo_status = status => {
+	
+	let estilo = "";
+	
+	switch(status) {
+		case "Aguardando":
+			estilo = `<span class="text-danger mx-2" title="${status}"><b><i class="fas fa-file fa-lg"></i></b></span>`;
+			break
+		case "Utilizando":
+			estilo = `<span class="text-success mx-2" title="${status}"><b><i class="fas fa-file-upload fa-lg"></i></b></span>`;
+			break
+		case "Recolhida":
+			estilo = `<span class="text-primary mx-2" title="${status}"><b><i class="fas fa-file-download fa-lg"></i></b></span>`;
+	}
+	return estilo;
+}
 
 // Buscar Reserva
 
@@ -246,13 +258,11 @@ buscar_reserva.onfocus = () => {
 
 		let reserva = new ReservaDashboard(usuario.trim(), equipamento, local, hora_inicial, hora_final, data, status);
 			
-		let reservas = bancodados_dashboard.pesquisaReserva(reserva, "Reserva");
+		let reservas = pesquisa_reserva(reserva);
 	
-		let lista_reservas = pegaId("lista-reservas-01");
-		
 		lista_reservas.innerHTML = "";
 
-		reservas.forEach((r) => {
+		reservas.forEach( r => {
 
 			let linha = lista_reservas.insertRow();
 
@@ -262,15 +272,10 @@ buscar_reserva.onfocus = () => {
 			linha.insertCell(3).innerHTML = r.hora_inicial;
 			linha.insertCell(4).innerHTML = r.hora_final;
 			linha.insertCell(5).innerHTML = data_BR(r.data);
+			linha.insertCell(6).innerHTML = estilo_status(r.status);
 		});
 	});
 }
-
-// Status da Reserva
-
-pegaId("status-01").innerHTML = bancodados_dashboard.pesquisaStatusAguardando();
-pegaId("status-02").innerHTML = bancodados_dashboard.pesquisaStatusEmUso();
-pegaId("status-03").innerHTML = bancodados_dashboard.pesquisaStatusRecolhida();
 
 
 // Exibindo a lista de reservas no Dashboard
@@ -278,11 +283,10 @@ pegaId("status-03").innerHTML = bancodados_dashboard.pesquisaStatusRecolhida();
 window.onload = () => {
 
 	let reservas = Array();
-	let lista_reservas = pegaId("lista-reservas-01");
 
-	reservas = bancodados_dashboard.recuperaReservas();
+	reservas = recupera_reservas();
 
-	reservas.forEach(r => {
+	reservas.forEach( r => {
 
 		let linha = lista_reservas.insertRow();
 
@@ -292,48 +296,16 @@ window.onload = () => {
 		linha.insertCell(3).innerHTML = r.hora_inicial;
 		linha.insertCell(4).innerHTML = r.hora_final;
 		linha.insertCell(5).innerHTML = data_BR(r.data);
+		linha.insertCell(6).innerHTML = estilo_status(r.status);
 	});
 };
 
 // Gráfico
 
-let semana = Array(); 
-
-semana["dia"] = Array(); 
-
-let data = new Date();
-
-data.getDay();
-
-switch(data.getDay()) {
-	case 0:
-		semana["dia"]["Domingo"] 	= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 1:
-		semana["dia"]["Segunda"] 	= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 2:
-		semana["dia"]["Terça"] 		= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 3:
-		semana["dia"]["Quarta"] 	= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 4:
-		semana["dia"]["Quinta"] 	= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 5:
-		semana["dia"]["Sexta"] 		= bancodados_dashboard.pesquisaStatusReserva();
-		break
-	case 6:
-		semana["dia"]["Sábado"] 	= bancodados_dashboard.pesquisaStatusReserva();
-		break
-}
-
-
 (function () {
   "use strict"
 
-  var ctx = pegaId("myChart")
+  var ctx = pega_id("myChart")
   // eslint-disable-next-line no-unused-vars
   var myChart = new Chart(ctx, {
 	type: "line",

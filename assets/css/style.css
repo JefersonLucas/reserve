@@ -1,3 +1,180 @@
-a.nounderline:link { 
-	text-decoration:none;
+/* 
+ * Jeferson Luckas - reserve
+ *
+ * Author: Jeferson Luckas
+ * Creation: 06/06/2020
+ * Modification: 16/07/2020
+ * Version: 1.0.0
+ * Description: Reserve style
+ *
+ * Copyright (c) 2020 Jeferson Luckas
+ * Released under the MIT license
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
+ */
+
+html {
+	scroll-behavior: smooth;
+}
+body {
+	font-size: .875rem;
+}
+
+.feather {
+	width: 17px;
+	height: 17px;
+	vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	padding: 48px 0 0;
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+	.sidebar {
+		top: 5rem;
+  	}
+}
+
+.sidebar-sticky {
+	position: relative;
+	top: 0;
+	height: calc(100vh - 48px);
+	padding-top: .5rem;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+	.sidebar-sticky {
+		position: -webkit-sticky;
+		position: sticky;
+  	}
+}
+
+.sidebar .nav-link {
+	font-weight: 500;
+	color: #333;
+}
+.menu {
+	font-size: 16px;
+}
+.sidebar .nav-link .feather {
+	margin-right: 4px;
+	color: #999;
+}
+
+.sidebar .nav-link.active {
+	color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+	color: inherit;
+}
+
+.sidebar-heading {
+	font-size: .75rem;
+	text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	font-size: 1rem;
+	background-color: rgba(0, 0, 0, .25);
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+	top: .25rem;
+	right: 1rem;
+}
+
+.navbar .form-control {
+	padding: .75rem 1rem;
+	border-width: 0;
+	border-radius: 0;
+}
+
+.form-control-dark {
+	color: #fff;
+	background-color: rgba(255, 255, 255, .1);
+	border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+	border-color: transparent;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/* 
+ * Alerta
+ */
+
+.toast {
+	position: fixed;
+	max-width: 300px;
+	height: 80px;
+	z-index: 1000;
+	right: 20px;
+	display: flex;
+	align-items: right;
+	justify-content: right;
+}
+
+/* 
+ * Botão scroll 
+ */
+ 
+.to-top {
+	background-color: #ccc;
+	background-color: rgba(0,0,0,.2);
+	position: fixed;
+	bottom: 16px;
+	right:32px;
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size:32px;
+	color:#1f1f1f;
+	text-decoration: none;
+	opacity:0;
+	pointer-events: none;
+	text-align: center;
+	backface-visibility: hidden;
+	perspective: 1000;
+	transform: translateZ(0px);
+	transition: all .2s ease-in-out;
+}
+
+.to-top i {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	color: #fff;
+	font-size: 16px;
+	line-height: 16px;
+}
+
+.to-top.active {
+	bottom:32px;
+	pointer-events: auto;
+	opacity:1;
 }

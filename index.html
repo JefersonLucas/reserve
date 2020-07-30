@@ -1,303 +1,218 @@
-<!-- ==============================================================||
-//  AUTOR: JEFERSON LUCAS
-//  DATA DE CRIAÇÃO: 03/06/2020
-//  DATA DE MODIFICAÇÃO: 04/06/2020
-//  VERSÃO: 1.6.1-BETA
-//  DESCRIÇÃO: CADASTRA RESERVAS DE EQUIPAMENTOS
-//==============================================================|| -->
+ <!--
+ * Jeferson Luckas - reserve
+ *
+ * Author: Jeferson Luckas
+ * Creation: 06/06/2020
+ * Modification: 16/07/2020
+ * Version: 2.0.0
+ * Description: Dashboard Reserve
+ *
+ * Copyright (c) 2020 Jeferson Luckas
+ * Released under the MIT license
+ * https://github.com/JefersonLucas/reserve/blob/master/LICENSE
+ *
+ * -->
+<!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-		<title>Reserve</title>        
-        <meta charset="utf-8">
-        <meta name="autor" content="Jeferson Lucas">
-        <!-- RESPONSÍVEL -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
-        <!-- ÍCONE -->
-        <link rel="shortcut icon" href="assets/img/logo-white.ico" type="image/x-icon">
-    	<!-- BOOTSTRAP CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- BOOTSTRAP JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        <!-- FONT AWESOME -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-        <!-- APP -->
-        <script src="assets/js/app.js"></script>
-        <!-- STYLE -->
-        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    </head>
-
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Jeferson Lucas">
+	<title>Dashboard · Reserve</title>
+	<link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<link href="assets/css/style.css" rel="stylesheet">
+</head>
 <body>
+	
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-2 col-lg-2 mr-0 px-3 text-light text-center font-weight-bold">
+			<img src="assets/img/logo-quadrado.png" class="mr-1" width="30" height="30" alt="Reserve">
+			<span>Reserve</span>
+		</a>
 
-    <!-- NAVBAR -->
-    <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark mb-2">
-        
-        <div class="container">
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+		   <span class="navbar-toggler-icon"></span>
+		</button>
+		<input class="form-control form-control-dark w-100" id="buscar-reserva" type="text" placeholder="Buscar..." aria-label="Search">	
+	</nav>
 
-            <!-- IMAGEM RESERVE -->
-            <a class="navbar-brand" href="https://jefersonlucas.github.io/reserve/" target="_blank" class="border-right" title="Reserve">
-                <img src="assets/img/logo-white.png" width="30" height="30" alt="Reserve">
-    		</a>
+	<div class="container-fluid">
 
-            <!-- BOTÃO TOGLLER -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-                
-            <!-- LINKS DE NAVEGAÇÃO -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto"></ul>
-                    
-                <!-- DATA E HORA -->
-                <span class="navbar-text" id="tempo"></span>&nbsp;
+		<div class="row">
 
-                <!-- NOME DO FUNCIONÁRIO -->
-                <span class="navbar-text active">
-                    <i class="fas fa-user-circle"></i> Administrador: <a href="#" class="nounderline" id="funcionario" onclick="infoApp()"></a>
-                </span>
+			<!-- SIDEBAR -->
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+			
+				<div class="sidebar-sticky pt-3">
+			
+					<ul class="nav flex-column menu align-items-left">
+						<li class="nav-item">
+							<a class="nav-link active" href="#" id="dashboard-page">
+								<span data-feather="home"></span>Dashboard<span class="sr-only">(current)</span>
+							</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="#" id="reserva-page">
+								<span data-feather="file"></span>Reserva
+							</a>
+						</li>
+					  
+						<li class="nav-item">
+							<a class="nav-link" href="#" id="perfil-page">
+								<span data-feather="user"></span>Perfil
+							</a>
+						</li>
+					</ul>
+					
+					<!-- PERÍODO -->
+					<h6 class="text-xl-left d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span id="periodo"></span>
+						<span id="icone"></span>
+					</h6>
+					
+					<ul class="nav flex-column mb-2">
+						
+						<!-- ADMINISTRADOR -->	
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-user-tie fa-lg mr-1"></span>
+								<span id="administrador-nome"></span>
+							</a>
+						</li>
 
-            </div>
-        
-        </div>
+						<!-- HORA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-clock fa-lg mr-1"></span>
+								<span id="relogio"></span>
+							</a>
+						</li>
 
-    </nav>
+						<!-- SEMANA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-week fa-lg mr-1"></span>
+								<span id="semana"></span>
+							</a>
+						</li>
 
-    <div class="container">
+						<!-- DATA -->
+						<li class="nav-item">
+							<a class="nav-link">
+								<span class="fas fa-calendar-alt fa-lg mr-1"></span>
+								<span id="calendario"></span>			            		
+							</a>
+						</li>
 
-        <div class="row">
-                
-            <!-- TÍTULO -->
-            <div class="col mb-5">
-                <h1 class="display-5"><i class="fas fa-user"></i>&nbsp;Usuário</h1>
-            </div>
-            
-        </div>
+					</ul>
 
-        <div class="row col-12 mb-2">
-                                
-            <!-- FORMULÁRIO COM VALIDAÇÃO -->
-            <form class="needs-validation" novalidate>
-                    
-                    <!-- DIV DO FORMULÁRIO -->
-                    <div class="form-row">
+				</div>
 
-                        <!-- PROFESSOR -->
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-user" title="Usuário"></i>
-                                </div>
-                            </div>
-                            <input type="text" title="Nome do suário" class="form-control" placeholder="Ex.: José" id="professor" required>
-                        </div>                    
-                        
-                        <!-- EQUIPAMENTO -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-desktop" title="Equipamento"></i>
-                                </div>
-                            </div>
-                            <input type="text" title="Nome do equipamento" class="form-control" placeholder="Ex.: Data Show S27" id="equipamento" required>
-                        </div>
+			</nav>
 
-                        <!-- SALA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-compass" title="Local"></i>
-                                </div>
-                            </div>
-                            <input type="text" title="Nome da sala" class="form-control" placeholder="Ex.: Anatomia I" id="sala" required>
-                        </div>
+			<!-- CONTEÚDO PRINCIPAL -->
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+				
+				<!-- TÍTULO -->
+				<div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">                   
+					<h1><span class="fa fa-home"></span> Dashboard</h1>
+				</div>
 
-                        <!-- INÍCIO DA AULA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Inicial"></i>
-                                </div>
-                            </div>
-                            <input type="time" title="Horário inicial" class="form-control" placeholder="00:00" id="horaA" required>
-                        </div>
+				<!-- ALERTA -->
+				<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" id="toast">
+					<div class="toast-header">										
+						<strong class="mr-auto"><i class="fas fa-bell fa-md"></i> Alerta</strong>
+						<small>11 mins ago</small>
+						<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="toast-body">
+						Hello, world! This is a toast message.
+					</div>
+				</div>
+				
+				<!-- GRÁFICO -->
+				<h2><i class="fas fa-chart-line"></i> Semanal</h2>
+				<canvas class="my-4 w-100" id="myChart" width="900" height="280"></canvas>
 
-                        <!-- TÉRMINO DA AULA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-clock" title="Horário Final"></i>
-                                </div>
-                            </div>
-                            <input type="time" title="Horário final" class="form-control" placeholder="00:00" id="horaB" required>
-                        </div>
+				<h2><span class="fas fa-file-alt"></span> Total</h2>
+				
+				<div class="table-responsive border-bottom mt-4">
+				
+					<table class="table table-hover table-bordered table-sm shadow">
+						
+					   <thead>
+					   		<tr class="text-center bg-dark">
+								<th class="text-white" title="Status das reservas" colspan="7">
+									<!-- STATUS -->
+									<nav class="nav nav-underline d-flex justify-content-center align-items-center">
+										<a class="nav-link text-danger" title="Aguardando">
+											<i class="fas fa-file fa-lg"></i>
+											<span class="badge badge-pill bg-light text-danger" id="status-01"></span>
+										</a>
+										<a class="nav-link text-success" title="Utilizando">
+											<i class="fas fa-file-upload fa-lg"></i>
+											<span class="badge badge-pill bg-light text-success" id="status-02"></span>
+										</a>
+										<a class="nav-link text-primary" title="Recolhido">
+											<i class="fas fa-file-download fa-lg"></i>
+											<span class="badge badge-pill bg-light text-primary" id="status-03"></span>
+										</a>
+									</nav>
+								</th>
+					   		</tr>
+							<tr class="text-center bg-dark">
+								<th class="text-white" title="Usuário"><i class="fas fa-user fa-lg"></i></th>
+								<th class="text-white" title="Equipamento"><i class="fas fa-laptop fa-lg"></i></th>
+								<th class="text-white" title="Local"><i class="fas fa-map-marker-alt fa-lg"></i></th>
+								<th class="text-white" title="Horário" colspan="2"><i class="fas fa-user-clock fa-lg"></i></th>
+								<th class="text-white" title="Data"><i class="fas fa-calendar-alt fa-lg"></i></th>
+								<th class="text-white" title="Status"><i class="fas fa-file-medical-alt fa-lg"></i></th>					
+							</tr>
+						</thead>
+						
+						<tbody id="lista-reservas-01" class="text-center">
 
-                        <!-- DATA -->                        
-                        <div class="input-group col-md-4 mb-3">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text bg-dark text-white">
-                                    <i class="fas fa-calendar-alt" title="Data"></i>
-                                </div>
-                            </div>
-                            <input type="date" title="Data" class="form-control" placeholder="dd/mm/aaaa" min="2018-01-01" max="2020-12-31" id="dataA" required>
-                        </div>                    
+						</tbody>
 
-                        <div class="input-group col-sm-6 mb-2">
-                        <!-- BOTÃO CADASTRAR RESERVA -->
-                         <div class="col-3">
-                            <button type="submit" title="Cadastrar" class="btn btn-outline-primary btn-lg" onclick="cadastrarReservaProfessor()">
-                                <i class="fas fa-save"></i>
-                            </button>
-                        </div>
+					</table>
 
-                        <!-- BOTÃO PESQUISAR -->
-                        <div class="col-3">
-                            <button type="submit" title="Pesquisar" class="btn btn-outline-primary btn-lg" onclick="pesquisarReservaProfessor()">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>                     
-                        </div>
-                
-                        <!-- BOTÃO IMPRIMIR -->
-                        <div class="col-3">
-                            <button id="botao" title="Imprimir" class="btn btn-outline-primary btn-lg" onclick="imprimir()">
-                                <i class="fa fa-print" aria-hidden="true"></i>
-                            </button>
-                        </div>
+				</div>
+				
+			</main>
 
-                        <!-- BOTÃO ATUALIZAR -->
-                        <div class="col-3">
-                            <button type="button" id="botao" title="Atualizar" class="btn btn-outline-primary btn-lg" onclick="atualizar()">
-                                <i class="fas fa-redo-alt"></i>
-                            </button>
-                        </div>
+		</div>
 
-                        </div>
+	</div>
 
-                    </div>
+	<!-- RODAPÉ -->
+	<footer class="footer my-3 text-center text-small">
 
-                </form>
+		<p class="align-middle text-center text-muted">&copy; 2018-2020 Jeferson Luckas</p>
+		<ul class="list-inline">
+			<li class="list-inline-item"><a href="https://github.com/JefersonLucas/reserve/blob/master/LICENSE" target="_blank">License</a></li>
+			<li class="list-inline-item"><a href="#">Privacy</a></li>
+			<li class="list-inline-item"><a href="#">Terms</a></li> 
+		</ul>
+		<a href="#" class="to-top"><i class="fas fa-chevron-up"></i></a>
 
-            </div>
+	</footer>
 
-            <!-- TABELA DAS RESERVAS -->
-            
-            <div class="row mb-4">
-                <div class="col" id="conteudo-imprecao">
-                    <table class="table table-hover table-bordered d-print-table">
-                        <thead>
-                            <tr class="text-center bg-dark">
-                                <th class="text-white" title="Usuário"><i class="fas fa-user" title="Usuário"></i>&nbsp;Usuário</th>
-                                <th class="text-white" title="Equipamento"><i class="fas fa-desktop" title="Equipamento"></i>&nbsp;Equipamento</th>
-                                <th class="text-white" title="Local"><i class="fas fa-compass" title="Local"></i>&nbsp;Local</th>
-                                <th class="text-white" title="Status"><i class="fas fa-clipboard-check" title="Status"></i>&nbsp;Status</th>
-                                <th class="text-white" title="Opções"><i class="fas fa-user-cog" title="Opções"></i>&nbsp;Opções</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody id="listaProfessores" class="text-center">
-                        <!-- EXIBIÇÃO DAS RESERVAS -->
-                        </tbody>
-                    
-                    </table>
-                    
-                </div>
-
-            </div>
-            <!-- FIM TABELA DAS RESERVAS -->
-
-            <!-- MODAL TIPO 1 -->
-            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                
-                <!-- DOCUMENTO -->
-                <div class="modal-dialog" role="document" id="modal-documento-1">
-                
-                    <div class="modal-content">
-                        
-                        <!-- CABEÇALHO -->
-                        <div id="modal-cabecalho-1">
-
-                            <!-- TÍTULO -->
-                            <h5 class="modal-title" id="modal-titulo-1"></h5>
-                            <!-- BOTÃO FECHAR MODAL -->
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="atualizar()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                        
-                        <!-- CONTEÚDO -->
-                        <div class="modal-body" id="modal-conteudo-1"></div>
-                    
-                        <div class="modal-footer">
-                            <!-- BOTÃO -->
-                            <button type="button" data-dismiss="modal" id="modal-botao-1" onclick="atualizar()"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL TIPO 1 -->
-
-            <!-- MODAL TIPO 2 -->
-            <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                
-                <!-- DOCUMENTO -->
-                <div class="modal-dialog" role="document" id="modal-documento-2">
-                
-                    <div class="modal-content">
-                        
-                        <!-- CABEÇALHO -->
-                        <div id="modal-cabecalho-2">
-
-                            <!-- TÍTULO -->
-                            <h5 class="modal-title" id="modal-titulo-2"></h5>
-                            <!-- BOTÃO FECHAR MODAL -->
-                            <button type="button" title="Fechar" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-
-                        </div>
-                        
-                        <!-- CONTEÚDO -->
-                        <div class="modal-body" id="modal-conteudo-2"></div>
-                    
-                        <div class="modal-footer">
-                            <!-- BOTÃO -->
-                            <button type="button" data-dismiss="modal" id="modal-botao-2"></button>
-                        </div>
-
-                    </div>
-
-                </div>
-            
-            </div>
-            <!-- FIM MODAL TIPO 2 -->
-
-        </div>
-
-    <script>
-    //  VALIDAÇÃO DE CADASTRO
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-        //  Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-        //  Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }        
-                    form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>window.jQuery || document.write('<script src="assets/jquery/jquery.slim.min.js"><\/script>')</script>
+	<script src="assets/js/bootstrap.bundle.min.js"d></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script src="assets/js/dashboard.js"></script>
+	<script src="assets/js/helpers.js"></script>
 
 </body>
 </html>
